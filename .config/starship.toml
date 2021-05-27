@@ -1,0 +1,20 @@
+add_newline = true
+
+[gcloud]
+disabled = true
+
+[directory]
+truncation_length = 2
+truncate_to_repo = false # truncates directory to root folder if in github repo
+style = "bold italic #94f07d"
+
+
+[nodejs]
+detect_folders = ['node_modules']
+disabled = true
+
+[package]
+disabled = true
+
+[npm]
+disabled = true
