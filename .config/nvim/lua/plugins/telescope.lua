@@ -4,11 +4,12 @@ require('telescope').setup{
     vimgrep_arguments = {
       'rg',
       '--color=never',
-      '--no-heading',
-      '--with-filename',
       '--line-number',
+      '--hidden',
+      '--follow',
       '--column',
-      '--smart-case'
+      '--ignore-case',
+      '--smart-case',
     },
     initial_mode = 'insert',
     shorten_path = true,

@@ -73,6 +73,11 @@ bindkey -s '^o' 'lfcd\n'
 
 bindkey -s '^a' 'bc -lq\n'
 
+## FZF
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
+
+# Override's fzf bindings
 bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
 
 bindkey '^[[P' delete-char

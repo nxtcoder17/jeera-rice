@@ -127,6 +127,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/neoscroll.nvim"
   },
+  nerdcommenter = {
+    loaded = true,
+    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/nerdcommenter"
+  },
   ["numb.nvim"] = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/numb.nvim"
@@ -138,6 +142,10 @@ _G.packer_plugins = {
   ["nvim-colorizer.lua"] = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/nvim-colorizer.lua"
+  },
+  ["nvim-comment"] = {
+    loaded = true,
+    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/nvim-comment"
   },
   ["nvim-compe"] = {
     loaded = true,
@@ -203,6 +211,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/registers.nvim"
   },
+  rnvimr = {
+    loaded = true,
+    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/rnvimr"
+  },
   sonokai = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/sonokai"
@@ -243,10 +255,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/vim-easy-align"
   },
-  ["vim-gutentags"] = {
-    loaded = true,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/vim-gutentags"
-  },
   ["vim-matchup"] = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/vim-matchup"
@@ -270,6 +278,10 @@ _G.packer_plugins = {
   ["vim-snippets"] = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/vim-snippets"
+  },
+  ["vim-surround"] = {
+    loaded = true,
+    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/vim-surround"
   },
   ["vim-tmux-focus-events"] = {
     loaded = true,

@@ -19,7 +19,16 @@ local function tmap(command, value, expr)
 end
 
 
--- The must have
+vim.g.mapleader = ' '
+
+-- Nvim Comment
+vim.cmd [[ nmap s<space> gcc ]]
+vim.cmd [[ vmap s<space> gc ]]
+
+-- Must haves
+nmap('Q', '<nop>')
+
+-- Must haves
 nmap('Q', '<nop>')
 
 -- Making my vim-flow against the `s` key
@@ -32,9 +41,14 @@ nmap('sj', '<C-w>j')
 nmap('sk', '<C-w>k')
 nmap('si', ':vsplit<CR>')
 nmap('sm', ':split<CR>')
-nmap('sf', ':Telescope find_files<CR>')
 nmap('Y', '"+y')
 vmap('Y', '"+y')
+
+nmap ('s4', '<leader>c<space>')
+
+-- Telescope Shortcuts
+nmap('sf', ":lua require'telescope.builtin'.find_files{hidden = true, folllow = true}<CR>")
+nmap('<C-f>', ":lua require'telescope.builtin'.live_grep{}<CR>")
 
 -- Vim Tmux Navigator
 
@@ -44,3 +58,8 @@ nmap('<M-k>', ':TmuxNavigateUp<cr>')
 nmap('<M-l>', ':TmuxNavigateRight<cr>')
 nmap(';', ':')
 
+
+-- RnVimR
+nmap('<M-o>', ':RnvimrToggle<CR>')
+tmap('<M-o>', '<C-\\><C-n>:RnvimrToggle<CR>')
+tmap('<M-i>', '<C-\\><C-n>:RnvimrResize<CR>')

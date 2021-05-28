@@ -23,6 +23,12 @@ return packer.startup(function (use)
 	-- Packer can manage itself as an optional plugin
 	use 'wbthomason/packer.nvim'
 
+  -- Navigation
+  use 'tpope/vim-surround'
+
+  -- Snippet Runner
+  use { 'michaelb/sniprun', run = 'bash ./install.sh'}
+
 	-- LSP
 	use 'neovim/nvim-lspconfig'
 	use 'onsails/lspkind-nvim'
@@ -83,6 +89,9 @@ return packer.startup(function (use)
 	-- Flutter
 	use 'akinsho/flutter-tools.nvim'
 
+  -- Markdown
+  use 'npxbr/glow.nvim'
+
 	-- Registers
 	use 'tversteeg/registers.nvim'
 
@@ -106,10 +115,16 @@ return packer.startup(function (use)
 	use 'sainnhe/sonokai'
 
 	-- Tags
-	use 'ludovicchabant/vim-gutentags'
+	-- use 'ludovicchabant/vim-gutentags'
+
+	-- Commenting
+	use 'tpope/vim-commentary'
+	use 'folke/todo-comments.nvim'
 
 	-- General Programming
 	use 'airblade/vim-rooter'
-	use 'folke/todo-comments.nvim'
+
+	-- File Explorer
+	use 'kevinhwang91/rnvimr'
 end)
 
