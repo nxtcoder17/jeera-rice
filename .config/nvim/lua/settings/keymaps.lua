@@ -1,65 +1,70 @@
 -- Key Mappings
 
--- Thanks to Rhisabh Dwivedi [URL]: https://github.com/RishabhRD/archrice/blob/master/.config/nvim/lua/mappings.lua
-
-local function nmap(command, value, expr)
-    vim.api.nvim_set_keymap('n',command,value,{noremap = true, silent = true, expr = expr})
+local function map(mode, key, value)
+  vim.api.nvim_set_keymap(mode, key, value, { silent = true } )
 end
 
-local function imap(command, value, expr)
-    vim.api.nvim_set_keymap('i',command,value,{noremap = true, silent = true, expr = expr})
+local function noremap(mode, key, value)
+  vim.api.nvim_set_keymap(mode, key, value, { silent = true, noremap = true })
 end
 
-local function vmap(command, value, expr)
-    vim.api.nvim_set_keymap('v',command,value,{noremap = true, silent = true, expr = expr})
-end
-
-local function tmap(command, value, expr)
-    vim.api.nvim_set_keymap('t',command,value,{noremap = true, silent = true, expr = expr})
-end
-
+local function nmap(key,value) map('n', key, value) end
+local function vmap(key,value) map('v', key, value) end
+local function nnoremap(key,value) noremap('n', key, value) end
+local function vnoremap(key,value) noremap('n', key, value) end
+local function tnoremap(key,value) noremap('t', key, '<C-\\><C-n>' .. value) end
 
 vim.g.mapleader = ' '
 
--- Nvim Comment
-vim.cmd [[ nmap s<space> gcc ]]
-vim.cmd [[ vmap s<space> gc ]]
+-- THe must haves
+nnoremap('Q', '<nop>')
+nnoremap('cc', '<nop>')
+nnoremap(';', ':')
+nnoremap('<BS>', ':nohlsearch<CR>')
 
--- Must haves
-nmap('Q', '<nop>')
+-- Copy to Clipboard
+nnoremap('Y', '"+y')
+vnoremap('Y', '"+y')
 
--- Must haves
-nmap('Q', '<nop>')
+-- The sexy [s]
+nnoremap('s', '<nop>')
 
--- Making my vim-flow against the `s` key
-nmap('s', '<nop>')
-nmap('ss', ':w<CR>')
-nmap('sd', ':bd<CR>')
-nmap('sl', '<C-w>l')
-nmap('sh', '<C-w>h')
-nmap('sj', '<C-w>j')
-nmap('sk', '<C-w>k')
-nmap('si', ':vsplit<CR>')
-nmap('sm', ':split<CR>')
-nmap('Y', '"+y')
-vmap('Y', '"+y')
+-- [S]exy commenting
+nmap('s<space>', 'gcc')
+vmap('s<space>', 'gc')
 
-nmap ('s4', '<leader>c<space>')
+-- [S]exy file Save
+nnoremap('ss', ':w<CR>')
 
--- Telescope Shortcuts
-nmap('sf', ":lua require'telescope.builtin'.find_files{hidden = true, folllow = true}<CR>")
-nmap('<C-f>', ":lua require'telescope.builtin'.live_grep{}<CR>")
+-- [S]exy buffer Delete
+nnoremap('sd', ':bdelete<CR>')
+
+-- [S]exy window splits
+nnoremap('si', ':vsplit<CR>')
+nnoremap('sm', ':split<CR>')
+
+-- [S]exy Split Navigation
+nnoremap('sh', '<C-w>h')
+nnoremap('sl', '<C-w>l')
+nnoremap('sj', '<C-w>j')
+nnoremap('sk', '<C-w>k')
+
+-- [S]exy Telescope
+nnoremap('sf',  ":lua require'telescope.builtin'.find_files{hidden = true, folllow = true}<CR>")
+nnoremap('<S-f>', ":lua require'telescope.builtin'.live_grep{}<CR>")
 
 -- Vim Tmux Navigator
+nnoremap('<M-h>', ':TmuxNavigateLeft<cr>')
+nnoremap('<M-l>', ':TmuxNavigateRight<cr>')
+nnoremap('<M-k>', ':TmuxNavigateUp<cr>')
+nnoremap('<M-j>', ':TmuxNavigateDown<cr>')
 
-nmap('<M-h>', ':TmuxNavigateLeft<cr>')
-nmap('<M-j>', ':TmuxNavigateDown<cr>')
-nmap('<M-k>', ':TmuxNavigateUp<cr>')
-nmap('<M-l>', ':TmuxNavigateRight<cr>')
-nmap(';', ':')
+nnoremap('<M-Left>', ':TmuxNavigateLeft<cr>')
+nnoremap('<M-Right>', ':TmuxNavigateRight<cr>')
+nnoremap('<M-Up>', ':TmuxNavigateUp<cr>')
+nnoremap('<M-Down>', ':TmuxNavigateDown<cr>')
 
-
--- RnVimR
-nmap('<M-o>', ':RnvimrToggle<CR>')
-tmap('<M-o>', '<C-\\><C-n>:RnvimrToggle<CR>')
-tmap('<M-i>', '<C-\\><C-n>:RnvimrResize<CR>')
+-- -- RnVimR
+nnoremap('<M-o>', ':RnvimrToggle<CR>')
+tnoremap('<M-o>', ':RnvimrToggle<CR>')
+tnoremap('<M-i>', ':RnvimrResize<CR>')

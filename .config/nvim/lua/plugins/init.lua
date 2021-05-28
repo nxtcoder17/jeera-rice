@@ -55,7 +55,6 @@ return packer.startup(function (use)
 	use 'zinit-zsh/zplugin-vim-syntax'
 	use 'editorconfig/editorconfig-vim'
 	use 'chrisbra/csv.vim'
-	use 'npxbr/glow.nvim'
 	use 'junegunn/vim-easy-align'
 
 	-- Icons
