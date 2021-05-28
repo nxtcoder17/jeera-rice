@@ -1,2 +1,4 @@
 .zcompdump
 **/nvim/after
+.pyc$
+__pycache__
