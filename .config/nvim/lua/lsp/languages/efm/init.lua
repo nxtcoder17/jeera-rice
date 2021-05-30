@@ -34,7 +34,7 @@ require'lspconfig'.efm.setup{
     efm_log_dir .. '/logfile.log'
   },
   filetypes = {
-    'javascript',
+    -- 'javascript',
     'javascriptreact',
     'typescript',
     'typescriptreact',

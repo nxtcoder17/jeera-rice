@@ -9,7 +9,6 @@ end
 vim.cmd [[packadd packer.nvim]]
 vim.cmd 'autocmd BufWritePost plugins.lua PackerCompile' -- Auto compile when there are changes in plugins.lua
 
-
 local packer = require('packer')
 local util = require('packer.util')
 
@@ -33,6 +32,7 @@ return packer.startup(function (use)
 	use 'neovim/nvim-lspconfig'
 	use 'onsails/lspkind-nvim'
 	use 'kabouzeid/nvim-lspinstall'
+	use 'kosayoda/nvim-lightbulb'
 
 	-- Autocomplete
 	use 'hrsh7th/nvim-compe'
@@ -84,6 +84,9 @@ return packer.startup(function (use)
 	use 'kdheepak/lazygit.nvim'
 	use 'rhysd/committia.vim'
 	use 'sindrets/diffview.nvim'
+
+	-- Javascript
+	use 'jose-elias-alvarez/nvim-lsp-ts-utils'
 
 	-- Flutter
 	use 'akinsho/flutter-tools.nvim'

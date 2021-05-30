@@ -8,11 +8,20 @@ local function noremap(mode, key, value)
   vim.api.nvim_set_keymap(mode, key, value, { silent = true, noremap = true })
 end
 
+local function noremapX(mode, key, value)
+  vim.api.nvim_set_keymap(mode, key, value, { silent = true, noremap = true, expr = true })
+end
+
 local function nmap(key,value) map('n', key, value) end
 local function vmap(key,value) map('v', key, value) end
+
 local function nnoremap(key,value) noremap('n', key, value) end
+local function inoremap(key,value) noremap('i', key, value) end
 local function vnoremap(key,value) noremap('n', key, value) end
 local function tnoremap(key,value) noremap('t', key, '<C-\\><C-n>' .. value) end
+
+local function inoremapX(key,value) noremapX('i', key, value) end
+
 
 vim.g.mapleader = ' '
 
@@ -68,3 +77,8 @@ nnoremap('<M-Down>', ':TmuxNavigateDown<cr>')
 nnoremap('<M-o>', ':RnvimrToggle<CR>')
 tnoremap('<M-o>', ':RnvimrToggle<CR>')
 tnoremap('<M-i>', ':RnvimrResize<CR>')
+
+
+-- Nvim Compe
+inoremapX('<TAB>', 'pumvisible() ? "\\<C-n>" : "\\<TAB>"')
+inoremapX('<S-TAB>', 'pumvisible() ? "\\<C-p>" : "\\<C-h>"')

@@ -10,7 +10,9 @@ lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(
   }
 )
 
+
 require('lspkind').init()
+
 
 -- LSP Server Names are in the format provided by
 -- lua, typescript, dockerfile, efm, html, css,
