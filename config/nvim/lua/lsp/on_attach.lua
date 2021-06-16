@@ -1,6 +1,3 @@
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -18,8 +15,8 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', '<M-CR>', '<Cmd>lua vim.lsp.buf.code_action{}<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<M-CR>', '<Cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()CR>', opts)
   buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
   buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
@@ -47,10 +44,16 @@ local on_attach = function(client, bufnr)
       hi LspReferenceText gui=bold guibg=#5a6863
       hi LspReferenceWrite gui=bold guibg=#5a6863
 
+      hi! LspDiagnosticsVirtualTextError guifg=#cc8b9d  guibg=None  gui=None 
+      hi! LspDiagnosticsVirtualTextWarning guifg=#e3ca7f  guibg=None  gui=None 
+      hi! LspDiagnosticsVirtualTextInformation guifg=#a6eb91  guibg=None  gui=None 
+      hi! LspDiagnosticsVirtualTextHint guifg=#617cc2 guibg=None  gui=None 
+
       augroup lsp_document_highlight
         autocmd!
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+        autocmd CursorHold  <buffer> silent! lua vim.lsp.buf.document_highlight()
+        autocmd CursorHoldI <buffer> silent! lua vim.lsp.buf.document_highlight()
+        autocmd CursorMoved <buffer> silent! lua vim.lsp.buf.clear_references()
       augroup END
     ]], false)
   end

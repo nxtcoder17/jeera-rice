@@ -33,6 +33,7 @@ return packer.startup(function (use)
 	use 'onsails/lspkind-nvim'
 	use 'kabouzeid/nvim-lspinstall'
 	use 'kosayoda/nvim-lightbulb'
+	use 'glepnir/lspsaga.nvim'
 
 	-- Autocomplete
 	use 'hrsh7th/nvim-compe'
@@ -125,6 +126,7 @@ return packer.startup(function (use)
 
 	-- General Programming
 	use 'airblade/vim-rooter'
+	use 'sbdchd/neoformat'
 
 	-- File Explorer
 	use 'kevinhwang91/rnvimr'

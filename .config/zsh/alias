@@ -1,5 +1,0 @@
-alias ls='ls --color=auto'
-alias cc='xclip -sel clip'
-
-alias nvms='source /usr/share/nvm/init-nvm.sh'
-

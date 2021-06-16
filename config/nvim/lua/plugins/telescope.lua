@@ -1,15 +1,16 @@
 local actions = require('telescope.actions')
+
+
+local ignoreFile = os.getenv('HOME') .. '/.ignore'
+
 require('telescope').setup{
   defaults = {
     vimgrep_arguments = {
       'rg',
       '--color=never',
       '--line-number',
-      '--hidden',
       '--follow',
-      '--column',
-      '--ignore-case',
-      '--smart-case',
+      '--column'
     },
     initial_mode = 'insert',
     shorten_path = true,

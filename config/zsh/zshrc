@@ -102,3 +102,10 @@ export PATH="$PATH:$HOME/bin:$HOME/.local/bin/mnpm"
 eval "$(starship init zsh)"
 
 alias dd='cd $(rg --files --hidden --follow --smart-case --ignore-file-case-insensitive | fzf)'
+
+alias gf='git flow'
+export PATH="$PATH:$HOME/.local/share/{go,local-node}/bin"
+
+source ~/.config/zsh/flow-completion.zsh
+
+export BUILD_LIBRDKAFKA=0

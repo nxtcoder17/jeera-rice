@@ -20,17 +20,17 @@
 # [ General Configurations ]⠀⠀
 
 # [ Recommended for i3-gaps ]
-for_window [class="^.*"] border pixel 4
+for_window [class="^.*"] border pixel 0
 
 # Smart Borders mean no border if only one window is open
-smart_borders on
+# smart_borders on
 
 # client.focused #00C1FF #00C1FF #000088 #00C1FF
 client.focused #86bd8e #86bd8e #000088 #86bd8e
 gaps inner 10
 
 # gaps outer so that Single Window consumes full space
-gaps outer -10
+gaps outer -7
 
 # [ Setting the Modifier Keys ]
 set $mod Mod4
@@ -377,7 +377,7 @@ bindsym $mod+backslash scratchpad show
 for_window [title="NxtTerm"] floating enable
 for_window [title="NxtTerm"] resize set 1200 1000
 for_window [title="NxtTerm"] move scratchpad
-for_window [title="NxtTerm"] border pixel 5
+for_window [title="NxtTerm"] border pixel 3
 
 # exec --no-startup-id xfce4-terminal --hide-menubar -T NxtTerm
 exec --no-startup-id konsole --hide-menubar -p tabtitle=NxtTerm 
