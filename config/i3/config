@@ -282,8 +282,8 @@ exec_always --no-startup-id      feh --bg-scale ~/.wallpaper
 # -> Network Manager
 exec --no-startup-id             nm-applet
 
-# -> Composite Manager: picom
-exec --no-startup-id 						 picom --experimental-backend
+# -> Composite Manager: picom ibhagwan-fork
+exec --no-startup-id 						 picom
 
 # -> Notification daemon
 exec --no-startup-id            dunst
@@ -377,7 +377,7 @@ bindsym $mod+backslash scratchpad show
 for_window [title="NxtTerm"] floating enable
 for_window [title="NxtTerm"] resize set 1200 1000
 for_window [title="NxtTerm"] move scratchpad
-for_window [title="NxtTerm"] border pixel 3
+# for_window [title="NxtTerm"] border pixel 3
 
 # exec --no-startup-id xfce4-terminal --hide-menubar -T NxtTerm
 exec --no-startup-id konsole --hide-menubar -p tabtitle=NxtTerm 

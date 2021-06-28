@@ -11,3 +11,8 @@ alias gaa='git add .'
 alias ga='git add'
 alias gb='git branch -a'
 alias gc='git commit -am'
+
+alias gf='git flow'
+alias gff='git flow feature'
+alias gffs='git flow feature start'
+alias gffp='git flow feature publish'

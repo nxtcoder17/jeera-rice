@@ -109,3 +109,5 @@ export PATH="$PATH:$HOME/.local/share/{go,local-node}/bin"
 source ~/.config/zsh/flow-completion.zsh
 
 export BUILD_LIBRDKAFKA=0
+
+source ~/.secrets
