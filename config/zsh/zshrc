@@ -74,8 +74,8 @@ bindkey -s '^o' 'lfcd\n'
 bindkey -s '^a' 'bc -lq\n'
 
 ## FZF
-source /usr/share/fzf/key-bindings.zsh
-source /usr/share/fzf/completion.zsh
+# source /usr/share/fzf/key-bindings.zsh
+# source /usr/share/fzf/completion.zsh
 
 # Override's fzf bindings
 bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
@@ -106,8 +106,10 @@ alias dd='cd $(rg --files --hidden --follow --smart-case --ignore-file-case-inse
 alias gf='git flow'
 export PATH="$PATH:$HOME/.local/share/{go,local-node}/bin"
 
+source ~/.config/zsh/fzf-keybindings.zsh
 source ~/.config/zsh/flow-completion.zsh
 
 export BUILD_LIBRDKAFKA=0
 
 source ~/.secrets
+export PATH=$PATH:$HOME/.local/bin/mnpm
