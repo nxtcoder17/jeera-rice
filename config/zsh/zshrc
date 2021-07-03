@@ -19,6 +19,7 @@ stty stop undef
 
 # enable completion features
 autoload -Uz compinit
+
 compinit -d ~/.cache/zcompdump
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' auto-description 'specify: %d'
@@ -187,7 +188,6 @@ source ~/.config/zsh/flow-completion.zsh
 export BUILD_LIBRDKAFKA=0
 
 source ~/.secrets
-export PATH=$PATH:$HOME/.local/bin/mnpm
 
 # enable auto-suggestions based on the history
 if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
@@ -200,3 +200,11 @@ fi
 if [ -f /etc/zsh_command_not_found ]; then
     . /etc/zsh_command_not_found
 fi
+
+export PATH=$PATH:$HOME/.local/bin/mnpm
+export PATH="$HOME/apps/node-v16.4.0/bin/:$PATH"
+source ~/.default-env.sh
+source ~/.brew-env.sh
+
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
