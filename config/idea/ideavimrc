@@ -1,0 +1,40 @@
+set surround
+set incsearch
+set multiple-cursors
+"set wildmenu
+
+"set updatetime=10
+
+nnoremap ; :
+vnoremap ; :
+
+set incsearch
+set ignorecase
+set smartcase
+
+nnoremap <C-j> ]]
+nnoremap <C-k> []
+
+nnoremap Q <nop>
+nnoremap Y "+y
+vnoremap Y "+y
+
+map s <nop>
+nnoremap sh <C-w>h
+nnoremap sl <C-w>l
+nnoremap sj <C-w>j
+nnoremap sk <C-w>k
+
+nnoremap si :action SplitVertically<CR>
+nnoremap sm :action SplitHorizontally<CR>
+
+nnoremap s<Right> :action StretchSplitToRight<CR>
+nnoremap s<Left> :action StretchSplitToLeft<CR>
+nnoremap s<Up> :action StretchSplitToTop<CR>
+nnoremap s<Down> :action StretchSplitToBottom<CR>
+
+nnoremap ss :w<CR>
+
+" File Navigation
+nnoremap sf :action GotoFile<CR>
+nnoremap <C-h> :action RecentFiles<CR>

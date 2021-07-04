@@ -1,8 +1,8 @@
 #! /usr/bin/env sh
 
-nvim() {
-  $HOME/builds/nvim.appimage "$@"
-}
+# nvim() {
+#  $HOME/builds/nvim.appimage "$@"
+# }
 
 pnpm() {
   if [ $1 = "peer" ]; then

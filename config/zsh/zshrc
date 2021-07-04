@@ -182,8 +182,8 @@ alias dd='cd $(rg --files --hidden --follow --smart-case --ignore-file-case-inse
 alias gf='git flow'
 # export PATH="$PATH:$HOME/.local/share/{go,local-node}/bin"
 
-source ~/.config/zsh/fzf-keybindings.zsh
-source ~/.config/zsh/flow-completion.zsh
+# source ~/.config/zsh/fzf-keybindings.zsh
+# source ~/.config/zsh/flow-completion.zsh
 
 export BUILD_LIBRDKAFKA=0
 
@@ -202,9 +202,12 @@ if [ -f /etc/zsh_command_not_found ]; then
 fi
 
 export PATH=$PATH:$HOME/.local/bin/mnpm
-export PATH="$HOME/apps/node-v16.4.0/bin/:$PATH"
-source ~/.default-env.sh
-source ~/.brew-env.sh
+export PATH="$HOME/apps/bin/:$PATH"
+export PATH="$HOME/apps/jeera-rice/bin:$PATH"
 
+# Dracula Themed
+export FZF_DEFAULT_OPTS='--color=fg:#f8f8f2,bg:#282a36,hl:#bd93f9 --color=fg+:#f8f8f2,bg+:#44475a,hl+:#bd93f9 --color=info:#ffb86c,prompt:#50fa7b,pointer:#ff79c6 --color=marker:#ff79c6,spinner:#ffb86c,header:#6272a4'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
+[ -f /usr/share/fzf/keybindings.zsh ] && source /usr/share/fzf/keybindings.zsh
