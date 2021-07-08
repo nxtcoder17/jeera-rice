@@ -18,10 +18,10 @@ require'plugins.lspsaga'
 
 -- Configurations
 require'settings'
-
-require'settings.autocommands'
 require'settings.keymaps'
 require'settings.colors'
 require'lsp'
+
+-- require'settings.autocommands'
 -- LSP Server Names are in the format provided by
 --

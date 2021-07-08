@@ -29,6 +29,7 @@ set('undofile')
 set ('switchbuf', 'usetab,newtab')
 
 -- Fast scrolling
+set('ttimeoutlen', 100)
 set 'ttyfast'
 set 'lazyredraw'
 

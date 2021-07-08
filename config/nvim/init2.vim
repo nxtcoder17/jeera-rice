@@ -1,6 +1,5 @@
 lua require'init'
 
-
 set ttimeoutlen=100
 set ttyfast
 set lazyredraw
@@ -10,52 +9,9 @@ set autoread
 command! -nargs=1 Silent execute ':silent !'.<q-args> | execute ':redraw!'
 command! -nargs=0 Fix execute ':silent !eslint_d --fix %' | execute ':redraw!'
 
-
-nnoremap Q <NOP>
-nnoremap cc <NOP>
-nnoremap ;  :
-nnoremap <BS> :nohlsearch<CR>
-
 let mapleader = ' '
 
-nnoremap Y "+y
-vnoremap Y "+y
-
 cnoremap wqa wq \| qa
-
-" The sexy [s]
-nnoremap s <NOP>
-
-" [S]exy commenting
-nmap s<space> gcc
-vmap s<space> gc
-
-
-" [S]exy Save
-nnoremap ss :w<CR>
-
-" [S]exy Buffer Delete
-nnoremap sd :bdelete<CR>
-
-" [S]exy splits
-nnoremap si :vsplit<CR>
-nnoremap sm :split<CR>
-
-" [S]exy split navigation
-nnoremap sh <C-w>h
-nnoremap sl <C-w>l
-nnoremap sk <C-w>k
-nnoremap sj <C-w>j
-
-" [S]exy Telescope
-nnoremap sf :lua require'telescope.builtin'.find_files{hidden = true, follow = true}<CR>
-nnoremap <S-f> :lua require'telescope.builtin'.live_grep{}<CR>
-
-" Vim Tmux Navigator
-nnoremap <M-h> :TmuxNavigateLeft<CR>
-nnoremap <M-l> :TmuxNavigateRight<CR>
-nnoremap <M-j> :TmuxNavigateDown<CR>
-nnoremap <M-k> :TmuxNavigateUp<CR>
 
 " RnVimR
 nnoremap <M-o> :RnvimrToggle<CR>

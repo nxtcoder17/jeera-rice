@@ -19,6 +19,7 @@ packer.init {
 vim.g.rainbow_active = 1
 
 return packer.startup(function (use)
+  use 'dracula/vim'
 	-- Packer can manage itself as an optional plugin
 	use 'wbthomason/packer.nvim'
 
@@ -116,9 +117,6 @@ return packer.startup(function (use)
 	-- Colorschema
 	use 'sainnhe/gruvbox-material'
 	use 'sainnhe/sonokai'
-
-	-- Tags
-	-- use 'ludovicchabant/vim-gutentags'
 
 	-- Commenting
 	use 'tpope/vim-commentary'

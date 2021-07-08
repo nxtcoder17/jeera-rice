@@ -16,7 +16,7 @@ require('telescope').setup{
     shorten_path = true,
 
     winblend = 0,
-    width = 0.45,
+    layout_width = 0.45,
 
     border = {},
     borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰'},
