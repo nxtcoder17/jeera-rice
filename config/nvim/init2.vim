@@ -44,25 +44,3 @@ nnoremap <silent> [e :Lspsaga diagnostic_jump_next<CR>
 nnoremap <silent> ]e :Lspsaga diagnostic_jump_prev<CR>
 nnoremap <silent> <leader>cot :Lspsaga open_floaterm<CR>
 tnoremap <silent> <leader>cct <C-\><C-n>:Lspsaga close_floaterm<CR>
-
-
-augroup nxtcoder17
-  autocmd!
-  au BufWritePost *.lua silent! :luafile %
-
-  " Restore Folds
-  autocmd! BufWinEnter <buffer> silent! loadview
-  autocmd! BufWinLeave <buffer> silent! mkview
-
-  " Code Actions
-  au CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
-
-  au BufWritePost *.js,*.jsx silent Neoformat
-augroup end
-
-" highlight symbol under cursor
-autocmd CursorHold  <buffer> silent! lua vim.lsp.buf.document_highlight()
-autocmd CursorHoldI <buffer> silent! lua vim.lsp.buf.document_highlight()
-autocmd CursorMoved <buffer> silent! lua vim.lsp.buf.clear_references()
-
-let g:neoformat_enabled_javascript = ['eslint_d']

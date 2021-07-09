@@ -9,6 +9,9 @@ end
 -- Switching between Buffers without saving each of them
 set 'hidden'
 
+-- AutoRead
+set 'autoread'
+
 -- Customising filling characters for vertical split, folding, and diff
 set('fillchars', 'vert:▞,fold:,diff:')
 
@@ -29,7 +32,7 @@ set('undofile')
 set ('switchbuf', 'usetab,newtab')
 
 -- Fast scrolling
-set('ttimeoutlen', 100)
+set('ttimeoutlen', 10)
 set 'ttyfast'
 set 'lazyredraw'
 
@@ -43,15 +46,11 @@ set 'wrap'
 -- Disabling CompleteOpt to auto-insert the first one
 set ('completeopt', 'menuone,noinsert,noselect')
 
--- Always split on the Right
+-- Always split on the Right and bottom
 set 'splitright'
-
--- and at Bottom
 set 'splitbelow'
 
-set 'termguicolors'                           -- Terminal colors on asteroids
-vim.cmd("colorscheme gruvbox-material")       -- Gruvbox
-
+set 'termguicolors'                           -- Terminal colors on steroids
 
 -- Fold Methods and Markers⠀⠀
 set('foldmethod', 'marker')

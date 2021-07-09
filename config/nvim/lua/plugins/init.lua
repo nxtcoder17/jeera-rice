@@ -21,7 +21,10 @@ vim.g.rainbow_active = 1
 return packer.startup(function (use)
   use 'dracula/vim'
 	-- Packer can manage itself as an optional plugin
-	use 'wbthomason/packer.nvim'
+	-- use 'wbthomason/packer.nvim'
+
+  -- AutoTag Completion
+  use 'windwp/nvim-ts-autotag'
 
   -- Navigation
   use 'tpope/vim-surround'
@@ -38,8 +41,8 @@ return packer.startup(function (use)
 
 	-- Autocomplete
 	use 'hrsh7th/nvim-compe'
-	use 'SirVer/ultisnips'
-	use 'honza/vim-snippets'
+	-- use 'SirVer/ultisnips'
+	-- use 'honza/vim-snippets'
 	use 'windwp/nvim-autopairs'
 	use 'AndrewRadev/tagalong.vim'
 	use 'andymass/vim-matchup'
@@ -95,6 +98,9 @@ return packer.startup(function (use)
 
   -- Markdown
   use 'npxbr/glow.nvim'
+
+  -- Syntax Definitions
+  use 'sheerun/vim-polyglot'
 
 	-- Registers
 	use 'tversteeg/registers.nvim'
