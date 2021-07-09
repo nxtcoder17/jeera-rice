@@ -6,7 +6,7 @@
 
 libinput-gestures-setup start
 
-X Resources
+# X Resources
 xrdb -merge ~/.Xresources
 xrdb -load ~/.Xresources
 
