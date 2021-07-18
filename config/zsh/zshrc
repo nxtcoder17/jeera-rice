@@ -20,23 +20,13 @@ stty stop undef
 # enable completion features
 autoload -Uz compinit
 
+zmodload zsh/complist
 compinit -d ~/.cache/zcompdump
 zstyle ':completion:*:*:*:*:*' menu select
-zstyle ':completion:*' auto-description 'specify: %d'
-zstyle ':completion:*' completer _expand _complete _correct _approximate
-zstyle ':completion:*' format 'Completing %d'
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*' list-colors ''
-zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
-zstyle ':completion:*' rehash true
-zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
-zstyle ':completion:*' use-compctl false
-zstyle ':completion:*' verbose true
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+_comp_options+=(globdots)		# Include hidden files.
 
 # History in XDG Cache
-
 HISTSIZE=10000000000
 SAVEHIST=10000000000
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
@@ -48,13 +38,6 @@ setopt hist_ignore_dups       # ignore duplicated commands history list
 setopt hist_ignore_space      # ignore commands that start with space
 setopt hist_verify            # show command with history expansion to user before running it
 setopt share_history          # share command history data
-
-# Basic auto/tab complete:
-autoload -U compinit
-zstyle ':completion:*' menu select
-zmodload zsh/complist
-compinit
-_comp_options+=(globdots)		# Include hidden files.
 
 # vi mode
 bindkey -v
@@ -119,7 +102,8 @@ if [ -f /etc/zsh_command_not_found ]; then
     . /etc/zsh_command_not_found
 fi
 
-# ci{, ci(, di{ etc..  autoload -U select-bracketed
+# ci{, ci(, di{ etc..  
+autoload -U select-bracketed
 zle -N select-bracketed
 for m in visual viopp; do
   for c in {a,i}${(s..)^:-'()[]{}<>bB'};
@@ -137,23 +121,7 @@ zle -N zle-line-init
 echo -ne '\e[5 q' # Use beam shape cursor on startup.
 preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
-# Use lf to switch directories and bind it to ctrl-o
-lfcd () {
-    tmp="$(mktemp)"
-    lf -last-dir-path="$tmp" "$@"
-    if [ -f "$tmp" ]; then
-        dir="$(cat "$tmp")"
-        rm -f "$tmp" >/dev/null
-        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
-    fi
-}
-bindkey -s '^o' 'lfcd\n'
-
 bindkey -s '^a' 'bc -lq\n'
-
-## FZF
-# source /usr/share/fzf/key-bindings.zsh
-# source /usr/share/fzf/completion.zsh
 
 # Override's fzf bindings
 bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
@@ -172,19 +140,11 @@ bindkey '^e' edit-command-line
 [ -f "$ZDOTDIR/functions" ] && . "$ZDOTDIR/functions"
 
 
-# Load syntax highlighting; should be last.
-source /home/nxtcoder17/.local/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
-
 eval "$(starship init zsh)"
 
 alias dd='cd $(rg --files --hidden --follow --smart-case --ignore-file-case-insensitive | fzf)'
 
 alias gf='git flow'
-# export PATH="$PATH:$HOME/.local/share/{go,local-node}/bin"
-
-# source ~/.config/zsh/fzf-keybindings.zsh
-# source ~/.config/zsh/flow-completion.zsh
-
 export BUILD_LIBRDKAFKA=0
 
 source ~/.secrets
@@ -201,11 +161,6 @@ if [ -f /etc/zsh_command_not_found ]; then
     . /etc/zsh_command_not_found
 fi
 
-# export PATH=$PATH:$HOME/.local/bin/mnpm
-# export PATH="$HOME/apps/bin/:$PATH"
-# export PATH="$HOME/apps/jeera-rice/bin:$PATH"
-# export PATH="$PATH:$XDG_CACHE_HOME/node/bin"
-
 # Dracula Themed
 export FZF_DEFAULT_OPTS='--color=fg:#f8f8f2,bg:#282a36,hl:#bd93f9 --color=fg+:#f8f8f2,bg+:#44475a,hl+:#bd93f9 --color=info:#ffb86c,prompt:#50fa7b,pointer:#ff79c6 --color=marker:#ff79c6,spinner:#ffb86c,header:#6272a4'
 
@@ -213,3 +168,8 @@ export FZF_DEFAULT_OPTS='--color=fg:#f8f8f2,bg:#282a36,hl:#bd93f9 --color=fg+:#f
 [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f $ZDOTDIR/flow-completion.zsh ] && source $ZDOTDIR/flow-completion.zsh
+
+# Load syntax highlighting; should be last.
+source /home/nxtcoder17/.local/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
+

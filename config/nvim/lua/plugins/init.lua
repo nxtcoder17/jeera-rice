@@ -61,6 +61,7 @@ return packer.startup(function (use)
 	use 'editorconfig/editorconfig-vim'
 	use 'chrisbra/csv.vim'
 	use 'junegunn/vim-easy-align'
+	use 'dhruvasagar/vim-table-mode'
 
 	-- Icons
 	use 'kyazdani42/nvim-web-devicons'

@@ -1,9 +1,6 @@
 # add this line, $ZDOTDIR/zprofile at top of /etc/zsh/zprofile
 
 # $HOME/.local bin in path
-
-echo $PATH
-
 export PATH="$HOME/.local/bin:$PATH"
 
 # load bin directories from $XDG_DATA_HOME
