@@ -2,7 +2,6 @@
 
 setopt autocd              # change directory just by typing its name
 setopt correct            # auto correct mistakes
-setopt interactivecomments
 setopt magicequalsubst     # enable filename expansion for arguments of the form ‘anything=expression’
 setopt nonomatch           # hide error message if there is no match for the pattern
 setopt notify              # report the status of background jobs immediately
@@ -117,6 +116,7 @@ zle-line-init() {
     zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
     echo -ne "\e[5 q"
 }
+
 zle -N zle-line-init
 echo -ne '\e[5 q' # Use beam shape cursor on startup.
 preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
@@ -145,9 +145,10 @@ eval "$(starship init zsh)"
 alias dd='cd $(rg --files --hidden --follow --smart-case --ignore-file-case-insensitive | fzf)'
 
 alias gf='git flow'
+
 export BUILD_LIBRDKAFKA=0
 
-source ~/.secrets
+[ -f $HOME/.secrets ] && source ~/.secrets
 
 # enable auto-suggestions based on the history
 if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
@@ -169,6 +170,8 @@ export FZF_DEFAULT_OPTS='--color=fg:#f8f8f2,bg:#282a36,hl:#bd93f9 --color=fg+:#f
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f $ZDOTDIR/flow-completion.zsh ] && source $ZDOTDIR/flow-completion.zsh
+
+export LESS=-FRX
 
 # Load syntax highlighting; should be last.
 source /home/nxtcoder17/.local/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null

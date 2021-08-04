@@ -16,6 +16,8 @@ local function cnoremap(key, value) cmap(key, value, globalOpts) end
 local function tnoremap(key, value) tmap(key, value, globalOpts) end
 local function inoremap(key, value) imap(key, value, { noremap = true, silent = true, expr = true }) end
 
+tnoremap('<Esc>', '<C-\\><C-n>')
+
 nnoremap('Q', '')
 nnoremap('cc', '')
 nnoremap(';', ':')
@@ -63,3 +65,9 @@ nnoremap('<S-f>', ':Telescope grep_string<CR>')
 nnoremap('sb', ':Telescope buffers<CR>')
 
 inoremap('<C-space>', 'compe#complete()')
+
+nnoremap('C-S-<Right>', ':vert resize +10')
+nnoremap('C-S-<Left>', ':vert resize -10')
+nnoremap('C-S-<Up>', ':resize +10')
+nnoremap('C-S-<Down>', ':resize -10')
+
