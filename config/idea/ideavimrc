@@ -1,0 +1,54 @@
+" Non-Negotiables
+set ignorecase
+set smartcase
+set scrolloff=7
+set incsearch
+
+" make idea join lines intellijently
+set ideajoin
+
+" Idea Emulated Plugins
+set surround
+set multiple-cursors
+set vim-paragraph-motion
+
+nnoremap ; :
+vnoremap ; :
+
+nnoremap <C-j> ]]
+nnoremap <C-k> []
+
+nnoremap Q <nop>
+nnoremap Y "+y
+vnoremap Y "+y
+
+map s <nop>
+nnoremap sh <C-w>h
+nnoremap sl <C-w>l
+nnoremap sj <C-w>j
+nnoremap sk <C-w>k
+
+nnoremap si :action SplitVertically<CR>
+nnoremap sm :action SplitHorizontally<CR>
+map s<space> :action CommentByLineComment<CR>
+
+nnoremap s<Right> :action StretchSplitToRight<CR>
+nnoremap s<Left> :action StretchSplitToLeft<CR>
+nnoremap s<Up> :action StretchSplitToTop<CR>
+nnoremap s<Down> :action StretchSplitToBottom<CR>
+
+nnoremap ss :w<CR>
+
+" File Navigation
+nnoremap sf :action GotoFile<CR>
+nnoremap <C-h> :action RecentFiles<CR>
+nmap sn :action GotoNextError<CR>
+nmap sN :action GotoPreviousError<CR>
+
+" Refactoring
+nnoremap sr :action RenameElement<CR>
+nnoremap sr :action RenameElement<CR>
+
+let mapleader = " "
+
+nmap <leader>t :action ActivateTODOToolWindow<CR>

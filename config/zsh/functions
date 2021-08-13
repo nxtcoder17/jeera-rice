@@ -1,0 +1,15 @@
+#! /usr/bin/env sh
+
+# nvim() {
+#  $HOME/builds/nvim.appimage "$@"
+# }
+
+pnpm() {
+  if [ $1 = "peer" ]; then
+    PKG=$2
+    shift 1;
+    command pnpm i $(npm info "$PKG@latest" peerDependencies --json | sed 's/[\{\},]//g ; s/: /@/g' | xargs) $@
+  else
+    command pnpm $@
+  fi
+}

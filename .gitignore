@@ -1,0 +1,6 @@
+.zcompdump
+**/nvim/after
+.pyc$
+__pycache__
+.idea
+tmux/plugins

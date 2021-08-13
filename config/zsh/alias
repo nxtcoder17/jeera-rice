@@ -1,0 +1,18 @@
+#! /usr/bin/env sh
+
+alias ls='ls --color=auto'
+alias cc='xclip -sel clip'
+
+alias nvms='source /usr/share/nvm/init-nvm.sh'
+
+## Git Aliases
+
+alias gaa='git add .'
+alias ga='git add'
+alias gb='git branch -a'
+alias gc='git commit -am'
+
+alias gf='git flow'
+alias gfff='git flow feature finish'
+alias gffs='git flow feature start'
+alias gffp='git flow feature publish'
