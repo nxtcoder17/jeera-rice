@@ -7,6 +7,9 @@ set incsearch
 " make idea join lines intellijently
 set ideajoin
 
+" keeps me in normal mode in refactoring tool boxes
+set idearefactormode=keep
+
 " Idea Emulated Plugins
 set surround
 set multiple-cursors
@@ -45,10 +48,16 @@ nnoremap <C-h> :action RecentFiles<CR>
 nmap sn :action GotoNextError<CR>
 nmap sN :action GotoPreviousError<CR>
 
+" Code Folding
+nnoremap zC :action CollapseRegionRecursively<CR>
+nnoremap zO :action ExpandRegionRecursively<CR>
+
+" Complete Current Statement
+nnoremap <C-CR> :action EditorCompleteStatement<CR>
+
+
 " Refactoring
-nnoremap sr :action RenameElement<CR>
 nnoremap sr :action RenameElement<CR>
 
 let mapleader = " "
-
-nmap <leader>t :action ActivateTODOToolWindow<CR>
+" nmap <leader>t :action ActivateTODOToolWindow<CR>
