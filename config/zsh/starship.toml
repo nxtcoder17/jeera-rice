@@ -15,6 +15,3 @@ disabled = true
 
 [package]
 disabled = true
-
-[npm]
-disabled = true

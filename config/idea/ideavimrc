@@ -1,63 +1,67 @@
-" Non-Negotiables
+set hlsearch
 set ignorecase
 set smartcase
-set scrolloff=7
 set incsearch
 
-" make idea join lines intellijently
-set ideajoin
-
-" keeps me in normal mode in refactoring tool boxes
-set idearefactormode=keep
-
-" Idea Emulated Plugins
 set surround
-set multiple-cursors
-set vim-paragraph-motion
+set multiple-cursor
 
-nnoremap ; :
-vnoremap ; :
+" keep some lines before and after the cursor visible
+set scrolloff=5 sidescrolloff=10
 
-nnoremap <C-j> ]]
-nnoremap <C-k> []
+" integrate with system clipboard
+set clipboard=unnamedplus,unnamed,ideaput
 
-nnoremap Q <nop>
-nnoremap Y "+y
-vnoremap Y "+y
+let mapleader = " "
+nnoremap <leader>= :action EditorIncreaseFontSize<CR>
+nnoremap <leader>- :action EditorDecreaseFontSize<CR>
 
-map s <nop>
-nnoremap sh <C-w>h
-nnoremap sl <C-w>l
+nnoremap <leader>x :action CloseAllEditorsButActive<CR>
+
+nnoremap <c-o> :action Back<cr>
+nnoremap <c-i> :action Forward<cr>
+
+nmap <BS> :nohlsearch<CR>
+
+nnoremap s <nop>
+nnoremap ss :w<CR>
+
 nnoremap sj <C-w>j
+nnoremap sl <C-w>l
 nnoremap sk <C-w>k
+nnoremap sh <C-w>h
 
 nnoremap si :action SplitVertically<CR>
 nnoremap sm :action SplitHorizontally<CR>
-map s<space> :action CommentByLineComment<CR>
 
-nnoremap s<Right> :action StretchSplitToRight<CR>
-nnoremap s<Left> :action StretchSplitToLeft<CR>
-nnoremap s<Up> :action StretchSplitToTop<CR>
-nnoremap s<Down> :action StretchSplitToBottom<CR>
+nnoremap s<space> :action CommentByLineComment<CR>
 
-nnoremap ss :w<CR>
+map sx :action CloseAllEditorsButActive<CR>
 
-" File Navigation
-nnoremap sf :action GotoFile<CR>
-nnoremap <C-h> :action RecentFiles<CR>
+nnoremap ; :
+
+nnoremap gr :action ShowUsages<CR>
+nnoremap gd :action GotoImplementation<CR>
+
+nmap <C-p> :action ParameterInfo<CR>
+imap <C-p> <C-o>:action ParameterInfo<CR>
+
 nmap sn :action GotoNextError<CR>
-nmap sN :action GotoPreviousError<CR>
+nmap sN :action GotoPrevError<CR>
+nmap sp :action GotoPrevError<CR>
+nmap se :action ShowErrorDescription<CR>
 
-" Code Folding
-nnoremap zC :action CollapseRegionRecursively<CR>
-nnoremap zO :action ExpandRegionRecursively<CR>
+nmap <leader>rm :action ExtractMethod<CR>
+vmap <leader>rm :action ExtractMethod<CR>
+nmap <leader>rv :action IntroduceVariable<CR>
+vmap <leader>rv :action IntroduceVariable<CR>
+nmap <leader>ro :action OptimizeImports<CR>
 
-" Complete Current Statement
 nnoremap <C-CR> :action EditorCompleteStatement<CR>
 
+nmap Y "+y
+vmap Y "+y
 
-" Refactoring
-nnoremap sr :action RenameElement<CR>
+" don't overwrite register when pasting over selection
+vnoremap p pgvy
 
-let mapleader = " "
-" nmap <leader>t :action ActivateTODOToolWindow<CR>
