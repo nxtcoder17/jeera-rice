@@ -1,0 +1,7 @@
+[Slice]
+MemoryAccounting=true
+MemoryLimit=2048M
+CPUAccounting=true
+CPUQuota=25%
+TasksMax=4096
+
