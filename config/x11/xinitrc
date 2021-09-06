@@ -15,3 +15,4 @@ keyboard-defaults.sh
 redshift -O 3000
 
 exec i3
+# exec awesome
