@@ -4,7 +4,7 @@ set smartcase
 set incsearch
 
 set surround
-set multiple-cursor
+set multiple-cursors
 
 " keep some lines before and after the cursor visible
 set scrolloff=5 sidescrolloff=10
