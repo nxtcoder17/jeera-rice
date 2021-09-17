@@ -10,7 +10,7 @@ set multiple-cursors
 set scrolloff=5 sidescrolloff=10
 
 " integrate with system clipboard
-set clipboard=unnamedplus,unnamed,ideaput
+" set clipboard=unnamedplus,unnamed,ideaput
 
 let mapleader = " "
 nnoremap <leader>= :action EditorIncreaseFontSize<CR>
@@ -26,6 +26,8 @@ nmap <BS> :nohlsearch<CR>
 nnoremap s <nop>
 nnoremap ss :w<CR>
 
+nnoremap sf :action GotoFile<CR>
+
 nnoremap sj <C-w>j
 nnoremap sl <C-w>l
 nnoremap sk <C-w>k
@@ -35,6 +37,7 @@ nnoremap si :action SplitVertically<CR>
 nnoremap sm :action SplitHorizontally<CR>
 
 nnoremap s<space> :action CommentByLineComment<CR>
+vnoremap s<space> :action CommentByLineComment<CR>
 
 map sx :action CloseAllEditorsButActive<CR>
 

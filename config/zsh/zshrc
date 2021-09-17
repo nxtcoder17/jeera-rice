@@ -169,7 +169,7 @@ export FZF_DEFAULT_OPTS='--color=fg:#f8f8f2,bg:#282a36,hl:#bd93f9 --color=fg+:#f
 [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f $ZDOTDIR/flow-completion.zsh ] && source $ZDOTDIR/flow-completion.zsh
+[ -f $ZDOTDIR/git-flow-completion.zsh ] && source $ZDOTDIR/git-flow-completion.zsh
 
 export LESS=-FRX
 
