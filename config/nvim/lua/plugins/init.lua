@@ -124,6 +124,7 @@ return packer.startup(function (use)
 	-- Colorschema
 	use 'sainnhe/gruvbox-material'
 	use 'sainnhe/sonokai'
+	use 'arcticicestudio/nord-vim'
 
 	-- Commenting
 	use 'tpope/vim-commentary'
