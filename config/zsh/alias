@@ -1,6 +1,6 @@
 #! /usr/bin/env sh
 
-alias ls='ls --color=auto'
+alias ls='ls -A --color=auto'
 alias cc='xclip -sel clip'
 
 alias nvms='source /usr/share/nvm/init-nvm.sh'

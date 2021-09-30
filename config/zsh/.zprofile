@@ -1,11 +1,8 @@
 # add this line, $ZDOTDIR/zprofile at top of /etc/zsh/zprofile
 
-# $HOME/.local bin in path
-export PATH="$HOME/.local/bin:$PATH"
-
 # load bin directories from $XDG_DATA_HOME
 export PATH="${XDG_DATA_HOME:-$HOME/.local/share}/node/bin:$PATH"
 export PATH="${XDG_DATA_HOME:-$HOME/.local/share}/go/bin:$PATH"
 
 # apps bin in path
-export PATH="$HOME/apps/bin:$PATH"
+export PATH="$HOME/apps/jeera-rice/bin:$PATH"

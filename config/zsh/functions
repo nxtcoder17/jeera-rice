@@ -13,3 +13,11 @@ pnpm() {
     command pnpm $@
   fi
 }
+
+_fzf_complete_make() {
+  _fzf_complete --multi --reverse --prompt="target> " -- "$@" < <(grep -iE '^[^.].*:\s+' ./Makefile | awk -F':' '{print $1}' | uniq)
+}
+
+_fzf_complete_sample() {
+  _fzf_complete --multi --reverse --prompt="target> " -- "$@" < <()
+}

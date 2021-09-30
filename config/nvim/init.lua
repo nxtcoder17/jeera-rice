@@ -1,1 +1,4 @@
-require 'init';
+require'plugins'
+require'options'
+require'keymaps'
+require'lsp'

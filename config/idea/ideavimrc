@@ -24,7 +24,7 @@ nnoremap <c-i> :action Forward<cr>
 nmap <BS> :nohlsearch<CR>
 
 nnoremap s <nop>
-nnoremap ss :w<CR>
+nnoremap ss :up<CR>
 
 nnoremap sf :action GotoFile<CR>
 
