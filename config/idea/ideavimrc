@@ -24,6 +24,7 @@ nnoremap <c-i> :action Forward<cr>
 nmap <BS> :nohlsearch<CR>
 
 nnoremap s <nop>
+nnoremap cc <nop>
 nnoremap ss :up<CR>
 
 nnoremap sf :action GotoFile<CR>
@@ -65,6 +66,12 @@ nnoremap <C-CR> :action EditorCompleteStatement<CR>
 nmap Y "+y
 vmap Y "+y
 
+nmap cc "+y
+vmap cc "+y
+
 " don't overwrite register when pasting over selection
 vnoremap p pgvy
 
+" Folding
+nnoremap <C-j> :action CollapseRegionRecursively<CR>
+nnoremap <C-k> :action ExpandRegionRecursively<CR>
