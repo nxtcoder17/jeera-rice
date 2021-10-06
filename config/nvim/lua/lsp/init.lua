@@ -17,6 +17,65 @@ local servers = require'lspinstall'.installed_servers()
 
 --- Languages
 
+local on_attach = require'lsp.on_attach'
+
+-- Lua
+require'lspconfig'.lua.setup{
+  on_attach = on_attach,
+  settings = {
+    Lua = {
+      diagnostics = {
+          globals = { 'vim' }
+      }
+    }
+  }
+}
+
+-- Typescript/Javascript
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+-- Code actions
+capabilities.textDocument.codeAction = {
+    dynamicRegistration = true,
+    codeActionLiteralSupport = {
+        codeActionKind = {
+            valueSet = (function()
+                local res = vim.tbl_values(vim.lsp.protocol.CodeActionKind)
+                table.sort(res)
+                return res
+            end)()
+        }
+    }
+}
+
+require'lspconfig'.typescript.setup{
+    cmd = {
+      vim.fn.stdpath('data') .. '/lspinstall/typescript/node_modules/.bin/typescript-language-server',
+      '--stdio'
+    },
+    capabilities = capabilities,
+    on_attach = function (client)
+      client.resolved_capabilities.document_formatting = false
+      on_attach(client)
+    end
+}
+
+-- Css
+require'lspconfig'.css.setup{}
+
+-- Tailwind CSS
+require'lspconfig'.tailwindcss.setup{}
+
+-- json
+require'lspconfig'.json.setup{}
+
+-- Bash
+require'lspconfig'.bash.setup{}
+
+-- Dockerfile
+require'lspconfig'.dockerfile.setup{}
+
 -- EFM
 local efm_config = vim.fn.stdpath('config') .. '/lua/lsp/languages/efm/config.yaml'
 local efm_log_dir = '/tmp'
@@ -67,7 +126,7 @@ require'lspconfig'.efm.setup{
     'typescript',
     'typescriptreact',
   },
-  on_attach = require'lsp.on_attach',
+  on_attach = on_attach,
   init_options = {
     document_formatting = false,
   },
@@ -76,46 +135,4 @@ require'lspconfig'.efm.setup{
     languages = efm_languages,
   },
 }
-
--- LspInstall lua
-require'lspconfig'.lua.setup{
-  on_attach = require'lsp.on_attach',
-  settings = {
-    Lua = {
-      diagnosticss = {
-        enable = true,
-        globals = {
-          "vim",
-        }
-      }
-    }
-  }
-}
-
--- LspInstall tailwindcss
-require'lspconfig'.tailwindcss.setup{}
-
--- for _, server in ipairs(servers) do
-    -- if file is not present, would throw error, and that's good
-    -- require('lsp.languages.' .. server)
--- end
-
-local method = "textDocument/publishDiagnostics"
-local default_handler = vim.lsp.handlers[method]
-vim.lsp.handlers[method] = function(err, method, result, client_id, bufnr,
-                                    config)
-    default_handler(err, method, result, client_id, bufnr, config)
-    local diagnostics = vim.lsp.diagnostic.get_all()
-    local qflist = {}
-    for bufnr, diagnostic in pairs(diagnostics) do
-        for _, d in ipairs(diagnostic) do
-            d.bufnr = bufnr
-            d.lnum = d.range.start.line + 1
-            d.col = d.range.start.character + 1
-            d.text = d.message
-            table.insert(qflist, d)
-        end
-    end
-    vim.lsp.util.set_qflist(qflist)
-  end
 

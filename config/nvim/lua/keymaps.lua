@@ -41,6 +41,9 @@ nnoremap('sk', '<C-w>k<CR>')
 nnoremap('si', ':vsplit<CR>')
 nnoremap('sm', ':split<CR>')
 
+nnoremap('sf', ':Telescope find_files<CR>')
+
+
 -- Resizing Splits
 nnoremap('<C-S-Right>', ':vert resize +10<CR>')
 nnoremap('<C-S-Left>', ':vert resize -10<CR>')
