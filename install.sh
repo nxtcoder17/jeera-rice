@@ -20,5 +20,7 @@ Nvim() {
 	fi
 }
 
+# i3 
+
 Zsh
 Nvim

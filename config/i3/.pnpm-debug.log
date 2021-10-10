@@ -1,0 +1,4772 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1
+  },
+  "1 debug pnpm:package-manifest": {
+    "initial": {
+      "dependencies": {
+        "esm": "^3.2.25",
+        "nodemon": "^2.0.12",
+        "pnpm": "^6.14.7",
+        "postcss-cli": "^8.3.1",
+        "prettier": "^2.4.1"
+      },
+      "dependenciesMeta": {
+        "prettier": {
+          "node": "/usr/bin/node"
+        }
+      }
+    },
+    "prefix": "/home/nxtcoder17/.local/share/node/pnpm-global/5"
+  },
+  "2 debug pnpm:context": {
+    "currentLockfileExists": true,
+    "storeDir": "/home/nxtcoder17/.local/share/node-pkg/v3",
+    "virtualStoreDir": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm"
+  },
+  "3 debug pnpm:stage": {
+    "prefix": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "stage": "resolution_started"
+  },
+  "4 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/esm/3.2.25",
+    "wanted": {
+      "dependentId": ".",
+      "name": "esm",
+      "rawSpec": "^3.2.25"
+    }
+  },
+  "5 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/nodemon/2.0.12",
+    "wanted": {
+      "dependentId": ".",
+      "name": "nodemon",
+      "rawSpec": "^2.0.12"
+    }
+  },
+  "6 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/pnpm/6.14.7",
+    "wanted": {
+      "dependentId": ".",
+      "name": "pnpm",
+      "rawSpec": "^6.14.7"
+    }
+  },
+  "7 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/postcss-cli/8.3.1",
+    "wanted": {
+      "dependentId": ".",
+      "name": "postcss-cli",
+      "rawSpec": "^8.3.1"
+    }
+  },
+  "8 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/prettier/2.4.1",
+    "wanted": {
+      "dependentId": ".",
+      "name": "prettier",
+      "rawSpec": "^2.4.1"
+    }
+  },
+  "9 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/nxt-next-app/1.2.2",
+    "wanted": {
+      "dependentId": ".",
+      "name": "nxt-next-app",
+      "rawSpec": "1.2.2"
+    }
+  },
+  "10 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/nxt-next-app/1.2.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "11 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/esm/3.2.25",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "12 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/esm/3.2.25",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "13 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/nodemon/2.0.12",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "14 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/nodemon/2.0.12",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "15 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/postcss-cli/8.3.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "16 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/postcss-cli/8.3.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "17 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/prettier/2.4.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "18 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/prettier/2.4.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "19 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/pnpm/6.14.7",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "20 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/pnpm/6.14.7",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "21 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/chokidar/3.5.2",
+    "wanted": {
+      "dependentId": "/nodemon/2.0.12",
+      "name": "chokidar",
+      "rawSpec": "^3.2.2"
+    }
+  },
+  "22 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/debug/3.2.7",
+    "wanted": {
+      "dependentId": "/nodemon/2.0.12",
+      "name": "debug",
+      "rawSpec": "^3.2.6"
+    }
+  },
+  "23 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/ignore-by-default/1.0.1",
+    "wanted": {
+      "dependentId": "/nodemon/2.0.12",
+      "name": "ignore-by-default",
+      "rawSpec": "^1.0.1"
+    }
+  },
+  "24 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/minimatch/3.0.4",
+    "wanted": {
+      "dependentId": "/nodemon/2.0.12",
+      "name": "minimatch",
+      "rawSpec": "^3.0.4"
+    }
+  },
+  "25 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/pstree.remy/1.1.8",
+    "wanted": {
+      "dependentId": "/nodemon/2.0.12",
+      "name": "pstree.remy",
+      "rawSpec": "^1.1.7"
+    }
+  },
+  "26 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/semver/5.7.1",
+    "wanted": {
+      "dependentId": "/nodemon/2.0.12",
+      "name": "semver",
+      "rawSpec": "^5.7.1"
+    }
+  },
+  "27 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/supports-color/5.5.0",
+    "wanted": {
+      "dependentId": "/nodemon/2.0.12",
+      "name": "supports-color",
+      "rawSpec": "^5.5.0"
+    }
+  },
+  "28 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/undefsafe/2.0.3",
+    "wanted": {
+      "dependentId": "/nodemon/2.0.12",
+      "name": "undefsafe",
+      "rawSpec": "^2.0.3"
+    }
+  },
+  "29 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/touch/3.1.0",
+    "wanted": {
+      "dependentId": "/nodemon/2.0.12",
+      "name": "touch",
+      "rawSpec": "^3.1.0"
+    }
+  },
+  "30 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/update-notifier/4.1.3",
+    "wanted": {
+      "dependentId": "/nodemon/2.0.12",
+      "name": "update-notifier",
+      "rawSpec": "^4.1.0"
+    }
+  },
+  "31 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/chokidar/3.5.2",
+    "wanted": {
+      "dependentId": "/postcss-cli/8.3.1",
+      "name": "chokidar",
+      "rawSpec": "^3.3.0"
+    }
+  },
+  "32 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/chalk/4.1.1",
+    "wanted": {
+      "dependentId": "/postcss-cli/8.3.1",
+      "name": "chalk",
+      "rawSpec": "^4.0.0"
+    }
+  },
+  "33 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/dependency-graph/0.9.0",
+    "wanted": {
+      "dependentId": "/postcss-cli/8.3.1",
+      "name": "dependency-graph",
+      "rawSpec": "^0.9.0"
+    }
+  },
+  "34 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/fs-extra/9.1.0",
+    "wanted": {
+      "dependentId": "/postcss-cli/8.3.1",
+      "name": "fs-extra",
+      "rawSpec": "^9.0.0"
+    }
+  },
+  "35 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/get-stdin/8.0.0",
+    "wanted": {
+      "dependentId": "/postcss-cli/8.3.1",
+      "name": "get-stdin",
+      "rawSpec": "^8.0.0"
+    }
+  },
+  "36 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/globby/11.0.4",
+    "wanted": {
+      "dependentId": "/postcss-cli/8.3.1",
+      "name": "globby",
+      "rawSpec": "^11.0.0"
+    }
+  },
+  "37 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/postcss-load-config/3.1.0",
+    "wanted": {
+      "dependentId": "/postcss-cli/8.3.1",
+      "name": "postcss-load-config",
+      "rawSpec": "^3.0.0"
+    }
+  },
+  "38 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/postcss-reporter/7.0.2",
+    "wanted": {
+      "dependentId": "/postcss-cli/8.3.1",
+      "name": "postcss-reporter",
+      "rawSpec": "^7.0.0"
+    }
+  },
+  "39 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/pretty-hrtime/1.0.3",
+    "wanted": {
+      "dependentId": "/postcss-cli/8.3.1",
+      "name": "pretty-hrtime",
+      "rawSpec": "^1.0.3"
+    }
+  },
+  "40 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/read-cache/1.0.0",
+    "wanted": {
+      "dependentId": "/postcss-cli/8.3.1",
+      "name": "read-cache",
+      "rawSpec": "^1.0.0"
+    }
+  },
+  "41 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/slash/3.0.0",
+    "wanted": {
+      "dependentId": "/postcss-cli/8.3.1",
+      "name": "slash",
+      "rawSpec": "^3.0.0"
+    }
+  },
+  "42 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/yargs/16.2.0",
+    "wanted": {
+      "dependentId": "/postcss-cli/8.3.1",
+      "name": "yargs",
+      "rawSpec": "^16.0.0"
+    }
+  },
+  "43 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/nxt-next-app/1.2.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "44 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/chokidar/3.5.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "45 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/chokidar/3.5.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "46 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/minimatch/3.0.4",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "47 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/minimatch/3.0.4",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "48 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ignore-by-default/1.0.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "49 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ignore-by-default/1.0.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "50 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/debug/3.2.7",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "51 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/debug/3.2.7",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "52 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/supports-color/5.5.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "53 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/supports-color/5.5.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "54 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/semver/5.7.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "55 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/semver/5.7.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "56 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/touch/3.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "57 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/touch/3.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "58 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/pstree.remy/1.1.8",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "59 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/pstree.remy/1.1.8",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "60 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/chalk/4.1.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "61 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/chalk/4.1.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "62 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/dependency-graph/0.9.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "63 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/dependency-graph/0.9.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "64 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/update-notifier/4.1.3",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "65 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/update-notifier/4.1.3",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "66 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/globby/11.0.4",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "67 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/globby/11.0.4",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "68 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/fs-extra/9.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "69 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/fs-extra/9.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "70 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/postcss-reporter/7.0.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "71 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/postcss-reporter/7.0.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "72 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/postcss-load-config/3.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "73 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/postcss-load-config/3.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "74 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/undefsafe/2.0.3",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "75 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/undefsafe/2.0.3",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "76 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/read-cache/1.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "77 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/read-cache/1.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "78 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/get-stdin/8.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "79 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/get-stdin/8.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "80 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/pretty-hrtime/1.0.3",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "81 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/pretty-hrtime/1.0.3",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "82 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/braces/3.0.2",
+    "wanted": {
+      "dependentId": "/chokidar/3.5.2",
+      "name": "braces",
+      "rawSpec": "~3.0.2"
+    }
+  },
+  "83 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/anymatch/3.1.2",
+    "wanted": {
+      "dependentId": "/chokidar/3.5.2",
+      "name": "anymatch",
+      "rawSpec": "~3.1.2"
+    }
+  },
+  "84 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/glob-parent/5.1.2",
+    "wanted": {
+      "dependentId": "/chokidar/3.5.2",
+      "name": "glob-parent",
+      "rawSpec": "~5.1.2"
+    }
+  },
+  "85 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/is-binary-path/2.1.0",
+    "wanted": {
+      "dependentId": "/chokidar/3.5.2",
+      "name": "is-binary-path",
+      "rawSpec": "~2.1.0"
+    }
+  },
+  "86 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/is-glob/4.0.1",
+    "wanted": {
+      "dependentId": "/chokidar/3.5.2",
+      "name": "is-glob",
+      "rawSpec": "~4.0.1"
+    }
+  },
+  "87 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/normalize-path/3.0.0",
+    "wanted": {
+      "dependentId": "/chokidar/3.5.2",
+      "name": "normalize-path",
+      "rawSpec": "~3.0.0"
+    }
+  },
+  "88 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/readdirp/3.6.0",
+    "wanted": {
+      "dependentId": "/chokidar/3.5.2",
+      "name": "readdirp",
+      "rawSpec": "~3.6.0"
+    }
+  },
+  "89 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/brace-expansion/1.1.11",
+    "wanted": {
+      "dependentId": "/minimatch/3.0.4",
+      "name": "brace-expansion",
+      "rawSpec": "^1.1.7"
+    }
+  },
+  "90 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/ms/2.1.3",
+    "wanted": {
+      "dependentId": "/debug/3.2.7",
+      "name": "ms",
+      "rawSpec": "^2.1.1"
+    }
+  },
+  "91 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/has-flag/3.0.0",
+    "wanted": {
+      "dependentId": "/supports-color/5.5.0",
+      "name": "has-flag",
+      "rawSpec": "^3.0.0"
+    }
+  },
+  "92 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/nopt/1.0.10",
+    "wanted": {
+      "dependentId": "/touch/3.1.0",
+      "name": "nopt",
+      "rawSpec": "~1.0.10"
+    }
+  },
+  "93 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/boxen/4.2.0",
+    "wanted": {
+      "dependentId": "/update-notifier/4.1.3",
+      "name": "boxen",
+      "rawSpec": "^4.2.0"
+    }
+  },
+  "94 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/chalk/3.0.0",
+    "wanted": {
+      "dependentId": "/update-notifier/4.1.3",
+      "name": "chalk",
+      "rawSpec": "^3.0.0"
+    }
+  },
+  "95 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/configstore/5.0.1",
+    "wanted": {
+      "dependentId": "/update-notifier/4.1.3",
+      "name": "configstore",
+      "rawSpec": "^5.0.1"
+    }
+  },
+  "96 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/has-yarn/2.1.0",
+    "wanted": {
+      "dependentId": "/update-notifier/4.1.3",
+      "name": "has-yarn",
+      "rawSpec": "^2.1.0"
+    }
+  },
+  "97 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/import-lazy/2.1.0",
+    "wanted": {
+      "dependentId": "/update-notifier/4.1.3",
+      "name": "import-lazy",
+      "rawSpec": "^2.1.0"
+    }
+  },
+  "98 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/is-ci/2.0.0",
+    "wanted": {
+      "dependentId": "/update-notifier/4.1.3",
+      "name": "is-ci",
+      "rawSpec": "^2.0.0"
+    }
+  },
+  "99 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/is-installed-globally/0.3.2",
+    "wanted": {
+      "dependentId": "/update-notifier/4.1.3",
+      "name": "is-installed-globally",
+      "rawSpec": "^0.3.1"
+    }
+  },
+  "100 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/is-npm/4.0.0",
+    "wanted": {
+      "dependentId": "/update-notifier/4.1.3",
+      "name": "is-npm",
+      "rawSpec": "^4.0.0"
+    }
+  },
+  "101 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/is-yarn-global/0.3.0",
+    "wanted": {
+      "dependentId": "/update-notifier/4.1.3",
+      "name": "is-yarn-global",
+      "rawSpec": "^0.3.0"
+    }
+  },
+  "102 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/latest-version/5.1.0",
+    "wanted": {
+      "dependentId": "/update-notifier/4.1.3",
+      "name": "latest-version",
+      "rawSpec": "^5.0.0"
+    }
+  },
+  "103 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/pupa/2.1.1",
+    "wanted": {
+      "dependentId": "/update-notifier/4.1.3",
+      "name": "pupa",
+      "rawSpec": "^2.0.1"
+    }
+  },
+  "104 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/semver-diff/3.1.1",
+    "wanted": {
+      "dependentId": "/update-notifier/4.1.3",
+      "name": "semver-diff",
+      "rawSpec": "^3.1.1"
+    }
+  },
+  "105 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/xdg-basedir/4.0.0",
+    "wanted": {
+      "dependentId": "/update-notifier/4.1.3",
+      "name": "xdg-basedir",
+      "rawSpec": "^4.0.0"
+    }
+  },
+  "106 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/debug/2.6.9",
+    "wanted": {
+      "dependentId": "/undefsafe/2.0.3",
+      "name": "debug",
+      "rawSpec": "^2.2.0"
+    }
+  },
+  "107 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/slash/3.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "108 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/slash/3.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "109 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/fs-extra/10.0.0",
+    "wanted": {
+      "dependentId": "/nxt-next-app/1.2.2",
+      "name": "fs-extra",
+      "rawSpec": "^10.0.0"
+    }
+  },
+  "110 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/fs-extra/10.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "111 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/chalk/4.1.1",
+    "wanted": {
+      "dependentId": "/nxt-next-app/1.2.2",
+      "name": "chalk",
+      "rawSpec": "^4.1.1"
+    }
+  },
+  "112 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/ora/5.4.1",
+    "wanted": {
+      "dependentId": "/nxt-next-app/1.2.2",
+      "name": "ora",
+      "rawSpec": "^5.4.1"
+    }
+  },
+  "113 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ora/5.4.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "114 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/yargs/16.2.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "115 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/yargs/16.2.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "116 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/ansi-styles/4.3.0",
+    "wanted": {
+      "dependentId": "/chalk/4.1.1",
+      "name": "ansi-styles",
+      "rawSpec": "^4.1.0"
+    }
+  },
+  "117 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/supports-color/7.2.0",
+    "wanted": {
+      "dependentId": "/chalk/4.1.1",
+      "name": "supports-color",
+      "rawSpec": "^7.1.0"
+    }
+  },
+  "118 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/array-union/2.1.0",
+    "wanted": {
+      "dependentId": "/globby/11.0.4",
+      "name": "array-union",
+      "rawSpec": "^2.1.0"
+    }
+  },
+  "119 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/dir-glob/3.0.1",
+    "wanted": {
+      "dependentId": "/globby/11.0.4",
+      "name": "dir-glob",
+      "rawSpec": "^3.0.1"
+    }
+  },
+  "120 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/fast-glob/3.2.7",
+    "wanted": {
+      "dependentId": "/globby/11.0.4",
+      "name": "fast-glob",
+      "rawSpec": "^3.1.1"
+    }
+  },
+  "121 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/ignore/5.1.8",
+    "wanted": {
+      "dependentId": "/globby/11.0.4",
+      "name": "ignore",
+      "rawSpec": "^5.1.4"
+    }
+  },
+  "122 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/merge2/1.4.1",
+    "wanted": {
+      "dependentId": "/globby/11.0.4",
+      "name": "merge2",
+      "rawSpec": "^1.3.0"
+    }
+  },
+  "123 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/slash/3.0.0",
+    "wanted": {
+      "dependentId": "/globby/11.0.4",
+      "name": "slash",
+      "rawSpec": "^3.0.0"
+    }
+  },
+  "124 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/at-least-node/1.0.0",
+    "wanted": {
+      "dependentId": "/fs-extra/9.1.0",
+      "name": "at-least-node",
+      "rawSpec": "^1.0.0"
+    }
+  },
+  "125 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/graceful-fs/4.2.6",
+    "wanted": {
+      "dependentId": "/fs-extra/9.1.0",
+      "name": "graceful-fs",
+      "rawSpec": "^4.2.0"
+    }
+  },
+  "126 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/jsonfile/6.1.0",
+    "wanted": {
+      "dependentId": "/fs-extra/9.1.0",
+      "name": "jsonfile",
+      "rawSpec": "^6.0.1"
+    }
+  },
+  "127 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/universalify/2.0.0",
+    "wanted": {
+      "dependentId": "/fs-extra/9.1.0",
+      "name": "universalify",
+      "rawSpec": "^2.0.0"
+    }
+  },
+  "128 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/colorette/1.4.0",
+    "wanted": {
+      "dependentId": "/postcss-reporter/7.0.2",
+      "name": "colorette",
+      "rawSpec": "^1.2.1"
+    }
+  },
+  "129 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/lodash.difference/4.5.0",
+    "wanted": {
+      "dependentId": "/postcss-reporter/7.0.2",
+      "name": "lodash.difference",
+      "rawSpec": "^4.5.0"
+    }
+  },
+  "130 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/lodash.forown/4.4.0",
+    "wanted": {
+      "dependentId": "/postcss-reporter/7.0.2",
+      "name": "lodash.forown",
+      "rawSpec": "^4.4.0"
+    }
+  },
+  "131 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/lodash.get/4.4.2",
+    "wanted": {
+      "dependentId": "/postcss-reporter/7.0.2",
+      "name": "lodash.get",
+      "rawSpec": "^4.4.2"
+    }
+  },
+  "132 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/lodash.groupby/4.6.0",
+    "wanted": {
+      "dependentId": "/postcss-reporter/7.0.2",
+      "name": "lodash.groupby",
+      "rawSpec": "^4.6.0"
+    }
+  },
+  "133 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/lodash.sortby/4.7.0",
+    "wanted": {
+      "dependentId": "/postcss-reporter/7.0.2",
+      "name": "lodash.sortby",
+      "rawSpec": "^4.7.0"
+    }
+  },
+  "134 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/import-cwd/3.0.0",
+    "wanted": {
+      "dependentId": "/postcss-load-config/3.1.0",
+      "name": "import-cwd",
+      "rawSpec": "^3.0.0"
+    }
+  },
+  "135 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/lilconfig/2.0.3",
+    "wanted": {
+      "dependentId": "/postcss-load-config/3.1.0",
+      "name": "lilconfig",
+      "rawSpec": "^2.0.3"
+    }
+  },
+  "136 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/yaml/1.10.2",
+    "wanted": {
+      "dependentId": "/postcss-load-config/3.1.0",
+      "name": "yaml",
+      "rawSpec": "^1.10.2"
+    }
+  },
+  "137 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/pify/2.3.0",
+    "wanted": {
+      "dependentId": "/read-cache/1.0.0",
+      "name": "pify",
+      "rawSpec": "^2.3.0"
+    }
+  },
+  "138 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/cliui/7.0.4",
+    "wanted": {
+      "dependentId": "/yargs/16.2.0",
+      "name": "cliui",
+      "rawSpec": "^7.0.2"
+    }
+  },
+  "139 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/escalade/3.1.1",
+    "wanted": {
+      "dependentId": "/yargs/16.2.0",
+      "name": "escalade",
+      "rawSpec": "^3.1.1"
+    }
+  },
+  "140 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/get-caller-file/2.0.5",
+    "wanted": {
+      "dependentId": "/yargs/16.2.0",
+      "name": "get-caller-file",
+      "rawSpec": "^2.0.5"
+    }
+  },
+  "141 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/require-directory/2.1.1",
+    "wanted": {
+      "dependentId": "/yargs/16.2.0",
+      "name": "require-directory",
+      "rawSpec": "^2.1.1"
+    }
+  },
+  "142 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/string-width/4.2.2",
+    "wanted": {
+      "dependentId": "/yargs/16.2.0",
+      "name": "string-width",
+      "rawSpec": "^4.2.0"
+    }
+  },
+  "143 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/y18n/5.0.8",
+    "wanted": {
+      "dependentId": "/yargs/16.2.0",
+      "name": "y18n",
+      "rawSpec": "^5.0.5"
+    }
+  },
+  "144 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/yargs-parser/20.2.9",
+    "wanted": {
+      "dependentId": "/yargs/16.2.0",
+      "name": "yargs-parser",
+      "rawSpec": "^20.2.2"
+    }
+  },
+  "145 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/esm/3.2.25",
+    "wanted": {
+      "dependentId": "/nxt-next-app/1.2.2",
+      "name": "esm",
+      "rawSpec": "^3.2.25"
+    }
+  },
+  "146 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/chalk/4.1.1",
+    "wanted": {
+      "dependentId": "/ora/5.4.1",
+      "name": "chalk",
+      "rawSpec": "^4.1.0"
+    }
+  },
+  "147 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/bl/4.1.0",
+    "wanted": {
+      "dependentId": "/ora/5.4.1",
+      "name": "bl",
+      "rawSpec": "^4.1.0"
+    }
+  },
+  "148 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/bl/4.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "149 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/graceful-fs/4.2.6",
+    "wanted": {
+      "dependentId": "/fs-extra/10.0.0",
+      "name": "graceful-fs",
+      "rawSpec": "^4.2.0"
+    }
+  },
+  "150 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/graceful-fs/4.2.6",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "151 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/jsonfile/6.1.0",
+    "wanted": {
+      "dependentId": "/fs-extra/10.0.0",
+      "name": "jsonfile",
+      "rawSpec": "^6.0.1"
+    }
+  },
+  "152 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/jsonfile/6.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "153 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/universalify/2.0.0",
+    "wanted": {
+      "dependentId": "/fs-extra/10.0.0",
+      "name": "universalify",
+      "rawSpec": "^2.0.0"
+    }
+  },
+  "154 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/universalify/2.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "155 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/graceful-fs/4.2.6",
+    "wanted": {
+      "dependentId": "/jsonfile/6.1.0",
+      "name": "graceful-fs",
+      "rawSpec": "^4.1.6"
+    }
+  },
+  "156 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/universalify/2.0.0",
+    "wanted": {
+      "dependentId": "/jsonfile/6.1.0",
+      "name": "universalify",
+      "rawSpec": "^2.0.0"
+    }
+  },
+  "157 warn pnpm:install-check": {
+    "message": "Unsupported platform for registry.npmjs.org/fsevents/2.3.2: wanted {\"cpu\":[\"any\"],\"os\":[\"darwin\"]} (current: {\"os\":\"linux\",\"cpu\":\"x64\"})",
+    "prefix": "/home/nxtcoder17/.local/share/node/pnpm-global/5"
+  },
+  "158 debug pnpm:skipped-optional-dependency": {
+    "details": "Error: Unsupported platform for registry.npmjs.org/fsevents/2.3.2: wanted {\"cpu\":[\"any\"],\"os\":[\"darwin\"]} (current: {\"os\":\"linux\",\"cpu\":\"x64\"})",
+    "package": {
+      "id": "registry.npmjs.org/fsevents/2.3.2",
+      "name": "fsevents",
+      "version": "2.3.2"
+    },
+    "prefix": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "reason": "unsupported_platform"
+  },
+  "159 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/fsevents/2.3.2",
+    "wanted": {
+      "dependentId": "/chokidar/3.5.2",
+      "name": "fsevents",
+      "rawSpec": "~2.3.2"
+    }
+  },
+  "160 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/fsevents/2.3.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "161 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/braces/3.0.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "162 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/braces/3.0.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "163 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/glob-parent/5.1.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "164 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/glob-parent/5.1.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "165 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-binary-path/2.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "166 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-binary-path/2.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "167 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/anymatch/3.1.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "168 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/anymatch/3.1.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "169 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-glob/4.0.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "170 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-glob/4.0.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "171 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/normalize-path/3.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "172 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/normalize-path/3.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "173 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/readdirp/3.6.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "174 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/readdirp/3.6.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "175 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/brace-expansion/1.1.11",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "176 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/brace-expansion/1.1.11",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "177 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ms/2.1.3",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "178 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ms/2.1.3",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "179 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/has-flag/3.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "180 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/has-flag/3.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "181 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/fill-range/7.0.1",
+    "wanted": {
+      "dependentId": "/braces/3.0.2",
+      "name": "fill-range",
+      "rawSpec": "^7.0.1"
+    }
+  },
+  "182 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/is-glob/4.0.1",
+    "wanted": {
+      "dependentId": "/glob-parent/5.1.2",
+      "name": "is-glob",
+      "rawSpec": "^4.0.1"
+    }
+  },
+  "183 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/binary-extensions/2.2.0",
+    "wanted": {
+      "dependentId": "/is-binary-path/2.1.0",
+      "name": "binary-extensions",
+      "rawSpec": "^2.0.0"
+    }
+  },
+  "184 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/normalize-path/3.0.0",
+    "wanted": {
+      "dependentId": "/anymatch/3.1.2",
+      "name": "normalize-path",
+      "rawSpec": "^3.0.0"
+    }
+  },
+  "185 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/picomatch/2.3.0",
+    "wanted": {
+      "dependentId": "/anymatch/3.1.2",
+      "name": "picomatch",
+      "rawSpec": "^2.0.4"
+    }
+  },
+  "186 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/is-extglob/2.1.1",
+    "wanted": {
+      "dependentId": "/is-glob/4.0.1",
+      "name": "is-extglob",
+      "rawSpec": "^2.1.1"
+    }
+  },
+  "187 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/picomatch/2.3.0",
+    "wanted": {
+      "dependentId": "/readdirp/3.6.0",
+      "name": "picomatch",
+      "rawSpec": "^2.2.1"
+    }
+  },
+  "188 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/boxen/4.2.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "189 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/boxen/4.2.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "190 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/concat-map/0.0.1",
+    "wanted": {
+      "dependentId": "/brace-expansion/1.1.11",
+      "name": "concat-map",
+      "rawSpec": "0.0.1"
+    }
+  },
+  "191 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/balanced-match/1.0.2",
+    "wanted": {
+      "dependentId": "/brace-expansion/1.1.11",
+      "name": "balanced-match",
+      "rawSpec": "^1.0.0"
+    }
+  },
+  "192 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/nopt/1.0.10",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "193 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/nopt/1.0.10",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "194 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/abbrev/1.1.1",
+    "wanted": {
+      "dependentId": "/nopt/1.0.10",
+      "name": "abbrev",
+      "rawSpec": "1"
+    }
+  },
+  "195 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/chalk/3.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "196 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/chalk/3.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "197 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/configstore/5.0.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "198 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/configstore/5.0.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "199 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/import-lazy/2.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "200 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/import-lazy/2.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "201 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-installed-globally/0.3.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "202 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-installed-globally/0.3.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "203 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/has-yarn/2.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "204 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/has-yarn/2.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "205 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/cli-cursor/3.1.0",
+    "wanted": {
+      "dependentId": "/ora/5.4.1",
+      "name": "cli-cursor",
+      "rawSpec": "^3.1.0"
+    }
+  },
+  "206 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/cli-cursor/3.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "207 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-npm/4.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "208 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-npm/4.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "209 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-ci/2.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "210 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-ci/2.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "211 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-yarn-global/0.3.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "212 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-yarn-global/0.3.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "213 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/cli-spinners/2.6.1",
+    "wanted": {
+      "dependentId": "/ora/5.4.1",
+      "name": "cli-spinners",
+      "rawSpec": "^2.5.0"
+    }
+  },
+  "214 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/cli-spinners/2.6.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "215 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/is-interactive/1.0.0",
+    "wanted": {
+      "dependentId": "/ora/5.4.1",
+      "name": "is-interactive",
+      "rawSpec": "^1.0.0"
+    }
+  },
+  "216 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-interactive/1.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "217 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/pupa/2.1.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "218 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/pupa/2.1.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "219 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/latest-version/5.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "220 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/latest-version/5.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "221 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/log-symbols/4.1.0",
+    "wanted": {
+      "dependentId": "/ora/5.4.1",
+      "name": "log-symbols",
+      "rawSpec": "^4.1.0"
+    }
+  },
+  "222 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/log-symbols/4.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "223 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/is-unicode-supported/0.1.0",
+    "wanted": {
+      "dependentId": "/ora/5.4.1",
+      "name": "is-unicode-supported",
+      "rawSpec": "^0.1.0"
+    }
+  },
+  "224 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-unicode-supported/0.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "225 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/strip-ansi/6.0.0",
+    "wanted": {
+      "dependentId": "/ora/5.4.1",
+      "name": "strip-ansi",
+      "rawSpec": "^6.0.0"
+    }
+  },
+  "226 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/strip-ansi/6.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "227 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/wcwidth/1.0.1",
+    "wanted": {
+      "dependentId": "/ora/5.4.1",
+      "name": "wcwidth",
+      "rawSpec": "^1.0.1"
+    }
+  },
+  "228 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/wcwidth/1.0.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "229 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/chalk/4.1.1",
+    "wanted": {
+      "dependentId": "/log-symbols/4.1.0",
+      "name": "chalk",
+      "rawSpec": "^4.1.0"
+    }
+  },
+  "230 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/is-unicode-supported/0.1.0",
+    "wanted": {
+      "dependentId": "/log-symbols/4.1.0",
+      "name": "is-unicode-supported",
+      "rawSpec": "^0.1.0"
+    }
+  },
+  "231 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/debug/2.6.9",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "232 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/debug/2.6.9",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "233 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/ms/2.0.0",
+    "wanted": {
+      "dependentId": "/debug/2.6.9",
+      "name": "ms",
+      "rawSpec": "2.0.0"
+    }
+  },
+  "234 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/semver-diff/3.1.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "235 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/semver-diff/3.1.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "236 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/xdg-basedir/4.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "237 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/xdg-basedir/4.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "238 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/ansi-align/3.0.0",
+    "wanted": {
+      "dependentId": "/boxen/4.2.0",
+      "name": "ansi-align",
+      "rawSpec": "^3.0.0"
+    }
+  },
+  "239 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/camelcase/5.3.1",
+    "wanted": {
+      "dependentId": "/boxen/4.2.0",
+      "name": "camelcase",
+      "rawSpec": "^5.3.1"
+    }
+  },
+  "240 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/chalk/3.0.0",
+    "wanted": {
+      "dependentId": "/boxen/4.2.0",
+      "name": "chalk",
+      "rawSpec": "^3.0.0"
+    }
+  },
+  "241 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/cli-boxes/2.2.1",
+    "wanted": {
+      "dependentId": "/boxen/4.2.0",
+      "name": "cli-boxes",
+      "rawSpec": "^2.2.0"
+    }
+  },
+  "242 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/string-width/4.2.2",
+    "wanted": {
+      "dependentId": "/boxen/4.2.0",
+      "name": "string-width",
+      "rawSpec": "^4.1.0"
+    }
+  },
+  "243 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/term-size/2.2.1",
+    "wanted": {
+      "dependentId": "/boxen/4.2.0",
+      "name": "term-size",
+      "rawSpec": "^2.1.0"
+    }
+  },
+  "244 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/type-fest/0.8.1",
+    "wanted": {
+      "dependentId": "/boxen/4.2.0",
+      "name": "type-fest",
+      "rawSpec": "^0.8.1"
+    }
+  },
+  "245 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/widest-line/3.1.0",
+    "wanted": {
+      "dependentId": "/boxen/4.2.0",
+      "name": "widest-line",
+      "rawSpec": "^3.1.0"
+    }
+  },
+  "246 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/ansi-styles/4.3.0",
+    "wanted": {
+      "dependentId": "/chalk/3.0.0",
+      "name": "ansi-styles",
+      "rawSpec": "^4.1.0"
+    }
+  },
+  "247 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/supports-color/7.2.0",
+    "wanted": {
+      "dependentId": "/chalk/3.0.0",
+      "name": "supports-color",
+      "rawSpec": "^7.1.0"
+    }
+  },
+  "248 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/dot-prop/5.3.0",
+    "wanted": {
+      "dependentId": "/configstore/5.0.1",
+      "name": "dot-prop",
+      "rawSpec": "^5.2.0"
+    }
+  },
+  "249 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/graceful-fs/4.2.6",
+    "wanted": {
+      "dependentId": "/configstore/5.0.1",
+      "name": "graceful-fs",
+      "rawSpec": "^4.1.2"
+    }
+  },
+  "250 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/make-dir/3.1.0",
+    "wanted": {
+      "dependentId": "/configstore/5.0.1",
+      "name": "make-dir",
+      "rawSpec": "^3.0.0"
+    }
+  },
+  "251 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/unique-string/2.0.0",
+    "wanted": {
+      "dependentId": "/configstore/5.0.1",
+      "name": "unique-string",
+      "rawSpec": "^2.0.0"
+    }
+  },
+  "252 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/write-file-atomic/3.0.3",
+    "wanted": {
+      "dependentId": "/configstore/5.0.1",
+      "name": "write-file-atomic",
+      "rawSpec": "^3.0.0"
+    }
+  },
+  "253 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/xdg-basedir/4.0.0",
+    "wanted": {
+      "dependentId": "/configstore/5.0.1",
+      "name": "xdg-basedir",
+      "rawSpec": "^4.0.0"
+    }
+  },
+  "254 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/is-path-inside/3.0.3",
+    "wanted": {
+      "dependentId": "/is-installed-globally/0.3.2",
+      "name": "is-path-inside",
+      "rawSpec": "^3.0.1"
+    }
+  },
+  "255 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/global-dirs/2.1.0",
+    "wanted": {
+      "dependentId": "/is-installed-globally/0.3.2",
+      "name": "global-dirs",
+      "rawSpec": "^2.0.1"
+    }
+  },
+  "256 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/ci-info/2.0.0",
+    "wanted": {
+      "dependentId": "/is-ci/2.0.0",
+      "name": "ci-info",
+      "rawSpec": "^2.0.0"
+    }
+  },
+  "257 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/escape-goat/2.1.1",
+    "wanted": {
+      "dependentId": "/pupa/2.1.1",
+      "name": "escape-goat",
+      "rawSpec": "^2.0.0"
+    }
+  },
+  "258 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/package-json/6.5.0",
+    "wanted": {
+      "dependentId": "/latest-version/5.1.0",
+      "name": "package-json",
+      "rawSpec": "^6.3.0"
+    }
+  },
+  "259 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/semver/6.3.0",
+    "wanted": {
+      "dependentId": "/semver-diff/3.1.1",
+      "name": "semver",
+      "rawSpec": "^6.3.0"
+    }
+  },
+  "260 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/fs-extra/10.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "261 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ora/5.4.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "262 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ansi-styles/4.3.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "263 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ansi-styles/4.3.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "264 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/array-union/2.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "265 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/array-union/2.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "266 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/supports-color/7.2.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "267 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/supports-color/7.2.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "268 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/color-convert/2.0.1",
+    "wanted": {
+      "dependentId": "/ansi-styles/4.3.0",
+      "name": "color-convert",
+      "rawSpec": "^2.0.1"
+    }
+  },
+  "269 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/has-flag/4.0.0",
+    "wanted": {
+      "dependentId": "/supports-color/7.2.0",
+      "name": "has-flag",
+      "rawSpec": "^4.0.0"
+    }
+  },
+  "270 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/fast-glob/3.2.7",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "271 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/fast-glob/3.2.7",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "272 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ignore/5.1.8",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "273 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ignore/5.1.8",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "274 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/dir-glob/3.0.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "275 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/dir-glob/3.0.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "276 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/merge2/1.4.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "277 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/merge2/1.4.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "278 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/at-least-node/1.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "279 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/at-least-node/1.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "280 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/jsonfile/6.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "281 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@nodelib/fs.stat/2.0.5",
+    "wanted": {
+      "dependentId": "/fast-glob/3.2.7",
+      "name": "@nodelib/fs.stat",
+      "rawSpec": "^2.0.2"
+    }
+  },
+  "282 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/glob-parent/5.1.2",
+    "wanted": {
+      "dependentId": "/fast-glob/3.2.7",
+      "name": "glob-parent",
+      "rawSpec": "^5.1.2"
+    }
+  },
+  "283 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@nodelib/fs.walk/1.2.8",
+    "wanted": {
+      "dependentId": "/fast-glob/3.2.7",
+      "name": "@nodelib/fs.walk",
+      "rawSpec": "^1.2.3"
+    }
+  },
+  "284 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/merge2/1.4.1",
+    "wanted": {
+      "dependentId": "/fast-glob/3.2.7",
+      "name": "merge2",
+      "rawSpec": "^1.3.0"
+    }
+  },
+  "285 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/micromatch/4.0.4",
+    "wanted": {
+      "dependentId": "/fast-glob/3.2.7",
+      "name": "micromatch",
+      "rawSpec": "^4.0.4"
+    }
+  },
+  "286 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/path-type/4.0.0",
+    "wanted": {
+      "dependentId": "/dir-glob/3.0.1",
+      "name": "path-type",
+      "rawSpec": "^4.0.0"
+    }
+  },
+  "287 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/graceful-fs/4.2.6",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "288 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/universalify/2.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "289 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/inherits/2.0.4",
+    "wanted": {
+      "dependentId": "/bl/4.1.0",
+      "name": "inherits",
+      "rawSpec": "^2.0.4"
+    }
+  },
+  "290 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/inherits/2.0.4",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "291 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/restore-cursor/3.1.0",
+    "wanted": {
+      "dependentId": "/cli-cursor/3.1.0",
+      "name": "restore-cursor",
+      "rawSpec": "^3.1.0"
+    }
+  },
+  "292 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/restore-cursor/3.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "293 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/lodash.difference/4.5.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "294 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/lodash.difference/4.5.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "295 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/colorette/1.4.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "296 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/colorette/1.4.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "297 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/lodash.get/4.4.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "298 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/lodash.get/4.4.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "299 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/readable-stream/3.6.0",
+    "wanted": {
+      "dependentId": "/bl/4.1.0",
+      "name": "readable-stream",
+      "rawSpec": "^3.4.0"
+    }
+  },
+  "300 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/readable-stream/3.6.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "301 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/ansi-regex/5.0.0",
+    "wanted": {
+      "dependentId": "/strip-ansi/6.0.0",
+      "name": "ansi-regex",
+      "rawSpec": "^5.0.0"
+    }
+  },
+  "302 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ansi-regex/5.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "303 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/defaults/1.0.3",
+    "wanted": {
+      "dependentId": "/wcwidth/1.0.1",
+      "name": "defaults",
+      "rawSpec": "^1.0.3"
+    }
+  },
+  "304 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/defaults/1.0.3",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "305 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/lodash.groupby/4.6.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "306 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/lodash.groupby/4.6.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "307 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/lodash.forown/4.4.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "308 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/lodash.forown/4.4.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "309 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/lodash.sortby/4.7.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "310 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/lodash.sortby/4.7.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "311 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/buffer/5.7.1",
+    "wanted": {
+      "dependentId": "/bl/4.1.0",
+      "name": "buffer",
+      "rawSpec": "^5.5.0"
+    }
+  },
+  "312 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/buffer/5.7.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "313 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/inherits/2.0.4",
+    "wanted": {
+      "dependentId": "/readable-stream/3.6.0",
+      "name": "inherits",
+      "rawSpec": "^2.0.3"
+    }
+  },
+  "314 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/import-cwd/3.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "315 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/import-cwd/3.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "316 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/onetime/5.1.2",
+    "wanted": {
+      "dependentId": "/restore-cursor/3.1.0",
+      "name": "onetime",
+      "rawSpec": "^5.1.0"
+    }
+  },
+  "317 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/onetime/5.1.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "318 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/signal-exit/3.0.3",
+    "wanted": {
+      "dependentId": "/restore-cursor/3.1.0",
+      "name": "signal-exit",
+      "rawSpec": "^3.0.2"
+    }
+  },
+  "319 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/signal-exit/3.0.3",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "320 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/yaml/1.10.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "321 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/yaml/1.10.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "322 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/lilconfig/2.0.3",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "323 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/lilconfig/2.0.3",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "324 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/require-directory/2.1.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "325 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/require-directory/2.1.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "326 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/pify/2.3.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "327 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/pify/2.3.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "328 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/cliui/7.0.4",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "329 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/cliui/7.0.4",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "330 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/import-from/3.0.0",
+    "wanted": {
+      "dependentId": "/import-cwd/3.0.0",
+      "name": "import-from",
+      "rawSpec": "^3.0.0"
+    }
+  },
+  "331 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/get-caller-file/2.0.5",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "332 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/get-caller-file/2.0.5",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "333 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/escalade/3.1.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "334 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/escalade/3.1.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "335 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/clone/1.0.4",
+    "wanted": {
+      "dependentId": "/defaults/1.0.3",
+      "name": "clone",
+      "rawSpec": "^1.0.2"
+    }
+  },
+  "336 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/clone/1.0.4",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "337 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/string-width/4.2.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "338 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/string-width/4.2.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "339 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/y18n/5.0.8",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "340 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/y18n/5.0.8",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "341 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/yargs-parser/20.2.9",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "342 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/yargs-parser/20.2.9",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "343 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/bl/4.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "344 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/string-width/4.2.2",
+    "wanted": {
+      "dependentId": "/cliui/7.0.4",
+      "name": "string-width",
+      "rawSpec": "^4.2.0"
+    }
+  },
+  "345 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/strip-ansi/6.0.0",
+    "wanted": {
+      "dependentId": "/cliui/7.0.4",
+      "name": "strip-ansi",
+      "rawSpec": "^6.0.0"
+    }
+  },
+  "346 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/wrap-ansi/7.0.0",
+    "wanted": {
+      "dependentId": "/cliui/7.0.4",
+      "name": "wrap-ansi",
+      "rawSpec": "^7.0.0"
+    }
+  },
+  "347 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/emoji-regex/8.0.0",
+    "wanted": {
+      "dependentId": "/string-width/4.2.2",
+      "name": "emoji-regex",
+      "rawSpec": "^8.0.0"
+    }
+  },
+  "348 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/is-fullwidth-code-point/3.0.0",
+    "wanted": {
+      "dependentId": "/string-width/4.2.2",
+      "name": "is-fullwidth-code-point",
+      "rawSpec": "^3.0.0"
+    }
+  },
+  "349 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/strip-ansi/6.0.0",
+    "wanted": {
+      "dependentId": "/string-width/4.2.2",
+      "name": "strip-ansi",
+      "rawSpec": "^6.0.0"
+    }
+  },
+  "350 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/fill-range/7.0.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "351 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/fill-range/7.0.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "352 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/binary-extensions/2.2.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "353 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/binary-extensions/2.2.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "354 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/string_decoder/1.3.0",
+    "wanted": {
+      "dependentId": "/readable-stream/3.6.0",
+      "name": "string_decoder",
+      "rawSpec": "^1.1.1"
+    }
+  },
+  "355 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/string_decoder/1.3.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "356 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/util-deprecate/1.0.2",
+    "wanted": {
+      "dependentId": "/readable-stream/3.6.0",
+      "name": "util-deprecate",
+      "rawSpec": "^1.0.1"
+    }
+  },
+  "357 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/util-deprecate/1.0.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "358 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/base64-js/1.5.1",
+    "wanted": {
+      "dependentId": "/buffer/5.7.1",
+      "name": "base64-js",
+      "rawSpec": "^1.3.1"
+    }
+  },
+  "359 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/base64-js/1.5.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "360 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/to-regex-range/5.0.1",
+    "wanted": {
+      "dependentId": "/fill-range/7.0.1",
+      "name": "to-regex-range",
+      "rawSpec": "^5.0.1"
+    }
+  },
+  "361 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/picomatch/2.3.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "362 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/picomatch/2.3.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "363 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-extglob/2.1.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "364 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-extglob/2.1.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "365 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/mimic-fn/2.1.0",
+    "wanted": {
+      "dependentId": "/onetime/5.1.2",
+      "name": "mimic-fn",
+      "rawSpec": "^2.1.0"
+    }
+  },
+  "366 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/mimic-fn/2.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "367 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/ieee754/1.2.1",
+    "wanted": {
+      "dependentId": "/buffer/5.7.1",
+      "name": "ieee754",
+      "rawSpec": "^1.1.13"
+    }
+  },
+  "368 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ieee754/1.2.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "369 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/concat-map/0.0.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "370 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/concat-map/0.0.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "371 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/balanced-match/1.0.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "372 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/balanced-match/1.0.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "373 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/abbrev/1.1.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "374 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/abbrev/1.1.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "375 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/cli-cursor/3.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "376 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/cli-spinners/2.6.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "377 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-interactive/1.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "378 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-unicode-supported/0.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "379 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/log-symbols/4.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "380 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/strip-ansi/6.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "381 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/wcwidth/1.0.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "382 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ms/2.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "383 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ms/2.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "384 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ansi-align/3.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "385 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ansi-align/3.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "386 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/camelcase/5.3.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "387 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/camelcase/5.3.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "388 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/type-fest/0.8.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "389 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/type-fest/0.8.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "390 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/safe-buffer/5.2.1",
+    "wanted": {
+      "dependentId": "/string_decoder/1.3.0",
+      "name": "safe-buffer",
+      "rawSpec": "~5.2.0"
+    }
+  },
+  "391 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/safe-buffer/5.2.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "392 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/cli-boxes/2.2.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "393 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/cli-boxes/2.2.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "394 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/widest-line/3.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "395 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/widest-line/3.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "396 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/term-size/2.2.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "397 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/term-size/2.2.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "398 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/dot-prop/5.3.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "399 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/dot-prop/5.3.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "400 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/make-dir/3.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "401 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/make-dir/3.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "402 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/string-width/3.1.0",
+    "wanted": {
+      "dependentId": "/ansi-align/3.0.0",
+      "name": "string-width",
+      "rawSpec": "^3.0.0"
+    }
+  },
+  "403 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/string-width/4.2.2",
+    "wanted": {
+      "dependentId": "/widest-line/3.1.0",
+      "name": "string-width",
+      "rawSpec": "^4.0.0"
+    }
+  },
+  "404 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/unique-string/2.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "405 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/unique-string/2.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "406 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-path-inside/3.0.3",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "407 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-path-inside/3.0.3",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "408 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/global-dirs/2.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "409 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/global-dirs/2.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "410 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/write-file-atomic/3.0.3",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "411 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/write-file-atomic/3.0.3",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "412 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ci-info/2.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "413 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ci-info/2.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "414 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/ini/1.3.7",
+    "wanted": {
+      "dependentId": "/global-dirs/2.1.0",
+      "name": "ini",
+      "rawSpec": "1.3.7"
+    }
+  },
+  "415 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/is-obj/2.0.0",
+    "wanted": {
+      "dependentId": "/dot-prop/5.3.0",
+      "name": "is-obj",
+      "rawSpec": "^2.0.0"
+    }
+  },
+  "416 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/semver/6.3.0",
+    "wanted": {
+      "dependentId": "/make-dir/3.1.0",
+      "name": "semver",
+      "rawSpec": "^6.0.0"
+    }
+  },
+  "417 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/crypto-random-string/2.0.0",
+    "wanted": {
+      "dependentId": "/unique-string/2.0.0",
+      "name": "crypto-random-string",
+      "rawSpec": "^2.0.0"
+    }
+  },
+  "418 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/imurmurhash/0.1.4",
+    "wanted": {
+      "dependentId": "/write-file-atomic/3.0.3",
+      "name": "imurmurhash",
+      "rawSpec": "^0.1.4"
+    }
+  },
+  "419 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/is-typedarray/1.0.0",
+    "wanted": {
+      "dependentId": "/write-file-atomic/3.0.3",
+      "name": "is-typedarray",
+      "rawSpec": "^1.0.0"
+    }
+  },
+  "420 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/signal-exit/3.0.3",
+    "wanted": {
+      "dependentId": "/write-file-atomic/3.0.3",
+      "name": "signal-exit",
+      "rawSpec": "^3.0.2"
+    }
+  },
+  "421 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/typedarray-to-buffer/3.1.5",
+    "wanted": {
+      "dependentId": "/write-file-atomic/3.0.3",
+      "name": "typedarray-to-buffer",
+      "rawSpec": "^3.1.5"
+    }
+  },
+  "422 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/escape-goat/2.1.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "423 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/escape-goat/2.1.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "424 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/package-json/6.5.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "425 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/package-json/6.5.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "426 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/semver/6.3.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "427 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/semver/6.3.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "428 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/got/9.6.0",
+    "wanted": {
+      "dependentId": "/package-json/6.5.0",
+      "name": "got",
+      "rawSpec": "^9.6.0"
+    }
+  },
+  "429 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/registry-auth-token/4.2.1",
+    "wanted": {
+      "dependentId": "/package-json/6.5.0",
+      "name": "registry-auth-token",
+      "rawSpec": "^4.0.0"
+    }
+  },
+  "430 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/registry-url/5.1.0",
+    "wanted": {
+      "dependentId": "/package-json/6.5.0",
+      "name": "registry-url",
+      "rawSpec": "^5.0.0"
+    }
+  },
+  "431 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/semver/6.3.0",
+    "wanted": {
+      "dependentId": "/package-json/6.5.0",
+      "name": "semver",
+      "rawSpec": "^6.2.0"
+    }
+  },
+  "432 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/color-convert/2.0.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "433 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/color-convert/2.0.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "434 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/has-flag/4.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "435 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/has-flag/4.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "436 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/color-name/1.1.4",
+    "wanted": {
+      "dependentId": "/color-convert/2.0.1",
+      "name": "color-name",
+      "rawSpec": "~1.1.4"
+    }
+  },
+  "437 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@nodelib/fs.stat/2.0.5",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "438 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@nodelib/fs.stat/2.0.5",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "439 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/micromatch/4.0.4",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "440 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/micromatch/4.0.4",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "441 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@nodelib/fs.walk/1.2.8",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "442 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@nodelib/fs.walk/1.2.8",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "443 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/braces/3.0.2",
+    "wanted": {
+      "dependentId": "/micromatch/4.0.4",
+      "name": "braces",
+      "rawSpec": "^3.0.1"
+    }
+  },
+  "444 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/picomatch/2.3.0",
+    "wanted": {
+      "dependentId": "/micromatch/4.0.4",
+      "name": "picomatch",
+      "rawSpec": "^2.2.3"
+    }
+  },
+  "445 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@nodelib/fs.scandir/2.1.5",
+    "wanted": {
+      "dependentId": "/@nodelib/fs.walk/1.2.8",
+      "name": "@nodelib/fs.scandir",
+      "rawSpec": "2.1.5"
+    }
+  },
+  "446 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/fastq/1.13.0",
+    "wanted": {
+      "dependentId": "/@nodelib/fs.walk/1.2.8",
+      "name": "fastq",
+      "rawSpec": "^1.6.0"
+    }
+  },
+  "447 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/path-type/4.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "448 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/path-type/4.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "449 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/inherits/2.0.4",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "450 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/restore-cursor/3.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "451 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/readable-stream/3.6.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "452 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ansi-regex/5.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "453 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/defaults/1.0.3",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "454 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/buffer/5.7.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "455 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/onetime/5.1.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "456 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/signal-exit/3.0.3",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "457 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/import-from/3.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "458 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/import-from/3.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "459 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/clone/1.0.4",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "460 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/wrap-ansi/7.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "461 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/wrap-ansi/7.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "462 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/resolve-from/5.0.0",
+    "wanted": {
+      "dependentId": "/import-from/3.0.0",
+      "name": "resolve-from",
+      "rawSpec": "^5.0.0"
+    }
+  },
+  "463 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/emoji-regex/8.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "464 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/emoji-regex/8.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "465 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/ansi-styles/4.3.0",
+    "wanted": {
+      "dependentId": "/wrap-ansi/7.0.0",
+      "name": "ansi-styles",
+      "rawSpec": "^4.0.0"
+    }
+  },
+  "466 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/string-width/4.2.2",
+    "wanted": {
+      "dependentId": "/wrap-ansi/7.0.0",
+      "name": "string-width",
+      "rawSpec": "^4.1.0"
+    }
+  },
+  "467 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/strip-ansi/6.0.0",
+    "wanted": {
+      "dependentId": "/wrap-ansi/7.0.0",
+      "name": "strip-ansi",
+      "rawSpec": "^6.0.0"
+    }
+  },
+  "468 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-fullwidth-code-point/3.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "469 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-fullwidth-code-point/3.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "470 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/string_decoder/1.3.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "471 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/util-deprecate/1.0.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "472 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/base64-js/1.5.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "473 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/to-regex-range/5.0.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "474 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/to-regex-range/5.0.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "475 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ieee754/1.2.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "476 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/is-number/7.0.0",
+    "wanted": {
+      "dependentId": "/to-regex-range/5.0.1",
+      "name": "is-number",
+      "rawSpec": "^7.0.0"
+    }
+  },
+  "477 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/mimic-fn/2.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "478 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/safe-buffer/5.2.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "479 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/string-width/3.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "480 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/string-width/3.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "481 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ini/1.3.7",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "482 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ini/1.3.7",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "483 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-obj/2.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "484 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-obj/2.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "485 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/emoji-regex/7.0.3",
+    "wanted": {
+      "dependentId": "/string-width/3.1.0",
+      "name": "emoji-regex",
+      "rawSpec": "^7.0.1"
+    }
+  },
+  "486 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/is-fullwidth-code-point/2.0.0",
+    "wanted": {
+      "dependentId": "/string-width/3.1.0",
+      "name": "is-fullwidth-code-point",
+      "rawSpec": "^2.0.0"
+    }
+  },
+  "487 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/strip-ansi/5.2.0",
+    "wanted": {
+      "dependentId": "/string-width/3.1.0",
+      "name": "strip-ansi",
+      "rawSpec": "^5.1.0"
+    }
+  },
+  "488 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/crypto-random-string/2.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "489 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/crypto-random-string/2.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "490 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/imurmurhash/0.1.4",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "491 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/imurmurhash/0.1.4",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "492 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-typedarray/1.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "493 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-typedarray/1.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "494 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/typedarray-to-buffer/3.1.5",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "495 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/typedarray-to-buffer/3.1.5",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "496 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/got/9.6.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "497 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/got/9.6.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "498 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/is-typedarray/1.0.0",
+    "wanted": {
+      "dependentId": "/typedarray-to-buffer/3.1.5",
+      "name": "is-typedarray",
+      "rawSpec": "^1.0.0"
+    }
+  },
+  "499 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/registry-auth-token/4.2.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "500 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/registry-auth-token/4.2.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "501 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/registry-url/5.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "502 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/registry-url/5.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "503 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/color-name/1.1.4",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "504 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/color-name/1.1.4",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "505 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@sindresorhus/is/0.14.0",
+    "wanted": {
+      "dependentId": "/got/9.6.0",
+      "name": "@sindresorhus/is",
+      "rawSpec": "^0.14.0"
+    }
+  },
+  "506 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@szmarczak/http-timer/1.1.2",
+    "wanted": {
+      "dependentId": "/got/9.6.0",
+      "name": "@szmarczak/http-timer",
+      "rawSpec": "^1.1.2"
+    }
+  },
+  "507 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/cacheable-request/6.1.0",
+    "wanted": {
+      "dependentId": "/got/9.6.0",
+      "name": "cacheable-request",
+      "rawSpec": "^6.0.0"
+    }
+  },
+  "508 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/decompress-response/3.3.0",
+    "wanted": {
+      "dependentId": "/got/9.6.0",
+      "name": "decompress-response",
+      "rawSpec": "^3.3.0"
+    }
+  },
+  "509 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/duplexer3/0.1.4",
+    "wanted": {
+      "dependentId": "/got/9.6.0",
+      "name": "duplexer3",
+      "rawSpec": "^0.1.4"
+    }
+  },
+  "510 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/get-stream/4.1.0",
+    "wanted": {
+      "dependentId": "/got/9.6.0",
+      "name": "get-stream",
+      "rawSpec": "^4.1.0"
+    }
+  },
+  "511 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/lowercase-keys/1.0.1",
+    "wanted": {
+      "dependentId": "/got/9.6.0",
+      "name": "lowercase-keys",
+      "rawSpec": "^1.0.1"
+    }
+  },
+  "512 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/mimic-response/1.0.1",
+    "wanted": {
+      "dependentId": "/got/9.6.0",
+      "name": "mimic-response",
+      "rawSpec": "^1.0.1"
+    }
+  },
+  "513 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/p-cancelable/1.1.0",
+    "wanted": {
+      "dependentId": "/got/9.6.0",
+      "name": "p-cancelable",
+      "rawSpec": "^1.0.0"
+    }
+  },
+  "514 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/to-readable-stream/1.0.0",
+    "wanted": {
+      "dependentId": "/got/9.6.0",
+      "name": "to-readable-stream",
+      "rawSpec": "^1.0.0"
+    }
+  },
+  "515 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/url-parse-lax/3.0.0",
+    "wanted": {
+      "dependentId": "/got/9.6.0",
+      "name": "url-parse-lax",
+      "rawSpec": "^3.0.0"
+    }
+  },
+  "516 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/rc/1.2.8",
+    "wanted": {
+      "dependentId": "/registry-auth-token/4.2.1",
+      "name": "rc",
+      "rawSpec": "^1.2.8"
+    }
+  },
+  "517 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/rc/1.2.8",
+    "wanted": {
+      "dependentId": "/registry-url/5.1.0",
+      "name": "rc",
+      "rawSpec": "^1.2.8"
+    }
+  },
+  "518 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@nodelib/fs.scandir/2.1.5",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "519 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@nodelib/fs.scandir/2.1.5",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "520 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/fastq/1.13.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "521 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/fastq/1.13.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "522 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/resolve-from/5.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "523 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/resolve-from/5.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "524 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-number/7.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "525 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-number/7.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "526 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@nodelib/fs.stat/2.0.5",
+    "wanted": {
+      "dependentId": "/@nodelib/fs.scandir/2.1.5",
+      "name": "@nodelib/fs.stat",
+      "rawSpec": "2.0.5"
+    }
+  },
+  "527 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/run-parallel/1.2.0",
+    "wanted": {
+      "dependentId": "/@nodelib/fs.scandir/2.1.5",
+      "name": "run-parallel",
+      "rawSpec": "^1.1.9"
+    }
+  },
+  "528 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/reusify/1.0.4",
+    "wanted": {
+      "dependentId": "/fastq/1.13.0",
+      "name": "reusify",
+      "rawSpec": "^1.0.4"
+    }
+  },
+  "529 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/emoji-regex/7.0.3",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "530 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/emoji-regex/7.0.3",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "531 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-fullwidth-code-point/2.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "532 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/is-fullwidth-code-point/2.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "533 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/strip-ansi/5.2.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "534 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/strip-ansi/5.2.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "535 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/ansi-regex/4.1.0",
+    "wanted": {
+      "dependentId": "/strip-ansi/5.2.0",
+      "name": "ansi-regex",
+      "rawSpec": "^4.1.0"
+    }
+  },
+  "536 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@sindresorhus/is/0.14.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "537 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@sindresorhus/is/0.14.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "538 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@szmarczak/http-timer/1.1.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "539 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@szmarczak/http-timer/1.1.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "540 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/cacheable-request/6.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "541 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/cacheable-request/6.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "542 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/decompress-response/3.3.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "543 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/decompress-response/3.3.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "544 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/duplexer3/0.1.4",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "545 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/duplexer3/0.1.4",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "546 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/lowercase-keys/1.0.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "547 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/lowercase-keys/1.0.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "548 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/get-stream/4.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "549 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/get-stream/4.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "550 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/mimic-response/1.0.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "551 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/mimic-response/1.0.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "552 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/p-cancelable/1.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "553 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/p-cancelable/1.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "554 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/to-readable-stream/1.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "555 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/to-readable-stream/1.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "556 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/url-parse-lax/3.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "557 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/url-parse-lax/3.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "558 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/rc/1.2.8",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "559 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/rc/1.2.8",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "560 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/defer-to-connect/1.1.3",
+    "wanted": {
+      "dependentId": "/@szmarczak/http-timer/1.1.2",
+      "name": "defer-to-connect",
+      "rawSpec": "^1.0.1"
+    }
+  },
+  "561 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/clone-response/1.0.2",
+    "wanted": {
+      "dependentId": "/cacheable-request/6.1.0",
+      "name": "clone-response",
+      "rawSpec": "^1.0.2"
+    }
+  },
+  "562 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/get-stream/5.2.0",
+    "wanted": {
+      "dependentId": "/cacheable-request/6.1.0",
+      "name": "get-stream",
+      "rawSpec": "^5.1.0"
+    }
+  },
+  "563 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/http-cache-semantics/4.1.0",
+    "wanted": {
+      "dependentId": "/cacheable-request/6.1.0",
+      "name": "http-cache-semantics",
+      "rawSpec": "^4.0.0"
+    }
+  },
+  "564 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/keyv/3.1.0",
+    "wanted": {
+      "dependentId": "/cacheable-request/6.1.0",
+      "name": "keyv",
+      "rawSpec": "^3.0.0"
+    }
+  },
+  "565 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/lowercase-keys/2.0.0",
+    "wanted": {
+      "dependentId": "/cacheable-request/6.1.0",
+      "name": "lowercase-keys",
+      "rawSpec": "^2.0.0"
+    }
+  },
+  "566 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/normalize-url/4.5.1",
+    "wanted": {
+      "dependentId": "/cacheable-request/6.1.0",
+      "name": "normalize-url",
+      "rawSpec": "^4.1.0"
+    }
+  },
+  "567 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/responselike/1.0.2",
+    "wanted": {
+      "dependentId": "/cacheable-request/6.1.0",
+      "name": "responselike",
+      "rawSpec": "^1.0.2"
+    }
+  },
+  "568 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/mimic-response/1.0.1",
+    "wanted": {
+      "dependentId": "/decompress-response/3.3.0",
+      "name": "mimic-response",
+      "rawSpec": "^1.0.0"
+    }
+  },
+  "569 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/pump/3.0.0",
+    "wanted": {
+      "dependentId": "/get-stream/4.1.0",
+      "name": "pump",
+      "rawSpec": "^3.0.0"
+    }
+  },
+  "570 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/prepend-http/2.0.0",
+    "wanted": {
+      "dependentId": "/url-parse-lax/3.0.0",
+      "name": "prepend-http",
+      "rawSpec": "^2.0.0"
+    }
+  },
+  "571 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/deep-extend/0.6.0",
+    "wanted": {
+      "dependentId": "/rc/1.2.8",
+      "name": "deep-extend",
+      "rawSpec": "^0.6.0"
+    }
+  },
+  "572 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/ini/1.3.8",
+    "wanted": {
+      "dependentId": "/rc/1.2.8",
+      "name": "ini",
+      "rawSpec": "~1.3.0"
+    }
+  },
+  "573 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/minimist/1.2.5",
+    "wanted": {
+      "dependentId": "/rc/1.2.8",
+      "name": "minimist",
+      "rawSpec": "^1.2.0"
+    }
+  },
+  "574 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/strip-json-comments/2.0.1",
+    "wanted": {
+      "dependentId": "/rc/1.2.8",
+      "name": "strip-json-comments",
+      "rawSpec": "~2.0.1"
+    }
+  },
+  "575 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/run-parallel/1.2.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "576 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/run-parallel/1.2.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "577 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/reusify/1.0.4",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "578 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/reusify/1.0.4",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "579 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/queue-microtask/1.2.3",
+    "wanted": {
+      "dependentId": "/run-parallel/1.2.0",
+      "name": "queue-microtask",
+      "rawSpec": "^1.2.2"
+    }
+  },
+  "580 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ansi-regex/4.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "581 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ansi-regex/4.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "582 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/defer-to-connect/1.1.3",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "583 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/defer-to-connect/1.1.3",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "584 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/clone-response/1.0.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "585 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/clone-response/1.0.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "586 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/get-stream/5.2.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "587 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/get-stream/5.2.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "588 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/http-cache-semantics/4.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "589 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/http-cache-semantics/4.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "590 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/keyv/3.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "591 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/keyv/3.1.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "592 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/lowercase-keys/2.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "593 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/lowercase-keys/2.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "594 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/normalize-url/4.5.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "595 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/normalize-url/4.5.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "596 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/pump/3.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "597 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/pump/3.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "598 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/responselike/1.0.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "599 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/responselike/1.0.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "600 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/end-of-stream/1.4.4",
+    "wanted": {
+      "dependentId": "/pump/3.0.0",
+      "name": "end-of-stream",
+      "rawSpec": "^1.1.0"
+    }
+  },
+  "601 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/once/1.4.0",
+    "wanted": {
+      "dependentId": "/pump/3.0.0",
+      "name": "once",
+      "rawSpec": "^1.3.1"
+    }
+  },
+  "602 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/prepend-http/2.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "603 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/prepend-http/2.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "604 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/deep-extend/0.6.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "605 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/deep-extend/0.6.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "606 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/mimic-response/1.0.1",
+    "wanted": {
+      "dependentId": "/clone-response/1.0.2",
+      "name": "mimic-response",
+      "rawSpec": "^1.0.0"
+    }
+  },
+  "607 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/pump/3.0.0",
+    "wanted": {
+      "dependentId": "/get-stream/5.2.0",
+      "name": "pump",
+      "rawSpec": "^3.0.0"
+    }
+  },
+  "608 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/json-buffer/3.0.0",
+    "wanted": {
+      "dependentId": "/keyv/3.1.0",
+      "name": "json-buffer",
+      "rawSpec": "3.0.0"
+    }
+  },
+  "609 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/lowercase-keys/1.0.1",
+    "wanted": {
+      "dependentId": "/responselike/1.0.2",
+      "name": "lowercase-keys",
+      "rawSpec": "^1.0.0"
+    }
+  },
+  "610 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ini/1.3.8",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "611 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ini/1.3.8",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "612 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/minimist/1.2.5",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "613 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/minimist/1.2.5",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "614 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/strip-json-comments/2.0.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "615 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/strip-json-comments/2.0.1",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "616 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/queue-microtask/1.2.3",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "617 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/queue-microtask/1.2.3",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "618 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/end-of-stream/1.4.4",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "619 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/end-of-stream/1.4.4",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "620 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/once/1.4.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "621 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/once/1.4.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "622 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/json-buffer/3.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "623 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/json-buffer/3.0.0",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "624 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/once/1.4.0",
+    "wanted": {
+      "dependentId": "/end-of-stream/1.4.4",
+      "name": "once",
+      "rawSpec": "^1.4.0"
+    }
+  },
+  "625 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/wrappy/1.0.2",
+    "wanted": {
+      "dependentId": "/once/1.4.0",
+      "name": "wrappy",
+      "rawSpec": "1"
+    }
+  },
+  "626 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/wrappy/1.0.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "resolved"
+  },
+  "627 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/wrappy/1.0.2",
+    "requester": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "status": "found_in_store"
+  },
+  "628 debug pnpm:package-manifest": {
+    "prefix": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "updated": {
+      "dependencies": {
+        "esm": "^3.2.25",
+        "nodemon": "^2.0.12",
+        "pnpm": "^6.14.7",
+        "postcss-cli": "^8.3.1",
+        "prettier": "^2.4.1",
+        "nxt-next-app": "1.2.2"
+      },
+      "dependenciesMeta": {
+        "prettier": {
+          "node": "/usr/bin/node"
+        },
+        "nxt-next-app": {
+          "node": "/usr/bin/node"
+        }
+      }
+    }
+  },
+  "629 warn pnpm": {
+    "message": "postcss-cli: postcss-reporter@7.0.2 requires a peer of postcss@^8.1.0 but none was installed.",
+    "prefix": "/home/nxtcoder17/.local/share/node/pnpm-global/5"
+  },
+  "630 warn pnpm": {
+    "message": "postcss-cli@8.3.1 requires a peer of postcss@^8.0.0 but none was installed.",
+    "prefix": "/home/nxtcoder17/.local/share/node/pnpm-global/5"
+  },
+  "631 debug pnpm:stage": {
+    "prefix": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "stage": "resolution_done"
+  },
+  "632 debug pnpm:stats": {
+    "prefix": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "removed": 0
+  },
+  "633 debug pnpm:stage": {
+    "prefix": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "stage": "importing_started"
+  },
+  "634 debug pnpm:stats": {
+    "added": 23,
+    "prefix": "/home/nxtcoder17/.local/share/node/pnpm-global/5"
+  },
+  "635 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/chalk@4.1.1/node_modules/chalk",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/nxt-next-app@1.2.2/node_modules/chalk"
+  },
+  "636 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/esm@3.2.25/node_modules/esm",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/nxt-next-app@1.2.2/node_modules/esm"
+  },
+  "637 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/fs-extra@10.0.0/node_modules/fs-extra",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/nxt-next-app@1.2.2/node_modules/fs-extra"
+  },
+  "638 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/ora@5.4.1/node_modules/ora",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/nxt-next-app@1.2.2/node_modules/ora"
+  },
+  "639 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/graceful-fs@4.2.6/node_modules/graceful-fs",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/fs-extra@10.0.0/node_modules/graceful-fs"
+  },
+  "640 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/jsonfile@6.1.0/node_modules/jsonfile",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/fs-extra@10.0.0/node_modules/jsonfile"
+  },
+  "641 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/universalify@2.0.0/node_modules/universalify",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/fs-extra@10.0.0/node_modules/universalify"
+  },
+  "642 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/bl@4.1.0/node_modules/bl",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/ora@5.4.1/node_modules/bl"
+  },
+  "643 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/chalk@4.1.1/node_modules/chalk",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/ora@5.4.1/node_modules/chalk"
+  },
+  "644 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/cli-cursor@3.1.0/node_modules/cli-cursor",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/ora@5.4.1/node_modules/cli-cursor"
+  },
+  "645 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/cli-spinners@2.6.1/node_modules/cli-spinners",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/ora@5.4.1/node_modules/cli-spinners"
+  },
+  "646 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/is-interactive@1.0.0/node_modules/is-interactive",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/ora@5.4.1/node_modules/is-interactive"
+  },
+  "647 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/is-unicode-supported@0.1.0/node_modules/is-unicode-supported",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/ora@5.4.1/node_modules/is-unicode-supported"
+  },
+  "648 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/log-symbols@4.1.0/node_modules/log-symbols",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/ora@5.4.1/node_modules/log-symbols"
+  },
+  "649 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/strip-ansi@6.0.0/node_modules/strip-ansi",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/ora@5.4.1/node_modules/strip-ansi"
+  },
+  "650 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/wcwidth@1.0.1/node_modules/wcwidth",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/ora@5.4.1/node_modules/wcwidth"
+  },
+  "651 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/buffer@5.7.1/node_modules/buffer",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/bl@4.1.0/node_modules/buffer"
+  },
+  "652 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/inherits@2.0.4/node_modules/inherits",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/bl@4.1.0/node_modules/inherits"
+  },
+  "653 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/readable-stream@3.6.0/node_modules/readable-stream",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/bl@4.1.0/node_modules/readable-stream"
+  },
+  "654 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/base64-js@1.5.1/node_modules/base64-js",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/buffer@5.7.1/node_modules/base64-js"
+  },
+  "655 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/ieee754@1.2.1/node_modules/ieee754",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/buffer@5.7.1/node_modules/ieee754"
+  },
+  "656 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/inherits@2.0.4/node_modules/inherits",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/readable-stream@3.6.0/node_modules/inherits"
+  },
+  "657 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/string_decoder@1.3.0/node_modules/string_decoder",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/readable-stream@3.6.0/node_modules/string_decoder"
+  },
+  "658 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/util-deprecate@1.0.2/node_modules/util-deprecate",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/readable-stream@3.6.0/node_modules/util-deprecate"
+  },
+  "659 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/safe-buffer@5.2.1/node_modules/safe-buffer",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/string_decoder@1.3.0/node_modules/safe-buffer"
+  },
+  "660 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/restore-cursor@3.1.0/node_modules/restore-cursor",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/cli-cursor@3.1.0/node_modules/restore-cursor"
+  },
+  "661 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/onetime@5.1.2/node_modules/onetime",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/restore-cursor@3.1.0/node_modules/onetime"
+  },
+  "662 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/signal-exit@3.0.3/node_modules/signal-exit",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/restore-cursor@3.1.0/node_modules/signal-exit"
+  },
+  "663 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/mimic-fn@2.1.0/node_modules/mimic-fn",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/onetime@5.1.2/node_modules/mimic-fn"
+  },
+  "664 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/chalk@4.1.1/node_modules/chalk",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/log-symbols@4.1.0/node_modules/chalk"
+  },
+  "665 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/is-unicode-supported@0.1.0/node_modules/is-unicode-supported",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/log-symbols@4.1.0/node_modules/is-unicode-supported"
+  },
+  "666 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/defaults@1.0.3/node_modules/defaults",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/wcwidth@1.0.1/node_modules/defaults"
+  },
+  "667 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/clone@1.0.4/node_modules/clone",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/defaults@1.0.3/node_modules/clone"
+  },
+  "668 debug pnpm:stage": {
+    "prefix": "/home/nxtcoder17/.local/share/node/pnpm-global/5",
+    "stage": "importing_done"
+  },
+  "669 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/nxt-next-app@1.2.2/node_modules/nxt-next-app",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/nxt-next-app"
+  },
+  "670 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/esm@3.2.25/node_modules/esm",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/esm"
+  },
+  "671 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/nodemon@2.0.12/node_modules/nodemon",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/nodemon"
+  },
+  "672 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/pnpm@6.14.7/node_modules/pnpm",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/pnpm"
+  },
+  "673 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/postcss-cli@8.3.1/node_modules/postcss-cli",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/postcss-cli"
+  },
+  "674 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/prettier@2.4.1/node_modules/prettier",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/prettier"
+  },
+  "675 debug pnpm:lockfile": "No entry for \"/fsevents/2.3.2\" in pnpm-lock.yaml",
+  "676 debug pnpm": "No entry for \"/fsevents/2.3.2\" in pnpm-lock.yaml",
+  "677 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/chokidar@3.5.2/node_modules/chokidar",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/chokidar"
+  },
+  "678 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/debug@3.2.7/node_modules/debug",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/debug"
+  },
+  "679 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/ignore-by-default@1.0.1/node_modules/ignore-by-default",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/ignore-by-default"
+  },
+  "680 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/minimatch@3.0.4/node_modules/minimatch",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/minimatch"
+  },
+  "681 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/pstree.remy@1.1.8/node_modules/pstree.remy",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/pstree.remy"
+  },
+  "682 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/semver@5.7.1/node_modules/semver",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/semver"
+  },
+  "683 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/supports-color@5.5.0/node_modules/supports-color",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/supports-color"
+  },
+  "684 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/touch@3.1.0/node_modules/touch",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/touch"
+  },
+  "685 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/undefsafe@2.0.3/node_modules/undefsafe",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/undefsafe"
+  },
+  "686 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/update-notifier@4.1.3/node_modules/update-notifier",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/update-notifier"
+  },
+  "687 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/chalk@4.1.1/node_modules/chalk",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/chalk"
+  },
+  "688 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/fs-extra@10.0.0/node_modules/fs-extra",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/fs-extra"
+  },
+  "689 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/ora@5.4.1/node_modules/ora",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/ora"
+  },
+  "690 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/dependency-graph@0.9.0/node_modules/dependency-graph",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/dependency-graph"
+  },
+  "691 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/get-stdin@8.0.0/node_modules/get-stdin",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/get-stdin"
+  },
+  "692 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/globby@11.0.4/node_modules/globby",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/globby"
+  },
+  "693 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/postcss-load-config@3.1.0/node_modules/postcss-load-config",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/postcss-load-config"
+  },
+  "694 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/postcss-reporter@7.0.2/node_modules/postcss-reporter",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/postcss-reporter"
+  },
+  "695 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/pretty-hrtime@1.0.3/node_modules/pretty-hrtime",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/pretty-hrtime"
+  },
+  "696 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/read-cache@1.0.0/node_modules/read-cache",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/read-cache"
+  },
+  "697 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/slash@3.0.0/node_modules/slash",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/slash"
+  },
+  "698 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/yargs@16.2.0/node_modules/yargs",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/yargs"
+  },
+  "699 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/ansi-styles@4.3.0/node_modules/ansi-styles",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/ansi-styles"
+  },
+  "700 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/anymatch@3.1.2/node_modules/anymatch",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/anymatch"
+  },
+  "701 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/braces@3.0.2/node_modules/braces",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/braces"
+  },
+  "702 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/glob-parent@5.1.2/node_modules/glob-parent",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/glob-parent"
+  },
+  "703 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/is-binary-path@2.1.0/node_modules/is-binary-path",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/is-binary-path"
+  },
+  "704 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/is-glob@4.0.1/node_modules/is-glob",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/is-glob"
+  },
+  "705 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/normalize-path@3.0.0/node_modules/normalize-path",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/normalize-path"
+  },
+  "706 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/readdirp@3.6.0/node_modules/readdirp",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/readdirp"
+  },
+  "707 debug pnpm:hoist": {
+    "hoistFailedFor": "/fsevents/2.3.2"
+  },
+  "708 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/ms@2.1.3/node_modules/ms",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/ms"
+  },
+  "709 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/graceful-fs@4.2.6/node_modules/graceful-fs",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/graceful-fs"
+  },
+  "710 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/jsonfile@6.1.0/node_modules/jsonfile",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/jsonfile"
+  },
+  "711 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/universalify@2.0.0/node_modules/universalify",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/universalify"
+  },
+  "712 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/at-least-node@1.0.0/node_modules/at-least-node",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/at-least-node"
+  },
+  "713 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/array-union@2.1.0/node_modules/array-union",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/array-union"
+  },
+  "714 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/dir-glob@3.0.1/node_modules/dir-glob",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/dir-glob"
+  },
+  "715 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/fast-glob@3.2.7/node_modules/fast-glob",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/fast-glob"
+  },
+  "716 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/ignore@5.1.8/node_modules/ignore",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/ignore"
+  },
+  "717 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/merge2@1.4.1/node_modules/merge2",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/merge2"
+  },
+  "718 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/brace-expansion@1.1.11/node_modules/brace-expansion",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/brace-expansion"
+  },
+  "719 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/bl@4.1.0/node_modules/bl",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/bl"
+  },
+  "720 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/cli-cursor@3.1.0/node_modules/cli-cursor",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/cli-cursor"
+  },
+  "721 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/cli-spinners@2.6.1/node_modules/cli-spinners",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/cli-spinners"
+  },
+  "722 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/is-interactive@1.0.0/node_modules/is-interactive",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/is-interactive"
+  },
+  "723 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/is-unicode-supported@0.1.0/node_modules/is-unicode-supported",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/is-unicode-supported"
+  },
+  "724 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/log-symbols@4.1.0/node_modules/log-symbols",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/log-symbols"
+  },
+  "725 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/strip-ansi@6.0.0/node_modules/strip-ansi",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/strip-ansi"
+  },
+  "726 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/wcwidth@1.0.1/node_modules/wcwidth",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/wcwidth"
+  },
+  "727 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/import-cwd@3.0.0/node_modules/import-cwd",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/import-cwd"
+  },
+  "728 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/lilconfig@2.0.3/node_modules/lilconfig",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/lilconfig"
+  },
+  "729 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/yaml@1.10.2/node_modules/yaml",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/yaml"
+  },
+  "730 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/colorette@1.4.0/node_modules/colorette",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/colorette"
+  },
+  "731 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/lodash.difference@4.5.0/node_modules/lodash.difference",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/lodash.difference"
+  },
+  "732 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/lodash.forown@4.4.0/node_modules/lodash.forown",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/lodash.forown"
+  },
+  "733 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/lodash.get@4.4.2/node_modules/lodash.get",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/lodash.get"
+  },
+  "734 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/lodash.groupby@4.6.0/node_modules/lodash.groupby",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/lodash.groupby"
+  },
+  "735 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/lodash.sortby@4.7.0/node_modules/lodash.sortby",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/lodash.sortby"
+  },
+  "736 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/pify@2.3.0/node_modules/pify",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/pify"
+  },
+  "737 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/has-flag@3.0.0/node_modules/has-flag",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/has-flag"
+  },
+  "738 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/nopt@1.0.10/node_modules/nopt",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/nopt"
+  },
+  "739 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/boxen@4.2.0/node_modules/boxen",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/boxen"
+  },
+  "740 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/configstore@5.0.1/node_modules/configstore",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/configstore"
+  },
+  "741 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/has-yarn@2.1.0/node_modules/has-yarn",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/has-yarn"
+  },
+  "742 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/import-lazy@2.1.0/node_modules/import-lazy",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/import-lazy"
+  },
+  "743 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/is-ci@2.0.0/node_modules/is-ci",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/is-ci"
+  },
+  "744 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/is-installed-globally@0.3.2/node_modules/is-installed-globally",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/is-installed-globally"
+  },
+  "745 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/is-npm@4.0.0/node_modules/is-npm",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/is-npm"
+  },
+  "746 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/is-yarn-global@0.3.0/node_modules/is-yarn-global",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/is-yarn-global"
+  },
+  "747 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/latest-version@5.1.0/node_modules/latest-version",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/latest-version"
+  },
+  "748 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/pupa@2.1.1/node_modules/pupa",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/pupa"
+  },
+  "749 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/semver-diff@3.1.1/node_modules/semver-diff",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/semver-diff"
+  },
+  "750 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/xdg-basedir@4.0.0/node_modules/xdg-basedir",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/xdg-basedir"
+  },
+  "751 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/cliui@7.0.4/node_modules/cliui",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/cliui"
+  },
+  "752 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/escalade@3.1.1/node_modules/escalade",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/escalade"
+  },
+  "753 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/get-caller-file@2.0.5/node_modules/get-caller-file",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/get-caller-file"
+  },
+  "754 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/require-directory@2.1.1/node_modules/require-directory",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/require-directory"
+  },
+  "755 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/string-width@4.2.2/node_modules/string-width",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/string-width"
+  },
+  "756 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/y18n@5.0.8/node_modules/y18n",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/y18n"
+  },
+  "757 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/yargs-parser@20.2.9/node_modules/yargs-parser",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/yargs-parser"
+  },
+  "758 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/picomatch@2.3.0/node_modules/picomatch",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/picomatch"
+  },
+  "759 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/buffer@5.7.1/node_modules/buffer",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/buffer"
+  },
+  "760 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/inherits@2.0.4/node_modules/inherits",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/inherits"
+  },
+  "761 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/readable-stream@3.6.0/node_modules/readable-stream",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/readable-stream"
+  },
+  "762 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/ansi-align@3.0.0/node_modules/ansi-align",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/ansi-align"
+  },
+  "763 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/camelcase@5.3.1/node_modules/camelcase",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/camelcase"
+  },
+  "764 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/cli-boxes@2.2.1/node_modules/cli-boxes",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/cli-boxes"
+  },
+  "765 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/term-size@2.2.1/node_modules/term-size",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/term-size"
+  },
+  "766 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/type-fest@0.8.1/node_modules/type-fest",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/type-fest"
+  },
+  "767 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/widest-line@3.1.0/node_modules/widest-line",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/widest-line"
+  },
+  "768 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/balanced-match@1.0.2/node_modules/balanced-match",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/balanced-match"
+  },
+  "769 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/concat-map@0.0.1/node_modules/concat-map",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/concat-map"
+  },
+  "770 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/fill-range@7.0.1/node_modules/fill-range",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/fill-range"
+  },
+  "771 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/restore-cursor@3.1.0/node_modules/restore-cursor",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/restore-cursor"
+  },
+  "772 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/wrap-ansi@7.0.0/node_modules/wrap-ansi",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/wrap-ansi"
+  },
+  "773 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/dot-prop@5.3.0/node_modules/dot-prop",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/dot-prop"
+  },
+  "774 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/make-dir@3.1.0/node_modules/make-dir",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/make-dir"
+  },
+  "775 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/unique-string@2.0.0/node_modules/unique-string",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/unique-string"
+  },
+  "776 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/write-file-atomic@3.0.3/node_modules/write-file-atomic",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/write-file-atomic"
+  },
+  "777 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/path-type@4.0.0/node_modules/path-type",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/path-type"
+  },
+  "778 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/@nodelib+fs.stat@2.0.5/node_modules/@nodelib/fs.stat",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/@nodelib/fs.stat"
+  },
+  "779 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/@nodelib+fs.walk@1.2.8/node_modules/@nodelib/fs.walk",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/@nodelib/fs.walk"
+  },
+  "780 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/micromatch@4.0.4/node_modules/micromatch",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/micromatch"
+  },
+  "781 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/import-from@3.0.0/node_modules/import-from",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/import-from"
+  },
+  "782 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/binary-extensions@2.2.0/node_modules/binary-extensions",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/binary-extensions"
+  },
+  "783 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/ci-info@2.0.0/node_modules/ci-info",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/ci-info"
+  },
+  "784 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/is-extglob@2.1.1/node_modules/is-extglob",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/is-extglob"
+  },
+  "785 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/global-dirs@2.1.0/node_modules/global-dirs",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/global-dirs"
+  },
+  "786 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/is-path-inside@3.0.3/node_modules/is-path-inside",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/is-path-inside"
+  },
+  "787 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/package-json@6.5.0/node_modules/package-json",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/package-json"
+  },
+  "788 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/abbrev@1.1.1/node_modules/abbrev",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/abbrev"
+  },
+  "789 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/escape-goat@2.1.1/node_modules/escape-goat",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/escape-goat"
+  },
+  "790 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/defaults@1.0.3/node_modules/defaults",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/defaults"
+  },
+  "791 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/@nodelib+fs.scandir@2.1.5/node_modules/@nodelib/fs.scandir",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/@nodelib/fs.scandir"
+  },
+  "792 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/fastq@1.13.0/node_modules/fastq",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/fastq"
+  },
+  "793 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/color-convert@2.0.1/node_modules/color-convert",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/color-convert"
+  },
+  "794 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/base64-js@1.5.1/node_modules/base64-js",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/base64-js"
+  },
+  "795 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/ieee754@1.2.1/node_modules/ieee754",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/ieee754"
+  },
+  "796 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/clone@1.0.4/node_modules/clone",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/clone"
+  },
+  "797 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/is-obj@2.0.0/node_modules/is-obj",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/is-obj"
+  },
+  "798 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/to-regex-range@5.0.1/node_modules/to-regex-range",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/to-regex-range"
+  },
+  "799 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/ini@1.3.7/node_modules/ini",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/ini"
+  },
+  "800 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/resolve-from@5.0.0/node_modules/resolve-from",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/resolve-from"
+  },
+  "801 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/got@9.6.0/node_modules/got",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/got"
+  },
+  "802 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/registry-auth-token@4.2.1/node_modules/registry-auth-token",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/registry-auth-token"
+  },
+  "803 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/registry-url@5.1.0/node_modules/registry-url",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/registry-url"
+  },
+  "804 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/string_decoder@1.3.0/node_modules/string_decoder",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/string_decoder"
+  },
+  "805 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/util-deprecate@1.0.2/node_modules/util-deprecate",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/util-deprecate"
+  },
+  "806 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/onetime@5.1.2/node_modules/onetime",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/onetime"
+  },
+  "807 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/signal-exit@3.0.3/node_modules/signal-exit",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/signal-exit"
+  },
+  "808 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/emoji-regex@8.0.0/node_modules/emoji-regex",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/emoji-regex"
+  },
+  "809 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/is-fullwidth-code-point@3.0.0/node_modules/is-fullwidth-code-point",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/is-fullwidth-code-point"
+  },
+  "810 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/crypto-random-string@2.0.0/node_modules/crypto-random-string",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/crypto-random-string"
+  },
+  "811 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/imurmurhash@0.1.4/node_modules/imurmurhash",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/imurmurhash"
+  },
+  "812 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/is-typedarray@1.0.0/node_modules/is-typedarray",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/is-typedarray"
+  },
+  "813 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/typedarray-to-buffer@3.1.5/node_modules/typedarray-to-buffer",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/typedarray-to-buffer"
+  },
+  "814 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/run-parallel@1.2.0/node_modules/run-parallel",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/run-parallel"
+  },
+  "815 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/color-name@1.1.4/node_modules/color-name",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/color-name"
+  },
+  "816 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/reusify@1.0.4/node_modules/reusify",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/reusify"
+  },
+  "817 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/@sindresorhus+is@0.14.0/node_modules/@sindresorhus/is",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/@sindresorhus/is"
+  },
+  "818 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/@szmarczak+http-timer@1.1.2/node_modules/@szmarczak/http-timer",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/@szmarczak/http-timer"
+  },
+  "819 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/cacheable-request@6.1.0/node_modules/cacheable-request",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/cacheable-request"
+  },
+  "820 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/decompress-response@3.3.0/node_modules/decompress-response",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/decompress-response"
+  },
+  "821 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/duplexer3@0.1.4/node_modules/duplexer3",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/duplexer3"
+  },
+  "822 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/get-stream@4.1.0/node_modules/get-stream",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/get-stream"
+  },
+  "823 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/lowercase-keys@1.0.1/node_modules/lowercase-keys",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/lowercase-keys"
+  },
+  "824 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/mimic-response@1.0.1/node_modules/mimic-response",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/mimic-response"
+  },
+  "825 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/p-cancelable@1.1.0/node_modules/p-cancelable",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/p-cancelable"
+  },
+  "826 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/to-readable-stream@1.0.0/node_modules/to-readable-stream",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/to-readable-stream"
+  },
+  "827 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/url-parse-lax@3.0.0/node_modules/url-parse-lax",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/url-parse-lax"
+  },
+  "828 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/mimic-fn@2.1.0/node_modules/mimic-fn",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/mimic-fn"
+  },
+  "829 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/rc@1.2.8/node_modules/rc",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/rc"
+  },
+  "830 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/safe-buffer@5.2.1/node_modules/safe-buffer",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/safe-buffer"
+  },
+  "831 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/ansi-regex@5.0.0/node_modules/ansi-regex",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/ansi-regex"
+  },
+  "832 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/is-number@7.0.0/node_modules/is-number",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/is-number"
+  },
+  "833 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/defer-to-connect@1.1.3/node_modules/defer-to-connect",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/defer-to-connect"
+  },
+  "834 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/clone-response@1.0.2/node_modules/clone-response",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/clone-response"
+  },
+  "835 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/http-cache-semantics@4.1.0/node_modules/http-cache-semantics",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/http-cache-semantics"
+  },
+  "836 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/keyv@3.1.0/node_modules/keyv",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/keyv"
+  },
+  "837 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/normalize-url@4.5.1/node_modules/normalize-url",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/normalize-url"
+  },
+  "838 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/responselike@1.0.2/node_modules/responselike",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/responselike"
+  },
+  "839 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/pump@3.0.0/node_modules/pump",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/pump"
+  },
+  "840 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/deep-extend@0.6.0/node_modules/deep-extend",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/deep-extend"
+  },
+  "841 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/minimist@1.2.5/node_modules/minimist",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/minimist"
+  },
+  "842 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/strip-json-comments@2.0.1/node_modules/strip-json-comments",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/strip-json-comments"
+  },
+  "843 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/queue-microtask@1.2.3/node_modules/queue-microtask",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/queue-microtask"
+  },
+  "844 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/prepend-http@2.0.0/node_modules/prepend-http",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/prepend-http"
+  },
+  "845 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/json-buffer@3.0.0/node_modules/json-buffer",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/json-buffer"
+  },
+  "846 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/end-of-stream@1.4.4/node_modules/end-of-stream",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/end-of-stream"
+  },
+  "847 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/once@1.4.0/node_modules/once",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/once"
+  },
+  "848 debug pnpm:link": {
+    "target": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/wrappy@1.0.2/node_modules/wrappy",
+    "link": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/node_modules/wrappy"
+  },
+  "849 error pnpm": {
+    "errno": -2,
+    "code": "ENOENT",
+    "syscall": "chmod",
+    "path": "/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/nxt-next-app@1.2.2/node_modules/nxt-next-app/bin/cmd/nxt-next-app.js",
+    "err": {
+      "name": "pnpm",
+      "message": "ENOENT: no such file or directory, chmod '/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/nxt-next-app@1.2.2/node_modules/nxt-next-app/bin/cmd/nxt-next-app.js'",
+      "code": "ENOENT",
+      "stack": "pnpm: ENOENT: no such file or directory, chmod '/home/nxtcoder17/.local/share/node/pnpm-global/5/node_modules/.pnpm/nxt-next-app@1.2.2/node_modules/nxt-next-app/bin/cmd/nxt-next-app.js'"
+    }
+  }
+}

@@ -44,8 +44,18 @@ nnoremap('sm', ':split<CR>')
 nnoremap('sf', ':Telescope find_files<CR>')
 
 
+-- [Source]: https://gist.github.com/benfrain/97f2b91087121b2d4ba0dcc4202d252f
+-- Keep search results centred
+nnoremap('n', 'nzzzv')
+nnoremap('N', 'Nzzzv')
+nnoremap('J', 'mzJ`z')
+
 -- Resizing Splits
 nnoremap('<C-S-Right>', ':vert resize +10<CR>')
 nnoremap('<C-S-Left>', ':vert resize -10<CR>')
 nnoremap('<C-S-Up>', ':resize +10<CR>')
 nnoremap('<C-S-Down>', ':resize -10<CR>')
+
+
+-- Code Related
+nnoremap('s;', ':!eslint_d --fix % <CR><CR> | :e!')
