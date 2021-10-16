@@ -46,17 +46,10 @@ hide_edge_borders vertical
 
 # [ Workspace Configuration ]⠀⠀
 
-# [ Workspace Names ]⠀⠀
-
-set $ws1 "1: Tmux:  "
-set $ws3 "3: firefox:  "
-
-# [ Workspace Names ]⠀⠀
-
 # [ Accessing the Workspaces 1 to 10 ]⠀⠀
-bindsym $mod+1 workspace $ws1
+bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
-bindsym $mod+3 workspace $ws3
+bindsym $mod+3 workspace 3
 bindsym $mod+4 workspace 4
 bindsym $mod+5 workspace 5
 bindsym $mod+6 workspace 6
@@ -68,9 +61,9 @@ bindsym $mod+0 workspace 10
 
 # [ Moving Focused Container to specific workspaces ]⠀⠀
 
-bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+1 move container to workspace 1
 bindsym $mod+Shift+2 move container to workspace 2
-bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+3 move container to workspace 3
 bindsym $mod+Shift+4 move container to workspace 4
 bindsym $mod+Shift+5 move container to workspace 5
 bindsym $mod+Shift+6 move container to workspace 6
@@ -277,7 +270,7 @@ exec_always --no-startup-id      unset LANG
 exec_always --no-startup-id      source /etc/profile.d/locale.sh
 
 # -> Wallpaper Setup
-exec_always --no-startup-id      feh --bg-scale ~/.wallpaper
+exec_always --no-startup-id      source $HOME/.fehbg
 
 # -> Network Manager
 exec --no-startup-id             nm-applet
@@ -384,7 +377,7 @@ exec --no-startup-id konsole --hide-menubar -p tabtitle=NxtTerm
 
 bindsym $alt + space	[title="NxtTerm"] scratchpad show; [title="NxtTerm"] move position center
 # bindsym $alt + shift + space exec --no-startup-id $term -T NxtTerm
-bindsym $alt + shift + space exec --no-startup-id  konsole --hide-menubar -p tabtitle=NxtTerm 
+bindsym $alt + ctrl + space exec --no-startup-id  konsole --hide-menubar -p tabtitle=NxtTerm 
 
 for_window [title="ChromeTabs"] floating enable
 for_window [title="ChromeTabs"] resize set 1000 500
