@@ -173,6 +173,9 @@ export FZF_DEFAULT_OPTS='--color=fg:#f8f8f2,bg:#282a36,hl:#bd93f9 --color=fg+:#f
 
 export LESS=-FRX
 
+# source .nxtcoder17.sh file, if sees somewhere
+[ -f $PWD/.nxtcoder17.sh ] && source .nxtcoder17.sh
+
 # Load syntax highlighting; should be last.
 source /home/nxtcoder17/.local/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
 
