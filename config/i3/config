@@ -305,6 +305,17 @@ set $orange         #ea5712
 set $navyBlue       #2d3e75
 set $orangeRed      #ff6303
 
+
+# Nordish Palette
+set $primary-1 #2E3440
+set $primary-2 #3B4252
+
+set $text-1 #88C0D0
+set $text-2 #727f9c
+set $text-3 #D8DEE9
+
+
+
 bar {
 	status_command i3blocks
 	i3bar_command i3bar -t
@@ -318,8 +329,6 @@ bar {
 	# modifier : Mod1-Mod5, Ctrl etc keys
 	modifier $mod
 
-	# Font : Monaco
-	# font pango:Monaco for Powerline Regular 10
 	font pango: mononoki Nerd Font bold 10
 	# font pango: Operator Mono Lig Book Bold 10
 
@@ -333,18 +342,15 @@ bar {
 
 	colors {
 		# Background	: defines the background Color
-		background $transparent
+		background $primary-1
 
 		# Statusline    : Text Color to be used for Statusline
-		statusline $cyan
-
-		# Separator     : Text color to be used for Separator
-		separator $green
+		statusline $text-1
 
 		#	 ColorClass			Border			Background		   Foreground Text
-        focused_workspace   $transparent    $navyBlue          $battleshipGrey
-		inactive_workspace  $transparent    $battleshipGrey          $black
-		urgent_workspace    $transparent    $tomatoRed         $transparent
+    focused_workspace   $transparent    $text-1         $primary-1
+		inactive_workspace  $transparent    $text-2         $primary-2
+		urgent_workspace    $transparent    $tomatoRed      $transparent
 	}
 }
 
