@@ -20,14 +20,14 @@
 # [ General Configurations ]⠀⠀
 
 # [ Recommended for i3-gaps ]
-for_window [class="^.*"] border pixel 5
+for_window [class="^.*"] border pixel 3
 
 # Smart Borders mean no border if only one window is open
-# smart_borders on
+smart_borders on
 
 # client.focused #00C1FF #00C1FF #000088 #00C1FF
 client.focused #86bd8e #86bd8e #000088 #86bd8e
-gaps inner 10
+gaps inner 7
 
 # gaps outer so that Single Window consumes full space
 gaps outer -7
