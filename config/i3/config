@@ -382,8 +382,7 @@ for_window [title="NxtTerm"] move scratchpad
 exec --no-startup-id konsole --hide-menubar -p tabtitle=NxtTerm 
 
 bindsym $alt + space	[title="NxtTerm"] scratchpad show; [title="NxtTerm"] move position center
-# bindsym $alt + shift + space exec --no-startup-id $term -T NxtTerm
-bindsym $alt + ctrl + space exec --no-startup-id  konsole --hide-menubar -p tabtitle=NxtTerm 
+bindsym F10 exec --no-startup-id  konsole --hide-menubar -p tabtitle=NxtTerm 
 
 for_window [title="ChromeTabs"] floating enable
 for_window [title="ChromeTabs"] resize set 1000 500

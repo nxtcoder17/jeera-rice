@@ -1,4 +1,5 @@
-require'plugins'
-require'options'
-require'keymaps'
-require'lsp'
+require("options")
+require("plugins")
+require("keymaps")
+-- require("lsp")
+vim.cmd([[ source $XDG_CONFIG_HOME/nvim/coc.vim ]])

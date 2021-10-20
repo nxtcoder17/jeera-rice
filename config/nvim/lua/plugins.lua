@@ -3,12 +3,32 @@ vim.cmd([[packadd packer.nvim]])
 require("packer").startup(function()
   use("wbthomason/packer.nvim")
 
+  -- color schemes
+  use({
+    "mcchrish/zenbones.nvim",
+    requires = "rktjmp/lush.nvim",
+  })
+  use("shaunsingh/nord.nvim")
+  use("sainnhe/everforest")
+  use("sainnhe/gruvbox-material")
+  use("maaslalani/nordbuddy")
+  use("norcalli/nvim-colorizer.lua")
+
   use("tpope/vim-surround")
   use("tpope/vim-commentary")
-  use("shaunsingh/nord.nvim")
   use("mbbill/undotree")
   use("kevinhwang91/nvim-hlslens")
   use("mg979/vim-visual-multi")
+
+  -- coc lsp
+  use {'neoclide/coc.nvim', branch = 'release'}
+  use { 'junegunn/fzf', run = './install --bin' }
+  use { 'ibhagwan/fzf-lua',
+    requires = {
+      'vijaymarupudi/nvim-fzf',
+      'kyazdani42/nvim-web-devicons'
+    }
+  }
 
   -- LSP
   use("neovim/nvim-lspconfig")
@@ -34,7 +54,6 @@ require("packer").startup(function()
 
   -- Code Beauty
   use("mhartington/formatter.nvim")
-  -- use("lukas-reineke/indent-blankline.nvim")
 
   -- AutoCompletion
 
@@ -83,47 +102,12 @@ end)
 -- Setting up Nord Colorscheme
 vim.g.nord_contrast = true
 vim.g.nord_borders = true
-require("nord").set()
-
----------------------------------------------------------------------------\ PLUGINS CONFIGS
------------------------------------------------\ Indent Blankline
--- Slows down neovim
--- MonoChrome colorpalette generated at https://pinetools.com/monochromatic-colors-generator
--- base shade: #7ca3b9 with count: 20 colors
--- vim.cmd([[highlight! IndentBlanklineIndent1 guibg=#2e4857 gui=nocombine]])
--- vim.cmd([[highlight! IndentBlanklineIndent2 guibg=#385768 gui=nocombine]])
--- vim.cmd([[highlight! IndentBlanklineIndent3 guibg=#41657a gui=nocombine]])
--- vim.cmd([[highlight! IndentBlanklineIndent4 guibg=#4a748b gui=nocombine]])
--- vim.cmd([[highlight! IndentBlanklineIndent5 guibg=#54839d gui=nocombine]])
--- vim.cmd([[highlight! IndentBlanklineIndent6 guibg=#6190aa gui=nocombine]])
--- vim.cmd([[highlight! IndentBlanklineIndent7 guibg=#739cb4 gui=nocombine]])
-
--- require("indent_blankline").setup({
---   char = " ",
---   buftype_exclude = { "terminal" },
---   char_highlight_list = {
---     "IndentBlanklineIndent1",
---     "IndentBlanklineIndent2",
---     "IndentBlanklineIndent3",
---     "IndentBlanklineIndent4",
---     "IndentBlanklineIndent5",
---     "IndentBlanklineIndent6",
---     "IndentBlanklineIndent7",
---   },
---   space_char_highlight_list = {
---     "IndentBlanklineIndent1",
---     "IndentBlanklineIndent2",
---     "IndentBlanklineIndent3",
---     "IndentBlanklineIndent4",
---     "IndentBlanklineIndent5",
---     "IndentBlanklineIndent6",
---     "IndentBlanklineIndent7",
---   },
---   show_trailing_blankline_indent = false,
--- })
----------------------------------------\ Git Signs
+-- require("nord").set()
+vim.cmd([[ colorscheme nordbuddy ]])
 
 require("gitsigns").setup()
+
+require("colorizer").setup()
 
 ---------------------------------------\ Lsp signature
 
@@ -141,7 +125,7 @@ cfg = {
 
   floating_window = true, -- show hint in a floating window, set to false for virtual text only mode
 
-  floating_window_above_cur_line = true, -- try to place the floating above the current line when possible Note:
+  floating_window_above_cur_line = false, -- try to place the floating above the current line when possible Note:
   -- will set to true when fully tested, set to false will use whichever side has more space
   -- this setting will be helpful if you do not want the PUM and floating win overlap
   fix_pos = false, -- set to true, the floating window will not auto-close until finish all parameters
@@ -174,188 +158,189 @@ cfg = {
 }
 
 -- recommanded:
-require("lsp_signature").setup(cfg)
+-- require("lsp_signature").setup(cfg)
 
 -----------------------------------------------------\ lsp-kind
-require("lspkind").init({
-  with_text = true,
+--require("lspkind").init({
+--  with_text = true,
 
-  symbol_map = {
-    Text = "",
-    Method = "ƒ",
-    Function = "ﬦ",
-    Constructor = "",
-    Variable = "",
-    Class = "",
-    Interface = "ﰮ",
-    Module = "",
-    Property = "",
-    Unit = "",
-    Value = "",
-    Enum = "了",
-    Keyword = "",
-    Snippet = "﬌",
-    Color = "",
-    File = "",
-    Folder = "",
-    EnumMember = "",
-    Constant = "",
-    Struct = "",
-  },
-})
+--  symbol_map = {
+--    Text = "",
+--    Method = "ƒ",
+--    Function = "ﬦ",
+--    Constructor = "",
+--    Variable = "",
+--    Class = "",
+--    Interface = "ﰮ",
+--    Module = "",
+--    Property = "",
+--    Unit = "",
+--    Value = "",
+--    Enum = "了",
+--    Keyword = "",
+--    Snippet = "﬌",
+--    Color = "",
+--    File = "",
+--    Folder = "",
+--    EnumMember = "",
+--    Constant = "",
+--    Struct = "",
+--  },
+--})
 
-------------------------------------------------------\ nvim-cmp
+--------------------------------------------------------\ nvim-cmp
 
-local cmp = require("cmp")
+---- local cmp = require("cmp")
 
-cmp.setup({
-  snippet = {
-    expand = function(args)
-      vim.fn["vsnip#anonymous"](args.body)
-    end,
-  },
-  mapping = {
-    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-    ["<C-f>"] = cmp.mapping.scroll_docs(4),
-    ["<C-Space>"] = cmp.mapping.complete(),
-    ["<CR>"] = cmp.mapping.confirm({ select = true }),
-    ["<C-e>"] = cmp.mapping.close(),
-    ["<C-p>"] = cmp.mapping.select_prev_item(),
-    ["<C-n>"] = cmp.mapping.select_next_item(),
-  },
-  documentation = {
-    border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-  },
-  sources = {
-    -- 'crates' is lazy loaded
-    { name = "nvim_lsp" },
-    { name = "treesitter" },
-    { name = "vsnip" },
-    { name = "path" },
-    {
-      name = "buffer",
-      opts = {
-        get_bufnrs = function()
-          return vim.api.nvim_list_bufs()
-        end,
-      },
-    },
-    { name = "spell" },
-  },
-  formatting = {
-    format = function(entry, vim_item)
-      vim_item.kind = string.format("%s %s", require("lspkind").presets.default[vim_item.kind], vim_item.kind)
-      vim_item.menu = ({
-        nvim_lsp = "ﲳ",
-        nvim_lua = "",
-        treesitter = "",
-        path = "ﱮ",
-        buffer = "﬘",
-        zsh = "",
-        vsnip = "",
-        spell = "暈",
-      })[entry.source.name]
+---- cmp.setup({
+----   snippet = {
+----     expand = function(args)
+----       vim.fn["vsnip#anonymous"](args.body)
+----     end,
+----   },
 
-      return vim_item
-    end,
-  },
-})
+----   mapping = {
+----     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+----     ["<C-f>"] = cmp.mapping.scroll_docs(4),
+----     ["<C-Space>"] = cmp.mapping.complete(),
+----     ["<CR>"] = cmp.mapping.confirm({ select = true }),
+----     ["<C-e>"] = cmp.mapping.close(),
+----     ["<C-p>"] = cmp.mapping.select_prev_item(),
+----     ["<C-n>"] = cmp.mapping.select_next_item(),
+----   },
+----   documentation = {
+----     border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+----   },
+----   sources = {
+----     -- 'crates' is lazy loaded
+----     { name = "nvim_lsp" },
+----     { name = "treesitter" },
+----     { name = "vsnip" },
+----     { name = "path" },
+----     {
+----       name = "buffer",
+----       opts = {
+----         get_bufnrs = function()
+----           return vim.api.nvim_list_bufs()
+----         end,
+----       },
+----     },
+----     { name = "spell" },
+----   },
+----   formatting = {
+----     format = function(entry, vim_item)
+----       vim_item.kind = string.format("%s %s", require("lspkind").presets.default[vim_item.kind], vim_item.kind)
+----       vim_item.menu = ({
+----         nvim_lsp = "ﲳ",
+----         nvim_lua = "",
+----         treesitter = "",
+----         path = "ﱮ",
+----         buffer = "﬘",
+----         zsh = "",
+----         vsnip = "",
+----         spell = "暈",
+----       })[entry.source.name]
 
------------------------------------------------------------\ nvim autopairs
--- require("nvim-autopairs.completion.cmp").setup({
---   map_cr = false, --  map <CR> on insert mode
---   map_complete = true, -- it will auto insert `(` (map_char) after select function or method item
---   auto_select = true, -- automatically select the first item
---   insert = false, -- use insert confirm behavior instead of replace
---   map_char = { -- modifies the function or method delimiter by filetypes
---     all = "(",
---     tex = "{",
---   },
--- })
+----       return vim_item
+----     end,
+----   },
+---- })
 
--------------------------------------------------------------\ Formatter
-require("formatter").setup({
-  logging = false,
-  filetype = {
-    javascript = {
-      function()
-        return {
-          exe = "prettier",
-          stdin = false,
-        }
-      end,
-    },
-    json = {
-      function()
-        return {
-          exe = "prettier",
-          stdin = false,
-        }
-      end,
-    },
-    typescript = {
-      function()
-        return {
-          exe = "prettier",
-          stdin = false,
-        }
-      end,
-    },
-    html = {
-      function()
-        return {
-          exe = "prettier",
-          stdin = false,
-        }
-      end,
-    },
-    css = {
-      function()
-        return {
-          exe = "prettier",
-          stdin = false,
-        }
-      end,
-    },
-    scss = {
-      function()
-        return {
-          exe = "prettier",
-          stdin = false,
-        }
-      end,
-    },
-    markdown = {
-      function()
-        return {
-          exe = "prettier",
-          stdin = false,
-        }
-      end,
-    },
-    lua = {
-      -- Stylua
-      function()
-        return {
-          exe = "stylua",
-          args = { "--indent-width", 2, "--indent-type", "Spaces" },
-          stdin = false,
-        }
-      end,
-    },
-  },
-})
+-------------------------------------------------------------\ nvim autopairs
+---- require("nvim-autopairs.completion.cmp").setup({
+----   map_cr = false, --  map <CR> on insert mode
+----   map_complete = true, -- it will auto insert `(` (map_char) after select function or method item
+----   auto_select = true, -- automatically select the first item
+----   insert = false, -- use insert confirm behavior instead of replace
+----   map_char = { -- modifies the function or method delimiter by filetypes
+----     all = "(",
+----     tex = "{",
+----   },
+---- })
 
--- AutoFormat on Save
-vim.api.nvim_exec(
-  [[ 
-augroup AutoFormatter
-  autocmd!
-  autocmd BufWritePost *.js,*.jsx,*.json,*.css,*.lua,*.md,*.html :FormatWrite
-augroup END
-]],
-  true
-)
+---------------------------------------------------------------\ Formatter
+--require("formatter").setup({
+--  logging = false,
+--  filetype = {
+--    javascript = {
+--      function()
+--        return {
+--          exe = "prettier",
+--          stdin = false,
+--        }
+--      end,
+--    },
+--    json = {
+--      function()
+--        return {
+--          exe = "prettier",
+--          stdin = false,
+--        }
+--      end,
+--    },
+--    typescript = {
+--      function()
+--        return {
+--          exe = "prettier",
+--          stdin = false,
+--        }
+--      end,
+--    },
+--    html = {
+--      function()
+--        return {
+--          exe = "prettier",
+--          stdin = false,
+--        }
+--      end,
+--    },
+--    css = {
+--      function()
+--        return {
+--          exe = "prettier",
+--          stdin = false,
+--        }
+--      end,
+--    },
+--    scss = {
+--      function()
+--        return {
+--          exe = "prettier",
+--          stdin = false,
+--        }
+--      end,
+--    },
+--    markdown = {
+--      function()
+--        return {
+--          exe = "prettier",
+--          stdin = false,
+--        }
+--      end,
+--    },
+--    lua = {
+--      -- Stylua
+--      function()
+--        return {
+--          exe = "stylua",
+--          args = { "--indent-width", 2, "--indent-type", "Spaces" },
+--          stdin = false,
+--        }
+--      end,
+--    },
+--  },
+--})
+
+---- AutoFormat on Save
+--vim.api.nvim_exec(
+--  [[
+--augroup AutoFormatter
+--  autocmd!
+--  autocmd BufWritePost *.js,*.jsx,*.json,*.css,*.lua,*.md,*.html :FormatWrite
+--augroup END
+--]],
+--  true
+--)
 
 -- Telescope
 
@@ -471,8 +456,14 @@ require("nvim-treesitter.configs").setup({
     enable = true,
     extended_mode = true, -- Highlight also non-parentheses delimiters, like HTML, jsx elements
     max_file_lines = 1000,
-    -- colors = {}, -- table of hex strings
-    -- termcolors = {} -- table of colour name strings
+    colors = {
+      "#7f9626",
+      "#76be9f",
+      "#9bcfde",
+      "#599f8c",
+      "#8b9dc3",
+    }, -- table of hex strings
+    -- termcolors = { }, -- table of colour name strings
   },
 
   -- Context CommentString

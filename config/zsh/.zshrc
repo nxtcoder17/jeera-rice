@@ -1,7 +1,7 @@
 # Kali Linux ZSH Defaults
 
 setopt autocd              # change directory just by typing its name
-setopt correct            # auto correct mistakes
+setopt correct             # auto correct mistakes
 setopt magicequalsubst     # enable filename expansion for arguments of the form ‘anything=expression’
 setopt nonomatch           # hide error message if there is no match for the pattern
 setopt notify              # report the status of background jobs immediately
@@ -17,7 +17,7 @@ PROMPT_EOL_MARK=""
 stty stop undef
 
 # enable completion features
-autoload -Uz compinit
+autoload -U compinit && compinit
 
 zmodload zsh/complist
 compinit -d ~/.cache/zcompdump
@@ -84,21 +84,11 @@ if [ -x /usr/bin/dircolors ]; then
     zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 fi
 
-# some more ls aliases
-alias ll='ls -l'
-alias la='ls -A'
-alias l='ls -CF'
-
 # enable auto-suggestions based on the history
 if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
     . /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
     # change suggestion color
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999'
-fi
-
-# enable command-not-found if installed
-if [ -f /etc/zsh_command_not_found ]; then
-    . /etc/zsh_command_not_found
 fi
 
 # ci{, ci(, di{ etc..  
@@ -126,12 +116,9 @@ bindkey -s '^a' 'bc -lq\n'
 # Override's fzf bindings
 bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
 
-bindkey '^[[P' delete-char
-
 # Edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
-
 
 # Aliases
 [ -f "$ZDOTDIR/alias" ] && . "$ZDOTDIR/alias"
@@ -142,25 +129,9 @@ bindkey '^e' edit-command-line
 
 eval "$(starship init zsh)"
 
-alias dd='cd $(rg --files --hidden --follow --smart-case --ignore-file-case-insensitive | fzf)'
-
-alias gf='git flow'
-
 export BUILD_LIBRDKAFKA=0
 
 [ -f $HOME/.secrets ] && source ~/.secrets
-
-# enable auto-suggestions based on the history
-if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-    . /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-    # change suggestion color
-    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999'
-fi
-
-# enable command-not-found if installed
-if [ -f /etc/zsh_command_not_found ]; then
-    . /etc/zsh_command_not_found
-fi
 
 # Dracula Themed
 export FZF_DEFAULT_OPTS='--color=fg:#f8f8f2,bg:#282a36,hl:#bd93f9 --color=fg+:#f8f8f2,bg+:#44475a,hl+:#bd93f9 --color=info:#ffb86c,prompt:#50fa7b,pointer:#ff79c6 --color=marker:#ff79c6,spinner:#ffb86c,header:#6272a4'
