@@ -3,17 +3,25 @@
 KEY_NAME=${1:-ca}
 DOMAIN=${2:-localhost.com}
 
-openssl genrsa -out $KEY_NAME.key 2048
-openssl rsa -in ${KEY_NAME}.key -pubout -out ${KEY_NAME}.pubkey
-openssl rsa -in ${KEY_NAME}.key -out ${KEY_NAME}.privKey
+[ -d certs ] || mkdir certs
+KEY_FILE=certs/$KEY_NAME.key
+PEM_FILE=certs/$KEY_NAME.pem
 
-mkdir $DOMAIN
+# generating private key (AES encryption)
+openssl genrsa -out $KEY_FILE 3072
 
-openssl req -new -x509 -nodes -sha256 -days 365 -key ${KEY_NAME}.key -out $DOMAIN/$DOMAIN.crt
+# generating root certificate
+openssl req -x509 -new -nodes -key $KEY_FILE -sha256 -days 360 -out $PEM_FILE
 
-# openssl req -new -key ${KEY_NAME}.key -out ./$DOMAIN/$DOMAIN.csr
+[ -d $DOMAIN ] || mkdir $DOMAIN
 
-cat > ./$DOMAIN/$DOMAIN.ext << EOF
+# certificate private key
+openssl genrsa -out $DOMAIN/$DOMAIN.key 3072
+
+# certificate signing request
+openssl req -new -key $DOMAIN/$DOMAIN.key -out $DOMAIN/$DOMAIN.csr
+
+cat > $DOMAIN/$DOMAIN.ext << EOF
 authorityKeyIdentifier=keyid,issuer
 basicConstraints=CA:FALSE
 keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
@@ -22,8 +30,6 @@ subjectAltName = @alt_names
 DNS.1 = $DOMAIN
 EOF
 
-# openssl req -x509 -new -nodes -key ${KEY_NAME}.key -sha256 -days 1825 -out $DOMAIN/${KEY_NAME}.pem
-
-# openssl x509 -req -in ./$DOMAIN/$DOMAIN.csr -CA ./${KEY_NAME}.pem -CAkey ./${KEY_NAME}.key -CAcreateserial \
-# -out $DOMAIN/$DOMAIN.crt -days 825 -sha256 -extfile $DOMAIN/$DOMAIN.ext
+openssl x509 -req -in $DOMAIN/$DOMAIN.csr -CA $PEM_FILE -CAkey $KEY_FILE -CAcreateserial \
+  -out $DOMAIN/$DOMAIN.crt -days 360 -sha256 -extfile $DOMAIN/$DOMAIN.ext
 
