@@ -19,7 +19,10 @@ opt.switchbuf = "usetab,newtab"
 -- Fast Scrolling
 opt.ttimeoutlen = 10
 opt.ttyfast = true
-opt.lazyredraw = true
+opt.updatetime = 50
+-- opt.lazyredraw = true
+
+
 
 -- AutoWrap
 opt.wrap = true
@@ -40,7 +43,7 @@ opt.smartindent = true
 opt.copyindent = true
 
 -- Completion, popup
-opt.completeopt = "menuone,noinsert,noselect"
+opt.completeopt = "menu,menuone,noinsert,noselect"
 
 -- Tab and Spaces
 opt.expandtab = true
@@ -50,3 +53,4 @@ opt.smarttab = true
 opt.tabstop = 2
 opt.softtabstop = 2
 opt.shiftwidth = 2
+

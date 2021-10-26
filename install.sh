@@ -20,6 +20,11 @@ Nvim() {
 	fi
 }
 
+InstallTelepresence() {
+  curl -fL https://app.getambassador.io/download/tel2/linux/amd64/latest/telepresence -o $HOME/apps/x-bin/telepresence
+  ln -sf $HOME/apps/x-bin/telepresence $HOME/apps/jeera-rice/bin/telepresence
+}
+
 # i3 
 
 Zsh

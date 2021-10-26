@@ -1,4 +1,5 @@
 local lsp = vim.lsp
+local lsp_config = require("lspconfig")
 
 lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(lsp.diagnostic.on_publish_diagnostics, {
   underline = true,
@@ -27,46 +28,36 @@ vim.fn.sign_define(
   { texthl = "DiagnosticSignInformation", text = "", numhl = "DiagnosticSignInformation" }
 )
 
--- LSP Enable diagnostics
--- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
---   virtual_text = false,
---   underline = true,
---   signs = true,
---   update_in_insert = false,
--- })
+--- Languages: lua, typescript, dockerfile, efm, html, css,
 
--- lua, typescript, dockerfile, efm, html, css,
-
---- Languages
-
-local lsp_installer = require("nvim-lsp-installer")
+-- require("nvim-lsp-installer")
 
 local on_attach = require("lsp.on_attach")
 
-require("lspconfig").sumneko_lua.setup({
+lsp_config.sumneko_lua.setup({
   cmd = {
     vim.fn.stdpath("data") .. "/lsp_servers/sumneko_lua/extension/server/bin/Linux/lua-language-server",
-    "-E",
-    vim.fn.stdpath("data") .. "/lsp_servers/sumneko_lua/extension/server/main.lua",
+    -- "-E",
+    -- vim.fn.stdpath("data") .. "/lsp_servers/sumneko_lua/extension/server/main.lua",
   },
-  on_attach = on_attach,
   settings = {
+    on_attach = on_attach,
     Lua = {
       runtime = {
         version = "LuaJIT",
       },
+      completion = { callSnippet = "Both" },
       diagnostics = {
-        globals = { "use", "vim" },
+        globals = { "vim", "use" },
       },
       workspace = {
-        preloadFileSize = 350,
         -- Make the server aware of Neovim runtime files
         library = vim.api.nvim_get_runtime_file("", true),
+        maxPreload = 2000,
+        preloadFileSize = 50000,
       },
       -- Do not send telemetry data containing a randomized but unique identifier
-      telemetry = {
-        enable = false,
-      },
+      telemetry = { enable = false },
     },
   },
 })
@@ -88,18 +79,6 @@ capabilities.textDocument.codeAction = {
     },
   },
 }
-
--- require("lspconfig").tsserver.setup({
---   cmd = {
---     vim.fn.stdpath("data") .. "/lsp_servers/tsserver/node_modules/.bin/typescript-language-server",
---     "--stdio",
---   },
---   capabilities = capabilities,
---   on_attach = function(client)
---     client.resolved_capabilities.document_formatting = false
---     on_attach(client)
---   end,
--- })
 
 -- GoLang
 require("lspconfig").gopls.setup({
@@ -194,65 +173,79 @@ require("lspconfig").efm.setup({
   },
 })
 
--- make sure to only run this once!
+-- tsserver
 require("lspconfig").tsserver.setup({
   cmd = {
     vim.fn.stdpath("data") .. "/lsp_servers/tsserver/node_modules/.bin/typescript-language-server",
     "--stdio",
   },
-  on_attach = function(client, bufnr)
-    -- disable tsserver formatting if you plan on formatting via null-ls
+  capabilities = capabilities,
+  on_attach = function(client)
     client.resolved_capabilities.document_formatting = false
-    client.resolved_capabilities.document_range_formatting = false
-
-    local ts_utils = require("nvim-lsp-ts-utils")
-
-    -- defaults
-    ts_utils.setup({
-      debug = false,
-      disable_commands = false,
-      enable_import_on_completion = false,
-
-      -- import all
-      import_all_timeout = 5000, -- ms
-      import_all_priorities = {
-        buffers = 4, -- loaded buffer names
-        buffer_content = 3, -- loaded buffer content
-        local_files = 2, -- git files or files with relative path markers
-        same_file = 1, -- add to existing import statement
-      },
-      import_all_scan_buffers = 100,
-      import_all_select_source = false,
-
-      -- eslint
-      eslint_enable_code_actions = true,
-      eslint_enable_disable_comments = true,
-      eslint_bin = "eslint",
-      eslint_enable_diagnostics = false,
-      eslint_opts = {},
-
-      -- formatting
-      enable_formatting = false,
-      formatter = "prettier",
-      formatter_opts = {},
-
-      -- update imports on file move
-      update_imports_on_move = false,
-      require_confirmation_on_move = false,
-      watch_dir = nil,
-
-      -- filter diagnostics
-      filter_out_diagnostics_by_severity = {},
-      filter_out_diagnostics_by_code = {},
-    })
-
-    -- required to fix code action ranges and filter diagnostics
-    ts_utils.setup_client(client)
-
-    -- no default maps, so you may want to define some here
-    local opts = { silent = true }
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "gs", ":TSLspOrganize<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", ":TSLspRenameFile<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", ":TSLspImportAll<CR>", opts)
+    on_attach(client)
   end,
 })
+
+-- make sure to only run this once!
+-- require("lspconfig").tsserver.setup({
+--   cmd = {
+--     vim.fn.stdpath("data") .. "/lsp_servers/tsserver/node_modules/.bin/typescript-language-server",
+--     "--stdio",
+--   },
+--   on_attach = function(client, bufnr)
+--     -- disable tsserver formatting if you plan on formatting via null-ls
+--     client.resolved_capabilities.document_formatting = false
+--     client.resolved_capabilities.document_range_formatting = false
+
+--     local ts_utils = require("nvim-lsp-ts-utils")
+
+--     -- defaults
+--     ts_utils.setup({
+--       debug = false,
+--       disable_commands = false,
+--       enable_import_on_completion = false,
+
+--       -- import all
+--       import_all_timeout = 5000, -- ms
+--       import_all_priorities = {
+--         buffers = 4, -- loaded buffer names
+--         buffer_content = 3, -- loaded buffer content
+--         local_files = 2, -- git files or files with relative path markers
+--         same_file = 1, -- add to existing import statement
+--       },
+--       import_all_scan_buffers = 100,
+--       import_all_select_source = false,
+
+--       -- eslint
+--       eslint_enable_code_actions = true,
+--       eslint_enable_disable_comments = true,
+--       eslint_bin = "eslint",
+--       eslint_enable_diagnostics = false,
+--       eslint_opts = {},
+
+--       -- formatting
+--       enable_formatting = false,
+--       formatter = "prettier",
+--       formatter_opts = {},
+
+--       -- update imports on file move
+--       update_imports_on_move = false,
+--       require_confirmation_on_move = false,
+--       watch_dir = nil,
+
+--       -- filter diagnostics
+--       filter_out_diagnostics_by_severity = {},
+--       filter_out_diagnostics_by_code = {},
+--     })
+
+--     -- required to fix code action ranges and filter diagnostics
+--     ts_utils.setup_client(client)
+--     on_attach(client, bufnr)
+
+--     -- no default maps, so you may want to define some here
+--     local opts = { silent = true }
+--     vim.api.nvim_buf_set_keymap(bufnr, "n", "gs", ":TSLspOrganize<CR>", opts)
+--     vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", ":TSLspRenameFile<CR>", opts)
+--     vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", ":TSLspImportAll<CR>", opts)
+--   end,
+-- })

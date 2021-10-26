@@ -1,0 +1,7 @@
+require'plugins_dir.telescope'
+require'plugins_dir.lsp-kind'
+require'plugins_dir.telescope'
+require'plugins_dir.treesitter'
+require'plugins_dir.nvim-cmp'
+require'plugins_dir.lua-snip'
+require'plugins_dir.formatter'

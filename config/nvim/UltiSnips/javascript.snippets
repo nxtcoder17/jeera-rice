@@ -1,0 +1,44 @@
+snippet imrou
+import {Router} from 'express';
+const router = Router();
+endsnippet
+
+snippet rou
+router.${1:get}('${2:/}', httpHandler(async (req, res) => {
+	$0
+	res.json({ msg: 'hello' });
+}));
+endsnippet
+
+snippet tryc
+try{
+	$0
+} catch (err) {
+	throw createError(StatusCodes.BAD_REQUEST, "Bad Request");
+}
+endsnippet
+
+# NodeJs specific imports
+
+snippet imcodes
+import {StatusCodes} from 'http-status-codes';
+endsnippet
+
+snippet imerror
+import createError from 'http-errors-lite';
+endsnippet
+
+snippet immongoose
+import mongoose, {Schema} from 'mongoose';
+endsnippet
+
+snippet iife  "IIFE"
+(async () => {
+	$0
+})();
+endsnippet
+
+snippet imhhandler "http handler"
+import {httpHandler} from '@madhouselabs/http-helpers';
+$0
+endsnippet

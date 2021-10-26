@@ -61,7 +61,9 @@ nnoremap("sk", "<C-w>k<CR>")
 nnoremap("si", ":vsplit<CR>")
 nnoremap("sm", ":split<CR>")
 
-nnoremap("sf", ":Telescope find_files<CR>")
+nnoremap("sf", ":lua require'plugins_dir.telescope'.find_files()<CR>")
+nnoremap("sb", ":Telescope buffers<CR>")
+
 
 -- [Source]: https://gist.github.com/benfrain/97f2b91087121b2d4ba0dcc4202d252f
 -- Keep search results centred
@@ -77,3 +79,23 @@ nnoremap("<C-S-Down>", ":resize -10<CR>")
 
 -- Code Related
 nnoremap("s;", ":!eslint_d --fix % <CR><CR> | :e!")
+
+-- rnvimr
+nnoremap('<M-o>', ':RnvimrToggle<CR>')
+tnoremap('<M-o>', '<C-\\><C-n>:RnvimrToggle<CR>')
+
+-- because, rnvimr shits wqa
+cnoremap('wqa', 'wa! | qa')
+
+-- from:plugin / navigator.nvim'
+vim.cmd [[let g:tmux_navigator_no_mappings = 1]]
+
+nnoremap('<M-h>', ':TmuxNavigateLeft<cr>');
+nnoremap('<M-l>', ':TmuxNavigateRight<cr>');
+nnoremap('<M-k>', ':TmuxNavigateUp<cr>');
+nnoremap('<M-j>', ':TmuxNavigateDown<cr>');
+
+-- CoC based
+
+vim.cmd [[cabbrev('OR', ':CocCommand editor.action.organizeImport')]]
+
