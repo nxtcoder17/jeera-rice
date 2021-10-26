@@ -22,7 +22,7 @@ opt.ttyfast = true
 opt.updatetime = 50
 -- opt.lazyredraw = true
 
-
+opt.signcolumn = "yes:2"
 
 -- AutoWrap
 opt.wrap = true
@@ -53,4 +53,3 @@ opt.smarttab = true
 opt.tabstop = 2
 opt.softtabstop = 2
 opt.shiftwidth = 2
-

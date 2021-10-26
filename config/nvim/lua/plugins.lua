@@ -3,6 +3,9 @@ require("packer").startup(function()
 
   use("lewis6991/impatient.nvim")
 
+  -- syntax
+  use("sheerun/vim-polyglot")
+
   -- color schemes
   use({
     "mcchrish/zenbones.nvim",
@@ -19,6 +22,12 @@ require("packer").startup(function()
   use("mbbill/undotree")
   use("kevinhwang91/nvim-hlslens")
   use("mg979/vim-visual-multi")
+
+  -- status line
+  use({
+    "nvim-lualine/lualine.nvim",
+    requires = { "kyazdani42/nvim-web-devicons", opt = true },
+  })
 
   -- coc lsp
   -- use {'neoclide/coc.nvim', branch = 'release'}
@@ -122,18 +131,6 @@ vim.g.nord_borders = true
 vim.cmd([[ colorscheme nordbuddy ]])
 
 require("colorizer").setup()
-
--------------------------------------------------------------\ nvim autopairs
----- require("nvim-autopairs.completion.cmp").setup({
-----   map_cr = false, --  map <CR> on insert mode
-----   map_complete = true, -- it will auto insert `(` (map_char) after select function or method item
-----   auto_select = true, -- automatically select the first item
-----   insert = false, -- use insert confirm behavior instead of replace
-----   map_char = { -- modifies the function or method delimiter by filetypes
-----     all = "(",
-----     tex = "{",
-----   },
----- })
 
 -- Extensions
 
