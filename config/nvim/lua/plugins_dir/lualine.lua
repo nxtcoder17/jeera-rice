@@ -47,7 +47,7 @@ lualine.setup({
         "filename",
         icons_enabled = true,
         file_status = true,
-        symbols = { modified = " [+]", readonly = " [-]" },
+        symbols = { modified = "  ", readonly = " [-]" },
       },
     },
     lualine_x = {
