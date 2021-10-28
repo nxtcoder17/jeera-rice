@@ -35,6 +35,16 @@ snippet imrou  "import useRouter : next.js "
 import {useRouter} from 'next/router';
 endsnippet
 
+snippet use-router "initialize router: next.js"
+const router = useRouter();
+endsnippet
+
 snippet state "useState() function"
 const [${1:data}, set${1}] = useState();
+endsnippet
+
+snippet iife "iife() function"
+(async () => {
+	$0
+})();
 endsnippet

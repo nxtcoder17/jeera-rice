@@ -48,6 +48,7 @@ require("packer").startup(function()
 
   -- LSP
   use("neovim/nvim-lspconfig")
+  use("folke/lsp-colors.nvim") --  better diagonstics colors
   use("hrsh7th/nvim-compe")
   use("onsails/lspkind-nvim")
   use("folke/lua-dev.nvim")

@@ -4,7 +4,17 @@ require("formatter").setup({
     javascript = {
       function()
         return {
-          exe = "prettier",
+          exe = "eslint_d",
+          args = { "--fix" },
+          stdin = false,
+        }
+      end,
+    },
+    javascriptreact = {
+      function()
+        return {
+          exe = "eslint_d",
+          args = { "--fix" },
           stdin = false,
         }
       end,
@@ -21,6 +31,15 @@ require("formatter").setup({
       function()
         return {
           exe = "prettier",
+          stdin = false,
+        }
+      end,
+    },
+    typescriptreact = {
+      function()
+        return {
+          exe = "eslint_d",
+          args = { "--fix" },
           stdin = false,
         }
       end,

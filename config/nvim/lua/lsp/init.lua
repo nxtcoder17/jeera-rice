@@ -3,11 +3,11 @@ local lsp_config = require("lspconfig")
 
 lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(lsp.diagnostic.on_publish_diagnostics, {
   underline = true,
-  virtual_text = false,
-  -- virtual_text = {
-  --   prefix = "●",
-  --   spacing = 12,
-  -- },
+  -- virtual_text = false,
+  virtual_text = {
+    prefix = "●",
+    spacing = 12,
+  },
   update_in_insert = true,
 })
 

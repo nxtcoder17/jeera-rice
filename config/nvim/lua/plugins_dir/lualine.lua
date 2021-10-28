@@ -1,68 +1,77 @@
--- Bubbles config for lualine
--- Author: lokesh-krishna
--- MIT license, see LICENSE for more details.
+local lualine = require("lualine")
 
--- stylua: ignore
--- local colors = {
---   blue   = '#80a0ff',
---   cyan   = '#79dac8',
---   black  = '#080808',
---   white  = '#c6c6c6',
---   red    = '#ff5189',
---   violet = '#d183e8',
---   grey   = '#303030',
--- }
+local conditions = {
+  buffer_not_empty = function()
+    return vim.fn.empty(vim.fn.expand("%:t")) ~= 1
+  end,
+  hide_in_width = function()
+    return vim.fn.winwidth(0) > 80
+  end,
+  check_git_workspace = function()
+    local filepath = vim.fn.expand("%:p:h")
+    local gitdir = vim.fn.finddir(".git", filepath .. ";")
+    return gitdir and #gitdir > 0 and #gitdir < #filepath
+  end,
+}
 
--- local bubbles_theme = {
---   normal = {
---     a = { fg = colors.black, bg = colors.violet },
---     b = { fg = colors.white, bg = colors.grey },
---     c = { fg = colors.black, bg = colors.black },
---   },
+local colors = {
+  blue = "#80a0ff",
+  cyan = "#79dac8",
+  black = "#080808",
+  white = "#c6c6c6",
+  red = "#ff5189",
+  violet = "#d183e8",
+  grey = "#303030",
+}
 
---   insert = { a = { fg = colors.black, bg = colors.blue } },
---   visual = { a = { fg = colors.black, bg = colors.cyan } },
---   replace = { a = { fg = colors.black, bg = colors.red } },
-
---   inactive = {
---     a = { fg = colors.white, bg = colors.black },
---     b = { fg = colors.white, bg = colors.black },
---     c = { fg = colors.black, bg = colors.black },
---   },
--- }
-
--- require("lualine").setup({
---   options = {
---     theme = bubbles_theme,
---     component_separators = "|",
---     section_separators = { left = "", right = "" },
---   },
---   sections = {
---     lualine_a = {
---       { "mode", separator = { left = "" }, right_padding = 2 },
---     },
---     lualine_b = { "filename", "branch" },
---     lualine_c = { "fileformat" },
---     lualine_x = {},
---     lualine_y = { "filetype", "progress" },
---     lualine_z = {
---       { "location", separator = { right = "" }, left_padding = 2 },
---     },
---   },
---   inactive_sections = {
---     lualine_a = { "filename" },
---     lualine_b = {},
---     lualine_c = {},
---     lualine_x = {},
---     lualine_y = {},
---     lualine_z = { "location" },
---   },
---   tabline = {},
---   extensions = {},
--- })
-
-require('lualine').setup({
+lualine.setup({
   options = {
-    theme = 'nord'
-  }
+    theme = "material",
+    section_separators = { left = "", right = "" },
+    component_separators = { left = "", right = "" },
+  },
+
+  sections = {
+    lualine_a = { { "mode", upper = true } },
+    lualine_b = {},
+    lualine_c = {
+      {
+        "diagnostics",
+        sources = { "nvim_lsp" },
+        symbols = { error = " ", warn = " ", info = " " },
+        color_error = colors.red,
+        color_warn = colors.yellow,
+        color_info = colors.cyan,
+      },
+      {
+        "filename",
+        icons_enabled = true,
+        file_status = true,
+        symbols = { modified = " [+]", readonly = " [-]" },
+      },
+    },
+    lualine_x = {
+      {
+        "diff",
+        symbols = { added = " ", modified = " 柳 ", removed = "  " },
+        color_added = colors.green,
+        color_modified = colors.orange,
+        color_removed = colors.red,
+        condition = conditions.hide_in_width,
+      },
+
+      { "branch", icon = "" },
+    },
+    lualine_y = {},
+    lualine_z = { "location" },
+  },
+  inactive_sections = {
+    lualine_a = { "filename" },
+    lualine_b = {},
+    lualine_c = { "filetype" },
+    lualine_x = { "location" },
+    lualine_y = {},
+    lualine_z = {},
+  },
+  extensions = {},
 })
