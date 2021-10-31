@@ -216,8 +216,8 @@ bindsym Control + exclam           exec --no-startup-id $toggleMute
 # [ Executing Applications ]⠀⠀
 
 # -> Opening Terminal
-set $term konsole --hide-menubar --hide-tabbar
-set $term2 xfce4-terminal --hide-menubar
+set $term kitty
+set $term2 konsole --hide-menubar --hide-tabbar
 bindsym $mod + Return                           exec --no-startup-id $term
 bindsym $mod + Control + Return                 exec --no-startup-id $term2
 

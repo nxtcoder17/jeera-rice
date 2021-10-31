@@ -5,6 +5,7 @@ require("packer").startup(function()
 
   -- syntax
   use("sheerun/vim-polyglot")
+  use("fladson/vim-kitty")
 
   -- color schemes
   use({
@@ -55,14 +56,13 @@ require("packer").startup(function()
   use("williamboman/nvim-lsp-installer")
   use("nvim-lua/lsp-status.nvim")
   use("jose-elias-alvarez/nvim-lsp-ts-utils")
+  use("/jose-elias-alvarez/null-ls.nvim")
   use("ray-x/lsp_signature.nvim")
+  use("glepnir/lspsaga.nvim")
 
   use({
     "folke/trouble.nvim",
     requires = "kyazdani42/nvim-web-devicons",
-    config = function()
-      require("trouble").setup({})
-    end,
   })
 
   -- Code Beauty

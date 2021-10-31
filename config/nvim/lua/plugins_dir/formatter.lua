@@ -27,6 +27,15 @@ require("formatter").setup({
         }
       end,
     },
+    jsonc = {
+      function()
+        return {
+          exe = "eslint_d",
+          args = { "--fix" },
+          stdin = false,
+        }
+      end,
+    },
     typescript = {
       function()
         return {
