@@ -15,7 +15,11 @@ pnpm() {
 }
 
 _fzf_complete_make() {
-  _fzf_complete --multi --reverse --prompt="target> " -- "$@" < <(grep -iE '^[^.].*:\s+' ./Makefile | awk -F':' '{print $1}' | uniq)
+  _fzf_complete --multi --reverse --prompt="target> " -- "make ${@:2}" < <(grep -iE '^[^.].*:\s+' ./Makefile | awk -F':' '{print $1}' | uniq)
+}
+
+_fzf_complete_prun() {
+  _fzf_complete --multi --reverse --prompt="package.json script> " -- "pnpm run ${@:2}" < <(cat ./package.json| jq '.scripts'  | grep -i '"' | awk '{print $1}' | sed 's/:$//g' | sed 's/"//g')
 }
 
 _fzf_complete_sample() {

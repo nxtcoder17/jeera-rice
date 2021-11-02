@@ -18,9 +18,10 @@ opt.switchbuf = "usetab,newtab"
 
 -- Fast Scrolling
 opt.ttimeoutlen = 10
+opt.timeoutlen = 500
 opt.ttyfast = true
 opt.updatetime = 50
--- opt.lazyredraw = true
+opt.lazyredraw = true
 
 opt.signcolumn = "yes:2"
 
@@ -34,6 +35,10 @@ opt.splitbelow = true
 -- Term Gui Colors
 opt.termguicolors = true
 
+-- wild menu
+opt.wildmenu = true
+opt.wildmode = "full"
+opt.wildignore = "*/node_modules/*,*/.git/*,.next"
 -- Completion PopUp Transparency
 opt.wildoptions = "pum"
 opt.pumblend = 9
@@ -53,3 +58,7 @@ opt.smarttab = true
 opt.tabstop = 2
 opt.softtabstop = 2
 opt.shiftwidth = 2
+
+opt.incsearch = true
+
+opt.mouse = "a"

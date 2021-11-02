@@ -71,16 +71,17 @@ require("nvim-treesitter.configs").setup({
     },
     -- highlight_current_scope = {enable = true}
   },
+
   textobjects = {
     lsp_interop = {
       enable = true,
       border = "none",
       peek_definition_code = {
-        ["df"] = "@function.outer",
-        ["dF"] = "@class.outer",
+        ["<leader>df"] = "@function.outer",
+        ["<leader>dF"] = "@class.outer",
       },
     },
-    jjjjjjjjjjjjjjjjjjjjjkkkkkkmove = {
+    move = {
       enable = true,
       set_jumps = true, -- whether to set jumps in the jumplist
       goto_next_start = {
@@ -113,4 +114,3 @@ require("nvim-treesitter.configs").setup({
     },
   },
 })
-

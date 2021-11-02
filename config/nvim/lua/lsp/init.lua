@@ -3,31 +3,50 @@ local lsp_config = require("lspconfig")
 
 lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(lsp.diagnostic.on_publish_diagnostics, {
   underline = true,
-  -- virtual_text = false,
-  virtual_text = {
-    prefix = "●",
-    spacing = 12,
-  },
+  virtual_text = false,
+  -- virtual_text = {
+  --   prefix = "●",
+  --   spacing = 12,
+  -- },
   update_in_insert = true,
 })
 
 -- LSP signs default
-vim.fn.sign_define(
-  "DiagnosticSignError",
-  { texthl = "DiagnosticSignError", text = "", numhl = "DiagnosticSignError" }
-)
 
-vim.fn.sign_define(
-  "DiagnosticSignWarning",
-  { texthl = "DiagnosticSignWarning", text = "", numhl = "DiagnosticSignWarning" }
-)
+local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
 
-vim.fn.sign_define("DiagnosticSignHint", { texthl = "DiagnosticSignHint", text = "", numhl = "DiagnosticSignHint" })
+for type, icon in pairs(signs) do
+  local hl = "LspDiagnosticsSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
 
-vim.fn.sign_define(
-  "DiagnosticSignInformation",
-  { texthl = "DiagnosticSignInformation", text = "", numhl = "DiagnosticSignInformation" }
-)
+vim.lsp.protocol.CompletionItemKind = {
+  "   (Text) ",
+  "   (Method)",
+  "   (Function)",
+  "   (Constructor)",
+  " ﴲ  (Field)",
+  "[] (Variable)",
+  "   (Class)",
+  " ﰮ  (Interface)",
+  "   (Module)",
+  " 襁 (Property)",
+  "   (Unit)",
+  "   (Value)",
+  " 練 (Enum)",
+  "   (Keyword)",
+  "   (Snippet)",
+  "   (Color)",
+  "   (File)",
+  "   (Reference)",
+  "   (Folder)",
+  "   (EnumMember)",
+  " ﲀ  (Constant)",
+  " ﳤ  (Struct)",
+  "   (Event)",
+  "   (Operator)",
+  "   (TypeParameter)",
+}
 
 --- Languages: lua, typescript, dockerfile, efm, html, css,
 
@@ -170,9 +189,9 @@ require("lspconfig").efm.setup({
     "typescript",
     "typescriptreact",
   },
-  on_attach = on_attach,
+  -- on_attach = on_attach,
   init_options = {
-    document_formatting = false,
+    document_formatting = true,
   },
   settings = {
     rootMarkers = efm_root_markers,

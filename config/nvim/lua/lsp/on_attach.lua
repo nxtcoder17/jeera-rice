@@ -79,8 +79,8 @@ local on_attach = function(client, bufnr)
   -- default opts
   local opts = { noremap = true, silent = true }
 
-  bmap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
-  bmap("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
+  -- bmap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
+  -- bmap("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
 end
 
 return on_attach

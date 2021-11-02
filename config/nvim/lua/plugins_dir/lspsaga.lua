@@ -1,9 +1,15 @@
 local saga = require("lspsaga")
 
-saga.init_lsp_saga()
+-- saga.init_lsp_saga({
+--   code_action_icon = "💡",
+--   code_action_prompt = {
+--     enable = true,
+--     sign = true,
+--     sign_priority = 15,
+--     virtual_text = false,
+--   },
+--   code_action_keys = { quit = { "q", "<ESC>" }, exec = "<CR>" },
+--   border_style = "round",
+-- })
 
-vim.cmd([[
-  nnoremap <silent> gh <cmd>lua require'lspsaga.provider'.lsp_finder()<CR>
-  nnoremap <silent><leader>ca <cmd>lua require('lspsaga.codeaction').code_action()<CR>
-  vnoremap <silent><leader>ca :<C-U>lua require('lspsaga.codeaction').range_code_action()<CR>
-]])
+saga.init_lsp_saga()

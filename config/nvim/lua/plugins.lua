@@ -56,7 +56,7 @@ require("packer").startup(function()
   use("williamboman/nvim-lsp-installer")
   use("nvim-lua/lsp-status.nvim")
   use("jose-elias-alvarez/nvim-lsp-ts-utils")
-  use("/jose-elias-alvarez/null-ls.nvim")
+  -- use("/jose-elias-alvarez/null-ls.nvim")
   use("ray-x/lsp_signature.nvim")
   use("glepnir/lspsaga.nvim")
 
@@ -68,8 +68,23 @@ require("packer").startup(function()
   -- Code Beauty
   use("mhartington/formatter.nvim")
 
-  -- AutoCompletion
+  -- Buffer Management
+  use({ "kevinhwang91/nvim-bqf", ft = "qf" })
 
+  -- TextObj
+  use("terryma/vim-expand-region")
+
+  use("kana/vim-textobj-user")
+  use("kana/vim-textobj-indent")
+  use("kana/vim-textobj-line")
+  use("kana/vim-textobj-entire")
+  use("kana/vim-textobj-function")
+  use("kana/vim-textobj-underscore")
+
+  -- wild mode
+  use({ "gelguy/wilder.nvim", run = ":UpdateRemotePlugins" })
+
+  -- AutoCompletion
   use({
     "hrsh7th/nvim-cmp",
     requires = {
@@ -95,11 +110,13 @@ require("packer").startup(function()
 
   -- Treesitter
   use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
+  use("nvim-treesitter/nvim-treesitter-refactor")
+  use("nvim-treesitter/nvim-treesitter-textobjects")
+
   use("windwp/nvim-autopairs")
   use("p00f/nvim-ts-rainbow")
   use("JoosepAlviste/nvim-ts-context-commentstring")
   use("andymass/vim-matchup")
-  use("nvim-treesitter/nvim-treesitter-refactor")
   use("windwp/nvim-ts-autotag")
 
   -- Telescope
@@ -115,6 +132,16 @@ require("packer").startup(function()
 
   -- Better profiling output for startup.
   use({ "dstein64/vim-startuptime", cmd = "StartupTime" })
+
+  -- buffers
+  use("famiu/bufdelete.nvim")
+
+  -- navigator
+  use({ "ray-x/navigator.lua", requires = { "ray-x/guihua.lua", run = "cd lua/fzy && make" } })
+
+  -- debugging
+  use("puremourning/vimspector")
+  use("szw/vim-maximizer")
 end)
 
 -- git signs
@@ -141,3 +168,23 @@ require("hlslens").setup({
   nearest_only = true,
   nearest_float_when = "always",
 })
+
+-- wilder
+-- vim.call([[ wilder#setup({'modes': [':', '/', '?']}) ]])
+
+vim.cmd([[
+  let g:expand_region_text_objects = {
+        \ 'iw'  :0,
+        \ 'iW'  :0,
+        \ 'i"'  :0,
+        \ 'i''' :0,
+        \ 'i]'  :1,
+        \ 'ib'  :1,
+        \ 'iB'  :1,
+        \ 'il'  :1,
+        \ 'ip'  :1,
+        \ 'ie'  :0,
+        \ }
+]])
+
+vim.cmd([[ map <C-w> <Plug>(expand_region_expand) ]])
