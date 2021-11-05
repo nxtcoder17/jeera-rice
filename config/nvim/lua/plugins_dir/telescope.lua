@@ -16,12 +16,16 @@ telescope.setup({
     find_files = {
       theme = "ivy",
     },
-    nvim_config = {
+    lsp_references = {
       theme = "ivy",
-    }
+    },
+    grep_string = {
+      theme = "ivy",
+    },
   },
 })
 
+require("telescope").load_extension("fzf")
 
 
 local M = {}
@@ -32,7 +36,14 @@ M.find_files = function()
   }
 end
 
-require("telescope").load_extension("fzf")
+M.grep = function()
+  telescope_builtin.grep_string({
+    prompt_title = " Grep word",
+    search = vim.fn.input("   Grep for word> ", vim.fn.expand("<cword>")),
+    use_regex = true,
+  })
+end
+
 
 
 M.nvim_config = function ()

@@ -60,5 +60,9 @@ opt.softtabstop = 2
 opt.shiftwidth = 2
 
 opt.incsearch = true
+opt.smartcase = true
+opt.ignorecase = true
 
 opt.mouse = "a"
+
+opt.cursorline = true

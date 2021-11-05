@@ -1,6 +1,10 @@
 require("packer").startup(function()
   use("wbthomason/packer.nvim")
 
+  -- back to where you left
+  use("farmergreg/vim-lastplace")
+  use("glepnir/dashboard-nvim")
+
   use("lewis6991/impatient.nvim")
 
   -- syntax
@@ -12,7 +16,12 @@ require("packer").startup(function()
     "mcchrish/zenbones.nvim",
     requires = "rktjmp/lush.nvim",
   })
-  use("shaunsingh/nord.nvim")
+  use("drewtempelmeyer/palenight.vim")
+  use("savq/melange")
+  use("rmehri01/onenord.nvim")
+  -- use("shaunsingh/nord.nvim")
+  use("0xdefaced/nord.nvim")
+  use("arcticicestudio/nord-vim")
   use("sainnhe/everforest")
   use("sainnhe/gruvbox-material")
   use("maaslalani/nordbuddy")
@@ -29,6 +38,7 @@ require("packer").startup(function()
     "nvim-lualine/lualine.nvim",
     requires = { "kyazdani42/nvim-web-devicons", opt = true },
   })
+  use("kdheepak/tabline.nvim")
 
   -- coc lsp
   -- use {'neoclide/coc.nvim', branch = 'release'}
@@ -41,9 +51,6 @@ require("packer").startup(function()
     },
   })
   use("kevinhwang91/rnvimr")
-  use("bayne/vim-dot-http")
-
-  -- tmux
   use("christoomey/vim-tmux-navigator")
   use("psliwka/vim-smoothie")
 
@@ -113,7 +120,7 @@ require("packer").startup(function()
   use("nvim-treesitter/nvim-treesitter-refactor")
   use("nvim-treesitter/nvim-treesitter-textobjects")
 
-  use("windwp/nvim-autopairs")
+  -- use("windwp/nvim-autopairs")
   use("p00f/nvim-ts-rainbow")
   use("JoosepAlviste/nvim-ts-context-commentstring")
   use("andymass/vim-matchup")
@@ -137,11 +144,14 @@ require("packer").startup(function()
   use("famiu/bufdelete.nvim")
 
   -- navigator
-  use({ "ray-x/navigator.lua", requires = { "ray-x/guihua.lua", run = "cd lua/fzy && make" } })
+  -- use({ "ray-x/navigator.lua", requires = { "ray-x/guihua.lua", run = "cd lua/fzy && make" } })
 
   -- debugging
   use("puremourning/vimspector")
   use("szw/vim-maximizer")
+
+  -- dot-http
+  use("nxtcoder17/vim-dot-http")
 end)
 
 -- git signs
@@ -151,12 +161,6 @@ end)
 --   linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
 --   word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
 -- }
-
--- Setting up Nord Colorscheme
-vim.g.nord_contrast = true
-vim.g.nord_borders = true
--- require("nord").set()
-vim.cmd([[ colorscheme nordbuddy ]])
 
 require("colorizer").setup()
 
@@ -188,3 +192,5 @@ vim.cmd([[
 ]])
 
 vim.cmd([[ map <C-w> <Plug>(expand_region_expand) ]])
+
+vim.g.dashboard_default_executive = "telescope"

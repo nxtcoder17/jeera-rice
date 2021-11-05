@@ -99,12 +99,12 @@ require("formatter").setup({
 })
 
 -- AutoFormat on Save
-vim.api.nvim_exec(
-  [[
-augroup AutoFormatter
-  autocmd!
-  autocmd BufWritePost *.js,*.jsx,*.json,*.css,*.lua,*.md,*.html :FormatWrite
-augroup END
-]],
-  true
-)
+-- vim.api.nvim_exec(
+--   [[
+-- augroup AutoFormatter
+--   autocmd!
+--   autocmd BufWritePost *.js,*.jsx,*.json,*.css,*.lua,*.md,*.html :FormatWrite
+-- augroup END
+-- ]],
+--   true
+-- )

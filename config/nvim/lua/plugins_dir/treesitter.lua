@@ -47,7 +47,6 @@ require("nvim-treesitter.configs").setup({
       "#599f8c",
       "#8b9dc3",
     }, -- table of hex strings
-    -- termcolors = { }, -- table of colour name strings
   },
 
   -- Context CommentString
@@ -108,8 +107,10 @@ require("nvim-treesitter.configs").setup({
       keymaps = {
         ["af"] = "@function.outer",
         ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner",
+        ["ab"] = "@block.outer",
+        ["ib"] = "@block.inner",
+        ["ac"] = "@call.outer",
+        ["ic"] = "@call.inner",
       },
     },
   },

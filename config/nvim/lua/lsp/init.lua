@@ -2,7 +2,7 @@ local lsp = vim.lsp
 local lsp_config = require("lspconfig")
 
 lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(lsp.diagnostic.on_publish_diagnostics, {
-  underline = true,
+  underline = false,
   virtual_text = false,
   -- virtual_text = {
   --   prefix = "●",
@@ -130,7 +130,7 @@ require("lspconfig").tailwindcss.setup({
 -- json
 require("lspconfig").jsonls.setup({
   cmd = {
-    vim.fn.stdpath("data") .. "vscode-langservers-extracted/node_modules/.bin/vscode-json-language-server",
+    vim.fn.stdpath("data") .. "/lsp_servers/vscode-langservers-extracted/node_modules/.bin/vscode-json-language-server",
   },
 })
 

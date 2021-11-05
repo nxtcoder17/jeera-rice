@@ -37,7 +37,6 @@ local function inoremap(key, value)
 end
 
 -- Commands
---
 -- vimspector
 vim.api.nvim_command("command! -nargs=0 Reload :luafile $XDG_CONFIG_HOME/nvim/init.lua")
 
@@ -49,7 +48,7 @@ vim.api.nvim_command("command! -nargs=0 Dl :call vimspector#StepInto()<CR>")
 vim.api.nvim_command("command! -nargs=0 Dr :call vimspector#Restart()<CR>")
 vim.api.nvim_command("command! -nargs=0 De :call vimspector#Reset()<CR>")
 
-vim.api.nvim_command("command! -nargs=0 Max :MaximizerToggle<CR>")
+vim.api.nvim_command("command! -nargs=0 Max :MaximizerToggle")
 
 -- keymappings
 
@@ -57,9 +56,21 @@ vim.g.mapleader = ","
 
 tnoremap("<Esc>", "<C-\\><C-n>")
 
+nnoremap("j", "gj")
+nnoremap("k", "gk")
+
 nnoremap("Q", "")
 nnoremap("s", "")
 vnoremap("s", "")
+nnoremap("f", "")
+vnoremap("f", "")
+
+-- Removing buffers
+nnoremap("fd", ":bdelete<CR>")
+nnoremap("fdd", ":bwipeout<CR>")
+
+-- nnoremap("ff", ":lua require'plugins_dir.telescope'.live_grep({use_regex=true})<CR>")
+nnoremap("ff", ":lua require'plugins_dir.telescope'.grep()<CR>")
 
 nnoremap("<BS>", ":nohlsearch<CR>")
 nnoremap("Y", '"+y')
@@ -82,8 +93,12 @@ nnoremap("si", ":vsplit<CR>")
 nnoremap("sm", ":split<CR>")
 
 nnoremap("sf", ":lua require'plugins_dir.telescope'.find_files()<CR>")
-nnoremap("sf", ":lua require'plugins_dir.telescope'.find_files()<CR>")
+nnoremap("ff", ":lua require'plugins_dir.telescope'.grep()<CR>")
 nnoremap("sb", ":Telescope buffers<CR>")
+
+nnoremap("sn", ":bnext<CR>")
+
+nnoremap("f;", ":!eslint_d --fix % <CR>|:e!<CR>")
 
 -- Trouble nvim toggle
 nnoremap("st", ":TroubleToggle<CR>")
@@ -99,9 +114,6 @@ nnoremap("<C-S-Right>", ":vert resize +10<CR>")
 nnoremap("<C-S-Left>", ":vert resize -10<CR>")
 nnoremap("<C-S-Up>", ":resize +10<CR>")
 nnoremap("<C-S-Down>", ":resize -10<CR>")
-
--- Code Related
-nnoremap("s;", ":!eslint_d --fix % <CR><CR> | :e!")
 
 -- rnvimr
 nnoremap("<M-o>", ":RnvimrToggle<CR>")
@@ -120,23 +132,46 @@ nnoremap("<M-j>", ":TmuxNavigateDown<cr>")
 
 -- CoC based
 -- vim.cmd([[cabbrev('OR', ':CocCommand editor.action.organizeImport')]])
-
+--
 -- comment uncomment
 nmap("s;", "gcc", {})
 vmap("s;", "gcc", {})
 
 -- nvim lsp
-nnoremap("gd", "<Cmd>lua vim.lsp.buf.definition()<CR>")
+-- nnoremap("gd", "<Cmd>lua vim.lsp.buf.definition()<CR>")
+nnoremap("gd", ":lua require'telescope.builtin'.lsp_definitions()<CR>")
 nnoremap("K", "<Cmd>lua vim.lsp.buf.hover()<CR>")
+
+nnoremap("gr", ":lua require'telescope.builtin'.lsp_references()<CR>")
+nnoremap("fd", ":lua require'telescope.builtin'.lsp_document_diagnostics()<CR>")
+nnoremap("fl", ":lua require'telescope.builtin'.lsp_document_diagnostics()<CR>")
+nnoremap("fn", "<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()<CR>")
 
 -- These mappings could get very slow, so must use `set timeoutlen=200`
 
-nnoremap("sel", "<Cmd>lua require'lspsaga.diagnostic'.show_cursor_diagnostics()<CR>")
-nnoremap("se", "<Cmd>lua require'lspsaga.diagnostic'.show_cursor_diagnostics()<CR>")
+nnoremap("se", "<Cmd>lua require'lspsaga.diagnostic'.show_line_diagnostics()<CR>")
 nnoremap("<leader>s", "<Cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>")
 
 nnoremap("sr", "<Cmd>lua require('lspsaga.rename').rename()<CR>")
 nnoremap("<leader>s", "<Cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>")
 
-nnoremap("sn", "<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()<CR>")
-nnoremap("sN", "<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()<CR>")
+nnoremap("s,", "<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()<CR>")
+nnoremap("s.", "<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()<CR>")
+
+vim.cmd([[ cabbrev http :DotHttp<CR> ]])
+
+cnoremap("qq", ":exit<CR>")
+
+nnoremap("<leader>dd", ":bwipeout<CR>")
+
+nnoremap("<M-CR>", ":lua require'telescope.builtin'.lsp_code_actions()<CR>")
+vnoremap("<M-CR>", ":lua require'telescope.builtin'.lsp_range_code_actions()<CR>")
+
+-- if vim.bo.filetype == "dot_http" then
+--   cnoremap("http", ":DotHttp<CR>")
+-- end
+
+vim.cmd([[
+augroup Formatter
+  autocmd!
+]])

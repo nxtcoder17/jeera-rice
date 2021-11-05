@@ -15,6 +15,8 @@ alias gaa='git add .'
 alias ga='git add'
 alias gb='git branch -a'
 alias gc='git commit -am'
+alias gs='git status'
+alias gss='git status -s'
 
 # git flow aliases
 alias gf='git flow'
