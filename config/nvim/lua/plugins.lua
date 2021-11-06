@@ -18,13 +18,18 @@ require("packer").startup(function()
   })
   use("drewtempelmeyer/palenight.vim")
   use("savq/melange")
-  use("rmehri01/onenord.nvim")
+  -- use("rmehri01/onenord.nvim")
   -- use("shaunsingh/nord.nvim")
-  use("0xdefaced/nord.nvim")
-  use("arcticicestudio/nord-vim")
+  -- use("0xdefaced/nord.nvim")
+  -- use("arcticicestudio/nord-vim")
   use("sainnhe/everforest")
   use("sainnhe/gruvbox-material")
   use("maaslalani/nordbuddy")
+  use("sainnhe/sonokai")
+  use("mhartington/oceanic-next")
+  use("shaunsingh/solarized.nvim")
+  use'EdenEast/nightfox.nvim'
+
   use("norcalli/nvim-colorizer.lua")
 
   use("tpope/vim-surround")
@@ -77,6 +82,7 @@ require("packer").startup(function()
 
   -- Buffer Management
   use({ "kevinhwang91/nvim-bqf", ft = "qf" })
+  use("luukvbaal/stabilize.nvim")
 
   -- TextObj
   use("terryma/vim-expand-region")
@@ -172,6 +178,9 @@ require("hlslens").setup({
   nearest_only = true,
   nearest_float_when = "always",
 })
+
+-- stabilize.nvim
+require("stabilize").setup()
 
 -- wilder
 -- vim.call([[ wilder#setup({'modes': [':', '/', '?']}) ]])

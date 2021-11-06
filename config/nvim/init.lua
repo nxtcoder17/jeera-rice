@@ -1,10 +1,5 @@
 -- disabling unused neovim builtin plugins
-vim.g.loaded_gzip = false
-vim.g.loaded_netrwPlugin = false
-vim.g.loaded_tarPlugin = false
-vim.g.loaded_zipPlugin = false
-vim.g.loaded_2html_plugin = false
-vim.g.loaded_remote_plugins = false
+require'disable-builtins'
 
 -- impatient
 require("impatient")

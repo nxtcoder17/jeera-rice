@@ -1,6 +1,6 @@
 #! /usr/bin/env sh
 
-xset r rate 180 80
+xset r rate 160 80
 
 setxkbmap -option ctrl:nocaps
 

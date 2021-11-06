@@ -22,6 +22,17 @@ telescope.setup({
     grep_string = {
       theme = "ivy",
     },
+    buffers = {
+      theme = "ivy",
+      mappings = {
+        n = {
+          ["<C-d>"] = actions.delete_buffer,
+        },
+        i = {
+          ["<C-d>"] = actions.delete_buffer,
+        },
+      },
+    },
   },
 })
 

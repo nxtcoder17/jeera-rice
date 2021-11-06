@@ -50,6 +50,10 @@ vim.api.nvim_command("command! -nargs=0 De :call vimspector#Reset()<CR>")
 
 vim.api.nvim_command("command! -nargs=0 Max :MaximizerToggle")
 
+--  Close All Buffers but current one
+vim.api.nvim_command("command! BufOnly execute '%bdelete|edit #'")
+
+
 -- keymappings
 
 vim.g.mapleader = ","

@@ -26,7 +26,7 @@ local colors = {
 
 lualine.setup({
   options = {
-    theme = "material",
+    theme = "nord",
     section_separators = { left = "", right = "" },
     component_separators = { left = "", right = "" },
   },
