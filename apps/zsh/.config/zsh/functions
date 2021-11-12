@@ -1,0 +1,27 @@
+#! /usr/bin/env sh
+
+# nvim() {
+#  $HOME/builds/nvim.appimage "$@"
+# }
+
+pnpm() {
+  if [ $1 = "peer" ]; then
+    PKG=$2
+    shift 1;
+    command pnpm i $(npm info "$PKG@latest" peerDependencies --json | sed 's/[\{\},]//g ; s/: /@/g' | xargs) $@
+  else
+    command pnpm $@
+  fi
+}
+
+_fzf_complete_make() {
+  _fzf_complete --multi --reverse --prompt="target> " -- "make ${@:2}" < <(grep -iE '^[^.].*:\s+' ./Makefile | awk -F':' '{print $1}' | uniq)
+}
+
+_fzf_complete_prun() {
+  _fzf_complete --multi --reverse --prompt="package.json script> " -- "pnpm run ${@:2}" < <(cat ./package.json| jq '.scripts'  | grep -i '"' | awk '{print $1}' | sed 's/:$//g' | sed 's/"//g')
+}
+
+# _fzf_complete_sample() {
+#   _fzf_complete --multi --reverse --prompt="target> " -- "$@" < <()
+# }

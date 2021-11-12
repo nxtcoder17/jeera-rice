@@ -1,0 +1,20 @@
+@import "./base.css";
+@import "./tabs-and-tabbar/style.css";
+
+
+#urlbar-input-container {
+  padding: 0.75rem !important;
+  font-size: 1.4rem !important;
+  font-family: var(--opertator-font);
+  font-style: var(--operator-font-style);
+}
+
+.urlbarView-row .urlbarView-title {
+  font-size: 1.3rem !important;
+}
+
+/* .urlbarView-row:is([selected]) * { */
+/*   background-color: #7aa2f7 !important; */
+/* } */
+
+ /* .urlbarView-row:not([selected]) .urlbarView-url  { */
