@@ -56,7 +56,7 @@ vim.api.nvim_command("command! BufOnly execute '%bdelete|edit #'")
 
 -- keymappings
 
-vim.g.mapleader = ","
+vim.g.mapleader = "c"
 
 tnoremap("<Esc>", "<C-\\><C-n>")
 
@@ -66,8 +66,8 @@ nnoremap("k", "gk")
 nnoremap("Q", "")
 nnoremap("s", "")
 vnoremap("s", "")
-nnoremap("f", "")
-vnoremap("f", "")
+-- nnoremap("f", "")
+-- vnoremap("f", "")
 
 -- Removing buffers
 nnoremap("fd", ":bdelete<CR>")
@@ -142,22 +142,19 @@ nmap("s;", "gcc", {})
 vmap("s;", "gcc", {})
 
 -- nvim lsp
--- nnoremap("gd", "<Cmd>lua vim.lsp.buf.definition()<CR>")
 nnoremap("gd", ":lua require'telescope.builtin'.lsp_definitions()<CR>")
 nnoremap("K", "<Cmd>lua vim.lsp.buf.hover()<CR>")
 
 nnoremap("gr", ":lua require'telescope.builtin'.lsp_references()<CR>")
-nnoremap("fd", ":lua require'telescope.builtin'.lsp_document_diagnostics()<CR>")
 nnoremap("fl", ":lua require'telescope.builtin'.lsp_document_diagnostics()<CR>")
 nnoremap("fn", "<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()<CR>")
 
 -- These mappings could get very slow, so must use `set timeoutlen=200`
 
 nnoremap("se", "<Cmd>lua require'lspsaga.diagnostic'.show_line_diagnostics()<CR>")
-nnoremap("<leader>s", "<Cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>")
+nnoremap("<leader>fs", ":lua vim.lsp.buf.signature_help()<CR>")
 
 nnoremap("sr", "<Cmd>lua require('lspsaga.rename').rename()<CR>")
-nnoremap("<leader>s", "<Cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>")
 
 nnoremap("s,", "<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()<CR>")
 nnoremap("s.", "<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()<CR>")
@@ -174,8 +171,3 @@ vnoremap("<M-CR>", ":lua require'telescope.builtin'.lsp_range_code_actions()<CR>
 -- if vim.bo.filetype == "dot_http" then
 --   cnoremap("http", ":DotHttp<CR>")
 -- end
-
-vim.cmd([[
-augroup Formatter
-  autocmd!
-]])

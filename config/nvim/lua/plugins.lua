@@ -10,6 +10,11 @@ require("packer").startup(function()
   -- syntax
   use("sheerun/vim-polyglot")
   use("fladson/vim-kitty")
+  use {"ellisonleao/glow.nvim"}
+
+
+  --  syntax specific
+  -- use({"Jakski/vim-yaml", run = ":UpdateRemotePlugins"})
 
   -- color schemes
   use({
@@ -28,7 +33,11 @@ require("packer").startup(function()
   use("sainnhe/sonokai")
   use("mhartington/oceanic-next")
   use("shaunsingh/solarized.nvim")
-  use'EdenEast/nightfox.nvim'
+  use("EdenEast/nightfox.nvim")
+  use("folke/tokyonight.nvim")
+  use("bluz71/vim-nightfly-guicolors")
+  use("Th3Whit3Wolf/one-nvim")
+  use("NLKNguyen/papercolor-theme")
 
   use("norcalli/nvim-colorizer.lua")
 
@@ -203,3 +212,7 @@ vim.cmd([[
 vim.cmd([[ map <C-w> <Plug>(expand_region_expand) ]])
 
 vim.g.dashboard_default_executive = "telescope"
+
+-- Glow.nvim
+vim.g.glow_binary_path = vim.fn.stdpath('data')..'bin'
+vim.g.glow_border = "rounded"

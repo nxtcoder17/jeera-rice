@@ -139,11 +139,13 @@ nxt-fonts:
 
 font:
   normal:
-    family: OperatorMono Nerd Font
+    # family: OperatorMono Nerd Font
+    family: Operator Mono Lig
     style: Medium
 
   bold:
-    family: OperatorMono Nerd Font
+    # family: OperatorMono Nerd Font
+    family: Operator Mono Lig
     style: Bold
 
   italic:
@@ -825,7 +827,7 @@ background_opacity: 1.0
 key_bindings:
     # (Windows, Linux, and BSD only)
   - { key: V,         mods: Control|Shift, action: Paste                       }
-  - { key: C,         mods: Control|Shift, action: Copy                        }
+  - { key: C,         mods: Control|Shift, action: None                        }
   - { key: Insert,    mods: Shift,         action: PasteSelection              }
   - { key: Key0,      mods: Control,       action: ResetFontSize               }
   - { key: Equals,    mods: Control,       action: IncreaseFontSize            }
@@ -840,3 +842,5 @@ key_bindings:
   - { key: PageDown,  mods: None,          action: ScrollPageDown, mode: ~Alt  }
   - { key: Home,      mods: Shift,         action: ScrollToTop,    mode: ~Alt  }
   - { key: End,       mods: Shift,         action: ScrollToBottom, mode: ~Alt  }
+  - { key: Space, mods: Control|Shift, action: None }
+

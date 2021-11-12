@@ -134,6 +134,21 @@ require("lspconfig").jsonls.setup({
   },
 })
 
+require("lspconfig").yamlls.setup({
+  cmd = {
+    vim.fn.stdpath("data") .. "/lsp_servers/yaml/node_modules/.bin/yaml-language-server",
+    "--stdio",
+  },
+  settings = {
+    yaml = {
+      schemaStore = {
+        url = "https://www.schemastore.org/api/json/catalog.json",
+        enable = true,
+      },
+    },
+  },
+})
+
 -- Bash
 require("lspconfig").bashls.setup({})
 

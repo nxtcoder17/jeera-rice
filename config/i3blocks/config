@@ -6,11 +6,15 @@ background=#1E3440
 separator_block_width=15
 markup=pango
 
-[date and time]
-command=echo -e "<span fgcolor='black' bgcolor='#838581'><b> $( ([[ $BLOCK_BUTTON -eq 1 ]] && date) || date '+%a %I:%M %p') </b></span>"
+[date]
+command=echo -e "<span fgcolor='#8fbcbb'><b> $( ([[ $BLOCK_BUTTON -eq 1 ]] && date) || date '+%a %I:%M %p') </b></span>"
+# command=echo -e "<span fgcolor='black' bgcolor='#838581'><b> $( ([[ $BLOCK_BUTTON -eq 1 ]] && date) || date '+%a %I:%M %p') </b></span>"
+border=#5e81ac
+border_top=1
+border_left=0
+border_right=0
+border_bottom=0
 interval=5
-min_width=1550
-align=center
 
 [battery]
 interval=2
@@ -61,6 +65,3 @@ border_top=1
 border_right=0
 border_bottom=0
 border_left=0
-
-[cpu_usage]
-label=<span color="#bd93f9">cpu  </span>
