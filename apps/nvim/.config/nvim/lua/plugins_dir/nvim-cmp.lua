@@ -1,5 +1,31 @@
 local cmp = require("cmp")
 
+local icons = {
+  Text = "   ",
+  Method = "  ",
+  Function = " ⨍ ",
+  Constructor = "   ",
+  Variable = "[]",
+  Class = "  ",
+  Interface = "ﰮ ",
+  Module = "  ",
+  Property = " 襁 ",
+  Unit = "   ",
+  Value = "  ",
+  Enum = " 練",
+  Keyword = "  ",
+  Snippet = "  ",
+  Color = "  ",
+  File = "  ",
+  Folder = "  ",
+  EnumMember = "  ",
+  Constant = "∁",
+  Struct = "▓",
+  Event = "",
+  Operator = " ",
+  TypeParameter = "  ",
+}
+
 cmp.setup({
   snippet = {
     expand = function(args)
@@ -38,17 +64,8 @@ cmp.setup({
   },
   formatting = {
     format = function(entry, vim_item)
-      vim_item.kind = string.format("%s %s", require("lspkind").presets.default[vim_item.kind], vim_item.kind)
-      vim_item.menu = ({
-        nvim_lsp = "ﲳ",
-        nvim_lua = "",
-        treesitter = "",
-        path = "ﱮ",
-        buffer = "﬘",
-        zsh = "",
-        vsnip = "",
-        spell = "暈",
-      })[entry.source.name]
+      vim_item.kind = string.format('%s (%s)', icons[vim_item.kind], vim_item.kind) 
+      vim_item.menu = "";
 
       return vim_item
     end,
@@ -56,10 +73,3 @@ cmp.setup({
 })
 
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
-
-require("lspconfig").tsserver.setup({ capabilities = capabilities })
-require("lspconfig").sumneko_lua.setup({ capabilities = capabilities })
-require("lspconfig").cssls.setup({ capabilities = capabilities })
-require("lspconfig").jsonls.setup({ capabilities = capabilities })
-require("lspconfig").yamlls.setup({ capabilities = capabilities })
-require("lspconfig").tailwindcss.setup({ capabilities = capabilities })

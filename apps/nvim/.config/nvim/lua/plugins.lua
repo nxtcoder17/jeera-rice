@@ -52,7 +52,6 @@ require("packer").startup(function()
     "nvim-lualine/lualine.nvim",
     requires = { "kyazdani42/nvim-web-devicons", opt = true },
   })
-  use("kdheepak/tabline.nvim")
 
   -- coc lsp
   -- use {'neoclide/coc.nvim', branch = 'release'}
@@ -168,14 +167,6 @@ require("packer").startup(function()
   -- dot-http
   use("nxtcoder17/vim-dot-http")
 end)
-
--- git signs
--- require('gitsigns').setup {
---   signcolumn = false,  -- Toggle with `:Gitsigns toggle_signs`
---   numhl      = true, -- Toggle with `:Gitsigns toggle_numhl`
---   linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
---   word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
--- }
 
 require("colorizer").setup()
 

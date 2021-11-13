@@ -26,9 +26,21 @@ local colors = {
 
 lualine.setup({
   options = {
-    theme = "nord",
-    section_separators = { left = "", right = "" },
-    component_separators = { left = "", right = "" },
+    theme = "tokyonight",
+    -- section_separators = { left = "", right = "" },
+    section_separators = { left = "", right = "" },
+    -- component_separators = { left = "", right = "" },
+    -- component_separators = { left = "░▒▓", right = "▓▒░" },
+    component_separators = { left = "", right = "" },
+  },
+
+  tabline = {
+    lualine_a = { "buffers" },
+    lualine_b = {},
+    lualine_c = {},
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = { "tabs" },
   },
 
   sections = {
@@ -53,7 +65,7 @@ lualine.setup({
     lualine_x = {
       {
         "diff",
-        symbols = { added = " ", modified = " 柳 ", removed = "  " },
+        symbols = { added = " ", modified = " 柳", removed = "  " },
         color_added = colors.green,
         color_modified = colors.orange,
         color_removed = colors.red,
