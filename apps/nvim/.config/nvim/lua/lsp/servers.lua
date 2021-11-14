@@ -25,9 +25,6 @@ local lsp_servers = {
   json = {
     base_dir .. "/vscode-langservers-extracted/node_modules/.bin/vscode-json-language-server",
   },
-  efm = {
-    base_dir .. "/efm/efm-langserver",
-  },
 }
 
 local function config(_config)
@@ -65,7 +62,7 @@ lsp_config.sumneko_lua.setup(config({
   },
 }))
 
--- yamlls
+-- -- yamlls
 lsp_config.yamlls.setup(config({
   cmd = lsp_servers.yaml,
   settings = {
@@ -79,31 +76,30 @@ lsp_config.yamlls.setup(config({
 }))
 
 -- GoLang
-require("lspconfig").gopls.setup({
+lsp_config.gopls.setup({
   cmd = lsp_servers.go,
 })
 
 -- Css
-require("lspconfig").cssls.setup({
+lsp_config.cssls.setup({
   cmd = lsp_servers.css,
 })
 
 -- Tailwind CSS
-require("lspconfig").tailwindcss.setup({
+lsp_config.tailwindcss.setup({
   cmd = lsp_servers.tailwindcss,
 })
 
 -- json
-require("lspconfig").jsonls.setup({
+lsp_config.jsonls.setup({
   cmd = lsp_servers.json,
 })
 
-
 -- Bash
-require("lspconfig").bashls.setup({})
+lsp_config.bashls.setup({})
 
 -- Dockerfile
-require("lspconfig").dockerls.setup({})
+lsp_config.dockerls.setup({})
 
 -- EFM
 local efm_config = vim.fn.stdpath("config") .. "/lua/lsp/sources/efm-config.yaml"
@@ -117,7 +113,7 @@ local eslint = {
 }
 
 local prettier = {
-  formatCommand = "prettier --find-config-path --stdin-filepath ${INPUT}",
+  formatCommand = "prettier_d_slim --find-config-path --stdin-filepath ${INPUT}",
   formatStdin = true,
 }
 
@@ -138,9 +134,11 @@ local efm_languages = {
   html = { prettier },
 }
 
+local efm_cmd = vim.fn.stdpath('data') .. '/lsp_servers/efm/efm-langserver'
+
 require("lspconfig").efm.setup({
   cmd = {
-    lsp_servers.efm,
+    efm_cmd,
     "-c",
     efm_config,
     "-logfile",
