@@ -1,171 +1,182 @@
 require("packer").startup(function()
- use("wbthomason/packer.nvim")
+  use("wbthomason/packer.nvim")
 
- -- back to where you left
- use("farmergreg/vim-lastplace")
- use("glepnir/dashboard-nvim")
+  -- Large fIles
+  -- use("vim-scripts/LargeFile")
 
- use("lewis6991/impatient.nvim")
+  -- back to where you left
+  use("farmergreg/vim-lastplace")
+  use("glepnir/dashboard-nvim")
 
- -- syntax
- use("sheerun/vim-polyglot")
- use("fladson/vim-kitty")
- use {"ellisonleao/glow.nvim"}
+  -- AutoPairs
+  use("windwp/nvim-autopairs")
 
+  use("lewis6991/impatient.nvim")
 
- --  syntax specific
- -- use({"Jakski/vim-yaml", run = ":UpdateRemotePlugins"})
+  -- syntax
+  use("sheerun/vim-polyglot")
+  use("fladson/vim-kitty")
+  use({ "ellisonleao/glow.nvim" })
 
- -- color schemes
- use({
-   "mcchrish/zenbones.nvim",
-   requires = "rktjmp/lush.nvim",
- })
- use("drewtempelmeyer/palenight.vim")
- use("savq/melange")
- -- use("rmehri01/onenord.nvim")
- -- use("shaunsingh/nord.nvim")
- -- use("0xdefaced/nord.nvim")
- -- use("arcticicestudio/nord-vim")
- use("sainnhe/everforest")
- use("sainnhe/gruvbox-material")
- use("maaslalani/nordbuddy")
- use("sainnhe/sonokai")
- use("mhartington/oceanic-next")
- use("shaunsingh/solarized.nvim")
- use("EdenEast/nightfox.nvim")
- use("folke/tokyonight.nvim")
- use("bluz71/vim-nightfly-guicolors")
- use("Th3Whit3Wolf/one-nvim")
- use("NLKNguyen/papercolor-theme")
+  --  syntax specific
+  -- use({"Jakski/vim-yaml", run = ":UpdateRemotePlugins"})
 
- use("norcalli/nvim-colorizer.lua")
+  -- color schemes
+  use({
+    "mcchrish/zenbones.nvim",
+    requires = "rktjmp/lush.nvim",
+  })
+  use("drewtempelmeyer/palenight.vim")
+  use("savq/melange")
+  -- use("rmehri01/onenord.nvim")
+  -- use("shaunsingh/nord.nvim")
+  -- use("0xdefaced/nord.nvim")
+  -- use("arcticicestudio/nord-vim")
+  use("sainnhe/everforest")
+  use("sainnhe/gruvbox-material")
+  use("maaslalani/nordbuddy")
+  use("sainnhe/sonokai")
+  use("mhartington/oceanic-next")
+  use("shaunsingh/solarized.nvim")
+  use("EdenEast/nightfox.nvim")
+  use("folke/tokyonight.nvim")
+  use("bluz71/vim-nightfly-guicolors")
+  use("Th3Whit3Wolf/one-nvim")
+  use("NLKNguyen/papercolor-theme")
 
- use("tpope/vim-surround")
- use("tpope/vim-commentary")
- use("mbbill/undotree")
- use("kevinhwang91/nvim-hlslens")
- use("mg979/vim-visual-multi")
+  use("norcalli/nvim-colorizer.lua")
 
- -- status line
- use({
-   "nvim-lualine/lualine.nvim",
-   requires = { "kyazdani42/nvim-web-devicons", opt = true },
- })
+  -- Motion
+  use("bkad/CamelCaseMotion")
+  use("tpope/vim-surround")
+  use("tpope/vim-commentary")
+  use("mbbill/undotree")
+  use("kevinhwang91/nvim-hlslens")
+  use("mg979/vim-visual-multi")
+  use("chrisbra/NrrwRgn")
 
- -- coc lsp
- -- use {'neoclide/coc.nvim', branch = 'release'}
- use({ "junegunn/fzf", run = "./install --bin" })
- use({
-   "ibhagwan/fzf-lua",
-   requires = {
-     "vijaymarupudi/nvim-fzf",
-     "kyazdani42/nvim-web-devicons",
-   },
- })
- use("kevinhwang91/rnvimr")
- use("christoomey/vim-tmux-navigator")
- use("psliwka/vim-smoothie")
+  -- status line
+  use({
+    "nvim-lualine/lualine.nvim",
+    requires = { "kyazdani42/nvim-web-devicons", opt = true },
+  })
 
- -- LSP
- use({"neovim/nvim-lspconfig", commit="0d2722a63e7e79bfc97ea10322ecbbfd48154e77"})
- use("folke/lsp-colors.nvim") --  better diagonstics colors
- use("hrsh7th/nvim-compe")
- use("onsails/lspkind-nvim")
- use("folke/lua-dev.nvim")
- use("williamboman/nvim-lsp-installer")
- use("nvim-lua/lsp-status.nvim")
- use("jose-elias-alvarez/nvim-lsp-ts-utils")
- -- use("/jose-elias-alvarez/null-ls.nvim")
- use("ray-x/lsp_signature.nvim")
- use("glepnir/lspsaga.nvim")
+  -- coc lsp
+  -- use {'neoclide/coc.nvim', branch = 'release'}
+  use({ "junegunn/fzf", run = "./install --bin" })
+  use({
+    "ibhagwan/fzf-lua",
+    requires = {
+      "vijaymarupudi/nvim-fzf",
+      "kyazdani42/nvim-web-devicons",
+    },
+  })
+  use("kevinhwang91/rnvimr")
+  use("christoomey/vim-tmux-navigator")
+  use("psliwka/vim-smoothie")
 
- use({
-   "folke/trouble.nvim",
-   requires = "kyazdani42/nvim-web-devicons",
- })
+  -- LSP
+  use({ "neovim/nvim-lspconfig" })
+  use("folke/lsp-colors.nvim") --  better diagonstics colors
+  use("hrsh7th/nvim-compe")
+  use("onsails/lspkind-nvim")
+  use("folke/lua-dev.nvim")
+  use("williamboman/nvim-lsp-installer")
+  use("nvim-lua/lsp-status.nvim")
+  use("jose-elias-alvarez/nvim-lsp-ts-utils")
+  -- use("/jose-elias-alvarez/null-ls.nvim")
+  use("ray-x/lsp_signature.nvim")
+  use("glepnir/lspsaga.nvim")
 
- -- Code Beauty
- use("mhartington/formatter.nvim")
+  use({
+    "folke/trouble.nvim",
+    requires = "kyazdani42/nvim-web-devicons",
+  })
 
- -- Buffer Management
- use({ "kevinhwang91/nvim-bqf", ft = "qf" })
- use("luukvbaal/stabilize.nvim")
+  -- Code Beauty
+  use("mhartington/formatter.nvim")
 
- -- TextObj
- use("terryma/vim-expand-region")
+  -- Buffer Management
+  use({ "kevinhwang91/nvim-bqf", ft = "qf" })
+  use("luukvbaal/stabilize.nvim")
 
- use("kana/vim-textobj-user")
- use("kana/vim-textobj-indent")
- use("kana/vim-textobj-line")
- use("kana/vim-textobj-entire")
- use("kana/vim-textobj-function")
- use("kana/vim-textobj-underscore")
+  -- TextObj
+  use("terryma/vim-expand-region")
 
- -- wild mode
- use({ "gelguy/wilder.nvim", run = ":UpdateRemotePlugins" })
+  use("kana/vim-textobj-user")
+  use("kana/vim-textobj-indent")
+  use("kana/vim-textobj-line")
+  use("kana/vim-textobj-entire")
+  use("kana/vim-textobj-function")
+  use("kana/vim-textobj-underscore")
 
- -- AutoCompletion
- use({
-   "hrsh7th/nvim-cmp",
-   requires = {
-     { "hrsh7th/cmp-buffer" },
-     { "hrsh7th/cmp-nvim-lsp" },
-     { "hrsh7th/cmp-path" },
-     { "hrsh7th/cmp-nvim-lua" },
-     { "ray-x/cmp-treesitter" },
-     { "SirVer/ultisnips" },
-     { "quangnguyen30192/cmp-nvim-ultisnips" },
-     { "hrsh7th/nvim-cmp" },
-     { "hrsh7th/cmp-vsnip" },
-     { "hrsh7th/vim-vsnip" },
-     { "hrsh7th/vim-vsnip-integ" },
-     { "Saecki/crates.nvim" },
-     { "f3fora/cmp-spell" },
-   },
- })
- use({
-   "andersevenrud/compe-tmux",
-   branch = "cmp",
- })
+  -- wild mode
+  use({ "gelguy/wilder.nvim", run = ":UpdateRemotePlugins" })
 
- -- Treesitter
- use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
- use("nvim-treesitter/nvim-treesitter-refactor")
- use("nvim-treesitter/nvim-treesitter-textobjects")
+  -- AutoCompletion
+  use({
+    "hrsh7th/nvim-cmp",
+    requires = {
+      { "hrsh7th/cmp-buffer" },
+      { "hrsh7th/cmp-nvim-lsp" },
+      { "hrsh7th/cmp-path" },
+      { "hrsh7th/cmp-nvim-lua" },
+      { "ray-x/cmp-treesitter" },
+      { "SirVer/ultisnips" },
+      { "quangnguyen30192/cmp-nvim-ultisnips" },
+      { "hrsh7th/nvim-cmp" },
+      { "hrsh7th/cmp-vsnip" },
+      { "hrsh7th/vim-vsnip" },
+      { "hrsh7th/vim-vsnip-integ" },
+      { "Saecki/crates.nvim" },
+      { "f3fora/cmp-spell" },
+    },
+  })
+  use({
+    "andersevenrud/compe-tmux",
+    branch = "cmp",
+  })
 
- -- use("windwp/nvim-autopairs")
- use("p00f/nvim-ts-rainbow")
- use("JoosepAlviste/nvim-ts-context-commentstring")
- use("andymass/vim-matchup")
- use("windwp/nvim-ts-autotag")
+  -- Treesitter
+  use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
+  use("nvim-treesitter/nvim-treesitter-refactor")
+  use("nvim-treesitter/nvim-treesitter-textobjects")
 
- -- Telescope
- use("nvim-lua/popup.nvim")
- use("nvim-lua/plenary.nvim")
- use("nvim-telescope/telescope.nvim")
- use("nvim-telescope/telescope-fzy-native.nvim")
- use("nvim-telescope/telescope-project.nvim")
- --
- use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
+  -- use("windwp/nvim-autopairs")
+  use("p00f/nvim-ts-rainbow")
+  use("JoosepAlviste/nvim-ts-context-commentstring")
+  use("andymass/vim-matchup")
+  use("windwp/nvim-ts-autotag")
 
- use({ "lewis6991/gitsigns.nvim", requires = { "nvim-lua/plenary.nvim" } })
+  -- Telescope
+  use("nvim-lua/popup.nvim")
+  use("nvim-lua/plenary.nvim")
+  use("nvim-telescope/telescope.nvim")
+  use("nvim-telescope/telescope-fzy-native.nvim")
+  use("nvim-telescope/telescope-project.nvim")
+  --
+  use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
 
- -- Better profiling output for startup.
- use({ "dstein64/vim-startuptime", cmd = "StartupTime" })
+  use({ "lewis6991/gitsigns.nvim", requires = { "nvim-lua/plenary.nvim" } })
 
- -- buffers
- use("famiu/bufdelete.nvim")
+  -- Better profiling output for startup.
+  use({ "dstein64/vim-startuptime", cmd = "StartupTime" })
 
- -- navigator
- -- use({ "ray-x/navigator.lua", requires = { "ray-x/guihua.lua", run = "cd lua/fzy && make" } })
+  -- buffers
+  use("famiu/bufdelete.nvim")
 
- -- debugging
- use("puremourning/vimspector")
- use("szw/vim-maximizer")
+  -- navigator
+  -- use({ "ray-x/navigator.lua", requires = { "ray-x/guihua.lua", run = "cd lua/fzy && make" } })
 
- -- dot-http
- use("nxtcoder17/vim-dot-http")
+  -- debugging
+  use("puremourning/vimspector")
+  use("szw/vim-maximizer")
+
+  -- dot-http
+  use("nxtcoder17/vim-dot-http")
+
+  -- async
+  use("tpope/vim-dispatch")
 end)
 
 -- git signs
@@ -213,5 +224,32 @@ vim.cmd([[ map <C-w> <Plug>(expand_region_expand) ]])
 vim.g.dashboard_default_executive = "telescope"
 
 -- Glow.nvim
-vim.g.glow_binary_path = vim.fn.stdpath('data')..'bin'
+vim.g.glow_binary_path = vim.fn.stdpath("data") .. "bin"
 vim.g.glow_border = "rounded"
+
+-- large files
+
+-- vim.g.LargeFile = 0.25
+vim.cmd [[
+
+  " file is large from 10mb
+let g:LargeFile = 1024 * 1024 * 2 / 10
+augroup LargeFile 
+  au!
+  autocmd BufReadPre * let f=getfsize(expand("<afile>")) | if f > g:LargeFile || f == -2 | call LargeFile() | endif
+augroup END
+
+function! LargeFile()
+ " no syntax highlighting etc
+ set eventignore+=FileType
+ " save memory when other file is viewed
+ setlocal bufhidden=unload
+ " is read-only (write with :w new_filename)
+ " setlocal buftype=nowrite
+ " no undo possible
+ setlocal undolevels=-1
+ " display message
+ autocmd VimEnter *  echo "The file is larger than " . (g:LargeFile / 1024 / 1024) . " MB, so some options are changed (see .vimrc for details)."
+endfunction
+
+]]

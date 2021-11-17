@@ -1,22 +1,44 @@
-local function map(mode, key, value, opts)
+local function mapHelper(mode, key, value, opts)
   vim.api.nvim_set_keymap(mode, key, value, opts)
 end
 
+local function map(key, value, opts)
+  mapHelper("", key, value, opts)
+end
+
+local function unmap(mode, key)
+  vim.api.nvim_del_keymap(mode, key)
+end
+
 local function nmap(key, value, opts)
-  map("n", key, value, opts)
+  mapHelper("n", key, value, opts)
 end
 local function vmap(key, value, opts)
-  map("v", key, value, opts)
+  mapHelper("v", key, value, opts)
 end
 local function cmap(key, value, opts)
-  map("c", key, value, opts)
+  mapHelper("c", key, value, opts)
 end
 local function imap(key, value, opts)
-  map("i", key, value, opts)
+  mapHelper("i", key, value, opts)
 end
+
 local function tmap(key, value, opts)
-  map("t", key, value, opts)
+  mapHelper("t", key, value, opts)
 end
+
+local function omap(key, value, opts)
+  mapHelper("o", key, value, opts)
+end
+
+local function xmap(key, value, opts)
+  mapHelper("x", key, value, opts)
+end
+
+local function smap(key, value, opts)
+  mapHelper("s", key, value, opts)
+end
+
 
 local globalOpts = { noremap = true, silent = true }
 
@@ -168,6 +190,28 @@ nnoremap("<leader>dd", ":bwipeout<CR>")
 nnoremap("<M-CR>", ":lua require'telescope.builtin'.lsp_code_actions()<CR>")
 vnoremap("<M-CR>", ":lua require'telescope.builtin'.lsp_range_code_actions()<CR>")
 
--- if vim.bo.filetype == "dot_http" then
---   cnoremap("http", ":DotHttp<CR>")
--- end
+-- CamelCase Motion (keymaps as suggested, by https://github.com/bkad/CamelCaseMotion)
+map('w', '<Plug>CamelCaseMotion_w', {})
+map('b', '<Plug>CamelCaseMotion_b', {})
+map('e', '<Plug>CamelCaseMotion_e', {})
+map('ge', '<Plug>CamelCaseMotion_ge', {})
+
+unmap('s','w')
+unmap('s','b')
+unmap('s','e')
+unmap('s','ge')
+
+omap('iw', '<Plug>CamelCaseMotion_iw', {})
+xmap('iw', '<Plug>CamelCaseMotion_iw', {})
+omap('ib', '<Plug>CamelCaseMotion_ib', {})
+xmap('ib', '<Plug>CamelCaseMotion_ib', {})
+omap('ie', '<Plug>CamelCaseMotion_ie', {})
+xmap('ie', '<Plug>CamelCaseMotion_ie', {})
+
+-- term open
+
+function termInBufferDir()
+  local dir = vim.fn.expand('%:h')
+end
+
+-- nnoremap('ct', string.format(':call termopen("cd %s && %s") <CR>|set ft=terminal', vim.fn.expand('%:h'), 'zsh'))

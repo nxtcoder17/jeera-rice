@@ -9,3 +9,5 @@ require("plugins_dir.lualine")
 require("plugins_dir.gitsigns")
 require("plugins_dir.trouble")
 require("plugins_dir.colorscheme")
+require("plugins_dir.nvim-autopairs")
+

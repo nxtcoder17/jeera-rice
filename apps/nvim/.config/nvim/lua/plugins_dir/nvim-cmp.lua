@@ -3,6 +3,7 @@ local cmp = require("cmp")
 local icons = {
   Text = "   ",
   Method = "  ",
+  Field = " λ ",
   Function = " ⨍ ",
   Constructor = "   ",
   Variable = "[]",

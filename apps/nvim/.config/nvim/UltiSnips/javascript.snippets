@@ -53,3 +53,10 @@ useEffect(() => {
 	$0
 }, []);
 endsnippet
+
+snippet esm__dirname "commonjs __dirname for ESM"
+import path from 'path';
+import {fileURLToPath} from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+endsnippet
