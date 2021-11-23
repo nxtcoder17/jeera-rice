@@ -23,6 +23,9 @@ _comp_options+=(globdots)		# Include hidden files.
 # History in XDG Cache
 HISTSIZE=100000
 SAVEHIST=100000
+
+[ -d $HOME/.cache/zsh ] || mkdir -p $HOME/.cache/zsh
+
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 
 setopt append_history
