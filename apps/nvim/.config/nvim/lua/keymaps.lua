@@ -183,7 +183,7 @@ nnoremap("s.", "<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()<
 
 vim.cmd([[ cabbrev http :DotHttp<CR> ]])
 
-cnoremap("qq", ":exit<CR>")
+-- cnoremap("qq", ":exit<CR>")
 
 nnoremap("<leader>dd", ":bwipeout<CR>")
 
