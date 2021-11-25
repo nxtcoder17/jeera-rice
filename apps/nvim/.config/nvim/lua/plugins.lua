@@ -8,6 +8,27 @@ require("packer").startup(function()
   use("farmergreg/vim-lastplace")
   use("glepnir/dashboard-nvim")
 
+  -- auto-sessions
+  use({
+    "rmagatti/auto-session",
+    config = function()
+      vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
+      require("auto-session").setup({
+        log_level = "info",
+        auto_session_enabled = true,
+        auto_session_suppress_dirs = { "~/" },
+        auto_session_root_dir = vim.fn.stdpath("data") .. "/sessions/",
+      })
+    end,
+  })
+
+  use({
+    "rmagatti/session-lens",
+    config = function()
+      require("session-lens").setup()
+    end,
+  })
+
   -- AutoPairs
   use("windwp/nvim-autopairs")
 
@@ -55,6 +76,9 @@ require("packer").startup(function()
   use("kevinhwang91/nvim-hlslens")
   use("mg979/vim-visual-multi")
   use("chrisbra/NrrwRgn")
+
+  -- kubernetes
+  use("andrewstuart/vim-kubernetes")
 
   -- status line
   use({
@@ -164,7 +188,8 @@ require("packer").startup(function()
   use({ "dstein64/vim-startuptime", cmd = "StartupTime" })
 
   -- buffers
-  use("famiu/bufdelete.nvim")
+  -- use("famiu/bufdelete.nvim")
+  use("kazhala/close-buffers.nvim")
 
   -- navigator
   -- use({ "ray-x/navigator.lua", requires = { "ray-x/guihua.lua", run = "cd lua/fzy && make" } })
@@ -205,20 +230,20 @@ require("stabilize").setup()
 -- wilder
 -- vim.call([[ wilder#setup({'modes': [':', '/', '?']}) ]])
 
-vim.cmd([[
-  let g:expand_region_text_objects = {
-        \ 'iw'  :0,
-        \ 'iW'  :0,
-        \ 'i"'  :0,
-        \ 'i''' :0,
-        \ 'i]'  :1,
-        \ 'ib'  :1,
-        \ 'iB'  :1,
-        \ 'il'  :1,
-        \ 'ip'  :1,
-        \ 'ie'  :0,
-        \ }
-]])
+-- vim.cmd([[
+--   let g:expand_region_text_objects = {
+--         \ 'iw'  :0,
+--         \ 'iW'  :0,
+--         \ 'i"'  :0,
+--         \ 'i''' :0,
+--         \ 'i]'  :1,
+--         \ 'ib'  :1,
+--         \ 'iB'  :1,
+--         \ 'il'  :1,
+--         \ 'ip'  :1,
+--         \ 'ie'  :0,
+--         \ }
+-- ]])
 
 vim.cmd([[ map <C-w> <Plug>(expand_region_expand) ]])
 

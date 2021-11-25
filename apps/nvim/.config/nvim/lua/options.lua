@@ -70,8 +70,8 @@ opt.completeopt = "menu,menuone,noinsert,noselect"
 -- Tab and Spaces
 opt.tabstop = 2
 opt.softtabstop = 2
-opt.shiftwidth = 2          -- spaces per tab when using >> or <<
-opt.expandtab = true        -- expand tabs into spaces
+opt.shiftwidth = 2 -- spaces per tab when using >> or <<
+opt.expandtab = true -- expand tabs into spaces
 opt.autoindent = true
 opt.smarttab = true
 opt.shiftround = true
@@ -82,26 +82,47 @@ opt.smartcase = true
 opt.ignorecase = true
 opt.hlsearch = true
 
--- replace 
-opt.inccommand = "split"    -- shows live incremental status of substitution in split buffer
+-- replace
+opt.inccommand = "split" -- shows live incremental status of substitution in split buffer
 
 opt.mouse = "a"
 
-vim.cmd [[
+vim.cmd([[
 augroup YankHighlight
     autocmd!
     autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=500, on_visual=true}
 augroup end
-]]
+]])
 
 -- don't auto commenting new lines
 vim.cmd([[au! BufEnter * set fo-=c fo-=r fo-=o]])
 
 vim.g.matchup_matchparen_status_offscreen = 0
 vim.g.matchup_matchparen_pumvisible = 0
-vim.g.matchup_matchparen_nomode = 'ivV'
+vim.g.matchup_matchparen_nomode = "ivV"
 vim.g.matchup_surround_enabled = 1
 
 -- vim.wo.foldmethod = 'expr'
 -- vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
 
+function _G.custom_fold_text()
+  local line = vim.fn.getline(vim.v.foldstart)
+  local line_count = vim.v.foldend - vim.v.foldstart + 1
+
+  -- local start_char = " ⚡ "
+  -- local start_char = " 🪅 "
+  local start_char = " 😎 "
+  local fill_char = " +--+ "
+
+  local other_offsets = 12
+  local right_padding = 10
+  local first_stop = vim.fn.winwidth(0) - #line - other_offsets - right_padding - #start_char - #line / 3
+  return start_char
+    .. line
+    .. (" "):rep(#line / 3)
+    .. fill_char:rep(first_stop / #fill_char)
+    .. string.format("[ %2s lines ]", line_count)
+    .. (" "):rep(right_padding)
+end
+
+vim.opt.foldtext = "v:lua.custom_fold_text()"

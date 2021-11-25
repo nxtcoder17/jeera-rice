@@ -76,4 +76,8 @@ M.file_explorer = function ()
   })
 end
 
+M.list_sessions = function ()
+  require('session-lens').search_session()
+end
+
 return M;
