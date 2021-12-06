@@ -88,6 +88,7 @@ lsp_config.cssls.setup({
 -- Tailwind CSS
 lsp_config.tailwindcss.setup({
   cmd = lsp_servers.tailwindcss,
+  root_dir = lsp_config.util.root_pattern('tailwind.config.js'),
 })
 
 -- json

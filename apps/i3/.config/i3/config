@@ -381,8 +381,8 @@ for_window [title="NxtTerm"] move scratchpad
 # exec --no-startup-id xfce4-terminal --hide-menubar -T NxtTerm
 exec --no-startup-id konsole --hide-menubar -p tabtitle=NxtTerm 
 
-bindsym $alt + space	[title="NxtTerm"] scratchpad show; [title="NxtTerm"] move position center
-bindsym F10 exec --no-startup-id  konsole --hide-menubar -p tabtitle=NxtTerm 
+bindsym $alt + g	[title="NxtTerm"] scratchpad show; [title="NxtTerm"] move position center
+bindsym F10 	exec --no-startup-id  konsole --hide-menubar -p tabtitle=NxtTerm 
 
 for_window [title="ChromeTabs"] floating enable
 for_window [title="ChromeTabs"] resize set 1000 500

@@ -1,4 +1,6 @@
 prefix = ${XDG_DATA_HOME}/node
+global-dir=${XDG_DATA_HOME}/node
+global-bin-dir=${XDG_DATA_HOME}/node/.bin
 
 @madhouselabs:registry = https://gitlab.com/api/v4/packages/npm/
 //gitlab.com/api/v4/packages/npm/:_authToken=${GITLAB_NPM_REGISTRY_TOKEN}

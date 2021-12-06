@@ -16,10 +16,10 @@ local disabled_built_ins = {
     "logipat",
     "rrhelper",
 
-    "netrw",
-    "netrwPlugin",
-    "netrwSettings",
-    "netrwFileHandlers",
+    -- "netrw",
+    -- "netrwPlugin",
+    -- "netrwSettings",
+    -- "netrwFileHandlers",
 
     "spellfile_plugin",
     "shada_plugin",

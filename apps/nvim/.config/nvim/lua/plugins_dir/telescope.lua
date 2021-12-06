@@ -1,7 +1,9 @@
-local telescope = require('telescope')
-local telescope_builtin = require("telescope.builtin");
-local telescope_actions = require("telescope.actions");
+local telescope = require("telescope")
+local telescope_builtin = require("telescope.builtin")
+local telescope_actions = require("telescope.actions")
 local actions = require("telescope.actions")
+local pickers = require("telescope.pickers")
+local finders = require("telescope.finders")
 
 telescope.setup({
   extensions = {
@@ -17,6 +19,9 @@ telescope.setup({
       theme = "ivy",
     },
     lsp_references = {
+      theme = "ivy",
+    },
+    lsp_definitions = {
       theme = "ivy",
     },
     grep_string = {
@@ -38,13 +43,12 @@ telescope.setup({
 
 require("telescope").load_extension("fzf")
 
-
 local M = {}
 
 M.find_files = function()
-  telescope_builtin.find_files {
-    find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' },
-  }
+  telescope_builtin.find_files({
+    find_command = { "rg", "--files", "--iglob", "!.git", "--hidden" },
+  })
 end
 
 M.grep = function()
@@ -55,9 +59,7 @@ M.grep = function()
   })
 end
 
-
-
-M.nvim_config = function ()
+M.nvim_config = function()
   require("telescope.builtin").file_browser({
     prompt_title = " NVim Config Browse",
     cwd = "~/.config/nvim/",
@@ -66,7 +68,7 @@ M.nvim_config = function ()
   })
 end
 
-M.file_explorer = function ()
+M.file_explorer = function()
   require("telescope.builtin").file_browser({
     prompt_title = " File Browser",
     path_display = { "shorten" },
@@ -76,8 +78,41 @@ M.file_explorer = function ()
   })
 end
 
-M.list_sessions = function ()
-  require('session-lens').search_session()
+M.list_sessions = function()
+  require("session-lens").search_session()
 end
 
-return M;
+-- WIP: do not use
+M.debugger = function(opts)
+  local results = {
+    "Launch",
+    "ToggleBreakpoint",
+    "StepOver",
+    "StepInto",
+    "StepOut",
+    "Restart",
+    "Reset",
+  }
+  pickers.new(opts, {
+    prompt_title = "vimspector debugger",
+    finder = finders.new_table(results),
+    sorter = require'telescope.sorters'.get_generic_fuzzy_sorter({}),
+    attach_mappings = function(_, map)
+      -- Map "<cr>" in insert mode to the function, actions.set_command_line
+      map('i', '<cr>', actions.set_command_line)
+      return true
+    end,
+  }):find()
+end
+
+M.colors = function(opts)
+  opts = opts or {}
+  pickers.new(opts, {
+    prompt_title = "colors",
+    finder = finders.new_table({
+      results = { "red", "green", "blue" },
+    }),
+  }):find()
+end
+
+return M

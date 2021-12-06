@@ -1,3 +1,16 @@
+local fn = vim.fn
+local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+if fn.empty(fn.glob(install_path)) > 0 then
+  packer_bootstrap = fn.system({
+    "git",
+    "clone",
+    "--depth",
+    "1",
+    "https://github.com/wbthomason/packer.nvim",
+    install_path,
+  })
+end
+
 require("packer").startup(function()
   use("wbthomason/packer.nvim")
 
@@ -66,6 +79,14 @@ require("packer").startup(function()
   use("NLKNguyen/papercolor-theme")
 
   use("norcalli/nvim-colorizer.lua")
+
+  -- comment/uncomment
+  use({
+    "numToStr/Comment.nvim",
+    config = function()
+      require("plugins_dir.comment-nvim")
+    end,
+  })
 
   -- Motion
   use("bkad/CamelCaseMotion")
@@ -203,15 +224,11 @@ require("packer").startup(function()
 
   -- async
   use("tpope/vim-dispatch")
-end)
 
--- git signs
--- require('gitsigns').setup {
---   signcolumn = false,  -- Toggle with `:Gitsigns toggle_signs`
---   numhl      = true, -- Toggle with `:Gitsigns toggle_numhl`
---   linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
---   word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
--- }
+  if packer_bootstrap then
+    require("packer").sync()
+  end
+end)
 
 require("colorizer").setup()
 
@@ -244,7 +261,6 @@ require("stabilize").setup()
 --         \ 'ie'  :0,
 --         \ }
 -- ]])
-
 vim.cmd([[ map <C-w> <Plug>(expand_region_expand) ]])
 
 vim.g.dashboard_default_executive = "telescope"
