@@ -30,6 +30,9 @@ lualine.setup({
     -- section_separators = { left = "", right = "" },
     section_separators = { left = "", right = "" },
     -- component_separators = { left = "", right = "" },
+    -- section_separators = { left = "░▒▓", right = "▓▒░" },
+    -- component_separators = { left = "░", right = "░" },
+    -- component_separators = { left = "░", right = "░" },
     -- component_separators = { left = "░▒▓", right = "▓▒░" },
     component_separators = { left = "", right = "" },
   },
@@ -44,7 +47,9 @@ lualine.setup({
   },
 
   sections = {
-    lualine_a = { { "mode", upper = true } },
+    lualine_a = {
+      { "mode", upper = true},
+    },
     lualine_b = {},
     lualine_c = {
       {
