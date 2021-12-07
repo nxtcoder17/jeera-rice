@@ -1,8 +1,9 @@
 -- nvim-treesitter
 require("nvim-treesitter.configs").setup({
+  ensure_installed = "all",
   highlight = {
     enable = true,
-    additional_vim_regex_highlighting = true,
+    additional_vim_regex_highlighting = false,
   },
   incremental_selection = {
     enable = true,
@@ -57,12 +58,12 @@ require("nvim-treesitter.configs").setup({
   -- Context CommentString
   context_commentstring = {
     enable = true,
-    -- enable_autocmd = false,
+    enable_autocmd = true,
   },
 
   refactor = {
-    smart_rename = { 
-      enable = true, 
+    smart_rename = {
+      enable = true,
       keymaps = { smart_rename = "grr" }
     },
     highlight_definitions = { enable = true },

@@ -8,6 +8,14 @@ else
   alias ll='ls -l'
 fi
 
+if [ -f .env.sh ]; then
+  source .env.sh
+  alias k="kubectl --namespace=$KUBE_NAMESPACE --context=$KUBE_CONTEXT"
+else
+  alias k="kubectl"
+fi
+alias tel='telepresence'
+
 alias cc='xclip -sel clip'
 
 alias nvms='source /usr/share/nvm/init-nvm.sh'

@@ -21,9 +21,15 @@ local lsp_servers = {
   },
   tailwindcss = {
     base_dir .. "/tailwindcss_npm/node_modules/.bin/tailwindcss-language-server",
+    '--stdio',
   },
   json = {
-    base_dir .. "/vscode-langservers-extracted/node_modules/.bin/vscode-json-language-server",
+    base_dir .. "/jsonls/node_modules/.bin/vscode-json-language-server",
+    '--stdio',
+  },
+  docker = {
+    base_dir .. "/dockerfile/node_modules/.bin/docker-langserver",
+    '--stdio'
   },
 }
 
@@ -88,19 +94,50 @@ lsp_config.cssls.setup({
 -- Tailwind CSS
 lsp_config.tailwindcss.setup({
   cmd = lsp_servers.tailwindcss,
+  filetypes = {"javascriptreact", "typescriptreact", "html", "css"},
   root_dir = lsp_config.util.root_pattern('tailwind.config.js'),
+  log_level = vim.lsp.protocol.MessageType.Warning;
+  settings = {};
 })
 
 -- json
 lsp_config.jsonls.setup({
   cmd = lsp_servers.json,
+  settings = {
+    json = {
+      schemas = {
+        {
+          fileMatch = { "package.json" },
+          url = "https://json.schemastore.org/npmpackagejsonlintrc.json",
+        },
+        {
+          fileMatch = { "jsconfig.json" },
+          url = "https://json.schemastore.org/jsconfig.json",
+        },
+        {
+          fileMatch = { "tsconfig.json" },
+          url = "https://json.schemastore.org/tsconfig.json",
+        },
+        {
+          fileMatch = {".eslintrc.json", ".eslintrc"},
+          url = "https://json.schemastore.org/eslintrc.json",
+        },
+      },
+    },
+  },
 })
 
 -- Bash
 lsp_config.bashls.setup({})
 
 -- Dockerfile
-lsp_config.dockerls.setup({})
+lsp_config.dockerls.setup({
+  cmd = lsp_servers.docker,
+  filetypes = {"Dockerfile", "dockerfile"};
+  root_dir = lsp_config.util.root_pattern("Dockerfile");
+  log_level = vim.lsp.protocol.MessageType.Warning;
+  settings = {};
+})
 
 -- EFM
 

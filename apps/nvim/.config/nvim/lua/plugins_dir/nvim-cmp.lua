@@ -52,6 +52,7 @@ cmp.setup({
     { name = "treesitter" },
     { name = "ultisnips" },
     { name = "path" },
+    { name = "copilot" },
     {
       name = "buffer",
       options = {
@@ -60,8 +61,8 @@ cmp.setup({
         end,
       },
     },
-    { name = "spell" },
     { name = "tmux" },
+    { name = "spell" },
   },
   formatting = {
     format = function(entry, vim_item)

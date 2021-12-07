@@ -1,7 +1,7 @@
 local fn = vim.fn
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 if fn.empty(fn.glob(install_path)) > 0 then
-  packer_bootstrap = fn.system({
+  local packer_bootstrap = fn.system({
     "git",
     "clone",
     "--depth",
@@ -20,6 +20,12 @@ require("packer").startup(function()
   -- back to where you left
   use("farmergreg/vim-lastplace")
   use("glepnir/dashboard-nvim")
+
+  -- copilot
+  use("github/copilot.vim")
+
+  -- syntax highlighting
+  use("mboughaba/i3config.vim")
 
   -- auto-sessions
   use({
@@ -60,36 +66,28 @@ require("packer").startup(function()
     "mcchrish/zenbones.nvim",
     requires = "rktjmp/lush.nvim",
   })
-  use("drewtempelmeyer/palenight.vim")
-  use("savq/melange")
+  -- use("drewtempelmeyer/palenight.vim")
+  -- use("savq/melange")
   -- use("rmehri01/onenord.nvim")
   -- use("shaunsingh/nord.nvim")
   -- use("0xdefaced/nord.nvim")
   -- use("arcticicestudio/nord-vim")
-  use("sainnhe/everforest")
-  use("sainnhe/gruvbox-material")
-  use("maaslalani/nordbuddy")
-  use("sainnhe/sonokai")
-  use("mhartington/oceanic-next")
-  use("shaunsingh/solarized.nvim")
-  use("EdenEast/nightfox.nvim")
+  -- use("sainnhe/everforest")
+  -- use("sainnhe/gruvbox-material")
+  -- use("maaslalani/nordbuddy")
+  -- use("sainnhe/sonokai")
+  -- use("mhartington/oceanic-next")
+  -- use("shaunsingh/solarized.nvim")
+  -- use("EdenEast/nightfox.nvim")
   use("folke/tokyonight.nvim")
-  use("bluz71/vim-nightfly-guicolors")
-  use("Th3Whit3Wolf/one-nvim")
-  use("NLKNguyen/papercolor-theme")
+  -- use("bluz71/vim-nightfly-guicolors")
+  -- use("Th3Whit3Wolf/one-nvim")
+  -- use("NLKNguyen/papercolor-theme")
 
   use("norcalli/nvim-colorizer.lua")
 
-  -- comment/uncomment
-  use({
-    "numToStr/Comment.nvim",
-    config = function()
-      require("plugins_dir.comment-nvim")
-    end,
-  })
-
   -- Motion
-  use("bkad/CamelCaseMotion")
+  -- use("bkad/CamelCaseMotion")
   use("chaoren/vim-wordmotion")
   use("tpope/vim-surround")
   use("tpope/vim-commentary")
@@ -176,6 +174,7 @@ require("packer").startup(function()
       { "hrsh7th/vim-vsnip-integ" },
       { "Saecki/crates.nvim" },
       { "f3fora/cmp-spell" },
+      { "hrsh7th/cmp-copilot" },
     },
   })
   use({
@@ -211,9 +210,6 @@ require("packer").startup(function()
   -- buffers
   -- use("famiu/bufdelete.nvim")
   use("kazhala/close-buffers.nvim")
-
-  -- navigator
-  -- use({ "ray-x/navigator.lua", requires = { "ray-x/guihua.lua", run = "cd lua/fzy && make" } })
 
   -- debugging
   use("puremourning/vimspector")

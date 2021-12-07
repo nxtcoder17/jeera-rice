@@ -4,7 +4,7 @@ local opt = vim.opt
 opt.background = "dark"
 
 -- highlight current line
-opt.cursorline = true
+-- opt.cursorline = true
 
 -- silently move between windows
 opt.hidden = true

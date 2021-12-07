@@ -9,6 +9,7 @@ else
     require("impatient")
     require("keymaps")
     require("plugins_dir")
+    require("autocmds")
     require("lsp")
 
     local dirExtension = vim.fn.getcwd() .. "/.nxtcoder17.lua"

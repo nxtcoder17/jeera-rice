@@ -82,6 +82,7 @@ M.list_sessions = function()
   require("session-lens").search_session()
 end
 
+
 -- WIP: do not use
 M.debugger = function(opts)
   local results = {

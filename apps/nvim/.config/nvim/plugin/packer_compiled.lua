@@ -69,11 +69,6 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
-  CamelCaseMotion = {
-    loaded = true,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/CamelCaseMotion",
-    url = "https://github.com/bkad/CamelCaseMotion"
-  },
   NrrwRgn = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/NrrwRgn",
@@ -94,6 +89,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/cmp-buffer",
     url = "https://github.com/hrsh7th/cmp-buffer"
+  },
+  ["cmp-copilot"] = {
+    loaded = true,
+    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/cmp-copilot",
+    url = "https://github.com/hrsh7th/cmp-copilot"
   },
   ["cmp-nvim-lsp"] = {
     loaded = true,
@@ -135,6 +135,11 @@ _G.packer_plugins = {
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/compe-tmux",
     url = "https://github.com/andersevenrud/compe-tmux"
   },
+  ["copilot.vim"] = {
+    loaded = true,
+    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/copilot.vim",
+    url = "https://github.com/github/copilot.vim"
+  },
   ["crates.nvim"] = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/crates.nvim",
@@ -144,11 +149,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/dashboard-nvim",
     url = "https://github.com/glepnir/dashboard-nvim"
-  },
-  everforest = {
-    loaded = true,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/everforest",
-    url = "https://github.com/sainnhe/everforest"
   },
   ["formatter.nvim"] = {
     loaded = true,
@@ -174,11 +174,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/glow.nvim",
     url = "https://github.com/ellisonleao/glow.nvim"
-  },
-  ["gruvbox-material"] = {
-    loaded = true,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/gruvbox-material",
-    url = "https://github.com/sainnhe/gruvbox-material"
   },
   ["impatient.nvim"] = {
     loaded = true,
@@ -224,21 +219,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/lush.nvim",
     url = "https://github.com/rktjmp/lush.nvim"
-  },
-  melange = {
-    loaded = true,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/melange",
-    url = "https://github.com/savq/melange"
-  },
-  ["nightfox.nvim"] = {
-    loaded = true,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/nightfox.nvim",
-    url = "https://github.com/EdenEast/nightfox.nvim"
-  },
-  nordbuddy = {
-    loaded = true,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/nordbuddy",
-    url = "https://github.com/maaslalani/nordbuddy"
   },
   ["nvim-autopairs"] = {
     loaded = true,
@@ -327,30 +307,10 @@ _G.packer_plugins = {
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
     url = "https://github.com/kyazdani42/nvim-web-devicons"
   },
-  ["oceanic-next"] = {
-    loaded = true,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/oceanic-next",
-    url = "https://github.com/mhartington/oceanic-next"
-  },
-  ["one-nvim"] = {
-    loaded = true,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/one-nvim",
-    url = "https://github.com/Th3Whit3Wolf/one-nvim"
-  },
   ["packer.nvim"] = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/packer.nvim",
     url = "https://github.com/wbthomason/packer.nvim"
-  },
-  ["palenight.vim"] = {
-    loaded = true,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/palenight.vim",
-    url = "https://github.com/drewtempelmeyer/palenight.vim"
-  },
-  ["papercolor-theme"] = {
-    loaded = true,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/papercolor-theme",
-    url = "https://github.com/NLKNguyen/papercolor-theme"
   },
   ["plenary.nvim"] = {
     loaded = true,
@@ -372,16 +332,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/session-lens",
     url = "https://github.com/rmagatti/session-lens"
-  },
-  ["solarized.nvim"] = {
-    loaded = true,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/solarized.nvim",
-    url = "https://github.com/shaunsingh/solarized.nvim"
-  },
-  sonokai = {
-    loaded = true,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/sonokai",
-    url = "https://github.com/sainnhe/sonokai"
   },
   ["stabilize.nvim"] = {
     loaded = true,
@@ -472,11 +422,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/vim-maximizer",
     url = "https://github.com/szw/vim-maximizer"
-  },
-  ["vim-nightfly-guicolors"] = {
-    loaded = true,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/vim-nightfly-guicolors",
-    url = "https://github.com/bluz71/vim-nightfly-guicolors"
   },
   ["vim-polyglot"] = {
     loaded = true,
