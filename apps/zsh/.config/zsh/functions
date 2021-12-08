@@ -27,23 +27,17 @@ _fzf_complete_prun() {
 # }
 
 list() {
-  telepresence list -n dev-hotspot
+  telepresence list -n hotspot
 }
 
 telenv() {
  printenv | grep -i telepresence | awk '{print "export " $1}' > ~/.env
  # ktunnel inject deployment ${1:-api-dev} ${2:-3000}
 }
-# write a function to proxy a port from kubernetes to localhost
-# ktunnel inject deployment ${1:-api-dev} ${2:-3000}
-
-# write a bash command to mount k8s volume into a local directory
-# wrong
-# ktunnel mount deployment ${1:-api-dev} ${2:-3000} /home/james/dev/api-dev
-
 
 intercept() {
-  telepresence intercept api-dev -p 3000:80 --mount=/tmp/nxtcoder17 -n dev-hotspot zsh
+  [ -f ~/.env ] && rm ~/.env 
+  telepresence intercept dev-nxtcoder17 -p 3000:80 --mount=/tmp/nxtcoder17 -n hotspot zsh
   # --mapped-namespaces hotspot zsh 
 }
 
