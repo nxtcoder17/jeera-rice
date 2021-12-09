@@ -4,6 +4,7 @@ local telescope_actions = require("telescope.actions")
 local actions = require("telescope.actions")
 local pickers = require("telescope.pickers")
 local finders = require("telescope.finders")
+local sorters = require("telescope.sorters")
 
 telescope.setup({
   extensions = {
@@ -52,11 +53,28 @@ M.find_files = function()
 end
 
 M.grep = function()
-  telescope_builtin.grep_string({
-    prompt_title = " Grep word",
-    search = vim.fn.input("   Grep for word> ", vim.fn.expand("<cword>")),
-    use_regex = true,
-  })
+  -- telescope_builtin.grep_string({
+  --   prompt_title = " Grep word",
+  --   search = vim.fn.input("   Grep for word> ", vim.fn.expand("<cword>")),
+  --   use_regex = true,
+  -- })
+local jobopts = {
+  entry_maker = function(entry)
+    local _,_, filename, lnum, col, text = string.find(entry, "([^:]+):(%d+):(%d+):(.*)")
+
+    local table = {
+      ordinal = text,
+      display = text,
+    }
+
+    return table
+  end,
+}
+  local rg = {"rg", "--line-number", "--column", "",  vim.fn.getcwd(0)}
+  return pickers.new({
+      finder = finders.new_oneshot_job(rg),
+      sorter = sorters.get_generic_fuzzy_sorter(),
+    }):find()
 end
 
 M.nvim_config = function()

@@ -53,6 +53,7 @@ cmp.setup({
     { name = "ultisnips" },
     { name = "path" },
     { name = "copilot" },
+    { name = "tmux" },
     {
       name = "buffer",
       options = {
@@ -61,7 +62,7 @@ cmp.setup({
         end,
       },
     },
-    { name = "tmux" },
+    { name = "rg" },
     { name = "spell" },
   },
   formatting = {
