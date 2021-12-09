@@ -44,6 +44,13 @@ maps["nnoremap"]("sl", "<C-w>l<CR>")
 maps["nnoremap"]("sj", "<C-w>j<CR>")
 maps["nnoremap"]("sk", "<C-w>k<CR>")
 
+-- buffer management
+maps['nnoremap']('sdb', ':BDelete this<CR>')
+maps['nnoremap']('sdo', ':BDelete other<CR>')
+maps['nnoremap']('sda', ':BDelete all<CR>')
+maps['nnoremap']('sdn', ':BDelete nameless<CR>')
+
+
 -- making splits
 maps["nnoremap"]("si", ":vsplit<CR>")
 maps["nnoremap"]("sm", ":split<CR>")
