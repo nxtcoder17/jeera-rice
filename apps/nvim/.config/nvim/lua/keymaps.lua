@@ -20,6 +20,9 @@ maps["nnoremap"]("k", "gk")
 maps["nnoremap"]("cc", '"+y')
 maps["vnoremap"]("cc", '"+y')
 
+-- cancel highlighting
+maps["nnoremap"]("<BS>", "nohlsearch")
+
 -- Resizing Splits
 maps["nnoremap"]("<C-S-Right>", ":vert resize +10<CR>")
 maps["nnoremap"]("<C-S-Left>", ":vert resize -10<CR>")
