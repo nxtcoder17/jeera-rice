@@ -24,37 +24,80 @@ local colors = {
   grey = "#303030",
 }
 
+local iconLeft = "▓▒░"
+local iconRight = "░▒▓"
+
+local tabline = {
+  iconLeft = "▒░",
+  iconRight = "░▒",
+  iconSlimLeft = "░",
+  iconSlimRight = "░"
+};
+
+
 lualine.setup({
   options = {
     theme = "tokyonight",
     -- section_separators = { left = "", right = "" },
-    section_separators = { left = "", right = "" },
+    -- section_separators = { left = "", right = "" },
     -- component_separators = { left = "", right = "" },
-    -- section_separators = { left = "░▒▓", right = "▓▒░" },
+    section_separators = { left = iconLeft, right = iconRight },
     -- component_separators = { left = "░", right = "░" },
     -- component_separators = { left = "░", right = "░" },
-    -- component_separators = { left = "░▒▓", right = "▓▒░" },
-    component_separators = { left = "", right = "" },
+    -- component_separators = { left = leftIcon, right = iconRight },
+    -- component_separators = { left = iconLeft, right = iconRight },
+    -- component_separators = { left = "", right = "" },
+    -- component_separators = { left = " ", right = " " },
+    component_separators = { left = tabline.iconSlimLeft, right = tabline.iconSlimRight },
   },
 
   tabline = {
-    lualine_a = { "buffers" },
+    lualine_a = { 
+      {
+        "buffers",
+        icons_enabled = false,
+        section_separators = { left = tabline.iconSlimLeft, right = tabline.iconSlimRight }, 
+        padding=0,
+        fmt = function(str) 
+          local current_buffer = vim.fn.expand('%a'):match("^.*/(.*)$")
+          local c = str == string.format('%s', vim.fn.tabpagenr()) 
+          return str == current_buffer and string.format("%s %s %s", iconLeft, str, iconRight) or string.format(' %s ', str)
+        end,
+        buffers_color = {
+          -- this takes Highlight Groups
+          active = 'lualine_a_normal', -- color for active buffer
+          inactive = 'Comment', -- color for inactive buffer
+        },
+      },
+    },
     lualine_b = {},
     lualine_c = {},
     lualine_x = {},
     lualine_y = {},
-    lualine_z = { "tabs" },
+    lualine_z = {
+      { "tabs",
+        mode=1,
+        icons_enabled= true,
+        section_separators = { left = "", right = "" },
+        padding=0,
+        fmt = function(str) 
+          return ""
+          -- return c and string.format("%s %s", str, iconRight) or str
+          -- return string.format("%s %s %s",tabline.iconLeft, vim.fn.tabpagenr(), tabline.iconRight)
+        end,
+      },
+    },
   },
 
   sections = {
     lualine_a = {
-      { "mode", upper = true},
+      { "mode", upper = true, icon = "▓▒░", padding = 0 },
     },
     lualine_b = {},
     lualine_c = {
       {
         "diagnostics",
-        sources = { "nvim_lsp" },
+        sources = { "nvim_diagnostic" },
         symbols = { error = " ", warn = " ", info = " " },
         color_error = colors.red,
         color_warn = colors.yellow,
@@ -80,7 +123,17 @@ lualine.setup({
       { "branch", icon = "" },
     },
     lualine_y = {},
-    lualine_z = { "location" },
+    lualine_z = {
+      {
+        "location",
+        icons_enabled = true,
+        fmt = function(str)
+          return string.format("%s%s", str, "░▒▓")
+        end,
+        -- icon = "░▒▓",
+        padding = 0,
+      },
+    },
   },
   inactive_sections = {
     lualine_a = { "filename" },

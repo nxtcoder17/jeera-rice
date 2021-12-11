@@ -37,7 +37,7 @@ telenv() {
 
 intercept() {
   [ -f ~/.env ] && rm ~/.env 
-  telepresence intercept dev-nxtcoder17 -p 3000:80 --mount=/tmp/nxtcoder17 -n hotspot zsh
+  telepresence intercept app-nxtcoder17 -p 3000:80 --mount=/tmp/nxtcoder17 -n hotspot zsh
   # --mapped-namespaces hotspot zsh 
 }
 

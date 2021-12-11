@@ -198,9 +198,9 @@ bindsym $mod + x            exec --no-startup-id ~/.config/i3/scripts/lock.sh
 
 # Autostarting apps
 # Locale to en_US.UTF-8
-exec_always --no-startup-id      localectl set-locale LANG=en_US.UTF-8
-exec_always --no-startup-id      unset LANG
-exec_always --no-startup-id      source /etc/profile.d/locale.sh
+exec --no-startup-id      localectl set-locale LANG=en_US.UTF-8
+exec --no-startup-id      unset LANG
+exec --no-startup-id      source /etc/profile.d/locale.sh
 
 # -> Wallpaper Setup
 exec_always --no-startup-id      source $HOME/.fehbg
@@ -208,14 +208,14 @@ exec_always --no-startup-id      source $HOME/.fehbg
 # -> Network Manager
 exec --no-startup-id             nm-applet
 
-# -> Composite Manager: picom ibhagwan-fork
-exec --no-startup-id 						 picom
+# window compositing with blur
+exec --no-startup-id 						 picom --experimental-backends
 
 # -> Notification daemon
 exec --no-startup-id            dunst
 
 # TouchPad: Tap To Click
-exec_always --no-startup-id     xinput set-prop 'Synaptics TM3276-022' 'libinput Tapping Enabled' 1
+exec --no-startup-id     xinput set-prop 'Synaptics TM3276-022' 'libinput Tapping Enabled' 1
 
 # Bar Configuration
 
