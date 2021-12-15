@@ -1,5 +1,4 @@
 local maps = require("lib.mapping")
-
 -- print(vim.inspect(maps));
 
 -- resets
@@ -10,9 +9,11 @@ maps["snoremap"]("q", "")
 maps["nnoremap"]("Q", "")
 maps["vnoremap"]("Q", "")
 
+-- ; to :
 maps["nnoremap"](";", ":")
 maps["vnoremap"](";", ":")
 
+-- j/k to virtual gj/gk
 maps["nnoremap"]("j", "gj")
 maps["nnoremap"]("k", "gk")
 
@@ -24,10 +25,10 @@ maps["vnoremap"]("cc", '"+y')
 maps["nnoremap"]("<BS>", ":set nohls<CR>")
 
 -- Resizing Splits
-maps["nnoremap"]("<C-S-Right>", ":vert resize +10<CR>")
-maps["nnoremap"]("<C-S-Left>", ":vert resize -10<CR>")
-maps["nnoremap"]("<C-S-Up>", ":resize +10<CR>")
-maps["nnoremap"]("<C-S-Down>", ":resize -10<CR>")
+maps["nnoremap"]("<C-M-Right>", ":vert resize +10<CR>")
+maps["nnoremap"]("<C-M-Left>", ":vert resize -10<CR>")
+maps["nnoremap"]("<C-M-Up>", ":resize +10<CR>")
+maps["nnoremap"]("<C-M-Down>", ":resize -10<CR>")
 
 -- comment/uncomment
 maps["nmap"]("s;", "gcc", {})
@@ -36,7 +37,7 @@ maps["vmap"]("s;", "gcc", {})
 maps["tnoremap"]("<Esc>", "<C-\\><C-n>")
 
 -- saving file
-maps["nnoremap"]("ss", ":up<CR>")
+maps["nnoremap"]("ss", ":w<CR>")
 
 -- split navigation
 maps["nnoremap"]("sh", "<C-w>h<CR>")
@@ -45,11 +46,19 @@ maps["nnoremap"]("sj", "<C-w>j<CR>")
 maps["nnoremap"]("sk", "<C-w>k<CR>")
 
 -- buffer management
-maps['nnoremap']('sdb', ':BDelete this<CR>')
-maps['nnoremap']('sdo', ':BDelete other<CR>')
-maps['nnoremap']('sda', ':BDelete all<CR>')
-maps['nnoremap']('sdn', ':BDelete nameless<CR>')
+maps["nnoremap"]("sdb", ":BDelete this<CR>")
+maps["nnoremap"]("sdo", ":BDelete other<CR>")
+maps["nnoremap"]("sda", ":BDelete all<CR>")
+maps["nnoremap"]("sdn", ":BDelete nameless<CR>")
 
+maps["nnoremap"]("s[", ":bprev<CR>")
+maps["nnoremap"]("s]", ":bnext<CR>")
+
+-- Iterate Quickfix list
+maps["nnoremap"]("q[", ":cprev<CR>")
+maps["nnoremap"]("q]", ":cnext<CR>")
+maps["nnoremap"]("qo", ":copen<CR>")
+maps["nnoremap"]("qc", ":cclose<CR>")
 
 -- making splits
 maps["nnoremap"]("si", ":vsplit<CR>")
@@ -66,11 +75,10 @@ maps["nnoremap"]("sr", ":lua vim.lsp.buf.rename()<CR>")
 maps["nnoremap"]("sn", ":lua vim.lsp.diagnostic.goto_next()<CR>")
 maps["nnoremap"]("sp", ":lua vim.lsp.diagnostic.goto_prev()<CR>")
 
--- show line diagnostics
-maps["nnoremap"]("se", ":lua vim.lsp.diagnostic.show_line_diagnostics()<CR>")
+-- LSP
+maps["nnoremap"]("se", ":lua vim.diagnostic.open_float()<CR>")
 maps["nnoremap"]("K", "<Cmd>lua vim.lsp.buf.hover()<CR>")
 
--- telescope
 maps["nnoremap"]("sb", ":Telescope buffers<CR>")
 maps["nnoremap"]("gd", ":Telescope lsp_definitions<CR>")
 maps["nnoremap"]("gr", ":Telescope lsp_references<CR>")
@@ -107,7 +115,19 @@ maps["nnoremap"]("<M-k>", ":TmuxNavigateUp<cr>")
 maps["nnoremap"]("<M-j>", ":TmuxNavigateDown<cr>")
 
 -- eslint format
-maps["nnoremap"]("f;", ":!eslint_d --fix '%' <CR>|:e!<CR>")
+
+function _G.NxtFormatMap()
+  if vim.bo.filetype == "javascript" then
+    maps["nnoremap"]("f;", ":!eslint_d --fix '%' <CR>|:e!<CR>")
+    -- maps["nnoremap"]("<C-c>", ":lua require'plugins_dir.eslint'.format()<CR>")
+  elseif vim.bo.filetype == "go" then
+    maps["nnoremap"]("f;", ":!gofmt -w '%'<CR>|:e!<CR>")
+  end
+end
+
+vim.cmd[[
+ autocmd! FileType javascript,go :lua NxtFormatMap()
+]]
 
 -- vimspector
 vim.api.nvim_command("command! -nargs=0 Reload :luafile $XDG_CONFIG_HOME/nvim/init.lua")
@@ -121,3 +141,4 @@ vim.api.nvim_command("command! -nargs=0 Dr :call vimspector#Restart()<CR>")
 vim.api.nvim_command("command! -nargs=0 De :call vimspector#Reset()<CR>")
 
 vim.api.nvim_command("command! -nargs=0 Max :MaximizerToggle")
+

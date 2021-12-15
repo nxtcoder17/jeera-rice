@@ -82,6 +82,9 @@ opt.smartcase = true
 opt.ignorecase = true
 opt.hlsearch = true
 
+-- no swap file
+opt.swapfile = false
+
 -- replace
 opt.inccommand = "split" -- shows live incremental status of substitution in split buffer
 

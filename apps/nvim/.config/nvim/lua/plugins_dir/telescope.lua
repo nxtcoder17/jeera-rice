@@ -53,28 +53,28 @@ M.find_files = function()
 end
 
 M.grep = function()
-  -- telescope_builtin.grep_string({
-  --   prompt_title = " Grep word",
-  --   search = vim.fn.input("   Grep for word> ", vim.fn.expand("<cword>")),
-  --   use_regex = true,
-  -- })
-local jobopts = {
-  entry_maker = function(entry)
-    local _,_, filename, lnum, col, text = string.find(entry, "([^:]+):(%d+):(%d+):(.*)")
+  telescope_builtin.grep_string({
+    prompt_title = " Grep word",
+    search = vim.fn.input("   Grep for word> ", vim.fn.expand("<cword>")),
+    use_regex = true,
+  })
+  -- local jobopts = {
+    -- entry_maker = function(entry)
+    --   local _,_, filename, lnum, col, text = string.find(entry, "([^:]+):(%d+):(%d+):(.*)")
 
-    local table = {
-      ordinal = text,
-      display = text,
-    }
+    --   local table = {
+    --     ordinal = text,
+    --     display = text,
+    --   }
 
-    return table
-  end,
-}
-  local rg = {"rg", "--line-number", "--column", "",  vim.fn.getcwd(0)}
-  return pickers.new({
-      finder = finders.new_oneshot_job(rg),
-      sorter = sorters.get_generic_fuzzy_sorter(),
-    }):find()
+    --   return table
+    -- end,
+  -- }
+  -- local rg = {"rg", "--line-number", "--column", "",  vim.fn.getcwd(0)}
+  -- return pickers.new({
+  --     finder = finders.new_oneshot_job(rg),
+  --     sorter = sorters.get_generic_fuzzy_sorter(),
+  --   }):find()
 end
 
 M.nvim_config = function()
@@ -121,16 +121,6 @@ M.debugger = function(opts)
       map('i', '<cr>', actions.set_command_line)
       return true
     end,
-  }):find()
-end
-
-M.colors = function(opts)
-  opts = opts or {}
-  pickers.new(opts, {
-    prompt_title = "colors",
-    finder = finders.new_table({
-      results = { "red", "green", "blue" },
-    }),
   }):find()
 end
 

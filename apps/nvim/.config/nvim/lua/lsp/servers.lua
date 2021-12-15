@@ -15,6 +15,7 @@ local lsp_servers = {
   },
   go = {
     base_dir .. "/go/gopls",
+    '--remote=auto'
   },
   css = {
     base_dir .. "/vscode-langservers-extracted/node_modules/.bin/vscode-css-language-server",

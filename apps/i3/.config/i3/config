@@ -185,8 +185,8 @@ bindsym Print                       exec --no-startup-id $shot
 bindsym $mod + r                    exec $term -e ranger
 
 # Toggling monitor and laptop
-set $laptopDisplay eDP-1-1
-set $monitorDisplay HDMI-2-1
+set $laptopDisplay eDP-1
+set $monitorDisplay HDMI-2
 set $turnHDMIon xrandr --output $monitorDisplay --mode 2560x1440 --auto --right-of $laptopDisplay
 set $turnHDMIoff xrandr --output $laptopDisplay --auto && xrandr --output $monitorDisplay --off
 

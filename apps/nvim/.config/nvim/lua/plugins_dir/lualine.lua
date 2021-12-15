@@ -24,16 +24,67 @@ local colors = {
   grey = "#303030",
 }
 
-local iconLeft = "▓▒░"
-local iconRight = "░▒▓"
+local bricks = {
+  three = {
+    left = "▓▒░",
+    right = "░▒▓"
+  },
+  two = {
+    left = "▓▒░"
+  },
+  one = {
+    left = "▓▒░"
+  },
+}
+-- local iconLeft = "▓▒░"
+-- local iconRight = "░▒▓"
+local iconLeft = "▒░"
+local iconRight = "░▒"
 
 local tabline = {
   iconLeft = "▒░",
   iconRight = "░▒",
-  iconSlimLeft = "░",
-  iconSlimRight = "░"
+  -- iconSlimLeft = "░",
+  -- iconSlimRight = "░"
+  iconSlimLeft = "▒",
+  iconSlimRight = "▒"
 };
 
+local emoji = {
+  table = '🍱',
+  barrier = '🚧',
+  tree = '🌴',
+}
+
+
+---------
+-- vim.cmd([[
+-- 	function MyTabLine()
+-- 	  let s = ''
+-- 	  for i in range(tabpagenr('$'))
+-- 	    " select the highlighting
+-- 	    if i + 1 == tabpagenr()
+-- 	      let s .= '%#TabLineSel#'
+-- 	    else
+-- 	      let s .= '%#TabLine#'
+-- 	    endif
+-- 	    " set the tab page number (for mouse clicks)
+-- 	    let s .= '%' . (i + 1) . 'T'
+-- 	    " the label is made by MyTabLabel()
+-- 	    let s .= ' %{MyTabLabel(' . (i + 1) . ')} '
+-- 	  endfor
+-- 	  " after the last tab fill with TabLineFill and reset tab page nr
+-- 	  let s .= '%#TabLineFill#%T'
+-- 	  return s
+-- 	endfunction
+-- 	function MyTabLabel(n)
+-- 	  let buflist = tabpagebuflist(a:n)
+-- 	  let winnr = tabpagewinnr(a:n)
+-- 	  return bufname(buflist[winnr - 1]) . '(' . tabpagewinnr(a:n, '$') . ')'
+-- 	endfunction
+--   set tabline=%!MyTabLine()
+-- ]])
+---------------
 
 lualine.setup({
   options = {
@@ -41,14 +92,16 @@ lualine.setup({
     -- section_separators = { left = "", right = "" },
     -- section_separators = { left = "", right = "" },
     -- component_separators = { left = "", right = "" },
-    section_separators = { left = iconLeft, right = iconRight },
+    -- section_separators = { left = iconLeft, right = iconRight },
+    -- section_separators = { left = iconLeft, right = iconRight },
+    section_separators = { left = " ", right = " " },
     -- component_separators = { left = "░", right = "░" },
     -- component_separators = { left = "░", right = "░" },
     -- component_separators = { left = leftIcon, right = iconRight },
     -- component_separators = { left = iconLeft, right = iconRight },
     -- component_separators = { left = "", right = "" },
-    -- component_separators = { left = " ", right = " " },
-    component_separators = { left = tabline.iconSlimLeft, right = tabline.iconSlimRight },
+    component_separators = { left = " ", right = " " },
+    -- component_separators = { left = tabline.iconSlimLeft, right = tabline.iconSlimRight },
   },
 
   tabline = {
@@ -60,13 +113,12 @@ lualine.setup({
         padding=0,
         fmt = function(str) 
           local current_buffer = vim.fn.expand('%a'):match("^.*/(.*)$")
-          local c = str == string.format('%s', vim.fn.tabpagenr()) 
           return str == current_buffer and string.format("%s %s %s", iconLeft, str, iconRight) or string.format(' %s ', str)
         end,
         buffers_color = {
           -- this takes Highlight Groups
-          active = 'lualine_a_normal', -- color for active buffer
-          inactive = 'Comment', -- color for inactive buffer
+          active = 'lualine_a_normal',
+          inactive = 'Comment',
         },
       },
     },
@@ -78,20 +130,27 @@ lualine.setup({
       { "tabs",
         mode=1,
         icons_enabled= true,
-        section_separators = { left = "", right = "" },
-        padding=0,
+        section_separators = { left = " ", right = " " },
+        padding=1,
         fmt = function(str) 
-          return ""
-          -- return c and string.format("%s %s", str, iconRight) or str
-          -- return string.format("%s %s %s",tabline.iconLeft, vim.fn.tabpagenr(), tabline.iconRight)
+          return string.format("%s", emoji.tree)
         end,
+        tabs_color = {
+          -- this takes Highlight Groups
+          active = 'lualine_b_insert',
+          inactive = 'Comment',
+        },
       },
     },
   },
 
   sections = {
     lualine_a = {
-      { "mode", upper = true, icon = "▓▒░", padding = 0 },
+      { "mode", upper = true, padding = 0,
+        fmt= function(str)
+          return string.format("%s %s %s", iconLeft, str, iconRight)
+        end,
+      },
     },
     lualine_b = {},
     lualine_c = {
@@ -126,11 +185,9 @@ lualine.setup({
     lualine_z = {
       {
         "location",
-        icons_enabled = true,
         fmt = function(str)
-          return string.format("%s%s", str, "░▒▓")
+          return string.format("%s%s%s", iconLeft, str, iconRight)
         end,
-        -- icon = "░▒▓",
         padding = 0,
       },
     },

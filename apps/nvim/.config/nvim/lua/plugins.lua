@@ -26,6 +26,26 @@ require("packer").startup(function()
 
   -- syntax highlighting
   use("mboughaba/i3config.vim")
+  use("lukas-reineke/indent-blankline.nvim")
+
+  -- golang
+  use({
+    "crispgm/nvim-go",
+    config = function()
+      require("go").setup({
+        lint_prompt_style = 'vt',
+      })
+    end,
+  })
+  -- use({
+  --   "ray-x/go.nvim",
+  --   config = function()
+  --     require("go").setup({})
+  --   end,
+  -- })
+
+  -- todo tracking
+  use("folke/todo-comments.nvim")
 
   -- auto-sessions
   use({
@@ -62,32 +82,11 @@ require("packer").startup(function()
   -- use({"Jakski/vim-yaml", run = ":UpdateRemotePlugins"})
 
   -- color schemes
-  use({
-    "mcchrish/zenbones.nvim",
-    requires = "rktjmp/lush.nvim",
-  })
-  -- use("drewtempelmeyer/palenight.vim")
-  -- use("savq/melange")
-  -- use("rmehri01/onenord.nvim")
-  -- use("shaunsingh/nord.nvim")
-  -- use("0xdefaced/nord.nvim")
-  -- use("arcticicestudio/nord-vim")
-  -- use("sainnhe/everforest")
-  -- use("sainnhe/gruvbox-material")
-  -- use("maaslalani/nordbuddy")
-  -- use("sainnhe/sonokai")
-  -- use("mhartington/oceanic-next")
-  -- use("shaunsingh/solarized.nvim")
-  -- use("EdenEast/nightfox.nvim")
   use("folke/tokyonight.nvim")
-  -- use("bluz71/vim-nightfly-guicolors")
-  -- use("Th3Whit3Wolf/one-nvim")
-  -- use("NLKNguyen/papercolor-theme")
 
   use("norcalli/nvim-colorizer.lua")
 
   -- Motion
-  -- use("bkad/CamelCaseMotion")
   use("chaoren/vim-wordmotion")
   use("tpope/vim-surround")
   use("tpope/vim-commentary")
@@ -115,6 +114,8 @@ require("packer").startup(function()
       "kyazdani42/nvim-web-devicons",
     },
   })
+
+  -- file explorer
   use("kevinhwang91/rnvimr")
   use("christoomey/vim-tmux-navigator")
   use("psliwka/vim-smoothie")
@@ -122,9 +123,7 @@ require("packer").startup(function()
   -- LSP
   use({ "neovim/nvim-lspconfig" })
   use("folke/lsp-colors.nvim") --  better diagonstics colors
-  use("hrsh7th/nvim-compe")
   use("onsails/lspkind-nvim")
-  use("folke/lua-dev.nvim")
   use("williamboman/nvim-lsp-installer")
   use("nvim-lua/lsp-status.nvim")
   use("jose-elias-alvarez/nvim-lsp-ts-utils")
@@ -169,7 +168,6 @@ require("packer").startup(function()
       { "SirVer/ultisnips" },
       { "quangnguyen30192/cmp-nvim-ultisnips" },
       { "hrsh7th/nvim-cmp" },
-      {"lukas-reineke/cmp-rg"},
       { "Saecki/crates.nvim" },
       { "f3fora/cmp-spell" },
       { "hrsh7th/cmp-copilot" },
@@ -182,7 +180,7 @@ require("packer").startup(function()
 
   -- Treesitter
   use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
-  use("nvim-treesitter/nvim-treesitter-refactor")
+  -- use("nvim-treesitter/nvim-treesitter-refactor")
   use("nvim-treesitter/nvim-treesitter-textobjects")
 
   -- use("windwp/nvim-autopairs")
@@ -238,6 +236,10 @@ require("hlslens").setup({
 -- stabilize.nvim
 require("stabilize").setup()
 
+-- require("indent_blankline").setup {
+--     show_current_context = false,
+-- }
+
 -- wilder
 -- vim.call([[ wilder#setup({'modes': [':', '/', '?']}) ]])
 
@@ -263,7 +265,7 @@ vim.g.dashboard_default_executive = "telescope"
 vim.g.glow_binary_path = vim.fn.stdpath("data") .. "bin"
 vim.g.glow_border = "rounded"
 
--- large files
+-- large files no syntax hightlighting
 
 -- vim.g.LargeFile = 0.25
 vim.cmd([[

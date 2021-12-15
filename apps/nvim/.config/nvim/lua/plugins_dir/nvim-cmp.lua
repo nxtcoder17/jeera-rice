@@ -62,8 +62,7 @@ cmp.setup({
         end,
       },
     },
-    { name = "rg" },
-    { name = "spell" },
+    -- { name = "spell" },
   },
   formatting = {
     format = function(entry, vim_item)
