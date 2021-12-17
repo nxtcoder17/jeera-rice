@@ -37,10 +37,34 @@ telenv() {
 
 intercept() {
   [ -f ~/.env ] && rm ~/.env 
-  telepresence intercept app-nxtcoder17 -p 3000:80 --mount=/tmp/nxtcoder17 -n hotspot zsh
+  d=~/.kube/configs
+  f=$(ls $d | fzf) 
+  if [ ! -z "$f" ]; then
+    KUBECONFIG=$d/$f telepresence intercept console-api -p 3000:80 --mount=/tmp/nxtcoder17 -n hotspot zsh
+  fi
   # --mapped-namespaces hotspot zsh 
 }
 
-# intercept2() {
-#   telepresence intercept api-dev -p 3000:80 --mount=/tmp/nxtcoder17 -n dev-hotspot ktunnel -- inject deployment -n dev-hotspot ${1:-api-dev} ${2:-3000} 
-# }
+k() {
+  d=~/.kube/configs
+  f=$(ls $d | fzf) 
+  if [ ! -z "$f" ]; then
+    KUBECONFIG=$d/$f kubectl "$@"
+  fi
+}
+
+k9s() {
+  d=~/.kube/configs
+  f=$(ls $d | fzf) 
+  if [ ! -z "$f" ]; then
+    KUBECONFIG=$d/$f command k9s
+  fi
+}
+
+h() {
+  d=~/.kube/configs
+  f=$(ls $d | fzf) 
+  if [ ! -z "$f" ]; then
+    KUBECONFIG=$d/$f helm "$@"
+  fi
+}

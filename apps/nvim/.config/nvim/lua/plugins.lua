@@ -33,7 +33,7 @@ require("packer").startup(function()
     "crispgm/nvim-go",
     config = function()
       require("go").setup({
-        lint_prompt_style = 'vt',
+        lint_prompt_style = "vt",
       })
     end,
   })
@@ -67,6 +67,11 @@ require("packer").startup(function()
       require("session-lens").setup()
     end,
   })
+
+  -- toggle term
+  use{ "akinsho/toggleterm.nvim", config = function()
+    require'toggleterm'.setup()
+  end }
 
   -- AutoPairs
   use("windwp/nvim-autopairs")

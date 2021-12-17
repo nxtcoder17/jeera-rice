@@ -8,12 +8,13 @@ else
   alias ll='ls -l'
 fi
 
-if [ -f .env.sh ]; then
-  source .env.sh
-  alias k="kubectl --namespace=$KUBE_NAMESPACE --context=$KUBE_CONTEXT"
-else
-  alias k="kubectl"
-fi
+# if [ -f .env.sh ]; then
+#   source .env.sh
+#   alias k="kubectl --namespace=$KUBE_NAMESPACE --context=$KUBE_CONTEXT"
+# else
+#   alias k="KUBECONFIG=~/.kube/workers/$(ls | fzf)"
+# fi
+
 alias tel='telepresence'
 
 alias cc='xclip -sel clip'
