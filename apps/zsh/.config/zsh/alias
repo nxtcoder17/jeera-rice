@@ -15,6 +15,9 @@ fi
 #   alias k="KUBECONFIG=~/.kube/workers/$(ls | fzf)"
 # fi
 
+alias kx='kubectx'
+alias kn='kubens'
+
 alias tel='telepresence'
 
 alias cc='xclip -sel clip'

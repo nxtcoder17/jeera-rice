@@ -129,6 +129,20 @@ vim.cmd[[
  autocmd! FileType javascript,go :lua NxtFormatMap()
 ]]
 
+-- Toggle Term
+maps["nnoremap"]("<C-t>", ":ToggleTermToggleAll<CR>")
+
+function _G.NxtTerminal(vertical)
+  local direction = vertical and "vertical" or "horizontal"
+  local size = vertical and "60" or "20"
+  local dir = vim.fn.expand('%:p:h')
+  vim.cmd(string.format("ToggleTerm size=%s dir=%s direction=%s", size, dir, direction))
+end
+
+maps["nnoremap"]("tt", ":lua NxtTerminal()<CR>")
+maps["nnoremap"]("txt", ":lua NxtTerminal(false)<CR>")
+maps["nnoremap"]("tvt", ":lua NxtTerminal(true)<CR>")
+
 -- vimspector
 vim.api.nvim_command("command! -nargs=0 Reload :luafile $XDG_CONFIG_HOME/nvim/init.lua")
 

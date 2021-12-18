@@ -45,26 +45,26 @@ intercept() {
   # --mapped-namespaces hotspot zsh 
 }
 
-k() {
-  d=~/.kube/configs
-  f=$(ls $d | fzf) 
-  if [ ! -z "$f" ]; then
-    KUBECONFIG=$d/$f kubectl "$@"
-  fi
-}
+# k() {
+#   d=~/.kube/configs
+#   f=$(ls $d | fzf) 
+#   if [ ! -z "$f" ]; then
+#     KUBECONFIG=$d/$f kubectl "$@"
+#   fi
+# }
 
-k9s() {
-  d=~/.kube/configs
-  f=$(ls $d | fzf) 
-  if [ ! -z "$f" ]; then
-    KUBECONFIG=$d/$f command k9s
-  fi
-}
+# k9s() {
+#   d=~/.kube/configs
+#   f=$(ls $d | fzf) 
+#   if [ ! -z "$f" ]; then
+#     KUBECONFIG=$d/$f command k9s
+#   fi
+# }
 
-h() {
-  d=~/.kube/configs
-  f=$(ls $d | fzf) 
-  if [ ! -z "$f" ]; then
-    KUBECONFIG=$d/$f helm "$@"
-  fi
-}
+# h() {
+#   d=~/.kube/configs
+#   f=$(ls $d | fzf) 
+#   if [ ! -z "$f" ]; then
+#     KUBECONFIG=$d/$f helm "$@"
+#   fi
+# }

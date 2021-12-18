@@ -70,7 +70,9 @@ require("packer").startup(function()
 
   -- toggle term
   use{ "akinsho/toggleterm.nvim", config = function()
-    require'toggleterm'.setup()
+    require'toggleterm'.setup({
+        open_mapping = [[s<space>]]
+      })
   end }
 
   -- AutoPairs
