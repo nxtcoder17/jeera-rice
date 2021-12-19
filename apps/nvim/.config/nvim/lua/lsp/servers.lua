@@ -32,6 +32,9 @@ local lsp_servers = {
     base_dir .. "/dockerfile/node_modules/.bin/docker-langserver",
     '--stdio'
   },
+  bashls = {
+    base_dir .. "/bash/node_modules/bash-language-server/bin/main.js start"
+  },
 }
 
 local function config(_config)
@@ -130,7 +133,10 @@ lsp_config.jsonls.setup({
 })
 
 -- Bash
-lsp_config.bashls.setup({})
+lsp_config.bashls.setup({
+  cmd = lsp_servers.bashls,
+  filetypes = {"sh"},
+})
 
 -- Dockerfile
 lsp_config.dockerls.setup({

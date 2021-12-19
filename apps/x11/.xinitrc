@@ -1,6 +1,9 @@
+xrandr --setprovideroutputsource modesetting NVIDIA-0
+xrandr --auto
+
 # Starting gnome keyring daemon
-# eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
-# export SSH_AUTH_SOCK
+eval $(gnome-keyring-daemon --start)
+export SSH_AUTH_SOCK
 
 # source /etc/X11/xinit/xinitrc.d/50-systemd-user.sh
 
@@ -14,5 +17,4 @@ keyboard-defaults.sh
 
 redshift -O 3000
 
-exec i3
-# exec awesome
+exec i3 &>> "/tmp/i3.log"

@@ -28,6 +28,10 @@ require("packer").startup(function()
   use("mboughaba/i3config.vim")
   use("lukas-reineke/indent-blankline.nvim")
 
+  --  align
+  -- use('junegunn/vim-easy-align')
+  use("godlygeek/tabular")
+
   -- golang
   use({
     "crispgm/nvim-go",

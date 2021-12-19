@@ -1,8 +1,0 @@
-#! /usr/bin/env sh
-
-for dir in $(command ls -d */ | xargs -0)
-do
-  if [ "$dir" != "node/" ]; then
-    stow -t $HOME -D "$dir"
-  fi
-done

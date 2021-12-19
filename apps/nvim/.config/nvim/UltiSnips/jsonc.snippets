@@ -19,11 +19,6 @@ snippet jsconfig.json "create initial jsconfig.json"
   },
   "allowJS": true,
   "checkJS": true,
-  "include": [
-    // directly mention directory name or file name, NO regex or globs
-    "app",
-    "lib",
-  ],
   "exclude": [
     "node_modules"
   ],
@@ -38,5 +33,16 @@ snippet extend-jsconfig "extends jsconfig.json, useful for pathmaps"
 			"@commons/*": ["./commons/*"],
 		}
   },
+  "include": [
+    "lib",
+    "repo",
+    "controller",
+    "handler",
+    "./node_modules/@shared/lib"
+  ],
 }
+endsnippet
+
+snippet typem "type: module in package.json"
+"type": "module"
 endsnippet

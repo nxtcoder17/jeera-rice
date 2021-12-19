@@ -175,7 +175,7 @@ bindsym $mod + d exec --no-startup-id rofi -show combi
 # -> Executing Rofi Run Window
 bindsym $mod + shift + d exec --no-startup-id rofi -show drun -lines 5 -eh 1 -width 600 -location 0 -hide-scrollbar -bw 4 -opacity 100 -bc "#283e26" -bg "#1f1513" -fg "$ffffff" -hlbg "#283e26" -hlfg "#ffffff" -bgalt "#527d41" -separator-style "solid" -padding 50 
 
-bindsym $alt + i		exec --no-startup-id rofi -modi 'chrome:chrome-switch-tabs' -show chrome
+# bindsym $alt + i		exec --no-startup-id rofi -modi 'chrome:chrome-switch-tabs' -show chrome
 
 # -> Taking Screenshots: scrot 
 set $shot scrot -q 100
@@ -203,7 +203,7 @@ exec --no-startup-id      unset LANG
 exec --no-startup-id      source /etc/profile.d/locale.sh
 
 # -> Wallpaper Setup
-exec_always --no-startup-id      source $HOME/.fehbg
+exec --no-startup-id      source $HOME/.fehbg
 
 # -> Network Manager
 exec --no-startup-id             nm-applet
