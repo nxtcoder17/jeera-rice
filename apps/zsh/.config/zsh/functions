@@ -36,13 +36,9 @@ telenv() {
 }
 
 intercept() {
-  [ -f ~/.env ] && rm ~/.env 
-  d=~/.kube/configs
-  f=$(ls $d | fzf) 
-  if [ ! -z "$f" ]; then
-    KUBECONFIG=$d/$f telepresence intercept console-api -p 3000:80 --mount=/tmp/nxtcoder17 -n hotspot zsh
-  fi
-  # --mapped-namespaces hotspot zsh 
+  svc=$1
+  [ -z $svc ] && echo "must have svc as an arguments" && return 1
+  telepresence intercept $svc -p 3000:80 --mount=/tmp/nxtcoder17 -n hotspot zsh
 }
 
 # k() {
