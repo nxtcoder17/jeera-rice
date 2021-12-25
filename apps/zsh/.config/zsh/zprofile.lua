@@ -1,9 +1,5 @@
-home = os.getenv("HOME")
-xdgDataHome = os.getenv("XDG_DATA_HOME")
-
-localBinDir = home .. "/.local/bin"
-
-jeeraRiceBin = os.getenv("HOME") .. "/me/jeera-rice/bin"
+local home = os.getenv("HOME")
+local xdgDataHome = os.getenv("XDG_DATA_HOME")
 
 local xdgToPath = {
   xdgDataHome       .. "/node/bin",          -- npm/pnpm global packages
@@ -12,6 +8,6 @@ local xdgToPath = {
   home              .. "/me/jeera-rice/bin", -- jeera-rice bin
 }
 
-local stdlib = require('posix.stdlib')
+-- local stdlib = require('posix.stdlib')
 print(table.concat(xdgToPath, ":"))
-stdlib.setenv("PATH", table.concat(xdgToPath, ":"))
+-- stdlib.setenv("PATH", table.concat(xdgToPath, ":"))

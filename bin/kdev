@@ -1,0 +1,38 @@
+#! /usr/bin/env sh
+
+command=$1
+
+[ -z "$command" ] || shift 1;
+
+globalListCmd() {
+  telepresence list | grep -i ^[a-z].* 
+}
+
+case $command in
+    "start")
+      svc=$( globalListCmd | awk -F: '{print $1}' | fzf)
+      [ -z "$svc" ] && echo "No K8s service selected" && exit 17
+      # telepresence intercept $svc -p 3000:80 --mount=/tmp/nxtcoder17 zsh
+      telepresence intercept $svc -p ${1:-3000} zsh
+      ;;
+    "env")
+      printenv | grep -i telepresence | awk '{print "export " $1}' > ~/.env
+      ;;
+    "stop")
+      intercept=$(globalListCmd | grep -i intercepted | awk -F: '{print $1}' | fzf)
+      [ -z "$intercept" ] && echo "No intercept selected" && exit 17
+      telepresence leave $intercept
+      ;;
+
+    "list")
+      globalListCmd
+      ;;
+
+    "restart")
+      telepresence quit && telepresence connect
+      ;;
+    "*")
+      echo "available commands: start, stop, list, restart"
+      exit 17
+      ;;
+esac

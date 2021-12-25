@@ -14,23 +14,24 @@ end
 require("packer").startup(function()
   use("wbthomason/packer.nvim")
 
-  -- Large fIles
-  -- use("vim-scripts/LargeFile")
-
   -- back to where you left
   use("farmergreg/vim-lastplace")
-  use("glepnir/dashboard-nvim")
 
   -- copilot
   use("github/copilot.vim")
 
+  -- markdown
+  use("davidgranstrom/nvim-markdown-preview")
+
   -- syntax highlighting
-  use("mboughaba/i3config.vim")
+  use({ "mboughaba/i3config.vim", ft="i3config" })
   use("lukas-reineke/indent-blankline.nvim")
 
   --  align
-  -- use('junegunn/vim-easy-align')
   use("godlygeek/tabular")
+
+  -- helm 
+  use("towolf/vim-helm")
 
   -- golang
   use({
@@ -65,19 +66,19 @@ require("packer").startup(function()
     end,
   })
 
-  use({
-    "rmagatti/session-lens",
-    config = function()
-      require("session-lens").setup()
-    end,
-  })
+  -- ## does not need it for now
+  -- use({
+  --   "rmagatti/session-lens",
+  --   config = function()
+  --     require("session-lens").setup()
+  --   end,
+  -- })
 
-  -- toggle term
-  use{ "akinsho/toggleterm.nvim", config = function()
-    require'toggleterm'.setup({
-        open_mapping = [[s<space>]]
-      })
-  end }
+  -- use{ "akinsho/toggleterm.nvim", config = function()
+  --   require'toggleterm'.setup({
+  --       open_mapping = [[s<space>]]
+  --     })
+  -- end }
 
   -- AutoPairs
   use("windwp/nvim-autopairs")
@@ -87,7 +88,7 @@ require("packer").startup(function()
   -- syntax
   use("sheerun/vim-polyglot")
   use("fladson/vim-kitty")
-  use({ "ellisonleao/glow.nvim" })
+  use({ "ellisonleao/glow.nvim", ft="markdown" })
 
   --  syntax specific
   -- use({"Jakski/vim-yaml", run = ":UpdateRemotePlugins"})
@@ -115,8 +116,6 @@ require("packer").startup(function()
     requires = { "kyazdani42/nvim-web-devicons", opt = true },
   })
 
-  -- coc lsp
-  -- use {'neoclide/coc.nvim', branch = 'release'}
   use({ "junegunn/fzf", run = "./install --bin" })
   use({
     "ibhagwan/fzf-lua",
@@ -133,13 +132,13 @@ require("packer").startup(function()
 
   -- LSP
   use({ "neovim/nvim-lspconfig" })
-  use("folke/lsp-colors.nvim") --  better diagonstics colors
+  use("folke/lsp-colors.nvim")        --  better diagonstics colors
   use("onsails/lspkind-nvim")
   use("williamboman/nvim-lsp-installer")
   use("nvim-lua/lsp-status.nvim")
   use("jose-elias-alvarez/nvim-lsp-ts-utils")
   -- use("/jose-elias-alvarez/null-ls.nvim")
-  use("ray-x/lsp_signature.nvim")
+  -- use("ray-x/lsp_signature.nvim")
   use("glepnir/lspsaga.nvim")
 
   use({
@@ -181,9 +180,12 @@ require("packer").startup(function()
       { "hrsh7th/nvim-cmp" },
       { "Saecki/crates.nvim" },
       { "f3fora/cmp-spell" },
-      { "hrsh7th/cmp-copilot" },
+      { "hrsh7th/cmp-copilot", config = function() 
+          require("plugins_dir.copilot")
+      end },
     },
   })
+
   use({
     "andersevenrud/compe-tmux",
     branch = "cmp",
@@ -237,7 +239,7 @@ require("colorizer").setup()
 
 -- Extensions
 
-------------------------\ Highlight Search
+------------------------ Highlight Search
 require("hlslens").setup({
   calm_down = true,
   nearest_only = true,
@@ -270,7 +272,7 @@ require("stabilize").setup()
 -- ]])
 vim.cmd([[ map <C-w> <Plug>(expand_region_expand) ]])
 
-vim.g.dashboard_default_executive = "telescope"
+-- vim.g.dashboard_default_executive = "telescope"
 
 -- Glow.nvim
 vim.g.glow_binary_path = vim.fn.stdpath("data") .. "bin"
@@ -300,5 +302,4 @@ function! LargeFile()
  " display message
  autocmd VimEnter *  echo "The file is larger than " . (g:LargeFile / 1024 / 1024) . " MB, so some options are changed (see .vimrc for details)."
 endfunction
-
 ]])

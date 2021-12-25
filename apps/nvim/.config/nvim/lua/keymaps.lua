@@ -65,15 +65,15 @@ maps["nnoremap"]("si", ":vsplit<CR>")
 maps["nnoremap"]("sm", ":split<CR>")
 
 -- file explorer | word grepper
-maps["nnoremap"]("sf", ":lua require'plugins_dir.telescope'.find_files()<CR>")
+maps["nnoremap"]("sf", ":Telescope find_files<CR>")
 maps["nnoremap"]("ff", ":lua require'plugins_dir.telescope'.grep()<CR>")
 
 -- rename variable
 maps["nnoremap"]("sr", ":lua vim.lsp.buf.rename()<CR>")
 
 -- jump to next / prev error
-maps["nnoremap"]("sn", ":lua vim.lsp.diagnostic.goto_next()<CR>")
-maps["nnoremap"]("sp", ":lua vim.lsp.diagnostic.goto_prev()<CR>")
+maps["nnoremap"]("sn", ":lua vim.diagnostic.goto_next()<CR>")
+maps["nnoremap"]("sp", ":lua vim.diagnostic.goto_prev()<CR>")
 
 -- LSP
 maps["nnoremap"]("se", ":lua vim.diagnostic.open_float()<CR>")
@@ -119,7 +119,6 @@ maps["nnoremap"]("<M-j>", ":TmuxNavigateDown<cr>")
 function _G.NxtFormatMap()
   if vim.bo.filetype == "javascript" then
     maps["nnoremap"]("f;", ":!eslint_d --fix '%' <CR>|:e!<CR>")
-    -- maps["nnoremap"]("<C-c>", ":lua require'plugins_dir.eslint'.format()<CR>")
   elseif vim.bo.filetype == "go" then
     maps["nnoremap"]("f;", ":!gofmt -w '%'<CR>|:e!<CR>")
   end
@@ -156,3 +155,5 @@ vim.api.nvim_command("command! -nargs=0 De :call vimspector#Reset()<CR>")
 
 vim.api.nvim_command("command! -nargs=0 Max :MaximizerToggle")
 
+vim.api.nvim_command("command! -nargs=0 Ce :lua vim.b.copilot_enabled = true<CR>")
+vim.api.nvim_command("command! -nargs=0 Cd :lua vim.b.copilot_enabled = false<CR>")

@@ -27,7 +27,7 @@ _fzf_complete_prun() {
 # }
 
 list() {
-  telepresence list -n hotspot
+  telepresence list
 }
 
 telenv() {
@@ -36,9 +36,9 @@ telenv() {
 }
 
 intercept() {
-  svc=$1
-  [ -z $svc ] && echo "must have svc as an arguments" && return 1
-  telepresence intercept $svc -p 3000:80 --mount=/tmp/nxtcoder17 -n hotspot zsh
+  svc=$(telepresence list | awk -F: '{print $1}' | fzf)
+  [ -z "$svc" ] && echo "No K8s service selected" && return 1
+  telepresence intercept $svc -p 3000:80 --mount=/tmp/nxtcoder17 zsh
 }
 
 # k() {

@@ -115,11 +115,6 @@ _G.packer_plugins = {
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/cmp-path",
     url = "https://github.com/hrsh7th/cmp-path"
   },
-  ["cmp-rg"] = {
-    loaded = true,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/cmp-rg",
-    url = "https://github.com/lukas-reineke/cmp-rg"
-  },
   ["cmp-spell"] = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/cmp-spell",
@@ -145,11 +140,6 @@ _G.packer_plugins = {
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/crates.nvim",
     url = "https://github.com/Saecki/crates.nvim"
   },
-  ["dashboard-nvim"] = {
-    loaded = true,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/dashboard-nvim",
-    url = "https://github.com/glepnir/dashboard-nvim"
-  },
   ["formatter.nvim"] = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/formatter.nvim",
@@ -171,19 +161,28 @@ _G.packer_plugins = {
     url = "https://github.com/lewis6991/gitsigns.nvim"
   },
   ["glow.nvim"] = {
-    loaded = true,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/glow.nvim",
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/glow.nvim",
     url = "https://github.com/ellisonleao/glow.nvim"
   },
   ["i3config.vim"] = {
-    loaded = true,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/i3config.vim",
+    loaded = false,
+    needs_bufread = true,
+    only_cond = false,
+    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/i3config.vim",
     url = "https://github.com/mboughaba/i3config.vim"
   },
   ["impatient.nvim"] = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/impatient.nvim",
     url = "https://github.com/lewis6991/impatient.nvim"
+  },
+  ["indent-blankline.nvim"] = {
+    loaded = true,
+    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
+    url = "https://github.com/lukas-reineke/indent-blankline.nvim"
   },
   ["lsp-colors.nvim"] = {
     loaded = true,
@@ -195,11 +194,6 @@ _G.packer_plugins = {
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/lsp-status.nvim",
     url = "https://github.com/nvim-lua/lsp-status.nvim"
   },
-  ["lsp_signature.nvim"] = {
-    loaded = true,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/lsp_signature.nvim",
-    url = "https://github.com/ray-x/lsp_signature.nvim"
-  },
   ["lspkind-nvim"] = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/lspkind-nvim",
@@ -210,20 +204,10 @@ _G.packer_plugins = {
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/lspsaga.nvim",
     url = "https://github.com/glepnir/lspsaga.nvim"
   },
-  ["lua-dev.nvim"] = {
-    loaded = true,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/lua-dev.nvim",
-    url = "https://github.com/folke/lua-dev.nvim"
-  },
   ["lualine.nvim"] = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/lualine.nvim",
     url = "https://github.com/nvim-lualine/lualine.nvim"
-  },
-  ["lush.nvim"] = {
-    loaded = true,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/lush.nvim",
-    url = "https://github.com/rktjmp/lush.nvim"
   },
   ["nvim-autopairs"] = {
     loaded = true,
@@ -247,15 +231,16 @@ _G.packer_plugins = {
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/nvim-colorizer.lua",
     url = "https://github.com/norcalli/nvim-colorizer.lua"
   },
-  ["nvim-compe"] = {
-    loaded = true,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/nvim-compe",
-    url = "https://github.com/hrsh7th/nvim-compe"
-  },
   ["nvim-fzf"] = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/nvim-fzf",
     url = "https://github.com/vijaymarupudi/nvim-fzf"
+  },
+  ["nvim-go"] = {
+    config = { "\27LJ\2\nL\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\22lint_prompt_style\avt\nsetup\ago\frequire\0" },
+    loaded = true,
+    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/nvim-go",
+    url = "https://github.com/crispgm/nvim-go"
   },
   ["nvim-hlslens"] = {
     loaded = true,
@@ -281,11 +266,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
-  },
-  ["nvim-treesitter-refactor"] = {
-    loaded = true,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/nvim-treesitter-refactor",
-    url = "https://github.com/nvim-treesitter/nvim-treesitter-refactor"
   },
   ["nvim-treesitter-textobjects"] = {
     loaded = true,
@@ -332,16 +312,15 @@ _G.packer_plugins = {
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/rnvimr",
     url = "https://github.com/kevinhwang91/rnvimr"
   },
-  ["session-lens"] = {
-    config = { "\27LJ\2\n:\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\17session-lens\frequire\0" },
-    loaded = true,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/session-lens",
-    url = "https://github.com/rmagatti/session-lens"
-  },
   ["stabilize.nvim"] = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/stabilize.nvim",
     url = "https://github.com/luukvbaal/stabilize.nvim"
+  },
+  tabular = {
+    loaded = true,
+    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/tabular",
+    url = "https://github.com/godlygeek/tabular"
   },
   ["telescope-fzf-native.nvim"] = {
     loaded = true,
@@ -362,6 +341,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
+  },
+  ["todo-comments.nvim"] = {
+    loaded = true,
+    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/todo-comments.nvim",
+    url = "https://github.com/folke/todo-comments.nvim"
   },
   ["tokyonight.nvim"] = {
     loaded = true,
@@ -402,6 +386,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/vim-expand-region",
     url = "https://github.com/terryma/vim-expand-region"
+  },
+  ["vim-helm"] = {
+    loaded = true,
+    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/vim-helm",
+    url = "https://github.com/towolf/vim-helm"
   },
   ["vim-kitty"] = {
     loaded = true,
@@ -505,11 +494,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/wilder.nvim",
     url = "https://github.com/gelguy/wilder.nvim"
-  },
-  ["zenbones.nvim"] = {
-    loaded = true,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/zenbones.nvim",
-    url = "https://github.com/mcchrish/zenbones.nvim"
   }
 }
 
@@ -518,10 +502,10 @@ time([[Defining packer_plugins]], false)
 time([[Config for auto-session]], true)
 try_loadstring("\27LJ\2\n«\2\0\0\6\0\15\0\0216\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\4\0'\2\5\0B\0\2\0029\0\6\0005\2\a\0005\3\b\0=\3\t\0026\3\0\0009\3\n\0039\3\v\3'\5\f\0B\3\2\2'\4\r\0&\3\4\3=\3\14\2B\0\2\1K\0\1\0\26auto_session_root_dir\15/sessions/\tdata\fstdpath\afn\31auto_session_suppress_dirs\1\2\0\0\a~/\1\0\2\25auto_session_enabled\2\14log_level\tinfo\nsetup\17auto-session\frequireEblank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal\19sessionoptions\6o\bvim\0", "config", "auto-session")
 time([[Config for auto-session]], false)
--- Config for: session-lens
-time([[Config for session-lens]], true)
-try_loadstring("\27LJ\2\n:\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\17session-lens\frequire\0", "config", "session-lens")
-time([[Config for session-lens]], false)
+-- Config for: nvim-go
+time([[Config for nvim-go]], true)
+try_loadstring("\27LJ\2\nL\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\22lint_prompt_style\avt\nsetup\ago\frequire\0", "config", "nvim-go")
+time([[Config for nvim-go]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
@@ -532,8 +516,15 @@ vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time([[Defining lazy-load filetype autocommands]], true)
+vim.cmd [[au FileType i3config ++once lua require("packer.load")({'i3config.vim'}, { ft = "i3config" }, _G.packer_plugins)]]
+vim.cmd [[au FileType markdown ++once lua require("packer.load")({'glow.nvim'}, { ft = "markdown" }, _G.packer_plugins)]]
 vim.cmd [[au FileType qf ++once lua require("packer.load")({'nvim-bqf'}, { ft = "qf" }, _G.packer_plugins)]]
 time([[Defining lazy-load filetype autocommands]], false)
+vim.cmd("augroup END")
+vim.cmd [[augroup filetypedetect]]
+time([[Sourcing ftdetect script at: /home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/i3config.vim/ftdetect/i3config.vim]], true)
+vim.cmd [[source /home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/i3config.vim/ftdetect/i3config.vim]]
+time([[Sourcing ftdetect script at: /home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/i3config.vim/ftdetect/i3config.vim]], false)
 vim.cmd("augroup END")
 if should_profile then save_profiles() end
 
