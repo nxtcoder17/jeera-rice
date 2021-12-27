@@ -111,12 +111,21 @@ M.grep = function()
 end
 
 M.nvim_config = function()
-  require("telescope.builtin").file_browser({
+  require("telescope.builtin").find_files({
     prompt_title = "  Nvim Config",
-    cwd = "~/.config/nvim/",
+    cwd = "~/me/jeera-rice",
     layout_strategy = "horizontal",
     layout_config = { preview_width = 0.65, width = 0.75 },
+    theme='ivy'
   })
+end
+
+M.jeera_rice = function()
+  M.find_files({
+    prompt_title = "  Jeera Rice",
+    cwd = "~/me/jeera-rice",
+    theme='ivy',
+  });
 end
 
 M.file_explorer = function()

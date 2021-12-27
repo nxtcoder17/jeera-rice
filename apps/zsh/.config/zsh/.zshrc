@@ -113,11 +113,14 @@ bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 
+zshDir=$(realpath $(dirname $0))
+
 # Aliases
-[ -f "$ZDOTDIR/alias" ] && source "$ZDOTDIR/alias"
+# [ -f "$ZDOTDIR/alias" ] && source "$ZDOTDIR/alias"
+[ -f "$zshDir/alias" ] && source "$zshDir/alias"
 
 # Functions
-[ -f "$ZDOTDIR/functions" ] && source "$ZDOTDIR/functions"
+[ -f "$zshDir/functions" ] && source "$zshDir/functions"
 
 
 eval "$(starship init zsh)"
@@ -134,17 +137,18 @@ fzf_keybindings_file="/usr/share/fzf/key-bindings.zsh"
 [ -f $fzf_completion_file ] && source $fzf_completion_file
 [ -f $fzf_keybindings_file ] && source $fzf_keybindings_file
 
-[ -f $ZDOTDIR/git-flow-completion.zsh ] && source $ZDOTDIR/git-flow-completion.zsh
+[ -f $zshDir/git-flow-completion.zsh ] && source $zshDir/git-flow-completion.zsh
 
 export LESS=-FRX
 
-# source .nxtcoder17.sh file, if sees somewhere
-[ -f $PWD/.nxtcoder17.sh ] && source .nxtcoder17.sh
+# source .nxtcoder17.sh file, if it sees it anywhere
+# this makes system hackable
+
+# wait till we find a good alternative
+# [ -f $PWD/.nxtcoder17.sh ] && source .nxtcoder17.sh
 
 # Load syntax highlighting; should be last.
-# source /home/nxtcoder17/.local/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
-
-[ -f ~/.env ] && source ~/.env
+source /home/nxtcoder17/.local/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
 
 # export LUA_PATH='/usr/share/lua/5.4/?.lua;/usr/share/lua/5.4/?/init.lua;/usr/lib/lua/5.4/?.lua;/usr/lib/lua/5.4/?/init.lua;./?.lua;./?/init.lua;/home/nxtcoder17/.luarocks/share/lua/5.4/?.lua;/home/nxtcoder17/.luarocks/share/lua/5.4/?/init.lua'
 # export LUA_CPATH='/usr/lib/lua/5.4/?.so;/usr/lib/lua/5.4/loadall.so;./?.so;/home/nxtcoder17/.luarocks/lib/lua/5.4/?.so'

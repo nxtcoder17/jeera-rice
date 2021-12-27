@@ -41,26 +41,11 @@ intercept() {
   telepresence intercept $svc -p 3000:80 --mount=/tmp/nxtcoder17 zsh
 }
 
-# k() {
-#   d=~/.kube/configs
-#   f=$(ls $d | fzf) 
-#   if [ ! -z "$f" ]; then
-#     KUBECONFIG=$d/$f kubectl "$@"
-#   fi
-# }
+to-base64 () {
+  cat $1 | base64 | tr -d '\n' | xclip -sel clip
+}
 
-# k9s() {
-#   d=~/.kube/configs
-#   f=$(ls $d | fzf) 
-#   if [ ! -z "$f" ]; then
-#     KUBECONFIG=$d/$f command k9s
-#   fi
-# }
+from-base64() {
+  cat $1 | base64 -d | xclip -sel clip
+}
 
-# h() {
-#   d=~/.kube/configs
-#   f=$(ls $d | fzf) 
-#   if [ ! -z "$f" ]; then
-#     KUBECONFIG=$d/$f helm "$@"
-#   fi
-# }

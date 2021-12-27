@@ -117,7 +117,9 @@ maps["nnoremap"]("<M-j>", ":TmuxNavigateDown<cr>")
 -- eslint format
 
 function _G.NxtFormatMap()
-  if vim.bo.filetype == "javascript" then
+  if vim.bo.filetype == "sh" then
+    maps["nnoremap"]("f;", ":!shfmt -i 2 -w -ci '%' <CR>|:e!<CR>")
+  elseif vim.bo.filetype == "javascript" then
     maps["nnoremap"]("f;", ":!eslint_d --fix '%' <CR>|:e!<CR>")
   elseif vim.bo.filetype == "go" then
     maps["nnoremap"]("f;", ":!gofmt -w '%'<CR>|:e!<CR>")
@@ -125,7 +127,7 @@ function _G.NxtFormatMap()
 end
 
 vim.cmd[[
- autocmd! FileType javascript,go :lua NxtFormatMap()
+ autocmd! FileType sh,javascript,go :lua NxtFormatMap()
 ]]
 
 -- Toggle Term
@@ -157,3 +159,5 @@ vim.api.nvim_command("command! -nargs=0 Max :MaximizerToggle")
 
 vim.api.nvim_command("command! -nargs=0 Ce :lua vim.b.copilot_enabled = true<CR>")
 vim.api.nvim_command("command! -nargs=0 Cd :lua vim.b.copilot_enabled = false<CR>")
+
+vim.api.nvim_command("command! -nargs=0 Jeera :lua require'plugins_dir.telescope'.jeera_rice()<CR>")

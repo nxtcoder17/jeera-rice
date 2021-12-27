@@ -15,8 +15,8 @@ fi
 #   alias k="KUBECONFIG=~/.kube/workers/$(ls | fzf)"
 # fi
 
-alias kx='kubectx'
-alias kn='kubens'
+alias kx='kubie ctx'
+alias kn='kubie ns'
 
 alias tel='telepresence'
 
@@ -26,14 +26,14 @@ alias nvms='source /usr/share/nvm/init-nvm.sh'
 
 ## Git Aliases
 alias gaa='git add .'
-alias ga='git add'
+alias ga='git add -p'
 alias gb='git branch -a'
 alias gc='git commit -am'
 alias gs='git status'
 alias gss='git status -s'
 
 # git flow aliases
-alias gf='git flow'
 alias gfff='git flow feature finish'
 alias gffs='git flow feature start'
 alias gffp='git flow feature publish'
+alias gf='git flow'

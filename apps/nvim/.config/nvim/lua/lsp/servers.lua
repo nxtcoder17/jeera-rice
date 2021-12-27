@@ -33,7 +33,8 @@ local lsp_servers = {
     '--stdio'
   },
   bashls = {
-    base_dir .. "/bash/node_modules/bash-language-server/bin/main.js start"
+    base_dir .. "/bash/node_modules/.bin/bash-language-server",
+    "start"
   },
 }
 

@@ -109,3 +109,31 @@ spec:
             periodSeconds: 10
 endsnippet
 
+snippet kjob "k8s job yaml"
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ${1:redis}-install-job
+  namespace: ${2:hotspot}
+spec:
+  template:
+    spec:
+      serviceAccount: hotspot-cluster-svc-account
+      containers:
+      - name: $1-install
+        image: registry.kloudlite.io/hotspot/api/jobs/$1
+        imagePullPolicy: Always
+        args:
+          - apply
+          # - delete
+        env:
+          - name: VALUES
+            value: HELM_VALUES
+          - name: NAME
+            value: RELEASE_NAME
+          - name: NAMESPACE
+            value: HELM_NAMESPACE
+          - name: SIZE
+            value: "5Gi"
+      restartPolicy: OnFailure
+endsnippet

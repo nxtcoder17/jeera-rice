@@ -1,6 +1,21 @@
 require("formatter").setup({
   logging = false,
   filetype = {
+    sh = {
+      function() 
+        return {
+          exe = "shfmt",
+          args = {
+            "-i",
+            "2",
+            "-s",
+            "-w",
+            "-ci",
+          },
+          stdin = false,
+        }
+      end
+    },
     javascript = {
       function()
         return {
