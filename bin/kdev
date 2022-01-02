@@ -2,37 +2,63 @@
 
 command=$1
 
-[ -z "$command" ] || shift 1;
+[ -z "$command" ] || shift 1
 
 globalListCmd() {
-  telepresence list | grep -i ^[a-z].* 
+  telepresence list | grep -i ^[a-z].*
 }
 
+envFile=~/.env
+
 case $command in
-    "start")
-      svc=$( globalListCmd | awk -F: '{print $1}' | fzf)
-      [ -z "$svc" ] && echo "No K8s service selected" && exit 17
-      # telepresence intercept $svc -p 3000:80 --mount=/tmp/nxtcoder17 zsh
-      telepresence intercept $svc -p ${1:-3000} zsh
-      ;;
-    "env")
-      printenv | grep -i telepresence | awk '{print "export " $1}' > ~/.env
-      ;;
-    "stop")
-      intercept=$(globalListCmd | grep -i intercepted | awk -F: '{print $1}' | fzf)
-      [ -z "$intercept" ] && echo "No intercept selected" && exit 17
-      telepresence leave $intercept
-      ;;
+  "start")
+    svc=$(globalListCmd | awk -F: '{print $1}' | fzf)
+    [ -z "$svc" ] && echo "No K8s service selected" && exit 17
+    # telepresence intercept $svc -p 3000:80 --mount=/tmp/nxtcoder17 zsh
+    telepresence intercept $svc -p ${1:-"3000:80"} -- zsh
+    ;;
+  "env")
+    printenv | grep -i telepresence | awk '{print "export " $1}' >$envFile
+    ;;
+  "stop")
+    rm -rf $envFile
+    intercept=$(globalListCmd | grep -i intercepted | awk -F: '{print $1}' | fzf)
+    [ -z "$intercept" ] && echo "No intercept selected" && exit 17
+    telepresence leave $intercept
+    ;;
 
-    "list")
-      globalListCmd
-      ;;
+  "list")
+    globalListCmd
+    ;;
 
-    "restart")
-      telepresence quit && telepresence connect
-      ;;
-    "*")
-      echo "available commands: start, stop, list, restart"
-      exit 17
-      ;;
+  "restart")
+    telepresence quit && eval $0 start
+    ;;
+
+  "mounts")
+    d=$(cat $envFile | grep -i _root | awk -F= '{print $2}')
+    action=$1
+    case $action in
+      "tree")
+        tree $d
+        ;;
+      "ls")
+        ls -la $d
+        ;;
+      "fzf")
+        f=$(cd $d && fzf)
+        [ -z "$f" ] && echo "No file selected" && exit 17
+        cat $d/$f
+        ;;
+      *)
+        echo "Mounting $d"
+        telepresence mount $d
+        ;;
+    esac
+    ;;
+
+  "*")
+    echo "available commands: start, stop, list, restart, env, mounts"
+    exit 17
+    ;;
 esac

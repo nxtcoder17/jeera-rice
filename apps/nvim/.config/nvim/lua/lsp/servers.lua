@@ -36,6 +36,10 @@ local lsp_servers = {
     base_dir .. "/bash/node_modules/.bin/bash-language-server",
     "start"
   },
+  python = {
+    base_dir .. "/python/node_modules/.bin/pyright-langserver",
+    "--stdio"
+  },
 }
 
 local function config(_config)
@@ -187,3 +191,7 @@ lsp_config.efm.setup {
   },
 }
 
+-- python lsp
+require("lspconfig").pyright.setup({
+  cmd = lsp_servers.python,
+})

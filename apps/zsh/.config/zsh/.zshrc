@@ -113,7 +113,7 @@ bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 
-zshDir=$(realpath $(dirname $0))
+export zshDir=$XDG_CONFIG_HOME/zsh
 
 # Aliases
 # [ -f "$ZDOTDIR/alias" ] && source "$ZDOTDIR/alias"
@@ -121,9 +121,6 @@ zshDir=$(realpath $(dirname $0))
 
 # Functions
 [ -f "$zshDir/functions" ] && source "$zshDir/functions"
-
-
-eval "$(starship init zsh)"
 
 export BUILD_LIBRDKAFKA=0
 
@@ -144,11 +141,16 @@ export LESS=-FRX
 # source .nxtcoder17.sh file, if it sees it anywhere
 # this makes system hackable
 
+[ -f $HOME/.env ] && source $HOME/.env
+
 # wait till we find a good alternative
 # [ -f $PWD/.nxtcoder17.sh ] && source .nxtcoder17.sh
 
+eval "$(zoxide init zsh)"
+eval "$(starship init zsh)"
+
 # Load syntax highlighting; should be last.
-source /home/nxtcoder17/.local/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
+# source /home/nxtcoder17/.local/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
 
 # export LUA_PATH='/usr/share/lua/5.4/?.lua;/usr/share/lua/5.4/?/init.lua;/usr/lib/lua/5.4/?.lua;/usr/lib/lua/5.4/?/init.lua;./?.lua;./?/init.lua;/home/nxtcoder17/.luarocks/share/lua/5.4/?.lua;/home/nxtcoder17/.luarocks/share/lua/5.4/?/init.lua'
 # export LUA_CPATH='/usr/lib/lua/5.4/?.so;/usr/lib/lua/5.4/loadall.so;./?.so;/home/nxtcoder17/.luarocks/lib/lua/5.4/?.so'
