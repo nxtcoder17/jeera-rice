@@ -12,6 +12,8 @@ envFile=~/.env
 
 case $command in
   "start")
+    rm -rf ~/.env
+    eval $0 list
     svc=$(globalListCmd | awk -F: '{print $1}' | fzf)
     [ -z "$svc" ] && echo "No K8s service selected" && exit 17
     # telepresence intercept $svc -p 3000:80 --mount=/tmp/nxtcoder17 zsh
@@ -33,6 +35,10 @@ case $command in
 
   "restart")
     telepresence quit && eval $0 start
+    ;;
+
+  "quit")
+    telepresence quit
     ;;
 
   "mounts")
@@ -57,7 +63,7 @@ case $command in
     esac
     ;;
 
-  "*")
+  *)
     echo "available commands: start, stop, list, restart, env, mounts"
     exit 17
     ;;

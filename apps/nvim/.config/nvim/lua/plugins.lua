@@ -21,21 +21,23 @@ require("packer").startup(function()
   use("github/copilot.vim")
 
   -- markdown
-  use("davidgranstrom/nvim-markdown-preview")
+  use({ "davidgranstrom/nvim-markdown-preview", ft = "markdown" })
 
   -- syntax highlighting
-  use({ "mboughaba/i3config.vim", ft="i3config" })
-  use("lukas-reineke/indent-blankline.nvim")
+  use({ "mboughaba/i3config.vim", ft = "i3config" })
+
+  use{ "lukas-reineke/indent-blankline.nvim", event='BufRead' }
 
   --  align
-  use("godlygeek/tabular")
+  use{ "godlygeek/tabular", event="BufRead" }
 
-  -- helm 
-  use("towolf/vim-helm")
+  -- helm
+  use({ "towolf/vim-helm", ft = "helm" })
 
   -- golang
   use({
     "crispgm/nvim-go",
+    ft = "go",
     config = function()
       require("go").setup({
         lint_prompt_style = "vt",
@@ -66,20 +68,6 @@ require("packer").startup(function()
     end,
   })
 
-  -- ## does not need it for now
-  -- use({
-  --   "rmagatti/session-lens",
-  --   config = function()
-  --     require("session-lens").setup()
-  --   end,
-  -- })
-
-  -- use{ "akinsho/toggleterm.nvim", config = function()
-  --   require'toggleterm'.setup({
-  --       open_mapping = [[s<space>]]
-  --     })
-  -- end }
-
   -- AutoPairs
   use("windwp/nvim-autopairs")
 
@@ -87,8 +75,8 @@ require("packer").startup(function()
 
   -- syntax
   use("sheerun/vim-polyglot")
-  use("fladson/vim-kitty")
-  use({ "ellisonleao/glow.nvim", ft="markdown" })
+  use({ "fladson/vim-kitty", ft = "conf" })
+  use({ "ellisonleao/glow.nvim", ft = "markdown" })
 
   --  syntax specific
   -- use({"Jakski/vim-yaml", run = ":UpdateRemotePlugins"})
@@ -96,7 +84,9 @@ require("packer").startup(function()
   -- color schemes
   use("folke/tokyonight.nvim")
 
-  use("norcalli/nvim-colorizer.lua")
+  use{ "norcalli/nvim-colorizer.lua", event="BufRead", config = function()
+    require'colorizer'.setup()
+  end}
 
   -- Motion
   use("chaoren/vim-wordmotion")
@@ -108,7 +98,7 @@ require("packer").startup(function()
   use("chrisbra/NrrwRgn")
 
   -- kubernetes
-  use("andrewstuart/vim-kubernetes")
+  use({ "andrewstuart/vim-kubernetes", ft = "yaml" })
 
   -- status line
   use({
@@ -132,7 +122,7 @@ require("packer").startup(function()
 
   -- LSP
   use({ "neovim/nvim-lspconfig" })
-  use("folke/lsp-colors.nvim")        --  better diagonstics colors
+  use("folke/lsp-colors.nvim") --  better diagonstics colors
   use("onsails/lspkind-nvim")
   use("williamboman/nvim-lsp-installer")
   use("nvim-lua/lsp-status.nvim")
@@ -180,9 +170,12 @@ require("packer").startup(function()
       { "hrsh7th/nvim-cmp" },
       { "Saecki/crates.nvim" },
       { "f3fora/cmp-spell" },
-      { "hrsh7th/cmp-copilot", config = function() 
+      {
+        "hrsh7th/cmp-copilot",
+        config = function()
           require("plugins_dir.copilot")
-      end },
+        end,
+      },
     },
   })
 
@@ -197,10 +190,19 @@ require("packer").startup(function()
   use("nvim-treesitter/nvim-treesitter-textobjects")
 
   -- use("windwp/nvim-autopairs")
-  use("p00f/nvim-ts-rainbow")
-  use("JoosepAlviste/nvim-ts-context-commentstring")
+  -- use("p00f/nvim-ts-rainbow")
+  use({
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    ft = {
+      "javascript",
+      "javascriptreact",
+    },
+  })
   use("andymass/vim-matchup")
-  use("windwp/nvim-ts-autotag")
+  use({ "windwp/nvim-ts-autotag", ft = {
+    "javascript",
+    "javascriptreact",
+  }})
 
   -- Telescope
   use("nvim-lua/popup.nvim")
@@ -235,9 +237,7 @@ require("packer").startup(function()
   end
 end)
 
-require("colorizer").setup()
-
--- Extensions
+-- require("colorizer").setup()
 
 ------------------------ Highlight Search
 require("hlslens").setup({
@@ -249,29 +249,7 @@ require("hlslens").setup({
 -- stabilize.nvim
 require("stabilize").setup()
 
--- require("indent_blankline").setup {
---     show_current_context = false,
--- }
-
--- wilder
--- vim.call([[ wilder#setup({'modes': [':', '/', '?']}) ]])
-
--- vim.cmd([[
---   let g:expand_region_text_objects = {
---         \ 'iw'  :0,
---         \ 'iW'  :0,
---         \ 'i"'  :0,
---         \ 'i''' :0,
---         \ 'i]'  :1,
---         \ 'ib'  :1,
---         \ 'iB'  :1,
---         \ 'il'  :1,
---         \ 'ip'  :1,
---         \ 'ie'  :0,
---         \ }
--- ]])
 vim.cmd([[ map <C-w> <Plug>(expand_region_expand) ]])
-
 -- vim.g.dashboard_default_executive = "telescope"
 
 -- Glow.nvim
@@ -281,25 +259,24 @@ vim.g.glow_border = "rounded"
 -- large files no syntax hightlighting
 
 -- vim.g.LargeFile = 0.25
-vim.cmd([[
+-- vim.cmd([[
+--   " file is large from 10mb
+-- let g:LargeFile = 1024 * 1024 * 2 / 10
+-- augroup LargeFile 
+--   au!
+--   autocmd BufReadPre * let f=getfsize(expand("<afile>")) | if f > g:LargeFile || f == -2 | call LargeFile() | endif
+-- augroup END
 
-  " file is large from 10mb
-let g:LargeFile = 1024 * 1024 * 2 / 10
-augroup LargeFile 
-  au!
-  autocmd BufReadPre * let f=getfsize(expand("<afile>")) | if f > g:LargeFile || f == -2 | call LargeFile() | endif
-augroup END
-
-function! LargeFile()
- " no syntax highlighting etc
- set eventignore+=FileType
- " save memory when other file is viewed
- setlocal bufhidden=unload
- " is read-only (write with :w new_filename)
- " setlocal buftype=nowrite
- " no undo possible
- setlocal undolevels=-1
- " display message
- autocmd VimEnter *  echo "The file is larger than " . (g:LargeFile / 1024 / 1024) . " MB, so some options are changed (see .vimrc for details)."
-endfunction
-]])
+-- function! LargeFile()
+--  " no syntax highlighting etc
+--  set eventignore+=FileType
+--  " save memory when other file is viewed
+--  setlocal bufhidden=unload
+--  " is read-only (write with :w new_filename)
+--  " setlocal buftype=nowrite
+--  " no undo possible
+--  setlocal undolevels=-1
+--  " display message
+--  autocmd VimEnter *  echo "The file is larger than " . (g:LargeFile / 1024 / 1024) . " MB, so some options are changed (see .vimrc for details)."
+-- endfunction
+-- ]])
