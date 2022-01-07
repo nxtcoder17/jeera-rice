@@ -24,7 +24,7 @@ require("packer").startup(function()
   use({ "davidgranstrom/nvim-markdown-preview", ft = "markdown" })
 
   -- syntax highlighting
-  use({ "mboughaba/i3config.vim", ft = "i3config" })
+  use({ "mboughaba/i3config.vim" })
 
   use{ "lukas-reineke/indent-blankline.nvim", event='BufRead' }
 
@@ -44,12 +44,6 @@ require("packer").startup(function()
       })
     end,
   })
-  -- use({
-  --   "ray-x/go.nvim",
-  --   config = function()
-  --     require("go").setup({})
-  --   end,
-  -- })
 
   -- todo tracking
   use("folke/todo-comments.nvim")
@@ -75,7 +69,7 @@ require("packer").startup(function()
 
   -- syntax
   use("sheerun/vim-polyglot")
-  use({ "fladson/vim-kitty", ft = "conf" })
+  use({ "fladson/vim-kitty" })
   use({ "ellisonleao/glow.nvim", ft = "markdown" })
 
   --  syntax specific

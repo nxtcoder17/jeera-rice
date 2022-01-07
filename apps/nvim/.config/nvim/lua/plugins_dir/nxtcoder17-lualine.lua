@@ -88,8 +88,7 @@ local emoji = {
 
 lualine.setup({
   options = {
-    -- theme = "tokyonight",
-    -- theme = "iceberg_dark",
+    theme = "tokyonight",
     -- section_separators = { left = "", right = "" },
     -- section_separators = { left = "", right = "" },
     -- component_separators = { left = "", right = "" },
@@ -101,8 +100,48 @@ lualine.setup({
     -- component_separators = { left = leftIcon, right = iconRight },
     -- component_separators = { left = iconLeft, right = iconRight },
     -- component_separators = { left = "", right = "" },
-    -- component_separators = { left = " ", right = " " },
+    component_separators = { left = " ", right = " " },
     -- component_separators = { left = tabline.iconSlimLeft, right = tabline.iconSlimRight },
+  },
+
+  tabline = {
+    lualine_a = { 
+      {
+        "buffers",
+        icons_enabled = false,
+        section_separators = { left = tabline.iconSlimLeft, right = tabline.iconSlimRight }, 
+        padding=0,
+        fmt = function(str) 
+          local current_buffer = vim.fn.expand('%a'):match("^.*/(.*)$")
+          return str == current_buffer and string.format("%s %s %s", iconLeft, str, iconRight) or string.format(' %s ', str)
+        end,
+        buffers_color = {
+          -- this takes Highlight Groups
+          active = 'lualine_a_normal',
+          inactive = 'Comment',
+        },
+      },
+    },
+    lualine_b = {},
+    lualine_c = {},
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = {
+      { "tabs",
+        mode=1,
+        icons_enabled= true,
+        section_separators = { left = " ", right = " " },
+        padding=1,
+        fmt = function(str) 
+          return string.format("%s", emoji.tree)
+        end,
+        tabs_color = {
+          -- this takes Highlight Groups
+          active = 'lualine_b_insert',
+          inactive = 'Comment',
+        },
+      },
+    },
   },
 
   sections = {

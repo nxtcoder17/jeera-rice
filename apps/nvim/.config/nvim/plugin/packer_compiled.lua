@@ -169,10 +169,8 @@ _G.packer_plugins = {
     url = "https://github.com/ellisonleao/glow.nvim"
   },
   ["i3config.vim"] = {
-    loaded = false,
-    needs_bufread = true,
-    only_cond = false,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/i3config.vim",
+    loaded = true,
+    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/i3config.vim",
     url = "https://github.com/mboughaba/i3config.vim"
   },
   ["impatient.nvim"] = {
@@ -412,10 +410,8 @@ _G.packer_plugins = {
     url = "https://github.com/towolf/vim-helm"
   },
   ["vim-kitty"] = {
-    loaded = false,
-    needs_bufread = true,
-    only_cond = false,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/vim-kitty",
+    loaded = true,
+    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/vim-kitty",
     url = "https://github.com/fladson/vim-kitty"
   },
   ["vim-kubernetes"] = {
@@ -539,34 +535,26 @@ vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time([[Defining lazy-load filetype autocommands]], true)
+vim.cmd [[au FileType markdown ++once lua require("packer.load")({'nvim-markdown-preview', 'glow.nvim'}, { ft = "markdown" }, _G.packer_plugins)]]
+vim.cmd [[au FileType qf ++once lua require("packer.load")({'nvim-bqf'}, { ft = "qf" }, _G.packer_plugins)]]
+vim.cmd [[au FileType javascript ++once lua require("packer.load")({'nvim-ts-context-commentstring', 'nvim-ts-autotag'}, { ft = "javascript" }, _G.packer_plugins)]]
+vim.cmd [[au FileType javascriptreact ++once lua require("packer.load")({'nvim-ts-context-commentstring', 'nvim-ts-autotag'}, { ft = "javascriptreact" }, _G.packer_plugins)]]
 vim.cmd [[au FileType yaml ++once lua require("packer.load")({'vim-kubernetes'}, { ft = "yaml" }, _G.packer_plugins)]]
 vim.cmd [[au FileType go ++once lua require("packer.load")({'nvim-go'}, { ft = "go" }, _G.packer_plugins)]]
-vim.cmd [[au FileType javascript ++once lua require("packer.load")({'nvim-ts-autotag', 'nvim-ts-context-commentstring'}, { ft = "javascript" }, _G.packer_plugins)]]
-vim.cmd [[au FileType conf ++once lua require("packer.load")({'vim-kitty'}, { ft = "conf" }, _G.packer_plugins)]]
-vim.cmd [[au FileType qf ++once lua require("packer.load")({'nvim-bqf'}, { ft = "qf" }, _G.packer_plugins)]]
-vim.cmd [[au FileType markdown ++once lua require("packer.load")({'nvim-markdown-preview', 'glow.nvim'}, { ft = "markdown" }, _G.packer_plugins)]]
-vim.cmd [[au FileType i3config ++once lua require("packer.load")({'i3config.vim'}, { ft = "i3config" }, _G.packer_plugins)]]
-vim.cmd [[au FileType javascriptreact ++once lua require("packer.load")({'nvim-ts-autotag', 'nvim-ts-context-commentstring'}, { ft = "javascriptreact" }, _G.packer_plugins)]]
 vim.cmd [[au FileType helm ++once lua require("packer.load")({'vim-helm'}, { ft = "helm" }, _G.packer_plugins)]]
 time([[Defining lazy-load filetype autocommands]], false)
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
-vim.cmd [[au BufRead * ++once lua require("packer.load")({'indent-blankline.nvim', 'nvim-colorizer.lua', 'tabular'}, { event = "BufRead *" }, _G.packer_plugins)]]
+vim.cmd [[au BufRead * ++once lua require("packer.load")({'tabular', 'indent-blankline.nvim', 'nvim-colorizer.lua'}, { event = "BufRead *" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]
 time([[Sourcing ftdetect script at: /home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/vim-helm/ftdetect/helm.vim]], true)
 vim.cmd [[source /home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/vim-helm/ftdetect/helm.vim]]
 time([[Sourcing ftdetect script at: /home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/vim-helm/ftdetect/helm.vim]], false)
-time([[Sourcing ftdetect script at: /home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim]], true)
-vim.cmd [[source /home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim]]
-time([[Sourcing ftdetect script at: /home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim]], false)
 time([[Sourcing ftdetect script at: /home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/vim-kubernetes/ftdetect/kubeconf.vim]], true)
 vim.cmd [[source /home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/vim-kubernetes/ftdetect/kubeconf.vim]]
 time([[Sourcing ftdetect script at: /home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/vim-kubernetes/ftdetect/kubeconf.vim]], false)
-time([[Sourcing ftdetect script at: /home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/i3config.vim/ftdetect/i3config.vim]], true)
-vim.cmd [[source /home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/i3config.vim/ftdetect/i3config.vim]]
-time([[Sourcing ftdetect script at: /home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/i3config.vim/ftdetect/i3config.vim]], false)
 vim.cmd("augroup END")
 if should_profile then save_profiles() end
 
