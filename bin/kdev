@@ -5,7 +5,7 @@ command=$1
 [ -z "$command" ] || shift 1
 
 globalListCmd() {
-  telepresence list | grep -i ^[a-z].*
+  telepresence list | grep -i ^[a-z].* | tee /tmp/telx.list
 }
 
 envFile=~/.env
@@ -13,8 +13,8 @@ envFile=~/.env
 case $command in
   "start")
     rm -rf ~/.env
-    eval $0 list
-    svc=$(globalListCmd | awk -F: '{print $1}' | fzf)
+    eval $0 list > /dev/null
+    svc=$(cat /tmp/telx.list | awk -F: '{print $1}' | fzf)
     [ -z "$svc" ] && echo "No K8s service selected" && exit 17
     # telepresence intercept $svc -p 3000:80 --mount=/tmp/nxtcoder17 zsh
     telepresence intercept $svc -p ${1:-"3000:80"} -- zsh

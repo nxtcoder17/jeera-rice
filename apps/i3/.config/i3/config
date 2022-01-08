@@ -272,6 +272,7 @@ for_window [title="Picture-in-Picture"] floating enable
 
 # ScratchPad
 bindsym $mod+Shift+BackSpace move scratchpad
+bindsym Control+Shift+BackSpace [title="nxthelper"] move scratchpad
 bindsym $mod+backslash scratchpad show; move position center
 
 for_window [title="NxtTerm"] floating enable
@@ -281,5 +282,15 @@ for_window [title="NxtTerm"] border pixel 3
 
 set $startNxtTerm '--no-startup-id konsole --hide-menubar -p tabtitle=NxtTerm'
 set $toggleNxtTerm '[title="NxtTerm"] scratchpad show; move position center'
+
+set $startHelperTerm '--no-startup-id kitty --title nxthelper'
+set $toggleHelperTerm '[title="nxthelper"] scratchpad show; move position center'
+
+bindsym Control+period [title="nxthelper"] scratchpad show; move position center
+
+for_window [title="nxthelper"] floating enable
+for_window [title="nxthelper"] resize set 1200 1000
+for_window [title="nxthelper"] move scratchpad
+for_window [title="nxthelper"] border pixel 3
 
 exec $startNxtTerm
