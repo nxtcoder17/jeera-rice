@@ -14,6 +14,9 @@ end
 require("packer").startup(function()
   use("wbthomason/packer.nvim")
 
+  -- lsp symbols
+  use("simrat39/symbols-outline.nvim")
+
   -- back to where you left
   use("farmergreg/vim-lastplace")
 
@@ -274,3 +277,7 @@ vim.g.glow_border = "rounded"
 --  autocmd VimEnter *  echo "The file is larger than " . (g:LargeFile / 1024 / 1024) . " MB, so some options are changed (see .vimrc for details)."
 -- endfunction
 -- ]])
+
+vim.g.symbols_outline = {
+  width = 50
+}
