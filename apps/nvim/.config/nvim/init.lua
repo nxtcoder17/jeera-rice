@@ -1,6 +1,6 @@
+require('disable-builtins')
 require("impatient")
 -- require("packer_compiled")
-require('disable-builtins')
 require("options")
 require("plugins")
 require("keymaps")
