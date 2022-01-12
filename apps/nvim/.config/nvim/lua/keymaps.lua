@@ -21,6 +21,8 @@ maps["nnoremap"]("k", "gk")
 maps["nnoremap"]("cc", '"+y')
 maps["vnoremap"]("cc", '"+y')
 
+maps["vnoremap"]("scc", ':OSCYank<CR>')
+
 -- cancel highlighting
 maps["nnoremap"]("<BS>", ":set nohls<CR>")
 
@@ -65,7 +67,8 @@ maps["nnoremap"]("si", ":vsplit<CR>")
 maps["nnoremap"]("sm", ":split<CR>")
 
 -- file explorer | word grepper
-maps["nnoremap"]("sf", ":Telescope find_files<CR>")
+maps["nnoremap"]("sf", ":Telescope resume<CR>")
+maps["nnoremap"]("sF", ":Telescope find_files<CR>")
 maps["nnoremap"]("ff", ":lua require'plugins_dir.telescope'.grep()<CR>")
 
 -- rename variable

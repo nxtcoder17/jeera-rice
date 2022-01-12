@@ -14,6 +14,9 @@ end
 require("packer").startup(function()
   use("wbthomason/packer.nvim")
 
+  -- osc copy
+  use('ojroques/vim-oscyank')
+
   -- lsp symbols
   use("simrat39/symbols-outline.nvim")
 
