@@ -67,8 +67,8 @@ maps["nnoremap"]("si", ":vsplit<CR>")
 maps["nnoremap"]("sm", ":split<CR>")
 
 -- file explorer | word grepper
-maps["nnoremap"]("sf", ":Telescope resume<CR>")
-maps["nnoremap"]("sF", ":Telescope find_files<CR>")
+maps["nnoremap"]("sf", ":Telescope find_files<CR>")
+maps["nnoremap"]("sF", ":Telescope pickers<CR>")
 maps["nnoremap"]("ff", ":lua require'plugins_dir.telescope'.grep()<CR>")
 
 -- rename variable

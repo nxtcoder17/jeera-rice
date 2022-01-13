@@ -42,6 +42,9 @@ end
 telescope.setup({
   defaults = {
     previewer = previewMaker,
+    cache_picker = {
+      num_pickers = -1
+    }
   },
   extensions = {
     fzf = {
@@ -128,15 +131,15 @@ M.jeera_rice = function()
   });
 end
 
-M.file_explorer = function()
-  require("telescope.builtin").file_browser({
-    prompt_title = " File Browser",
-    path_display = { "shorten" },
-    cwd = "~",
-    layout_strategy = "horizontal",
-    layout_config = { preview_width = 0.65, width = 0.75 },
-  })
-end
+-- M.file_explorer = function()
+--   require("telescope.builtin").file_browser({
+--     prompt_title = " File Browser",
+--     path_display = { "shorten" },
+--     cwd = "~",
+--     layout_strategy = "horizontal",
+--     layout_config = { preview_width = 0.65, width = 0.75 },
+--   })
+-- end
 
 M.list_sessions = function()
   require("session-lens").search_session()

@@ -129,3 +129,8 @@ function _G.custom_fold_text()
 end
 
 vim.opt.foldtext = "v:lua.custom_fold_text()"
+
+vim.cmd[[
+  let &t_Cs = "\e[4:3m"
+  let &t_Ce = "\e[4:0m"
+]]

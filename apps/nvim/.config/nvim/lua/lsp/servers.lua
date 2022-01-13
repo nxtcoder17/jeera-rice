@@ -11,7 +11,7 @@ local lsp_servers = {
     "--stdio",
   },
   lua = {
-    base_dir .. "/sumneko_lua/extension/server/bin/Linux/lua-language-server",
+    base_dir .. "/sumneko_lua/extension/server/bin/lua-language-server",
   },
   go = {
     base_dir .. "/go/gopls",
@@ -202,4 +202,5 @@ require("lspconfig").pyright.setup({
 
 require("lspconfig").eslint.setup({
   cmd = lsp_servers.eslint,
+  root_dir = lsp_config.util.root_pattern(".eslintrc.yml"),
 })
