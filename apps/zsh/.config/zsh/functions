@@ -7,7 +7,7 @@
 pnpm() {
   if [ $1 = "peer" ]; then
     PKG=$2
-    shift 1;
+    shift 1
     command pnpm i $(npm info "$PKG@latest" peerDependencies --json | sed 's/[\{\},]//g ; s/: /@/g' | xargs) $@
   else
     command pnpm $@
@@ -15,37 +15,21 @@ pnpm() {
 }
 
 _fzf_complete_make() {
-  _fzf_complete --multi --reverse --prompt="target> " -- "make ${@:2}" < <(grep -iE '^[^.].*:\s+' ./Makefile | awk -F':' '{print $1}' | uniq)
+  _fzf_complete --multi --reverse --prompt="target> " -- "make ${@:2}" < <(grep -iE '^[^.#].*:\s+' ./Makefile | awk -F':' '{print $1}' | uniq)
 }
 
 _fzf_complete_prun() {
-  _fzf_complete --multi --reverse --prompt="package.json script> " -- "pnpm run ${@:2}" < <(cat ./package.json| jq '.scripts'  | grep -i '"' | awk '{print $1}' | sed 's/:$//g' | sed 's/"//g')
+  _fzf_complete --multi --reverse --prompt="package.json script> " -- "pnpm run ${@:2}" < <(cat ./package.json | jq '.scripts' | grep -i '"' | awk '{print $1}' | sed 's/:$//g' | sed 's/"//g')
 }
 
 # _fzf_complete_sample() {
 #   _fzf_complete --multi --reverse --prompt="target> " -- "$@" < <()
 # }
 
-list() {
-  telepresence list
-}
-
-telenv() {
- printenv | grep -i telepresence | awk '{print "export " $1}' > ~/.env
- # ktunnel inject deployment ${1:-api-dev} ${2:-3000}
-}
-
-intercept() {
-  svc=$(telepresence list | awk -F: '{print $1}' | fzf)
-  [ -z "$svc" ] && echo "No K8s service selected" && return 1
-  telepresence intercept $svc -p 3000:80 --mount=/tmp/nxtcoder17 zsh
-}
-
-to-base64 () {
+to-base64() {
   cat $1 | base64 | tr -d '\n' | xclip -sel clip
 }
 
 from-base64() {
   cat $1 | base64 -d | xclip -sel clip
 }
-
