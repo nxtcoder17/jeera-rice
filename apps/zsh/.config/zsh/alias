@@ -1,22 +1,17 @@
 #! /usr/bin/env sh
 
 if [ -x $(command -v exa) ]; then
-  alias ls='exa -a'
+  alias ls='exa'
   alias ll='exa -la'
 else
   alias ls='ls -A --color=auto'
   alias ll='ls -l'
 fi
 
-# if [ -f .env.sh ]; then
-#   source .env.sh
-#   alias k="kubectl --namespace=$KUBE_NAMESPACE --context=$KUBE_CONTEXT"
-# else
-#   alias k="KUBECONFIG=~/.kube/workers/$(ls | fzf)"
-# fi
-
 alias kx='kubie ctx'
 alias kn='kubie ns'
+
+alias k='kubectl'
 
 alias tel='telepresence'
 
@@ -36,4 +31,7 @@ alias gss='git status -s'
 alias gfff='git flow feature finish'
 alias gffs='git flow feature start'
 alias gffp='git flow feature publish'
+alias gfbs='git flow bugfix start'
+alias gfbf='git flow bugfix finish'
+alias gfbp='git flow bugfix publish'
 alias gf='git flow'

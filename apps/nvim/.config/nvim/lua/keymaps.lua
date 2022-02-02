@@ -2,6 +2,8 @@ local maps = require("lib.mapping")
 -- print(vim.inspect(maps));
 
 -- resets
+maps["nnoremap"]("S", "")
+maps["nnoremap"]("S", "")
 maps["nnoremap"]("s", "")
 maps["vnoremap"]("s", "")
 maps["nnoremap"]("q", "")
@@ -21,10 +23,10 @@ maps["nnoremap"]("k", "gk")
 maps["nnoremap"]("cc", '"+y')
 maps["vnoremap"]("cc", '"+y')
 
-maps["vnoremap"]("scc", ':OSCYank<CR>')
+maps["vnoremap"]("scc", ":OSCYank<CR>")
 
 -- cancel highlighting
-maps["nnoremap"]("<BS>", ":set nohls<CR>")
+maps["nnoremap"]("<BS>", ":set nohls <CR>|:HlSearchLensToggle <CR>|:HlSearchLensToggle <CR>")
 
 -- Resizing Splits
 maps["nnoremap"]("<C-M-Right>", ":vert resize +10<CR>")
@@ -53,12 +55,16 @@ maps["nnoremap"]("sdo", ":BDelete other<CR>")
 maps["nnoremap"]("sda", ":BDelete all<CR>")
 maps["nnoremap"]("sdn", ":BDelete nameless<CR>")
 
-maps["nnoremap"]("s[", ":bprev<CR>")
-maps["nnoremap"]("s]", ":bnext<CR>")
+-- Debugging
+maps["nnoremap"]("qt", ":Telescope dap configurations<CR>")
+maps["nnoremap"]("qq", ":Telescope dap commands<CR>")
+
+-- maps["nnoremap"]("s[", ":bprev<CR>")
+-- maps["nnoremap"]("s]", ":bnext<CR>")
 
 -- Iterate Quickfix list
-maps["nnoremap"]("q[", ":cprev<CR>")
-maps["nnoremap"]("q]", ":cnext<CR>")
+maps["nnoremap"]("s[", ":cprev<CR>")
+maps["nnoremap"]("s]", ":cnext<CR>")
 maps["nnoremap"]("qo", ":copen<CR>")
 maps["nnoremap"]("qc", ":cclose<CR>")
 
@@ -81,6 +87,7 @@ maps["nnoremap"]("sp", ":lua vim.diagnostic.goto_prev()<CR>")
 -- LSP
 maps["nnoremap"]("se", ":lua vim.diagnostic.open_float()<CR>")
 maps["nnoremap"]("K", "<Cmd>lua vim.lsp.buf.hover()<CR>")
+maps["inoremap"]("<C-k>", "<Cmd>lua vim.lsp.buf.signature_help()<CR>")
 
 maps["nnoremap"]("sb", ":Telescope buffers<CR>")
 maps["nnoremap"]("gd", ":Telescope lsp_definitions<CR>")
@@ -117,50 +124,40 @@ maps["nnoremap"]("<M-l>", ":TmuxNavigateRight<cr>")
 maps["nnoremap"]("<M-k>", ":TmuxNavigateUp<cr>")
 maps["nnoremap"]("<M-j>", ":TmuxNavigateDown<cr>")
 
--- eslint format
+maps["nnoremap"]("f;", ":lua vim.lsp.buf.formatting()<CR>")
 
-function _G.NxtFormatMap()
-  if vim.bo.filetype == "sh" then
-    maps["nnoremap"]("f;", ":!shfmt -i 2 -w -ci '%' <CR>|:e!<CR>")
-  elseif vim.bo.filetype == "javascript" then
-    maps["nnoremap"]("f;", ":!eslint_d --fix '%' <CR>|:e!<CR>")
-  elseif vim.bo.filetype == "go" then
-    maps["nnoremap"]("f;", ":!gofmt -w '%'<CR>|:e!<CR>")
-  end
-end
+-- function _G.NxtFormatMap()
+--   if vim.bo.filetype == "sh" then
+--     maps["nnoremap"]("f;", ":!shfmt -i 2 -w -ci '%' <CR>|:e!<CR>")
+--   elseif vim.bo.filetype == "javascript" then
+--     -- maps["nnoremap"]("f;", ":!eslint_d --fix '%' <CR>|:e!<CR>")
+--     maps["nnoremap"]("f;", ":EslintFixAll<CR>")
+--   elseif vim.bo.filetype == "go" then
+--     maps["nnoremap"]("f;", ":!gofmt -w '%'<CR>|:e!<CR>")
+--   elseif vim.bo.filetype == "make" then
+--     maps["nnoremap"]("f;", nil)
+--   end
+-- end
 
-vim.cmd[[
- autocmd! FileType sh,javascript,go :lua NxtFormatMap()
-]]
+-- vim.cmd([[
+--  autocmd! FileType sh,javascript,javascriptreact,go :lua NxtFormatMap()
+-- ]])
 
--- Toggle Term
-maps["nnoremap"]("<C-t>", ":ToggleTermToggleAll<CR>")
-
-function _G.NxtTerminal(vertical)
-  local direction = vertical and "vertical" or "horizontal"
-  local size = vertical and "60" or "20"
-  local dir = vim.fn.expand('%:p:h')
-  vim.cmd(string.format("ToggleTerm size=%s dir=%s direction=%s", size, dir, direction))
-end
-
-maps["nnoremap"]("tt", ":lua NxtTerminal()<CR>")
-maps["nnoremap"]("txt", ":lua NxtTerminal(false)<CR>")
-maps["nnoremap"]("tvt", ":lua NxtTerminal(true)<CR>")
-
+-- Debugger Commands
 -- vimspector
-vim.api.nvim_command("command! -nargs=0 Reload :luafile $XDG_CONFIG_HOME/nvim/init.lua")
+-- vim.api.nvim_command("command! -nargs=0 Reload :luafile $XDG_CONFIG_HOME/nvim/init.lua")
 
-vim.api.nvim_command("command! -nargs=0 DD :call vimspector#Launch()<CR>")
-vim.api.nvim_command("command! -nargs=0 Dbp :call vimspector#ToggleBreakpoint()<CR>")
-vim.api.nvim_command("command! -nargs=0 Dj :call vimspector#StepOver()<CR>")
-vim.api.nvim_command("command! -nargs=0 Dk :call vimspector#StepOut()<CR>")
-vim.api.nvim_command("command! -nargs=0 Dl :call vimspector#StepInto()<CR>")
-vim.api.nvim_command("command! -nargs=0 Dr :call vimspector#Restart()<CR>")
-vim.api.nvim_command("command! -nargs=0 De :call vimspector#Reset()<CR>")
+-- vim.api.nvim_command("command! -nargs=0 DD :call vimspector#Launch()<CR>")
+-- vim.api.nvim_command("command! -nargs=0 Dbp :call vimspector#ToggleBreakpoint()<CR>")
+-- vim.api.nvim_command("command! -nargs=0 Dj :call vimspector#StepOver()<CR>")
+-- vim.api.nvim_command("command! -nargs=0 Dk :call vimspector#StepOut()<CR>")
+-- vim.api.nvim_command("command! -nargs=0 Dl :call vimspector#StepInto()<CR>")
+-- vim.api.nvim_command("command! -nargs=0 Dr :call vimspector#Restart()<CR>")
+-- vim.api.nvim_command("command! -nargs=0 De :call vimspector#Reset()<CR>")
 
-vim.api.nvim_command("command! -nargs=0 Max :MaximizerToggle")
+-- vim.api.nvim_command("command! -nargs=0 Max :MaximizerToggle")
 
-vim.api.nvim_command("command! -nargs=0 Ce :lua vim.b.copilot_enabled = true<CR>")
-vim.api.nvim_command("command! -nargs=0 Cd :lua vim.b.copilot_enabled = false<CR>")
+-- vim.api.nvim_command("command! -nargs=0 Ce :lua vim.b.copilot_enabled = true<CR>")
+-- vim.api.nvim_command("command! -nargs=0 Cd :lua vim.b.copilot_enabled = false<CR>")
 
-vim.api.nvim_command("command! -nargs=0 Jeera :lua require'plugins_dir.telescope'.jeera_rice()<CR>")
+-- vim.api.nvim_command("command! -nargs=0 Jeera :lua require'plugins_dir.telescope'.jeera_rice()<CR>")

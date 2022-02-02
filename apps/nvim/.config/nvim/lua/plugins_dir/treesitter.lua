@@ -1,6 +1,9 @@
 -- nvim-treesitter
 require("nvim-treesitter.configs").setup({
-  ensure_installed = "all",
+  ensure_installed = "maintained",
+  -- ignore_install={"phpdoc","lua","php","vim", "ocamllex"},
+  ignore_install = { "ocamllex" },
+
   highlight = {
     enable = true,
     additional_vim_regex_highlighting = false,
@@ -64,7 +67,7 @@ require("nvim-treesitter.configs").setup({
   refactor = {
     smart_rename = {
       enable = true,
-      keymaps = { smart_rename = "grr" }
+      keymaps = { smart_rename = "grr" },
     },
     highlight_definitions = { enable = true },
     navigation = {

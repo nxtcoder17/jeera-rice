@@ -256,7 +256,7 @@ bar {
 }
 
 # Defaults for application popups
-floating_maximum_size 1366 x 768
+# floating_maximum_size 1366 x 768
 
 for_window [window_role="pop_up"] floating enable
 for_window [window_role="task_dialog"] floating enable
@@ -289,8 +289,8 @@ set $toggleHelperTerm '[title="nxthelper"] scratchpad show; move position center
 bindsym Control+period [title="nxthelper"] scratchpad show; move position center
 
 for_window [title="nxthelper"] floating enable
-for_window [title="nxthelper"] resize set 1200 1000
-for_window [title="nxthelper"] move scratchpad
+for_window [title="nxthelper"] resize set 2000 2000
+for_window [title="nxthelper"] move scratchpad, fullscreen enable
 for_window [title="nxthelper"] border pixel 3
 
 exec $startNxtTerm

@@ -1,8 +1,8 @@
 require("formatter").setup({
-  logging = false,
+  logging = true,
   filetype = {
     sh = {
-      function() 
+      function()
         return {
           exe = "shfmt",
           args = {
@@ -14,7 +14,7 @@ require("formatter").setup({
           },
           stdin = false,
         }
-      end
+      end,
     },
     javascript = {
       function()

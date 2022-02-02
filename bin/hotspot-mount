@@ -1,0 +1,4 @@
+#! /usr/bin/env bash
+DIR=$HOME/workspace/madhouselabs/hotspot-ctl/
+$DIR/venv/bin/python3 $DIR/main.py
+echo /tmp/kloudlite | xclip -sel clip

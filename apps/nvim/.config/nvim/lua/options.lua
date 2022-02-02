@@ -70,7 +70,7 @@ opt.completeopt = "menu,menuone,noinsert,noselect"
 -- Tab and Spaces
 opt.tabstop = 2
 opt.softtabstop = 2
-opt.shiftwidth = 2 -- spaces per tab when using >> or <<
+opt.shiftwidth = 2   -- spaces per tab when using >> or <<
 opt.expandtab = true -- expand tabs into spaces
 opt.autoindent = true
 opt.smarttab = true
@@ -130,7 +130,7 @@ end
 
 vim.opt.foldtext = "v:lua.custom_fold_text()"
 
-vim.cmd[[
-  let &t_Cs = "\e[4:3m"
-  let &t_Ce = "\e[4:0m"
-]]
+-- vim.cmd[[
+--   let &t_Cs = "\e[4:3m"
+--   let &t_Ce = "\e[4:0m"
+-- ]]

@@ -1,0 +1,9 @@
+#! /usr/bin/env bash
+
+# kubectl proxy --port 8080 &
+# sudo kubefwd svc -n hotspot
+# sudo kubefwd svc -n shared-cf27c386ec31e271c02f
+(trap 'kill 0' SIGTERM;
+  ktunnel inject deployment nxt-gateway -n hotspot 3000:4000 -p 28689 &
+  ktunnel inject deployment app-nxtcoder17 -n hotspot 3000 &
+)

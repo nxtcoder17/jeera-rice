@@ -1,6 +1,6 @@
 #! /usr/bin/env sh
 
-xset r rate 150 100
+xset r rate 150 90
 
 setxkbmap -option ctrl:nocaps
 
@@ -10,7 +10,7 @@ xmodmap -e 'keycode 50 = space'
 # space key as Left Shift
 xmodmap -e 'keycode 65 = Shift_L'
 
-pkill -9  xcape
+pkill -9 xcape
 
 # make space toggle b/w space and Shift_L
 xcape -e 'Shift_L=space'

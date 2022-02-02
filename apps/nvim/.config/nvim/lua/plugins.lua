@@ -12,16 +12,72 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 require("packer").startup(function()
+  -- for faster neovim
+  use("lewis6991/impatient.nvim")
+
+  use({
+    "nathom/filetype.nvim",
+    config = function()
+      vim.g.did_load_filetypes = 1
+    end,
+  })
+  use({
+    "antoinemadec/FixCursorHold.nvim",
+  })
+
   use("wbthomason/packer.nvim")
 
+  -- rest client
+  use({
+    "NTBBloodbath/rest.nvim",
+    requires = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("rest-nvim").setup({
+        -- Open request results in a horizontal split
+        result_split_horizontal = false,
+        -- Skip SSL verification, useful for unknown certificates
+        skip_ssl_verification = false,
+        -- Highlight request on run
+        highlight = {
+          enabled = true,
+          timeout = 150,
+        },
+        result = {
+          -- toggle showing URL, HTTP info, headers at top the of result window
+          show_url = true,
+          show_http_info = true,
+          show_headers = true,
+        },
+        -- Jump to request line on run
+        jump_to_request = false,
+        env_file = ".env",
+        custom_dynamic_variables = {},
+        yank_dry_run = true,
+      })
+    end,
+  })
+
   -- osc copy
-  use('ojroques/vim-oscyank')
+  use("ojroques/vim-oscyank")
 
   -- lsp symbols
   use("simrat39/symbols-outline.nvim")
 
   -- back to where you left
   use("farmergreg/vim-lastplace")
+
+  -- debugger
+  use("Pocco81/DAPInstall.nvim")
+  use({ "mfussenegger/nvim-dap" })
+  use({ "rcarriga/nvim-dap-ui" })
+  use({ "nvim-telescope/telescope-dap.nvim" })
+  use({
+    "theHamsta/nvim-dap-virtual-text",
+    config = function()
+      require("nvim-dap-virtual-text").setup()
+    end,
+  })
+  vim.g.dap_virtual_text = true
 
   -- copilot
   use("github/copilot.vim")
@@ -32,24 +88,24 @@ require("packer").startup(function()
   -- syntax highlighting
   use({ "mboughaba/i3config.vim" })
 
-  use{ "lukas-reineke/indent-blankline.nvim", event='BufRead' }
+  use({ "lukas-reineke/indent-blankline.nvim", event = "BufRead" })
 
   --  align
-  use{ "godlygeek/tabular", event="BufRead" }
+  use({ "godlygeek/tabular", event = "BufRead" })
 
   -- helm
   use({ "towolf/vim-helm", ft = "helm" })
 
   -- golang
-  use({
-    "crispgm/nvim-go",
-    ft = "go",
-    config = function()
-      require("go").setup({
-        lint_prompt_style = "vt",
-      })
-    end,
-  })
+  -- use({
+  --   "crispgm/nvim-go",
+  --   ft = "go",
+  --   config = function()
+  --     require("go").setup({
+  --       lint_prompt_style = "vt",
+  --     })
+  --   end,
+  -- })
 
   -- todo tracking
   use("folke/todo-comments.nvim")
@@ -68,10 +124,16 @@ require("packer").startup(function()
     end,
   })
 
+  -- tab helpers
+  use({
+    "nanozuki/tabby.nvim",
+    config = function()
+      require("tabby").setup()
+    end,
+  })
+
   -- AutoPairs
   use("windwp/nvim-autopairs")
-
-  use("lewis6991/impatient.nvim")
 
   -- syntax
   use("sheerun/vim-polyglot")
@@ -84,9 +146,13 @@ require("packer").startup(function()
   -- color schemes
   use("folke/tokyonight.nvim")
 
-  use{ "norcalli/nvim-colorizer.lua", event="BufRead", config = function()
-    require'colorizer'.setup()
-  end}
+  use({
+    "norcalli/nvim-colorizer.lua",
+    event = "BufRead",
+    config = function()
+      require("colorizer").setup()
+    end,
+  })
 
   -- Motion
   use("chaoren/vim-wordmotion")
@@ -99,6 +165,11 @@ require("packer").startup(function()
 
   -- kubernetes
   use({ "andrewstuart/vim-kubernetes", ft = "yaml" })
+
+  use({
+    "kyazdani42/nvim-web-devicons",
+    event = "BufEnter",
+  })
 
   -- status line
   use({
@@ -116,7 +187,7 @@ require("packer").startup(function()
   })
 
   -- file explorer
-  use("kevinhwang91/rnvimr")
+  use({ "kevinhwang91/rnvimr", commit = "e93671b4ea8" }) -- something broke in latest, i could not do splits
   use("christoomey/vim-tmux-navigator")
   use("psliwka/vim-smoothie")
 
@@ -185,8 +256,8 @@ require("packer").startup(function()
   })
 
   -- Treesitter
-  use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
-  -- use("nvim-treesitter/nvim-treesitter-refactor")
+  use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate", commit = "4e4b58f8e994" })
+  use("nvim-treesitter/nvim-treesitter-refactor")
   use("nvim-treesitter/nvim-treesitter-textobjects")
 
   -- use("windwp/nvim-autopairs")
@@ -202,7 +273,7 @@ require("packer").startup(function()
   use({ "windwp/nvim-ts-autotag", ft = {
     "javascript",
     "javascriptreact",
-  }})
+  } })
 
   -- Telescope
   use("nvim-lua/popup.nvim")
@@ -262,7 +333,7 @@ vim.g.glow_border = "rounded"
 -- vim.cmd([[
 --   " file is large from 10mb
 -- let g:LargeFile = 1024 * 1024 * 2 / 10
--- augroup LargeFile 
+-- augroup LargeFile
 --   au!
 --   autocmd BufReadPre * let f=getfsize(expand("<afile>")) | if f > g:LargeFile || f == -2 | call LargeFile() | endif
 -- augroup END
@@ -282,5 +353,5 @@ vim.g.glow_border = "rounded"
 -- ]])
 
 vim.g.symbols_outline = {
-  width = 50
+  width = 50,
 }

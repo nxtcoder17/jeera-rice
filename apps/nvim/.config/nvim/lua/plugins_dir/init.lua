@@ -11,4 +11,4 @@ require("plugins_dir.trouble")
 require("plugins_dir.colorscheme")
 require("plugins_dir.nvim-autopairs")
 require("plugins_dir.todo-comments")
-
+require("plugins_dir.debugger")

@@ -15,7 +15,7 @@ local lsp_servers = {
   },
   go = {
     base_dir .. "/go/gopls",
-    '--remote=auto'
+    -- '--remote=auto'
   },
   css = {
     base_dir .. "/vscode-langservers-extracted/node_modules/.bin/vscode-css-language-server",
@@ -44,6 +44,10 @@ local lsp_servers = {
     base_dir .. "/vscode-eslint/node_modules/.bin/vscode-eslint-language-server",
     "--stdio"
   },
+  quicklint = {
+    base_dir .. "/quick_lint_js/bin/quick-lint-js",
+    "--lsp"
+  }
 }
 
 local function config(_config)
@@ -56,6 +60,12 @@ end
 lsp_config.tsserver.setup(config({
   cmd = lsp_servers.tsserver,
   root_dir = lsp_config.util.root_pattern("jsconfig.json", "tsconfig.json", ".git"),
+  on_attach = function(client)
+    if client.config.flags then
+      client.config.flags.allow_incremental_sync = true
+    end
+    client.resolved_capabilities.document_formatting = false
+  end
 }))
 
 -- sumneko_lua
@@ -85,6 +95,7 @@ lsp_config.sumneko_lua.setup(config({
 -- -- yamlls
 lsp_config.yamlls.setup(config({
   cmd = lsp_servers.yaml,
+  filetypes = {"yaml", "yml"},
   settings = {
     yaml = {
       schemaStore = {
@@ -158,49 +169,80 @@ lsp_config.dockerls.setup({
 
 -- EFM
 
--- local eslint = {
---   lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT}",
---   lintStdin = true,
---   lintFormats = {"%f:%l:%c: %m"},
---   lintIgnoreExitCode = true,
---   formatCommand = "eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}",
---   formatStdin = true
--- }
+local eslint = {
+  lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT}",
+  lintStdin = true,
+  lintFormats = {"%f:%l:%c: %m"},
+  lintIgnoreExitCode = true,
+  formatCommand = "eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}",
+  formatStdin = true
+}
 
--- lsp_config.efm.setup {
---   cmd = {
---     vim.fn.stdpath('data') .. '/lsp_servers/efm/efm-langserver',
---   },
---   on_attach = function(client)
---     client.resolved_capabilities.document_formatting = true
---   end,
---   root_dir = lsp_config.util.root_pattern(".eslintrc.yml"),
---   settings = {
---     languages = {
---       javascript = {eslint},
---       javascriptreact = {eslint},
---       ["javascript.jsx"] = {eslint},
---       typescript = {eslint},
---       ["typescript.tsx"] = {eslint},
---       typescriptreact = {eslint}
---     }
---   },
---   filetypes = {
---     "javascript",
---     "javascriptreact",
---     "javascript.jsx",
---     "typescript",
---     "typescript.tsx",
---     "typescriptreact"
---   },
--- }
+local shell = {
+  lintCommand = "shellcheck -f gcc -x",
+  lintSource = 'shellcheck',
+  lintFormats = {
+    "%f:%l:%c: %m",
+    "%f:%l:%c: %m (warning)",
+    "%f:%l:%c: %m (error)",
+  },
+  formatCommand = "shfmt -c -i 2 -s -bn",
+  formatStdin = true
+}
+
+local golangcilint = {
+  lintCommand = "golangci-lint run",
+  lintSource = "golanci-lint",
+  init_options = {documentFormatting = false}, 
+}
+
+lsp_config.efm.setup {
+  cmd = {
+    vim.fn.stdpath('data') .. '/lsp_servers/efm/efm-langserver',
+  },
+  on_attach = function(client)
+    client.resolved_capabilities.document_formatting = true
+  end,
+  root_dir = lsp_config.util.root_pattern(".eslintrc.yml"),
+  settings = {
+    languages = {
+      javascript = {eslint},
+      javascriptreact = {eslint},
+      ["javascript.jsx"] = {eslint},
+      typescript = {eslint},
+      ["typescript.tsx"] = {eslint},
+      typescriptreact = {eslint},
+      sh = {shell},
+      go= {golangcilint},
+    }
+  },
+  filetypes = {
+    "javascript",
+    "javascriptreact",
+    "javascript.jsx",
+    "typescript",
+    "typescript.tsx",
+    "typescriptreact"
+  },
+}
 
 -- python lsp
 require("lspconfig").pyright.setup({
   cmd = lsp_servers.python,
 })
 
-require("lspconfig").eslint.setup({
-  cmd = lsp_servers.eslint,
-  root_dir = lsp_config.util.root_pattern(".eslintrc.yml"),
-})
+lsp_config.gopls.setup({
+  cmd = lsp_servers.go,
+  filetypes = { "go", "gomod", "gotmpl" },
+  root_dir = lsp_config.util.root_pattern("go.mod")
+});
+
+-- lsp_config.quick_lint_js.setup({
+--   cmd = lsp_servers.quicklint,
+-- })
+
+-- require("lspconfig").eslint.setup({
+--   cmd = lsp_servers.eslint,
+--   root_dir = lsp_config.util.root_pattern(".eslintrc.yml"),
+--   log_level = vim.lsp.protocol.MessageType.Warning;
+-- })

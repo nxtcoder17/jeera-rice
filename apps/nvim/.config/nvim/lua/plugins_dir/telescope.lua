@@ -84,7 +84,9 @@ telescope.setup({
   },
 })
 
-require("telescope").load_extension("fzf")
+telescope.load_extension("fzf")
+telescope.load_extension("dap")
+
 
 local M = {}
 
@@ -174,6 +176,23 @@ M.dockerImages = function()
     theme = "ivy",
     results_title = "Docker Images",
     finder = finders.new_oneshot_job({"docker", "images"}),
+    sorter = sorters.get_fuzzy_file(),
+    mappings = {
+      n = {
+        ["<C-d>"] = function(args) print(args) end,
+      },
+      i = {
+        ["<C-d>"] = function(args) print(args) end,
+      },
+    },
+  }):find()
+end
+
+M.tabs = function()
+  pickers.new({
+    theme = "ivy",
+    results_title = "Docker Images",
+    -- finder = finders.new_oneshot_job({"docker", "images"}),
     sorter = sorters.get_fuzzy_file(),
     mappings = {
       n = {
