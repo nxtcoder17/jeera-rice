@@ -25,11 +25,6 @@ for type, icon in pairs(signs) do
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
-require'lsp.servers'
-
--- customisations
-
--- [source]: neovim lsp UI customisations
 
 -- goto definition in a split by default
 local function goto_definition(split_cmd)
@@ -66,3 +61,4 @@ end
 
 vim.lsp.handlers["textDocument/definition"] = goto_definition('split')
 
+require'lsp.servers'

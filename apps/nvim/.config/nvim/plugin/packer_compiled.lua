@@ -151,6 +151,11 @@ _G.packer_plugins = {
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/crates.nvim",
     url = "https://github.com/Saecki/crates.nvim"
   },
+  ["ctrlsf.vim"] = {
+    loaded = true,
+    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/ctrlsf.vim",
+    url = "https://github.com/dyng/ctrlsf.vim"
+  },
   ["filetype.nvim"] = {
     config = { "\27LJ\2\n4\0\0\2\0\3\0\0056\0\0\0009\0\1\0)\1\1\0=\1\2\0K\0\1\0\23did_load_filetypes\6g\bvim\0" },
     loaded = true,
@@ -262,6 +267,7 @@ _G.packer_plugins = {
     url = "https://github.com/rcarriga/nvim-dap-ui"
   },
   ["nvim-dap-virtual-text"] = {
+    config = { "\27LJ\2\nC\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\26nvim-dap-virtual-text\frequire\0" },
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/nvim-dap-virtual-text",
     url = "https://github.com/theHamsta/nvim-dap-virtual-text"
@@ -328,10 +334,8 @@ _G.packer_plugins = {
     url = "https://github.com/JoosepAlviste/nvim-ts-context-commentstring"
   },
   ["nvim-web-devicons"] = {
-    loaded = false,
-    needs_bufread = false,
-    only_cond = false,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons",
+    loaded = true,
+    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
     url = "https://github.com/kyazdani42/nvim-web-devicons"
   },
   ["packer.nvim"] = {
@@ -349,6 +353,12 @@ _G.packer_plugins = {
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/popup.nvim",
     url = "https://github.com/nvim-lua/popup.nvim"
   },
+  ["rest.nvim"] = {
+    config = { "\27LJ\2\nü\2\0\0\4\0\t\0\r6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\0025\3\6\0=\3\a\0024\3\0\0=\3\b\2B\0\2\1K\0\1\0\29custom_dynamic_variables\vresult\1\0\3\rshow_url\2\19show_http_info\2\17show_headers\2\14highlight\1\0\2\fenabled\2\ftimeout\3ñ\1\1\0\5\20jump_to_request\1\28result_split_horizontal\1\26skip_ssl_verification\1\17yank_dry_run\2\renv_file\t.env\nsetup\14rest-nvim\frequire\0" },
+    loaded = true,
+    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/rest.nvim",
+    url = "https://github.com/NTBBloodbath/rest.nvim"
+  },
   rnvimr = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/rnvimr",
@@ -358,11 +368,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/stabilize.nvim",
     url = "https://github.com/luukvbaal/stabilize.nvim"
-  },
-  ["symbols-outline.nvim"] = {
-    loaded = true,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/symbols-outline.nvim",
-    url = "https://github.com/simrat39/symbols-outline.nvim"
   },
   ["tabby.nvim"] = {
     config = { "\27LJ\2\n3\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\ntabby\frequire\0" },
@@ -568,14 +573,6 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: filetype.nvim
-time([[Config for filetype.nvim]], true)
-try_loadstring("\27LJ\2\n4\0\0\2\0\3\0\0056\0\0\0009\0\1\0)\1\1\0=\1\2\0K\0\1\0\23did_load_filetypes\6g\bvim\0", "config", "filetype.nvim")
-time([[Config for filetype.nvim]], false)
--- Config for: cmp-copilot
-time([[Config for cmp-copilot]], true)
-try_loadstring("\27LJ\2\n3\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\24plugins_dir.copilot\frequire\0", "config", "cmp-copilot")
-time([[Config for cmp-copilot]], false)
 -- Config for: tabby.nvim
 time([[Config for tabby.nvim]], true)
 try_loadstring("\27LJ\2\n3\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\ntabby\frequire\0", "config", "tabby.nvim")
@@ -584,6 +581,22 @@ time([[Config for tabby.nvim]], false)
 time([[Config for auto-session]], true)
 try_loadstring("\27LJ\2\n«\2\0\0\6\0\15\0\0216\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\4\0'\2\5\0B\0\2\0029\0\6\0005\2\a\0005\3\b\0=\3\t\0026\3\0\0009\3\n\0039\3\v\3'\5\f\0B\3\2\2'\4\r\0&\3\4\3=\3\14\2B\0\2\1K\0\1\0\26auto_session_root_dir\15/sessions/\tdata\fstdpath\afn\31auto_session_suppress_dirs\1\2\0\0\a~/\1\0\2\14log_level\tinfo\25auto_session_enabled\2\nsetup\17auto-session\frequireEblank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal\19sessionoptions\6o\bvim\0", "config", "auto-session")
 time([[Config for auto-session]], false)
+-- Config for: filetype.nvim
+time([[Config for filetype.nvim]], true)
+try_loadstring("\27LJ\2\n4\0\0\2\0\3\0\0056\0\0\0009\0\1\0)\1\1\0=\1\2\0K\0\1\0\23did_load_filetypes\6g\bvim\0", "config", "filetype.nvim")
+time([[Config for filetype.nvim]], false)
+-- Config for: nvim-dap-virtual-text
+time([[Config for nvim-dap-virtual-text]], true)
+try_loadstring("\27LJ\2\nC\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\26nvim-dap-virtual-text\frequire\0", "config", "nvim-dap-virtual-text")
+time([[Config for nvim-dap-virtual-text]], false)
+-- Config for: cmp-copilot
+time([[Config for cmp-copilot]], true)
+try_loadstring("\27LJ\2\n3\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\24plugins_dir.copilot\frequire\0", "config", "cmp-copilot")
+time([[Config for cmp-copilot]], false)
+-- Config for: rest.nvim
+time([[Config for rest.nvim]], true)
+try_loadstring("\27LJ\2\nü\2\0\0\4\0\t\0\r6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\0025\3\6\0=\3\a\0024\3\0\0=\3\b\2B\0\2\1K\0\1\0\29custom_dynamic_variables\vresult\1\0\3\rshow_url\2\19show_http_info\2\17show_headers\2\14highlight\1\0\2\fenabled\2\ftimeout\3ñ\1\1\0\5\20jump_to_request\1\28result_split_horizontal\1\26skip_ssl_verification\1\17yank_dry_run\2\renv_file\t.env\nsetup\14rest-nvim\frequire\0", "config", "rest.nvim")
+time([[Config for rest.nvim]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
@@ -594,17 +607,16 @@ vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time([[Defining lazy-load filetype autocommands]], true)
-vim.cmd [[au FileType yaml ++once lua require("packer.load")({'vim-kubernetes'}, { ft = "yaml" }, _G.packer_plugins)]]
-vim.cmd [[au FileType javascript ++once lua require("packer.load")({'nvim-ts-context-commentstring', 'nvim-ts-autotag'}, { ft = "javascript" }, _G.packer_plugins)]]
-vim.cmd [[au FileType javascriptreact ++once lua require("packer.load")({'nvim-ts-context-commentstring', 'nvim-ts-autotag'}, { ft = "javascriptreact" }, _G.packer_plugins)]]
-vim.cmd [[au FileType helm ++once lua require("packer.load")({'vim-helm'}, { ft = "helm" }, _G.packer_plugins)]]
 vim.cmd [[au FileType qf ++once lua require("packer.load")({'nvim-bqf'}, { ft = "qf" }, _G.packer_plugins)]]
-vim.cmd [[au FileType markdown ++once lua require("packer.load")({'nvim-markdown-preview', 'glow.nvim'}, { ft = "markdown" }, _G.packer_plugins)]]
+vim.cmd [[au FileType helm ++once lua require("packer.load")({'vim-helm'}, { ft = "helm" }, _G.packer_plugins)]]
+vim.cmd [[au FileType yaml ++once lua require("packer.load")({'vim-kubernetes'}, { ft = "yaml" }, _G.packer_plugins)]]
+vim.cmd [[au FileType javascriptreact ++once lua require("packer.load")({'nvim-ts-context-commentstring', 'nvim-ts-autotag'}, { ft = "javascriptreact" }, _G.packer_plugins)]]
+vim.cmd [[au FileType markdown ++once lua require("packer.load")({'glow.nvim', 'nvim-markdown-preview'}, { ft = "markdown" }, _G.packer_plugins)]]
+vim.cmd [[au FileType javascript ++once lua require("packer.load")({'nvim-ts-context-commentstring', 'nvim-ts-autotag'}, { ft = "javascript" }, _G.packer_plugins)]]
 time([[Defining lazy-load filetype autocommands]], false)
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
-vim.cmd [[au BufRead * ++once lua require("packer.load")({'nvim-colorizer.lua', 'tabular', 'indent-blankline.nvim'}, { event = "BufRead *" }, _G.packer_plugins)]]
-vim.cmd [[au BufEnter * ++once lua require("packer.load")({'nvim-web-devicons'}, { event = "BufEnter *" }, _G.packer_plugins)]]
+vim.cmd [[au BufRead * ++once lua require("packer.load")({'indent-blankline.nvim', 'nvim-colorizer.lua', 'tabular'}, { event = "BufRead *" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]

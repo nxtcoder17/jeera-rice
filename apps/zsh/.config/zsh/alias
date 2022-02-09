@@ -11,6 +11,8 @@ fi
 alias kx='kubie ctx'
 alias kn='kubie ns'
 
+alias nv='nvim'
+
 alias k='kubectl'
 
 alias tel='telepresence'

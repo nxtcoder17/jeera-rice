@@ -1,3 +1,10 @@
+local actions = require("fzf-lua.actions")
+require("fzf-lua").setup({
+  global_resume = true, -- enable global `resume`?
+  global_resume_query = true, -- include typed query in `resume`?
+  global_resume_prompt = "resume: ", -- prompt for `resume`
+})
+
 local maps = require("lib.mapping")
 -- print(vim.inspect(maps));
 
@@ -6,8 +13,8 @@ maps["nnoremap"]("S", "")
 maps["nnoremap"]("S", "")
 maps["nnoremap"]("s", "")
 maps["vnoremap"]("s", "")
-maps["nnoremap"]("q", "")
-maps["snoremap"]("q", "")
+-- maps["nnoremap"]("q", "")
+-- maps["snoremap"]("q", "")
 maps["nnoremap"]("Q", "")
 maps["vnoremap"]("Q", "")
 
@@ -56,8 +63,8 @@ maps["nnoremap"]("sda", ":BDelete all<CR>")
 maps["nnoremap"]("sdn", ":BDelete nameless<CR>")
 
 -- Debugging
-maps["nnoremap"]("qt", ":Telescope dap configurations<CR>")
-maps["nnoremap"]("qq", ":Telescope dap commands<CR>")
+-- maps["nnoremap"]("qt", ":Telescope dap configurations<CR>")
+-- maps["nnoremap"]("qq", ":Telescope dap commands<CR>")
 
 -- maps["nnoremap"]("s[", ":bprev<CR>")
 -- maps["nnoremap"]("s]", ":bnext<CR>")
@@ -73,8 +80,10 @@ maps["nnoremap"]("si", ":vsplit<CR>")
 maps["nnoremap"]("sm", ":split<CR>")
 
 -- file explorer | word grepper
-maps["nnoremap"]("sf", ":Telescope find_files<CR>")
-maps["nnoremap"]("sF", ":Telescope pickers<CR>")
+-- maps["nnoremap"]("sf", ":Telescope find_files<CR>")
+maps["nnoremap"]("sf", ":FzfLua files<CR>")
+-- maps["nnoremap"]("sF", ":Telescope pickers<CR>")
+maps["nnoremap"]("sF", ":FzfLua resume files_resume<CR>")
 maps["nnoremap"]("ff", ":lua require'plugins_dir.telescope'.grep()<CR>")
 
 -- rename variable
@@ -142,22 +151,3 @@ maps["nnoremap"]("f;", ":lua vim.lsp.buf.formatting()<CR>")
 -- vim.cmd([[
 --  autocmd! FileType sh,javascript,javascriptreact,go :lua NxtFormatMap()
 -- ]])
-
--- Debugger Commands
--- vimspector
--- vim.api.nvim_command("command! -nargs=0 Reload :luafile $XDG_CONFIG_HOME/nvim/init.lua")
-
--- vim.api.nvim_command("command! -nargs=0 DD :call vimspector#Launch()<CR>")
--- vim.api.nvim_command("command! -nargs=0 Dbp :call vimspector#ToggleBreakpoint()<CR>")
--- vim.api.nvim_command("command! -nargs=0 Dj :call vimspector#StepOver()<CR>")
--- vim.api.nvim_command("command! -nargs=0 Dk :call vimspector#StepOut()<CR>")
--- vim.api.nvim_command("command! -nargs=0 Dl :call vimspector#StepInto()<CR>")
--- vim.api.nvim_command("command! -nargs=0 Dr :call vimspector#Restart()<CR>")
--- vim.api.nvim_command("command! -nargs=0 De :call vimspector#Reset()<CR>")
-
--- vim.api.nvim_command("command! -nargs=0 Max :MaximizerToggle")
-
--- vim.api.nvim_command("command! -nargs=0 Ce :lua vim.b.copilot_enabled = true<CR>")
--- vim.api.nvim_command("command! -nargs=0 Cd :lua vim.b.copilot_enabled = false<CR>")
-
--- vim.api.nvim_command("command! -nargs=0 Jeera :lua require'plugins_dir.telescope'.jeera_rice()<CR>")

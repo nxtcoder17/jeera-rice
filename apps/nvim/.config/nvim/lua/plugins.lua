@@ -61,10 +61,13 @@ require("packer").startup(function()
   use("ojroques/vim-oscyank")
 
   -- lsp symbols
-  use("simrat39/symbols-outline.nvim")
+  -- use("simrat39/symbols-outline.nvim")
 
   -- back to where you left
   use("farmergreg/vim-lastplace")
+
+  -- search code
+  use('dyng/ctrlsf.vim')
 
   -- debugger
   use("Pocco81/DAPInstall.nvim")
@@ -166,10 +169,10 @@ require("packer").startup(function()
   -- kubernetes
   use({ "andrewstuart/vim-kubernetes", ft = "yaml" })
 
-  use({
-    "kyazdani42/nvim-web-devicons",
-    event = "BufEnter",
-  })
+  -- use({
+  --   "kyazdani42/nvim-web-devicons",
+  --   event = "BufEnter",
+  -- })
 
   -- status line
   use({
@@ -199,8 +202,15 @@ require("packer").startup(function()
   use("nvim-lua/lsp-status.nvim")
   use("jose-elias-alvarez/nvim-lsp-ts-utils")
   -- use("/jose-elias-alvarez/null-ls.nvim")
-  -- use("ray-x/lsp_signature.nvim")
   use("glepnir/lspsaga.nvim")
+
+  -- use({
+  --   "ray-x/lsp_signature.nvim",
+  --   event = "BufRead",
+  --   config = function()
+  --     require("lsp_signature").setup()
+  --   end,
+  -- })
 
   use({
     "folke/trouble.nvim",
