@@ -21,44 +21,45 @@ require("packer").startup(function()
       vim.g.did_load_filetypes = 1
     end,
   })
-  use({
-    "antoinemadec/FixCursorHold.nvim",
-  })
+
+  -- use({
+  --   "antoinemadec/FixCursorHold.nvim",
+  -- })
 
   use("wbthomason/packer.nvim")
 
   -- rest client
-  use({
-    "NTBBloodbath/rest.nvim",
-    requires = { "nvim-lua/plenary.nvim" },
-    config = function()
-      require("rest-nvim").setup({
-        -- Open request results in a horizontal split
-        result_split_horizontal = false,
-        -- Skip SSL verification, useful for unknown certificates
-        skip_ssl_verification = false,
-        -- Highlight request on run
-        highlight = {
-          enabled = true,
-          timeout = 150,
-        },
-        result = {
-          -- toggle showing URL, HTTP info, headers at top the of result window
-          show_url = true,
-          show_http_info = true,
-          show_headers = true,
-        },
-        -- Jump to request line on run
-        jump_to_request = false,
-        env_file = ".env",
-        custom_dynamic_variables = {},
-        yank_dry_run = true,
-      })
-    end,
-  })
+  -- use({
+  --   "NTBBloodbath/rest.nvim",
+  --   requires = { "nvim-lua/plenary.nvim" },
+  --   config = function()
+  --     require("rest-nvim").setup({
+  --       -- Open request results in a horizontal split
+  --       result_split_horizontal = false,
+  --       -- Skip SSL verification, useful for unknown certificates
+  --       skip_ssl_verification = false,
+  --       -- Highlight request on run
+  --       highlight = {
+  --         enabled = true,
+  --         timeout = 150,
+  --       },
+  --       result = {
+  --         -- toggle showing URL, HTTP info, headers at top the of result window
+  --         show_url = true,
+  --         show_http_info = true,
+  --         show_headers = true,
+  --       },
+  --       -- Jump to request line on run
+  --       jump_to_request = false,
+  --       env_file = ".env",
+  --       custom_dynamic_variables = {},
+  --       yank_dry_run = true,
+  --     })
+  --   end,
+  -- })
 
   -- osc copy
-  use("ojroques/vim-oscyank")
+  -- use("ojroques/vim-oscyank")
 
   -- lsp symbols
   -- use("simrat39/symbols-outline.nvim")
@@ -67,10 +68,11 @@ require("packer").startup(function()
   use("farmergreg/vim-lastplace")
 
   -- search code
-  use('dyng/ctrlsf.vim')
+  use("dyng/ctrlsf.vim")
+  use("nvim-pack/nvim-spectre")
 
   -- debugger
-  use("Pocco81/DAPInstall.nvim")
+  -- use("Pocco81/DAPInstall.nvim")
   use({ "mfussenegger/nvim-dap" })
   use({ "rcarriga/nvim-dap-ui" })
   use({ "nvim-telescope/telescope-dap.nvim" })
@@ -139,7 +141,7 @@ require("packer").startup(function()
   use("windwp/nvim-autopairs")
 
   -- syntax
-  use("sheerun/vim-polyglot")
+  -- use("sheerun/vim-polyglot")
   use({ "fladson/vim-kitty" })
   use({ "ellisonleao/glow.nvim", ft = "markdown" })
 
@@ -161,7 +163,7 @@ require("packer").startup(function()
   use("chaoren/vim-wordmotion")
   use("tpope/vim-surround")
   use("tpope/vim-commentary")
-  use("mbbill/undotree")
+  -- use("mbbill/undotree")
   use("kevinhwang91/nvim-hlslens")
   use("mg979/vim-visual-multi")
   use("chrisbra/NrrwRgn")
@@ -196,13 +198,14 @@ require("packer").startup(function()
 
   -- LSP
   use({ "neovim/nvim-lspconfig" })
+  -- use({
   use("folke/lsp-colors.nvim") --  better diagonstics colors
-  use("onsails/lspkind-nvim")
+  -- use("onsails/lspkind-nvim")
   use("williamboman/nvim-lsp-installer")
-  use("nvim-lua/lsp-status.nvim")
-  use("jose-elias-alvarez/nvim-lsp-ts-utils")
+  -- use("nvim-lua/lsp-status.nvim")
+  -- use("jose-elias-alvarez/nvim-lsp-ts-utils")
   -- use("/jose-elias-alvarez/null-ls.nvim")
-  use("glepnir/lspsaga.nvim")
+  -- use("glepnir/lspsaga.nvim")
 
   -- use({
   --   "ray-x/lsp_signature.nvim",
@@ -212,27 +215,26 @@ require("packer").startup(function()
   --   end,
   -- })
 
-  use({
-    "folke/trouble.nvim",
-    requires = "kyazdani42/nvim-web-devicons",
-  })
+  -- use({
+  --   "folke/trouble.nvim",
+  --   requires = "kyazdani42/nvim-web-devicons",
+  -- })
 
   -- Code Beauty
-  use("mhartington/formatter.nvim")
+  -- use("mhartington/formatter.nvim")
 
   -- Buffer Management
   use({ "kevinhwang91/nvim-bqf", ft = "qf" })
   use("luukvbaal/stabilize.nvim")
 
   -- TextObj
-  use("terryma/vim-expand-region")
-
-  use("kana/vim-textobj-user")
-  use("kana/vim-textobj-indent")
-  use("kana/vim-textobj-line")
-  use("kana/vim-textobj-entire")
-  use("kana/vim-textobj-function")
-  use("kana/vim-textobj-underscore")
+  -- use("terryma/vim-expand-region")
+  -- use("kana/vim-textobj-user")
+  -- use("kana/vim-textobj-indent")
+  -- use("kana/vim-textobj-line")
+  -- use("kana/vim-textobj-entire")
+  -- use("kana/vim-textobj-function")
+  -- use("kana/vim-textobj-underscore")
 
   -- wild mode
   use({ "gelguy/wilder.nvim", run = ":UpdateRemotePlugins" })
@@ -289,12 +291,12 @@ require("packer").startup(function()
   use("nvim-lua/popup.nvim")
   use("nvim-lua/plenary.nvim")
   use("nvim-telescope/telescope.nvim")
-  use("nvim-telescope/telescope-fzy-native.nvim")
+  -- use("nvim-telescope/telescope-fzy-native.nvim")
   use("nvim-telescope/telescope-project.nvim")
   --
   use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
 
-  use({ "lewis6991/gitsigns.nvim", requires = { "nvim-lua/plenary.nvim" } })
+  -- use({ "lewis6991/gitsigns.nvim", requires = { "nvim-lua/plenary.nvim" } })
 
   -- Better profiling output for startup.
   use({ "dstein64/vim-startuptime", cmd = "StartupTime" })
@@ -304,11 +306,11 @@ require("packer").startup(function()
   use("kazhala/close-buffers.nvim")
 
   -- debugging
-  use("puremourning/vimspector")
+  -- use("puremourning/vimspector")
   use("szw/vim-maximizer")
 
   -- dot-http
-  use("nxtcoder17/vim-dot-http")
+  -- use({ "nxtcoder17/vim-dot-http", ft = "http" })
 
   -- async
   use("tpope/vim-dispatch")

@@ -1,10 +1,4 @@
 local actions = require("fzf-lua.actions")
-require("fzf-lua").setup({
-  global_resume = true, -- enable global `resume`?
-  global_resume_query = true, -- include typed query in `resume`?
-  global_resume_prompt = "resume: ", -- prompt for `resume`
-})
-
 local maps = require("lib.mapping")
 -- print(vim.inspect(maps));
 
@@ -80,18 +74,19 @@ maps["nnoremap"]("si", ":vsplit<CR>")
 maps["nnoremap"]("sm", ":split<CR>")
 
 -- file explorer | word grepper
--- maps["nnoremap"]("sf", ":Telescope find_files<CR>")
-maps["nnoremap"]("sf", ":FzfLua files<CR>")
+maps["nnoremap"]("sf", ":Telescope find_files<CR>")
+-- maps["nnoremap"]("sf", ":FzfLua files<CR>")
 -- maps["nnoremap"]("sF", ":Telescope pickers<CR>")
-maps["nnoremap"]("sF", ":FzfLua resume files_resume<CR>")
+-- maps["nnoremap"]("sF", ":FzfLua resume files_resume<CR>")
 maps["nnoremap"]("ff", ":lua require'plugins_dir.telescope'.grep()<CR>")
+-- maps["nnoremap"]("ff", ":FzfLua grep<CR>")
 
 -- rename variable
 maps["nnoremap"]("sr", ":lua vim.lsp.buf.rename()<CR>")
 
 -- jump to next / prev error
-maps["nnoremap"]("sn", ":lua vim.diagnostic.goto_next()<CR>")
-maps["nnoremap"]("sp", ":lua vim.diagnostic.goto_prev()<CR>")
+maps["nnoremap"]("sn", ":lua vim.diagnostic.goto_next({ severity = 'error' })<CR>")
+maps["nnoremap"]("sp", ":lua vim.diagnostic.goto_prev({ severity = 'error'})<CR>")
 
 -- LSP
 maps["nnoremap"]("se", ":lua vim.diagnostic.open_float()<CR>")
@@ -119,6 +114,7 @@ maps["cnoremap"]("wqa", "wa! | qa")
 -- for tabs
 maps["nnoremap"]("tn", ":tabnew <CR>")
 maps["nnoremap"]("te", ":tabedit % <CR>")
+maps["nnoremap"]("tl", ":lua require('plugins_dir.telescope').tabs()<CR>")
 
 -- [Source]: https://gist.github.com/benfrain/97f2b91087121b2d4ba0dcc4202d252f
 -- Keep search results centred
@@ -134,6 +130,19 @@ maps["nnoremap"]("<M-k>", ":TmuxNavigateUp<cr>")
 maps["nnoremap"]("<M-j>", ":TmuxNavigateDown<cr>")
 
 maps["nnoremap"]("f;", ":lua vim.lsp.buf.formatting()<CR>")
+
+    -- execute 'vne | setlocal buftype=nofile | setlocal bufhidden=hide | setlocal noswapfile | r! dot-http -e '. g:dot_http_env .' '. expand('%:p') . ' -l ' . line('.') . ' -n ' . g:dot_http_env_file
+    -- normal gg
+
+-- gql
+-- maps['nnoremap']('<M-g>', ':vne | setlocal buftype=nofile | setlocal bufhidden=hide | setlocal noswapfile | lua  r! node --es-module-specifier-resolution=node /home/nxtcoder17/workspace/nxtcoder17/graph-cli/src/index.js' .. ' ' .. vim.fn.expand('%:p') .. ' ' ..  'gqlenv.json' .. ' ' .. vim.api.nvim_win_get_cursor(0)[1])
+
+-- maps['nnoremap']('<M-g>', ':vne | setlocal buftype=nofile | setlocal bufhidden=hide | setlocal noswapfile | r! node --es-module-specifier-resolution=node /home/nxtcoder17/workspace/nxtcoder17/graph-cli/src/index.js' .. ' ' .. vim.fn.expand('%:p') .. ' ' ..  'gqlenv.json' .. ' ' .. vim.api.nvim_win_get_cursor(0)[1])
+
+vim.cmd [[
+  command -nargs=0 Gql  execute 'vne | setlocal buftype=nofile | setlocal bufhidden=hide | setlocal noswapfile | set ft=json | r! node --es-module-specifier-resolution=node /home/nxtcoder17/workspace/nxtcoder17/graph-cli/src/index.js' . ' '. expand('%:p') . ' gqlenv.json'. ' '. line('.')
+]]
+
 
 -- function _G.NxtFormatMap()
 --   if vim.bo.filetype == "sh" then

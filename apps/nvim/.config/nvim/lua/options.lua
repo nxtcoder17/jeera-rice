@@ -88,6 +88,15 @@ opt.swapfile = false
 -- replace
 opt.inccommand = "split" -- shows live incremental status of substitution in split buffer
 
+-- gui
+-- opt.guifont = "Operator Mono Lig Medium:h14"
+-- opt.guifontwide = "FiraCode Nerd Font Medium:h14"
+opt.guifont="Operator Mono Lig Medium:h13.5"
+opt.linespace = 4
+opt.guifontwide="FiraCode Nerd Font Medium:h13"
+
+
+
 opt.mouse = "a"
 
 vim.cmd([[

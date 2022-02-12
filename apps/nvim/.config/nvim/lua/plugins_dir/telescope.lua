@@ -5,6 +5,9 @@ local actions = require("telescope.actions")
 local pickers = require("telescope.pickers")
 local finders = require("telescope.finders")
 local sorters = require("telescope.sorters")
+local themes = require("telescope.themes")
+local conf = require("telescope.config").values
+local action_state = require('telescope.actions.state')
 
 -- Custom Find Command
 local findCmd
@@ -87,8 +90,11 @@ telescope.setup({
 telescope.load_extension("fzf")
 telescope.load_extension("dap")
 
-
 local M = {}
+
+M.tabs = function()
+  return telescope.tabs()
+end
 
 M.grep = function()
   telescope_builtin.grep_string({
@@ -188,20 +194,40 @@ M.dockerImages = function()
   }):find()
 end
 
+local goto_window = function(prompt_bufnr)
+  actions.close(prompt_bufnr)
+  local entry = action_state.get_selected_entry()
+  -- make vim show the given window
+  vim.api.nvim_set_current_win(entry.value)
+end
+
 M.tabs = function()
+  local tabs = vim.api.nvim_list_tabpages()
+  local windows = {};
+  for tabidx, tabnr in ipairs(tabs) do
+    local windownrs = vim.api.nvim_tabpage_list_wins(tabnr)
+    for windownr, windowid in ipairs(windownrs) do
+      local bufnr = vim.api.nvim_win_get_buf(windowid)
+      local bufstr = '[TAB] ' .. tabnr .. ' ' .. vim.api.nvim_buf_get_name(bufnr)
+      table.insert(windows, { 
+        ordinal = bufstr , display = bufstr, value = windowid 
+      })
+    end
+  end
   pickers.new({
     theme = "ivy",
-    results_title = "Docker Images",
-    -- finder = finders.new_oneshot_job({"docker", "images"}),
-    sorter = sorters.get_fuzzy_file(),
-    mappings = {
-      n = {
-        ["<C-d>"] = function(args) print(args) end,
-      },
-      i = {
-        ["<C-d>"] = function(args) print(args) end,
-      },
-    },
+    results_title = "Tabs",
+    finder = finders.new_table({
+      results = windows,
+      entry_maker = function (x) return x end,
+    }),
+    sorter = conf.generic_sorter({}),
+    attach_mappings = function(item, map)
+      -- use our custom action to go the window id
+      map( 'i', '<CR>', goto_window)
+      map( 'n', '<CR>', goto_window)
+      return true
+    end,
   }):find()
 end
 
