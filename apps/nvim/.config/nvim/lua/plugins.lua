@@ -22,41 +22,11 @@ require("packer").startup(function()
     end,
   })
 
-  -- use({
-  --   "antoinemadec/FixCursorHold.nvim",
-  -- })
+  use({
+    "antoinemadec/FixCursorHold.nvim",
+  })
 
   use("wbthomason/packer.nvim")
-
-  -- rest client
-  -- use({
-  --   "NTBBloodbath/rest.nvim",
-  --   requires = { "nvim-lua/plenary.nvim" },
-  --   config = function()
-  --     require("rest-nvim").setup({
-  --       -- Open request results in a horizontal split
-  --       result_split_horizontal = false,
-  --       -- Skip SSL verification, useful for unknown certificates
-  --       skip_ssl_verification = false,
-  --       -- Highlight request on run
-  --       highlight = {
-  --         enabled = true,
-  --         timeout = 150,
-  --       },
-  --       result = {
-  --         -- toggle showing URL, HTTP info, headers at top the of result window
-  --         show_url = true,
-  --         show_http_info = true,
-  --         show_headers = true,
-  --       },
-  --       -- Jump to request line on run
-  --       jump_to_request = false,
-  --       env_file = ".env",
-  --       custom_dynamic_variables = {},
-  --       yank_dry_run = true,
-  --     })
-  --   end,
-  -- })
 
   -- osc copy
   -- use("ojroques/vim-oscyank")
@@ -82,6 +52,7 @@ require("packer").startup(function()
       require("nvim-dap-virtual-text").setup()
     end,
   })
+
   vim.g.dap_virtual_text = true
 
   -- copilot
@@ -102,15 +73,9 @@ require("packer").startup(function()
   use({ "towolf/vim-helm", ft = "helm" })
 
   -- golang
-  -- use({
-  --   "crispgm/nvim-go",
-  --   ft = "go",
-  --   config = function()
-  --     require("go").setup({
-  --       lint_prompt_style = "vt",
-  --     })
-  --   end,
-  -- })
+  use({'ray-x/go.nvim', ft="go", config = function() 
+    require('go').setup()
+  end })
 
   -- todo tracking
   use("folke/todo-comments.nvim")

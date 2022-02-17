@@ -131,8 +131,7 @@ maps["nnoremap"]("<M-j>", ":TmuxNavigateDown<cr>")
 
 maps["nnoremap"]("f;", ":lua vim.lsp.buf.formatting()<CR>")
 
-    -- execute 'vne | setlocal buftype=nofile | setlocal bufhidden=hide | setlocal noswapfile | r! dot-http -e '. g:dot_http_env .' '. expand('%:p') . ' -l ' . line('.') . ' -n ' . g:dot_http_env_file
-    -- normal gg
+maps['cnoremap']('cd', 'windo lcd ')
 
 -- gql
 -- maps['nnoremap']('<M-g>', ':vne | setlocal buftype=nofile | setlocal bufhidden=hide | setlocal noswapfile | lua  r! node --es-module-specifier-resolution=node /home/nxtcoder17/workspace/nxtcoder17/graph-cli/src/index.js' .. ' ' .. vim.fn.expand('%:p') .. ' ' ..  'gqlenv.json' .. ' ' .. vim.api.nvim_win_get_cursor(0)[1])
@@ -142,7 +141,6 @@ maps["nnoremap"]("f;", ":lua vim.lsp.buf.formatting()<CR>")
 vim.cmd [[
   command -nargs=0 Gql  execute 'vne | setlocal buftype=nofile | setlocal bufhidden=hide | setlocal noswapfile | set ft=json | r! node --es-module-specifier-resolution=node /home/nxtcoder17/workspace/nxtcoder17/graph-cli/src/index.js' . ' '. expand('%:p') . ' gqlenv.json'. ' '. line('.')
 ]]
-
 
 -- function _G.NxtFormatMap()
 --   if vim.bo.filetype == "sh" then

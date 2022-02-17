@@ -35,7 +35,7 @@ opt.ttimeoutlen = 10
 opt.timeoutlen = 500
 opt.ttyfast = true
 opt.updatetime = 50
-opt.lazyredraw = true
+opt.lazyredraw = false
 
 -- no awkward horizontal jumping (for linters, git signs and lsp symbols)
 opt.signcolumn = "yes:2"
@@ -89,13 +89,9 @@ opt.swapfile = false
 opt.inccommand = "split" -- shows live incremental status of substitution in split buffer
 
 -- gui
--- opt.guifont = "Operator Mono Lig Medium:h14"
--- opt.guifontwide = "FiraCode Nerd Font Medium:h14"
 opt.guifont="Operator Mono Lig Medium:h13.5"
 opt.linespace = 4
 opt.guifontwide="FiraCode Nerd Font Medium:h13"
-
-
 
 opt.mouse = "a"
 
@@ -113,9 +109,6 @@ vim.g.matchup_matchparen_status_offscreen = 0
 vim.g.matchup_matchparen_pumvisible = 0
 vim.g.matchup_matchparen_nomode = "ivV"
 vim.g.matchup_surround_enabled = 1
-
--- vim.wo.foldmethod = 'expr'
--- vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
 
 function _G.custom_fold_text()
   local line = vim.fn.getline(vim.v.foldstart)

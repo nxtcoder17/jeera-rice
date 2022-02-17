@@ -15,7 +15,6 @@ local lsp_servers = {
   },
   go = {
     base_dir .. "/go/gopls",
-    -- '--remote=auto'
   },
   css = {
     base_dir .. "/vscode-langservers-extracted/node_modules/.bin/vscode-css-language-server",
@@ -93,18 +92,18 @@ lsp_config.sumneko_lua.setup(config({
 }))
 
 -- -- yamlls
-lsp_config.yamlls.setup(config({
-  cmd = lsp_servers.yaml,
-  filetypes = {"yaml", "yml"},
-  settings = {
-    yaml = {
-      schemaStore = {
-        url = "https://www.schemastore.org/api/json/catalog.json",
-        enable = true,
-      },
-    },
-  },
-}))
+-- lsp_config.yamlls.setup(config({
+--   cmd = lsp_servers.yaml,
+--   filetypes = {"yaml", "yml"},
+--   settings = {
+--     yaml = {
+--       schemaStore = {
+--         url = "https://www.schemastore.org/api/json/catalog.json",
+--         enable = true,
+--       },
+--     },
+--   },
+-- }))
 
 -- GoLang
 lsp_config.gopls.setup({

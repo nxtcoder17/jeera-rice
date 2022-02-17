@@ -20,3 +20,9 @@ if vim.g.nvui then
         NvuiCursorAnimationDuration 0.1
     ]] 
 end
+
+-- neovide
+vim.g.neovide_cursor_animation_length = 0.1
+vim.g.neovide_cursor_trail_length=0.5
+vim.g.neovide_input_use_logo = true
+vim.g.neovide_cursor_vfx_mode = "pixiedust"

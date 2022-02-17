@@ -64,7 +64,7 @@ telescope.setup({
       prompt_title = "  Looking for files",
     },
     lsp_references = {
-      theme = "cursor",
+      theme = "ivy",
       prompt_title = "  Looking for references",
     },
     lsp_definitions = {
@@ -208,7 +208,7 @@ M.tabs = function()
     local windownrs = vim.api.nvim_tabpage_list_wins(tabnr)
     for windownr, windowid in ipairs(windownrs) do
       local bufnr = vim.api.nvim_win_get_buf(windowid)
-      local bufstr = '[TAB] ' .. tabnr .. ' ' .. vim.api.nvim_buf_get_name(bufnr)
+      local bufstr = '[TAB] ' .. tabnr .. ' ' .. string.gsub(vim.api.nvim_buf_get_name(bufnr), os.getenv("PWD") .. "/", "")
       table.insert(windows, { 
         ordinal = bufstr , display = bufstr, value = windowid 
       })
