@@ -112,8 +112,9 @@ maps["tnoremap"]("<M-o>", "<C-\\><C-n>:RnvimrToggle<CR>")
 maps["cnoremap"]("wqa", "wa! | qa")
 
 -- for tabs
-maps["nnoremap"]("tn", ":tabnew <CR>")
-maps["nnoremap"]("te", ":tabedit % <CR>")
+print(vim.g.root_dir)
+maps["nnoremap"]("tn", ":tabnew | windo lcd ".. vim.g.root_dir .. '<CR>')
+maps["nnoremap"]("te", ":tabedit % |:windo cd g:root_dir <CR>")
 maps["nnoremap"]("tl", ":lua require('plugins_dir.telescope').tabs()<CR>")
 
 -- [Source]: https://gist.github.com/benfrain/97f2b91087121b2d4ba0dcc4202d252f
