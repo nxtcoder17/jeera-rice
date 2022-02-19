@@ -131,7 +131,7 @@ maps["nnoremap"]("<M-j>", ":TmuxNavigateDown<cr>")
 
 maps["nnoremap"]("f;", ":lua vim.lsp.buf.formatting()<CR>")
 
-maps['cnoremap']('cd', 'windo lcd ')
+-- maps['cnoremap']('cd', 'windo lcd ')
 
 -- gql
 -- maps['nnoremap']('<M-g>', ':vne | setlocal buftype=nofile | setlocal bufhidden=hide | setlocal noswapfile | lua  r! node --es-module-specifier-resolution=node /home/nxtcoder17/workspace/nxtcoder17/graph-cli/src/index.js' .. ' ' .. vim.fn.expand('%:p') .. ' ' ..  'gqlenv.json' .. ' ' .. vim.api.nvim_win_get_cursor(0)[1])

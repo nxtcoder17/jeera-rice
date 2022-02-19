@@ -114,7 +114,25 @@ require("packer").startup(function()
   -- use({"Jakski/vim-yaml", run = ":UpdateRemotePlugins"})
 
   -- color schemes
-  use("folke/tokyonight.nvim")
+  use{"folke/tokyonight.nvim", config = function() 
+      vim.g.tokyonight_style = "night"
+      vim.g.tokyonight_italic_functions = true
+      -- vim.g.tokyonight_transparent = true
+      vim.g.tokyonight_italic_variables = true
+      vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" }
+
+      vim.g.tokyonight_colors = {
+        comment = "#61768c",
+      }
+
+      -- vim.cmd[[ colorscheme tokyonight ]]
+    end  
+  }
+  use{
+    "rebelot/kanagawa.nvim", config = function ()
+      -- vim.cmd [[ colorscheme kanagawa ]]
+    end
+  }
 
   use({
     "norcalli/nvim-colorizer.lua",
@@ -332,3 +350,4 @@ vim.g.glow_border = "rounded"
 vim.g.symbols_outline = {
   width = 50,
 }
+vim.cmd("colorscheme kanagawa")

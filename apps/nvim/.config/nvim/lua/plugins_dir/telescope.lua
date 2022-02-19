@@ -208,7 +208,7 @@ M.tabs = function()
     local windownrs = vim.api.nvim_tabpage_list_wins(tabnr)
     for windownr, windowid in ipairs(windownrs) do
       local bufnr = vim.api.nvim_win_get_buf(windowid)
-      local bufstr = '[TAB] ' .. tabnr .. ' ' .. string.gsub(vim.api.nvim_buf_get_name(bufnr), os.getenv("PWD") .. "/", "")
+      local bufstr = '[TAB] ' .. tabnr .. ' ' .. string.sub(vim.api.nvim_buf_get_name(bufnr), vim.fn.getcwd():len()+2)
       table.insert(windows, { 
         ordinal = bufstr , display = bufstr, value = windowid 
       })
