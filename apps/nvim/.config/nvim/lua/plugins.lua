@@ -22,6 +22,8 @@ require("packer").startup(function()
     end,
   })
 
+  use{"caenrique/nvim-toggle-terminal"}
+
   use({
     "antoinemadec/FixCursorHold.nvim",
   })
@@ -128,11 +130,7 @@ require("packer").startup(function()
       -- vim.cmd[[ colorscheme tokyonight ]]
     end  
   }
-  use{
-    "rebelot/kanagawa.nvim", config = function ()
-      -- vim.cmd [[ colorscheme kanagawa ]]
-    end
-  }
+  use{ "rebelot/kanagawa.nvim" }
 
   use({
     "norcalli/nvim-colorizer.lua",
@@ -350,4 +348,5 @@ vim.g.glow_border = "rounded"
 vim.g.symbols_outline = {
   width = 50,
 }
-vim.cmd("colorscheme kanagawa")
+
+-- vim.cmd("colorscheme kanagawa")
