@@ -1,4 +1,4 @@
-local actions = require("fzf-lua.actions")
+-- local actions = require("fzf-lua.actions")
 local maps = require("lib.mapping")
 -- print(vim.inspect(maps));
 
@@ -37,7 +37,7 @@ maps["nnoremap"]("<C-M-Down>", ":resize -10<CR>")
 
 -- comment/uncomment
 maps["nmap"]("s;", "gcc", {})
-maps["vmap"]("s;", "gcc", {})
+maps["vmap"]("s;", "gc", {})
 
 maps["tnoremap"]("<Esc>", "<C-\\><C-n>")
 
@@ -96,6 +96,7 @@ maps["inoremap"]("<C-k>", "<Cmd>lua vim.lsp.buf.signature_help()<CR>")
 maps["nnoremap"]("sb", ":Telescope buffers<CR>")
 maps["nnoremap"]("gd", ":Telescope lsp_definitions<CR>")
 maps["nnoremap"]("gr", ":Telescope lsp_references<CR>")
+maps["nnoremap"]("gi", ":Telescope lsp_implementations<CR>")
 maps["nnoremap"]("gdd", ":Telescope lsp_document_diagnostics<CR>")
 maps["nnoremap"]("gds", ":Telescope lsp_document_symbols<CR>")
 maps["nnoremap"]("gwd", ":Telescope lsp_workspace_diagnostics<CR>")
