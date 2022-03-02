@@ -110,12 +110,13 @@ vim.g.matchup_matchparen_pumvisible = 0
 vim.g.matchup_matchparen_nomode = "ivV"
 vim.g.matchup_surround_enabled = 1
 
+opt.foldmethod = "syntax"
+opt.foldmarker = "👉,👈"
+
 function _G.custom_fold_text()
   local line = vim.fn.getline(vim.v.foldstart)
   local line_count = vim.v.foldend - vim.v.foldstart + 1
 
-  -- local start_char = " ⚡ "
-  -- local start_char = " 🪅 "
   local start_char = " 😎 "
   local fill_char = " +--+ "
 
@@ -131,8 +132,3 @@ function _G.custom_fold_text()
 end
 
 vim.opt.foldtext = "v:lua.custom_fold_text()"
-
--- vim.cmd[[
---   let &t_Cs = "\e[4:3m"
---   let &t_Ce = "\e[4:0m"
--- ]]

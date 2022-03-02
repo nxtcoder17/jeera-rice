@@ -1,6 +1,4 @@
--- local actions = require("fzf-lua.actions")
 local maps = require("lib.mapping")
--- print(vim.inspect(maps));
 
 -- resets
 maps["nnoremap"]("S", "")
@@ -53,7 +51,8 @@ maps["nnoremap"]("sk", "<C-w>k<CR>")
 -- buffer management
 maps["nnoremap"]("sdb", ":BDelete this<CR>")
 maps["nnoremap"]("sdo", ":BDelete other<CR>")
-maps["nnoremap"]("sda", ":BDelete all<CR>")
+-- maps["nnoremap"]("sda", ":BDelete all<CR>")
+maps["nnoremap"]("sda", ":tabc<CR>")
 maps["nnoremap"]("sdn", ":BDelete nameless<CR>")
 
 -- Debugging
@@ -81,30 +80,40 @@ maps["nnoremap"]("sf", ":Telescope find_files<CR>")
 maps["nnoremap"]("ff", ":lua require'plugins_dir.telescope'.grep()<CR>")
 -- maps["nnoremap"]("ff", ":FzfLua grep<CR>")
 
--- rename variable
-maps["nnoremap"]("sr", ":lua vim.lsp.buf.rename()<CR>")
+local function lspNative()
+  -- rename variable
+  maps["nnoremap"]("sr", ":lua vim.lsp.buf.rename()<CR>")
 
--- jump to next / prev error
-maps["nnoremap"]("sn", ":lua vim.diagnostic.goto_next({ severity = 'error' })<CR>")
-maps["nnoremap"]("sp", ":lua vim.diagnostic.goto_prev({ severity = 'error'})<CR>")
+  -- jump to next / prev error
+  maps["nnoremap"]("sn", ":lua vim.diagnostic.goto_next({ severity = 'error' })<CR>")
+  maps["nnoremap"]("sp", ":lua vim.diagnostic.goto_prev({ severity = 'error'})<CR>")
 
--- LSP
-maps["nnoremap"]("se", ":lua vim.diagnostic.open_float()<CR>")
-maps["nnoremap"]("K", "<Cmd>lua vim.lsp.buf.hover()<CR>")
-maps["inoremap"]("<C-k>", "<Cmd>lua vim.lsp.buf.signature_help()<CR>")
+  --show line diagnositcs
+  maps["nnoremap"]("se", ":lua vim.diagnostic.open_float()<CR>")
+
+  maps["nnoremap"]("K", "<Cmd>lua vim.lsp.buf.hover()<CR>")
+  maps["inoremap"]("<C-k>", "<Cmd>lua vim.lsp.buf.signature_help()<CR>")
+
+  -- code actions
+  maps["nnoremap"]("<M-CR>", ":Telescope lsp_code_actions<CR>")
+  maps["vnoremap"]("<M-CR>", ":Telescope lsp_code_actions<CR>")
+
+  -- formatting
+  maps["nnoremap"]("f;", ":lua vim.lsp.buf.formatting()<CR>")
+
+  -- commands
+  maps["nnoremap"]("gd", ":Telescope lsp_definitions<CR>")
+  maps["nnoremap"]("gr", ":Telescope lsp_references<CR>")
+  maps["nnoremap"]("gi", ":Telescope lsp_implementations<CR>")
+  maps["nnoremap"]("gdd", ":Telescope lsp_document_diagnostics<CR>")
+  maps["nnoremap"]("gds", ":Telescope lsp_document_symbols<CR>")
+  maps["nnoremap"]("gwd", ":Telescope lsp_workspace_diagnostics<CR>")
+  maps["nnoremap"]("gws", ":Telescope lsp_workspace_symbols<CR>")
+end
+
+lspNative()
 
 maps["nnoremap"]("sb", ":Telescope buffers<CR>")
-maps["nnoremap"]("gd", ":Telescope lsp_definitions<CR>")
-maps["nnoremap"]("gr", ":Telescope lsp_references<CR>")
-maps["nnoremap"]("gi", ":Telescope lsp_implementations<CR>")
-maps["nnoremap"]("gdd", ":Telescope lsp_document_diagnostics<CR>")
-maps["nnoremap"]("gds", ":Telescope lsp_document_symbols<CR>")
-maps["nnoremap"]("gwd", ":Telescope lsp_workspace_diagnostics<CR>")
-maps["nnoremap"]("gws", ":Telescope lsp_workspace_symbols<CR>")
-
--- lsp code actions
-maps["nnoremap"]("<M-CR>", ":Telescope lsp_code_actions<CR>")
-maps["vnoremap"]("<M-CR>", ":Telescope lsp_code_actions<CR>")
 
 -- rnvimr (file explorer)
 maps["nnoremap"]("<M-o>", ":RnvimrToggle<CR>")
@@ -115,7 +124,7 @@ maps["cnoremap"]("wqa", "wa! | qa")
 -- for tabs
 print(vim.g.root_dir)
 maps["nnoremap"]("tn", ":tabnew | windo lcd ".. vim.g.root_dir .. '<CR>')
-maps["nnoremap"]("te", ":tabedit % |:windo cd g:root_dir <CR>")
+maps["nnoremap"]("te", ":tabedit % |:windo cd " .. vim.g.root_dir .. '<CR>')
 maps["nnoremap"]("tl", ":lua require('plugins_dir.telescope').tabs()<CR>")
 
 -- [Source]: https://gist.github.com/benfrain/97f2b91087121b2d4ba0dcc4202d252f
@@ -124,21 +133,19 @@ maps["nnoremap"]("n", "nzzzv")
 maps["nnoremap"]("N", "Nzzzv")
 maps["nnoremap"]("J", "mzJ`z")
 
--- from:plugin / navigator.nvim'
-vim.cmd([[let g:tmux_navigator_no_mappings = 1]])
+-- from:plugin / navigator.nvim
+vim.g.tmux_navigator_no_mappings = 1
 maps["nnoremap"]("<M-h>", ":TmuxNavigateLeft<cr>")
 maps["nnoremap"]("<M-l>", ":TmuxNavigateRight<cr>")
 maps["nnoremap"]("<M-k>", ":TmuxNavigateUp<cr>")
 maps["nnoremap"]("<M-j>", ":TmuxNavigateDown<cr>")
 
-maps["nnoremap"]("f;", ":lua vim.lsp.buf.formatting()<CR>")
+-- lsp
 
--- maps['cnoremap']('cd', 'windo lcd ')
+vim.cmd ("command -nargs=0 Root execute 'windo tcd g:root_dir'")
+vim.cmd ("command -nargs=1 Cd execute 'windo tcd <f-args> <CR>'" )
 
 -- gql
--- maps['nnoremap']('<M-g>', ':vne | setlocal buftype=nofile | setlocal bufhidden=hide | setlocal noswapfile | lua  r! node --es-module-specifier-resolution=node /home/nxtcoder17/workspace/nxtcoder17/graph-cli/src/index.js' .. ' ' .. vim.fn.expand('%:p') .. ' ' ..  'gqlenv.json' .. ' ' .. vim.api.nvim_win_get_cursor(0)[1])
-
--- maps['nnoremap']('<M-g>', ':vne | setlocal buftype=nofile | setlocal bufhidden=hide | setlocal noswapfile | r! node --es-module-specifier-resolution=node /home/nxtcoder17/workspace/nxtcoder17/graph-cli/src/index.js' .. ' ' .. vim.fn.expand('%:p') .. ' ' ..  'gqlenv.json' .. ' ' .. vim.api.nvim_win_get_cursor(0)[1])
 
 vim.cmd [[
   command -nargs=0 Gql  execute 'vne | setlocal buftype=nofile | setlocal bufhidden=hide | setlocal noswapfile | set ft=json | r! node --es-module-specifier-resolution=node /home/nxtcoder17/workspace/nxtcoder17/graph-cli/src/index.js' . ' '. expand('%:p') . ' gqlenv.json'. ' '. line('.')

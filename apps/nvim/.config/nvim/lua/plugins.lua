@@ -11,6 +11,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
 	})
 end
 
+
 require("packer").startup(function()
 	-- for faster neovim
 	use("lewis6991/impatient.nvim")
@@ -27,6 +28,7 @@ require("packer").startup(function()
 	use({
 		"antoinemadec/FixCursorHold.nvim",
 	})
+
 
 	use("wbthomason/packer.nvim")
 
@@ -97,11 +99,12 @@ require("packer").startup(function()
 		end,
 	})
 
+
 	-- auto-sessions
 	use({
 		"rmagatti/auto-session",
 		config = function()
-			vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
+			vim.o.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
 			require("auto-session").setup({
 				log_level = "info",
 				auto_session_enabled = true,
@@ -110,6 +113,9 @@ require("packer").startup(function()
 			})
 		end,
 	})
+
+  -- toggle term
+  use{"akinsho/toggleterm.nvim"}
 
 	-- tab helpers
 	use({
@@ -181,17 +187,19 @@ require("packer").startup(function()
 	-- kubernetes
 	use({ "andrewstuart/vim-kubernetes", ft = "yaml" })
 
-	-- use({
-	--   "kyazdani42/nvim-web-devicons",
-	--   event = "BufEnter",
-	-- })
-
 	-- status line
 	use({
 		"nvim-lualine/lualine.nvim",
 		requires = {
 			{ "kyazdani42/nvim-web-devicons" },
 			{ "arkav/lualine-lsp-progress" },
+			-- {
+			-- 		"kdheepak/tabline.nvim",
+			-- 		after="lualine.nvim",
+			-- 		config = function() 
+			-- 			require("tabline").setup({ enabled = false })
+			-- 		end,
+			-- }
 		},
 		event = "BufEnter",
 		config = function()
@@ -232,6 +240,9 @@ require("packer").startup(function()
 			-- 	end,
 			-- },
 			{ "folke/lsp-colors.nvim", after = "nvim-lspconfig" },
+			-- { "tami5/lspsaga.nvim", after = "nvim-lspconfig", config = function() 
+			-- 		require("lspsaga").setup()
+			-- end }
 		},
 	})
 
@@ -244,15 +255,17 @@ require("packer").startup(function()
 			require("plugins_dir.treesitter")
 		end,
 		requires = {
+			{"MaxMEllon/vim-jsx-pretty", event="BufEnter"},
 			{ "nvim-treesitter/nvim-treesitter-refactor", after = "nvim-treesitter" },
 			{ "nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter" },
-			{ "RRethy/nvim-treesitter-textsubjects", after = "nvim-treesitter" },
+			-- { "RRethy/nvim-treesitter-textsubjects", after = "nvim-treesitter" },
+			{'andymass/vim-matchup', event="VimEnter"},
 			{
 				"JoosepAlviste/nvim-ts-context-commentstring",
 				after = "nvim-treesitter",
 				ft = { "javascript", "javascriptreact" },
 			},
-			{ "p00f/nvim-ts-rainbow", after = "nvim-treesitter", event = "BufReadPre" },
+			-- { "p00f/nvim-ts-rainbow", event = "BufReadPre" },
 			{
 				"numToStr/Comment.nvim",
 				after = "nvim-treesitter",
@@ -331,17 +344,16 @@ require("packer").startup(function()
 
 	-- TextObj
 	-- use("terryma/vim-expand-region")
-	-- use("kana/vim-textobj-user")
-	-- use("kana/vim-textobj-indent")
-	-- use("kana/vim-textobj-line")
-	-- use("kana/vim-textobj-entire")
-	-- use("kana/vim-textobj-function")
-	-- use("kana/vim-textobj-underscore")
+	use("kana/vim-textobj-user")
+	use("kana/vim-textobj-indent")
+	use("kana/vim-textobj-line")
+	use("kana/vim-textobj-entire")
+	use("kana/vim-textobj-function")
+	use("kana/vim-textobj-underscore")
 
 	-- wild mode
 	use({ "gelguy/wilder.nvim", run = ":UpdateRemotePlugins", event = "VimEnter" })
 
-	use("andymass/vim-matchup")
 
 	-- Telescope
 	use("nvim-lua/popup.nvim")
@@ -351,6 +363,7 @@ require("packer").startup(function()
 		config = function()
 			require("plugins_dir.telescope")
 		end,
+		-- after="tabby.nvim",
 		requires = {
 			{ "nvim-telescope/telescope-project.nvim" },
 			{ "nvim-telescope/telescope-dap.nvim", after = "nvim-dap", ft = { "javascript" } },
@@ -379,3 +392,4 @@ require("packer").startup(function()
 		require("packer").sync()
 	end
 end)
+

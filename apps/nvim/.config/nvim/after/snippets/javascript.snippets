@@ -4,6 +4,45 @@ snippet resolver
 		return ${2};
 	}
 
+
 # eslint-disable no-console for entire file
 snippet eslint-disable-no-console
 	/* eslint-disable no-console */
+
+
+snippet exec-promise
+	const execPromise = async (cmd) => {
+		return new Promise((resolve, reject) => {
+		   exec(cmd, (err, stdout, stderr) => {
+		   if (err) {
+		     console.log("error: ", err)
+		     return reject(stderr);
+		   }
+		   return resolve(stdout)
+		   })
+		});
+	}
+
+snippet logi
+	logger.info({
+		context: '${1:context}',
+		data: {},
+	}, '${2:msg}');
+
+snippet logd
+	logger.debug({
+		context: '${1:context}',
+		data: {},
+	}, '${2:msg}');
+
+snippet tryc
+	try {
+	  ${1}
+	} catch(err) {
+	  throw createHttpError(StatusCodes.BAD_REQUEST,  \`failed because ${err.message}\`)
+	}
+
+snippet iife
+	(async () => {
+	  ${1}
+	})()

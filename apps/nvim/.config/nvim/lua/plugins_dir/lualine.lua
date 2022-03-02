@@ -40,6 +40,15 @@ lualine.setup({
     component_separators = { left = "", right = "" },
   },
 
+  -- tabline = {
+  --   lualine_a = {},
+  --   lualine_b = {},
+  --   lualine_c = { require'tabline'.tabline_buffers },
+  --   lualine_x = { require'tabline'.tabline_tabs },
+  --   lualine_y = {},
+  --   lualine_z = {},
+  -- },
+
   sections = {
     lualine_a = {
       { "mode", upper = false},
@@ -60,7 +69,7 @@ lualine.setup({
         file_status = true,
         symbols = { modified = "  ", readonly = " [-]" },
       },
-      'lsp_progress',
+      'lsp_progress'
     },
     lualine_x = {
       {

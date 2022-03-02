@@ -39,3 +39,4 @@ function kanagawa()
 end
 
 kanagawa()
+-- tokyoNight()

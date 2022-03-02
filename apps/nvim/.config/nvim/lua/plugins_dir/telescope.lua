@@ -12,6 +12,7 @@ local action_state = require('telescope.actions.state')
 local findCmd
 if vim.fn.executable("fd") then
   findCmd = { "fd", "-t", "f", "-H", "-E", ".git", "--strip-cwd-prefix" }
+  -- findCmd = { "fd", "-t", "f", "-E", ".git", "--strip-cwd-prefix" }
 elseif vim.fn.executable("rg") then
   findCmd = { "rg", "--files", "--iglob", "!.git", "--hidden" }
 end
@@ -150,6 +151,16 @@ local goto_window = function(prompt_bufnr)
   vim.api.nvim_set_current_win(entry.value)
 end
 
+local getTabLabel = function(tabnr)
+  return "[TAB] " .. tabnr
+end
+
+local getTabName = nil
+
+local hasTabby = function()
+  return packer_plugins['tabby.nvim'] and packer_plugins['tabby.nvim'].loaded
+end
+
 M.tabs = function()
   local tabs = vim.api.nvim_list_tabpages()
   local windows = {};
@@ -157,7 +168,20 @@ M.tabs = function()
     local windownrs = vim.api.nvim_tabpage_list_wins(tabnr)
     for windownr, windowid in ipairs(windownrs) do
       local bufnr = vim.api.nvim_win_get_buf(windowid)
-      local bufstr = '[TAB] ' .. tabnr .. ' ' .. string.sub(vim.api.nvim_buf_get_name(bufnr), vim.fn.getcwd():len()+2)
+      local bufLabel = string.sub(vim.api.nvim_buf_get_name(bufnr), vim.fn.getcwd():len()+2)
+
+      if getTabName  == nil then
+        if hasTabby() then
+          local tn = require("tabby.util").get_tab_name
+          getTabLabel = function(tabnr) 
+            return '[TAB] ( ' .. tn(tabnr) .. ' )'
+          end
+        end
+        getTabName = "from:tabby"
+      end
+
+      local bufstr = getTabLabel(tabnr) .. ' ' .. bufLabel
+
       table.insert(windows, { 
         ordinal = bufstr , display = bufstr, value = windowid 
       })
