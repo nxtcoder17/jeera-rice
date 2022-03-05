@@ -232,13 +232,10 @@ require("packer").startup(function()
 		end,
 		requires = {
 			{ "williamboman/nvim-lsp-installer", after = "nvim-lspconfig" },
-			-- {
-			-- 	"jose-elias-alvarez/null-ls.nvim",
-			-- 	after = "nvim-lspconfig",
-			-- 	config = function()
-			-- 		require("plugins_dir.null-ls")
-			-- 	end,
-			-- },
+			{ "stevearc/aerial.nvim", config = function() 
+					require("aerial").setup({})
+				end
+			},
 			{ "folke/lsp-colors.nvim", after = "nvim-lspconfig" },
 			-- { "tami5/lspsaga.nvim", after = "nvim-lspconfig", config = function() 
 			-- 		require("lspsaga").setup()

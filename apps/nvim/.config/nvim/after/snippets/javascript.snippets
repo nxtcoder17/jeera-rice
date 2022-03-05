@@ -46,3 +46,13 @@ snippet iife
 	(async () => {
 	  ${1}
 	})()
+
+snippet template_cli
+	const program = new Command();
+	program.version('1.0.0');
+
+	program.command('${1:command}').description('${2:description}').option('-d, --debug', 'debug mode').action(async (opts) => {
+	${3}
+	});
+
+	program.parse()
