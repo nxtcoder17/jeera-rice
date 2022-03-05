@@ -46,7 +46,11 @@ local lsp_servers = {
   quicklint = {
     base_dir .. "/quick_lint_js/bin/quick-lint-js",
     "--lsp"
-  }
+  },
+  -- php = {
+  --   base_dir .. "/quick_lint_js/bin/quick-lint-js",
+  --   "--lsp"
+  -- }
 }
 
 local function config(_config)
@@ -235,6 +239,12 @@ lsp_config.gopls.setup({
   filetypes = { "go", "gomod", "gotmpl" },
   root_dir = lsp_config.util.root_pattern("go.mod")
 });
+
+require'lspconfig'.intelephense.setup{
+  cmd = { "intelephense", "--stdio" },
+  filetypes = { "php" },
+  root_dir = lsp_config.util.root_pattern("composer.json", ".git")
+}
 
 -- lsp_config.quick_lint_js.setup({
 --   cmd = lsp_servers.quicklint,

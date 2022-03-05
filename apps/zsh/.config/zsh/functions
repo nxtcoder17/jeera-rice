@@ -14,6 +14,48 @@ pnpm() {
   fi
 }
 
+
+dc() {
+  command=$1
+  shift 1;
+  case $command  in 
+    "up")
+      command docker compose up -d --remove-orphans $@
+      ;;
+    "p"|"ps")
+      command docker compose ps
+      ;;
+    "re"|"restart")
+      svc=$(cat docker-compose.yml | yq '.services | keys| .[]' | tr -d '"' | fzf --prompt="restart service 👉 ")
+      command docker compose restart $svc
+      ;;
+    "start")
+      svc=$(cat docker-compose.yml | yq '.services | keys| .[]' | tr -d '"' | fzf --prompt="service 👉 ")
+      docker compose start $svc
+      ;;
+    "stop")
+      svc=$(cat docker-compose.yml | yq '.services | keys| .[]' | tr -d '"' | fzf --prompt="service 👉 ")
+      docker compose stop $svc
+      ;;
+    "l"|"logs")
+      opt=$1
+      svc=""
+      [ $opt = "all" ] || svc=$(cat docker-compose.yml | yq '.services | keys| .[]' | tr -d '"' | fzf --prompt="for service 👉 ")
+      command docker compose logs --tail=100 -f $svc $@
+      ;;
+    "e"|"exec")
+      arg=$1
+      shell=$SHELL
+      [ -z "$arg" ] || shell=$arg
+      svc=$(cat docker-compose.yml | yq '.services | keys| .[]' | tr -d '"' | fzf --prompt="into service 👉 ")
+      command docker compose exec $svc $shell
+      ;;
+    "d"|"down")
+      docker-compose down
+      ;;
+  esac
+}
+
 _fzf_complete_make() {
   _fzf_complete --multi --reverse --prompt="target> " -- "make ${@:2}" < <(grep -iE '^[^.#].*:\s+' ./Makefile | awk -F':' '{print $1}' | uniq)
 }

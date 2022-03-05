@@ -68,6 +68,8 @@ maps["nnoremap"]("s]", ":cnext<CR>")
 maps["nnoremap"]("qo", ":copen<CR>")
 maps["nnoremap"]("qc", ":cclose<CR>")
 
+maps['nnoremap']('tt', ':ToggleTerm<CR>')
+
 -- making splits
 maps["nnoremap"]("si", ":vsplit<CR>")
 maps["nnoremap"]("sm", ":split<CR>")
