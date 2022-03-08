@@ -5,14 +5,19 @@ maps["nnoremap"]("S", "")
 maps["nnoremap"]("S", "")
 maps["nnoremap"]("s", "")
 maps["vnoremap"]("s", "")
--- maps["nnoremap"]("q", "")
--- maps["snoremap"]("q", "")
+
+maps['nnoremap']('H', '')
+maps['nnoremap']('M', '')
+maps['nnoremap']('L', '')
+
 maps["nnoremap"]("Q", "")
 maps["vnoremap"]("Q", "")
 
 -- ; to :
 maps["nnoremap"](";", ":")
 maps["vnoremap"](";", ":")
+
+vim.g.mapleader = "'"
 
 -- j/k to virtual gj/gk
 maps["nnoremap"]("j", "gj")
@@ -51,16 +56,12 @@ maps["nnoremap"]("sk", "<C-w>k<CR>")
 -- buffer management
 maps["nnoremap"]("sdb", ":BDelete this<CR>")
 maps["nnoremap"]("sdo", ":BDelete other<CR>")
--- maps["nnoremap"]("sda", ":BDelete all<CR>")
 maps["nnoremap"]("sda", ":tabc<CR>")
 maps["nnoremap"]("sdn", ":BDelete nameless<CR>")
 
 -- Debugging
 -- maps["nnoremap"]("qt", ":Telescope dap configurations<CR>")
 -- maps["nnoremap"]("qq", ":Telescope dap commands<CR>")
-
--- maps["nnoremap"]("s[", ":bprev<CR>")
--- maps["nnoremap"]("s]", ":bnext<CR>")
 
 -- Iterate Quickfix list
 maps["nnoremap"]("s[", ":cprev<CR>")
@@ -76,11 +77,7 @@ maps["nnoremap"]("sm", ":split<CR>")
 
 -- file explorer | word grepper
 maps["nnoremap"]("sf", ":Telescope find_files<CR>")
--- maps["nnoremap"]("sf", ":FzfLua files<CR>")
--- maps["nnoremap"]("sF", ":Telescope pickers<CR>")
--- maps["nnoremap"]("sF", ":FzfLua resume files_resume<CR>")
 maps["nnoremap"]("ff", ":lua require'plugins_dir.telescope'.grep()<CR>")
--- maps["nnoremap"]("ff", ":FzfLua grep<CR>")
 
 local function lspNative()
   -- rename variable
@@ -144,8 +141,8 @@ maps["nnoremap"]("<M-j>", ":TmuxNavigateDown<cr>")
 
 -- lsp
 
-vim.cmd ("command -nargs=0 Root execute 'windo tcd g:root_dir'")
-vim.cmd ("command -nargs=1 Cd execute 'windo tcd <f-args> <CR>'" )
+vim.cmd("command -nargs=0 Root execute 'windo tcd g:root_dir'")
+vim.cmd("command -nargs=1 Cd execute 'windo tcd <f-args> <CR>'")
 
 -- gql
 

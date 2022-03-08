@@ -14,7 +14,8 @@ echo $PWD
 echo "Generating Private RSA key ..."
 openssl genrsa -out $ACCOUNT.key 2048
 
-echo "Generating Certificate Signing Request (CSR) ..."
+# echo "Generating Certificate Signing Request (CSR) ..."
+# openssl req -new -key $ACCOUNT.key -out $ACCOUNT.csr -subj "/CN=$NAMESPACE/O=$ACCOUNT"
 openssl req -new -key $ACCOUNT.key -out $ACCOUNT.csr -subj "/CN=$NAMESPACE/O=$ACCOUNT"
 
 cat > $ACCOUNT-kube-csr.yml <<EOF
@@ -46,16 +47,11 @@ metadata:
   name: $ACCOUNT-role
 rules:
   - apiGroups:
-      - extensions
-      - apps
       - ""
     resources:
-      - deployments
-      - pods
-      - namespaces
-      - configmaps
-      - services
+      -  ""
     verbs:
+      - ""
       - get
       - list
       - watch

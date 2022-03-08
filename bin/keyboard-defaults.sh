@@ -1,7 +1,6 @@
 #! /usr/bin/env sh
 
-xset r rate 150 90
-
+xset r rate 140 100
 setxkbmap -option ctrl:nocaps
 
 # left shift as space
