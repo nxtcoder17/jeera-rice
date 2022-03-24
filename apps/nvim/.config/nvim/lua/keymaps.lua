@@ -13,6 +13,8 @@ maps['nnoremap']('L', '')
 maps["nnoremap"]("Q", "")
 maps["vnoremap"]("Q", "")
 
+maps['nnoremap']("'", "")
+
 -- ; to :
 maps["nnoremap"](";", ":")
 maps["vnoremap"](";", ":")
@@ -40,7 +42,7 @@ maps["nnoremap"]("<C-M-Down>", ":resize -10<CR>")
 
 -- comment/uncomment
 maps["nmap"]("s;", "gcc", {})
-maps["vmap"]("s;", "gc", {})
+maps["vmap"]("s;", "gcc", {})
 
 maps["tnoremap"]("<Esc>", "<C-\\><C-n>")
 
@@ -69,6 +71,7 @@ maps["nnoremap"]("s]", ":cnext<CR>")
 maps["nnoremap"]("qo", ":copen<CR>")
 maps["nnoremap"]("qc", ":cclose<CR>")
 
+-- maps['nnoremap']('tt', ':ToggleTerm<CR>')
 maps['nnoremap']('tt', ':ToggleTerm<CR>')
 
 -- making splits
@@ -82,6 +85,7 @@ maps["nnoremap"]("ff", ":lua require'plugins_dir.telescope'.grep()<CR>")
 local function lspNative()
   -- rename variable
   maps["nnoremap"]("sr", ":lua vim.lsp.buf.rename()<CR>")
+  -- maps["nnoremap"]("sr", "<cmd>Lspsaga rename<cr>")
 
   -- jump to next / prev error
   maps["nnoremap"]("sn", ":lua vim.diagnostic.goto_next({ severity = 'error' })<CR>")
@@ -112,6 +116,13 @@ end
 
 lspNative()
 
+local function withFuzzyFinders()
+  -- maps['nnoremap']('<leader>f', '<cmd>:FzfLua blines<CR>')
+  maps['nnoremap']('<leader>f', '<cmd>:Telescope current_buffer_fuzzy_find<CR>')
+end
+
+withFuzzyFinders()
+
 maps["nnoremap"]("sb", ":Telescope buffers<CR>")
 
 -- rnvimr (file explorer)
@@ -121,9 +132,8 @@ maps["tnoremap"]("<M-o>", "<C-\\><C-n>:RnvimrToggle<CR>")
 maps["cnoremap"]("wqa", "wa! | qa")
 
 -- for tabs
-print(vim.g.root_dir)
-maps["nnoremap"]("tn", ":tabnew | windo lcd ".. vim.g.root_dir .. '<CR>')
-maps["nnoremap"]("te", ":tabedit % |:windo cd " .. vim.g.root_dir .. '<CR>')
+maps["nnoremap"]("tn", "<cmd>tabnew<CR>")
+maps["nnoremap"]("te", "<cmd>tabedit % |:windo tcd " .. vim.g.root_dir .. '<CR>')
 maps["nnoremap"]("tl", ":lua require('plugins_dir.telescope').tabs()<CR>")
 
 -- [Source]: https://gist.github.com/benfrain/97f2b91087121b2d4ba0dcc4202d252f
@@ -141,13 +151,13 @@ maps["nnoremap"]("<M-j>", ":TmuxNavigateDown<cr>")
 
 -- lsp
 
-vim.cmd("command -nargs=0 Root execute 'windo tcd g:root_dir'")
-vim.cmd("command -nargs=1 Cd execute 'windo tcd <f-args> <CR>'")
+vim.cmd("command! -nargs=0 Root execute 'windo tcd g:root_dir'")
+vim.cmd("command! -nargs=1 Cd execute 'windo tcd <f-args> <CR>'")
 
 -- gql
 
 vim.cmd [[
-  command -nargs=0 Gql  execute 'vne | setlocal buftype=nofile | setlocal bufhidden=hide | setlocal noswapfile | set ft=json | r! node --es-module-specifier-resolution=node /home/nxtcoder17/workspace/nxtcoder17/graph-cli/src/index.js' . ' '. expand('%:p') . ' gqlenv.json'. ' '. line('.')
+  command! -nargs=0 Gql  execute 'vne | setlocal buftype=nofile | setlocal bufhidden=hide | setlocal noswapfile | set ft=json | r! node --es-module-specifier-resolution=node /home/nxtcoder17/workspace/nxtcoder17/graph-cli/src/index.js' . ' '. expand('%:p') . ' gqlenv.json'. ' '. line('.')
 ]]
 
 -- function _G.NxtFormatMap()

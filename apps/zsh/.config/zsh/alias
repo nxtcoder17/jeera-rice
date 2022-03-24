@@ -13,7 +13,7 @@ alias kl='kl dev'
 alias kx='kubie ctx'
 alias kn='kubie ns'
 
-alias nv='nvim'
+alias nv='nvim7'
 
 alias k='kubectl'
 

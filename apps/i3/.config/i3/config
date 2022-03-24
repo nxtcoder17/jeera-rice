@@ -38,6 +38,15 @@ hide_edge_borders vertical
 # Modifier Keys
 set $mod Mod4
 set $alt Mod1
+set $shift Shift
+set $tab Tab
+set $ctrl Control
+set $period Period
+set $bs BackSpace
+set $return Return
+
+# commons vars
+set $noid --no-startup-id
 
 # Workspaces
 
@@ -54,29 +63,27 @@ bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
 
 # Throw windows to other workspaces
-bindsym $mod+Shift+1 move container to workspace 1
-bindsym $mod+Shift+2 move container to workspace 2
-bindsym $mod+Shift+3 move container to workspace 3
-bindsym $mod+Shift+4 move container to workspace 4
-bindsym $mod+Shift+5 move container to workspace 5
-bindsym $mod+Shift+6 move container to workspace 6
-bindsym $mod+Shift+7 move container to workspace 7
-bindsym $mod+Shift+8 move container to workspace 8
-bindsym $mod+Shift+9 move container to workspace 9
-bindsym $mod+Shift+0 move container to workspace 10
-
-
+bindsym $mod+$shift+1 move container to workspace 1
+bindsym $mod+$shift+2 move container to workspace 2
+bindsym $mod+$shift+3 move container to workspace 3
+bindsym $mod+$shift+4 move container to workspace 4
+bindsym $mod+$shift+5 move container to workspace 5
+bindsym $mod+$shift+6 move container to workspace 6
+bindsym $mod+$shift+7 move container to workspace 7
+bindsym $mod+$shift+8 move container to workspace 8
+bindsym $mod+$shift+9 move container to workspace 9
+bindsym $mod+$shift+0 move container to workspace 10
 
 # Basic i3wm controls
 
 # Reloading i3wm
-bindsym $mod + Shift + c            reload
+bindsym $mod + $shift + c            reload
 
 # Restarting i3wm
-bindsym $mod + Shift + r            restart
+bindsym $mod + $shift + r            restart
 
 # Killing windows
-bindsym $mod + shift + q            kill
+bindsym $mod + $shift + q            kill
 
 # Toggle Floating Window
 bindsym $mod+space                  floating toggle
@@ -86,40 +93,39 @@ bindsym $mod+f                      fullscreen toggle
 popup_during_fullscreen             smart
 
 # Toggle among splits while in fullscreen
-bindsym $alt+period                fullscreen disable; focus right ; fullscreen enable
+bindsym $alt+$period                fullscreen disable; focus right ; fullscreen enable
 
 # Jumping back and forth b/w Workspaces
-bindsym $mod+Tab                    workspace back_and_forth
+bindsym $mod+$tab                    workspace back_and_forth
 
 # Make a window stick to the screen (always on top)
 bindsym $alt + s                    sticky toggle
 
-
 # Navigation between windows
 
 bindsym $mod+h focus left
-bindsym $mod+Shift+h move left
+bindsym $mod+$shift+h move left
 
 bindsym $mod+l focus right
-bindsym $mod+Shift+l move right
+bindsym $mod+$shift+l move right
 
 bindsym $mod+j focus down
-bindsym $mod+Shift+j move down
+bindsym $mod+$shift+j move down
 
 bindsym $mod+k focus up
-bindsym $mod+Shift+k move up
+bindsym $mod+$shift+k move up
 
 bindsym $mod+Left focus Left
-bindsym $mod+Shift+Left move left
+bindsym $mod+$shift+Left move left
 
 bindsym $mod+Right focus right
-bindsym $mod+Shift+Right move right
+bindsym $mod+$shift+Right move right
 
 bindsym $mod+Down focus down
-bindsym $mod+Shift+Down move down
+bindsym $mod+$shift+Down move down
 
 bindsym $mod+Up focus up
-bindsym $mod+Shift+Up move up
+bindsym $mod+$shift+Up move up
 
 
 # Resize windows
@@ -135,84 +141,84 @@ bindsym XF86MonBrightnessUp exec "light -A -b 5"
 bindsym XF86MonBrightnessDown exec "light -U -b 5"
 
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
+bindsym XF86AudioRaiseVolume exec $noid pactl set-sink-volume 0 +5%
+bindsym XF86AudioLowerVolume exec $noid pactl set-sink-volume 0 -5%
+bindsym XF86AudioMute exec $noid pactl set-sink-mute 0 toggle
 
 # Volume controls
-# Reducing volume vars
-set $minorDec --no-startup-id pamixer --allow-boost -d 5
-set $majorDec --no-startup-id pamixer --allow-boost -d 10
+set $minorInc $noid pamixer --allow-boost -i 5
+set $majorInc $noid pamixer --allow-boost -i 10
+
+bindsym $alt + plus             exec $minorInc
+bindsym $alt + $$shift + plus     exec $majorInc
 
 # Increasing volume vars
-set $minorInc --no-startup-id pamixer --allow-boost -i 5
-set $majorInc --no-startup-id pamixer --allow-boost -i 10
+set $minorDec $noid pamixer --allow-boost -d 5
+set $majorDec $noid pamixer --allow-boost -d 10
+
+bindsym $alt + minus            exec $minorDec
+bindsym $alt + $shift + minus    exec $majorDec
 
 # Mute/Unmute vars
-set $toggleMute --no-startup-id pamixer -t
-
-bindsym $alt + plus             exec --no-startup-id $minorInc
-bindsym $alt + shift + plus     exec --no-startup-id $majorInc
-
-bindsym $alt + minus            exec --no-startup-id $minorDec
-bindsym $alt + shift + minus    exec --no-startup-id $majorDec
-
-bindsym Control + exclam           exec --no-startup-id $toggleMute
+set $toggleMute $noid pamixer -t
+bindsym $ctrl + exclam           exec $noid $toggleMute
 
 # Key Mappings
 # -> Opening Terminal
 set $term kitty
 set $term2 konsole --hide-menubar --hide-tabbar
-bindsym $mod + Return                           exec --no-startup-id $term
-bindsym $mod + Control + Return                 exec --no-startup-id $term2
+bindsym $mod + $return         exec $noid $term
+bindsym $mod + $ctrl + $return exec $noid $term2
 
-# -> Executing Rofi Desktop Run Window
-bindsym $mod + d exec --no-startup-id rofi -show combi
+# -> Rofi combined run:window
+bindsym $mod + d exec $noid rofi -show combi
 
 # -> Executing Rofi Run Window
-bindsym $mod + shift + d exec --no-startup-id rofi -show drun -lines 5 -eh 1 -width 600 -location 0 -hide-scrollbar -bw 4 -opacity 100 -bc "#283e26" -bg "#1f1513" -fg "$ffffff" -hlbg "#283e26" -hlfg "#ffffff" -bgalt "#527d41" -separator-style "solid" -padding 50 
+bindsym $mod + $shift + d exec $noid rofi -show drun -lines 5 -eh 1 -width 600 -location 0 -hide-scrollbar -bw 4 -opacity 100 -bc "#283e26" -bg "#1f1513" -fg "$ffffff" -hlbg "#283e26" -hlfg "#ffffff" -bgalt "#527d41" -separator-style "solid" -padding 50 
 
-# bindsym $alt + i		exec --no-startup-id rofi -modi 'chrome:chrome-switch-tabs' -show chrome
+# bindsym $alt + i		exec $noid rofi -modi 'chrome:chrome-switch-tabs' -show chrome
 
 # -> Taking Screenshots: scrot 
 set $shot scrot -q 100
-bindsym Print                       exec --no-startup-id $shot
+bindsym Print                       exec $noid $shot
  
 # -> executing ranger
 bindsym $mod + r                    exec $term -e ranger
 
-# Toggling monitor and laptop
-set $laptopDisplay eDP-1
-set $monitorDisplay HDMI-2
-set $turnHDMIon xrandr --output $monitorDisplay --mode 2560x1440 --auto --right-of $laptopDisplay
-set $turnHDMIoff xrandr --output $laptopDisplay --auto && xrandr --output $monitorDisplay --off
+# multi monitor
+set $laptopDisplay eDP-1-1
+set $monitorDisplay HDMI-1-2
+set $monitorMode 2560x1440
 
-bindsym Control + $alt + shift + m                   exec "$turnHDMIon"
-bindsym Control + $alt + m                           exec "$turnHDMIoff"
+set $turnMonitorOn xrandr --output $monitorDisplay --mode $monitorMode --auto && xrandr --output $laptopDisp --off
+
+set $turnMonitorOff xrandr --output $laptopDisplay --auto && xrandr --output $monitorDisplay --off
+
+bindsym Control + $alt + $shift + m     exec "$turnMonitorOff"
+bindsym Control + $alt + m              exec "$turnMonitorOn"
 
 # lock screen
-bindsym $mod + x            exec --no-startup-id ~/.config/i3/scripts/lock.sh
+bindsym $mod + x            exec $noid ~/.config/i3/scripts/lock.sh
 
 # Autostarting apps
-# Locale to en_US.UTF-8
-exec --no-startup-id      localectl set-locale LANG=en_US.UTF-8
-exec --no-startup-id      unset LANG
-exec --no-startup-id      source /etc/profile.d/locale.sh
+exec $noid  localectl set-locale LANG=en_US.UTF-8
+exec $noid  unset LANG
+exec $noid  source /etc/profile.d/locale.sh
 
 # -> Wallpaper Setup
-exec --no-startup-id      source $HOME/.fehbg
+exec $noid source $HOME/.fehbg
 
 # -> Network Manager
-exec --no-startup-id             nm-applet
+exec $noid nm-applet
 
 # window compositing with blur
-exec --no-startup-id 						 picom --experimental-backends
+exec $noid picom --experimental-backends
 
 # -> Notification daemon
-exec --no-startup-id            dunst
+exec $noid dunst
 
 # TouchPad: Tap To Click
-exec --no-startup-id     xinput set-prop 'Synaptics TM3276-022' 'libinput Tapping Enabled' 1
+exec $noid xinput set-prop 'Synaptics TM3276-022' 'libinput Tapping Enabled' 1
 
 # Bar Configuration
 
@@ -260,16 +266,15 @@ for_window [window_role="task_dialog"] floating enable
 for_window [window_role="GtkFileChooserDialog"] floating enable
 for_window [window_role='vlc-main'] floating enable
 for_window [class='jetbrains-.*'] floating enable
-for_window [class = 'gl'] floating enable
+for_window [class='gl'] floating enable
 for_window [class="firefox" title="Firefox — Sharing Indicator"] floating enable
 for_window [class="firefox" title="Pushbullet – Mozilla Firefox"] floating enable
 for_window [class="firefox" title="About Mozilla Firefox"] floating enable
 for_window [title="Picture-in-Picture"] floating enable
 
-
 # ScratchPad
-bindsym $mod+Shift+BackSpace move scratchpad
-bindsym Control+Shift+BackSpace [title="nxthelper"] move scratchpad
+bindsym $mod+$shift+BackSpace move scratchpad
+bindsym $ctrl+$shift+BackSpace [title="nxthelper"] move scratchpad
 bindsym $mod+backslash scratchpad show; move position center
 
 for_window [title="NxtTerm"] floating enable
@@ -277,13 +282,13 @@ for_window [title="NxtTerm"] resize set 1200 1000
 for_window [title="NxtTerm"] move scratchpad
 for_window [title="NxtTerm"] border pixel 3
 
-set $startNxtTerm '--no-startup-id konsole --hide-menubar -p tabtitle=NxtTerm'
+set $startNxtTerm '$noid konsole --hide-menubar -p tabtitle=NxtTerm'
 set $toggleNxtTerm '[title="NxtTerm"] scratchpad show; move position center'
 
-set $startHelperTerm '--no-startup-id kitty --title nxthelper'
+set $startHelperTerm '$noid kitty --title nxthelper'
 set $toggleHelperTerm '[title="nxthelper"] scratchpad show; move position center'
 
-bindsym Control+period [title="nxthelper"] scratchpad show; move position center
+bindsym $ctrl+$period [title="nxthelper"] scratchpad show; move position center
 
 for_window [title="nxthelper"] floating enable
 for_window [title="nxthelper"] resize set 1800 1200

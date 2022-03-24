@@ -12,7 +12,6 @@ local action_state = require('telescope.actions.state')
 local findCmd
 if vim.fn.executable("fd") then
   findCmd = { "fd", "-t", "f", "-H", "-E", ".git", "--strip-cwd-prefix" }
-  -- findCmd = { "fd", "-t", "f", "-E", ".git", "--strip-cwd-prefix" }
 elseif vim.fn.executable("rg") then
   findCmd = { "rg", "--files", "--iglob", "!.git", "--hidden" }
 end
@@ -52,7 +51,7 @@ telescope.setup({
   extensions = {
     fzf = {
       fuzzy = true,
-      override_generic_sorter = false,
+      override_generic_sorter = true,
       override_file_sorter = true,
       case_mode = "smart_case",
     },
@@ -71,6 +70,9 @@ telescope.setup({
       theme = "ivy",
     },
     grep_string = {
+      theme = "ivy",
+    },
+    current_buffer_fuzzy_find = {
       theme = "ivy",
     },
     buffers = {

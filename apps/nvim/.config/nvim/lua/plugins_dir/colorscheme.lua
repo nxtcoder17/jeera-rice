@@ -12,6 +12,7 @@ function tokyoNight()
 end
 
 function kanagawa()
+  -- print("hello, i am here")
   local defaultColors = require("kanagawa.colors").setup()
 
   local colors = {
@@ -34,7 +35,20 @@ function kanagawa()
     },
   }
 
-  require'kanagawa'.setup({ overrides = overrides, colors = colors })
+  vim.opt.fillchars:append({
+    horiz = '━',
+    horizup = '┻',
+    horizdown = '┳',
+    vert = '┃',
+    vertleft = '┨',
+    vertright = '┣',
+    verthoriz = '╋',
+})
+  require'kanagawa'.setup({ 
+    globalStatus = true,
+    overrides = overrides, 
+    colors = colors
+  })
   vim.cmd('colorscheme kanagawa')
 end
 

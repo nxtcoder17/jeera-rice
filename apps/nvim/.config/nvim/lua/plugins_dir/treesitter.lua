@@ -1,12 +1,12 @@
 require("nvim-treesitter.configs").setup({
   ensure_installed = "maintained",
-  -- ignore_install={"phpdoc","lua","php","vim", "ocamllex"},
   ignore_install = { "ocamllex" },
 
   highlight = {
     enable = true,
     additional_vim_regex_highlighting = false,
   },
+
   incremental_selection = {
     enable = true,
     keymaps = {
@@ -26,36 +26,16 @@ require("nvim-treesitter.configs").setup({
   -- nvim autopairs
   autopairs = { enable = true },
 
-  -- playground = {
-  --   enable = true,
-  --   disable = {},
-  --   updatetime = 25,
-  --   persist_queries = false,
-  --   keybindings = {
-  --     toggle_query_editor = "o",
-  --     toggle_hl_groups = "i",
-  --     toggle_injected_languages = "t",
-  --     toggle_anonymous_nodes = "a",
-  --     toggle_language_display = "I",
-  --     focus_language = "f",
-  --     unfocus_language = "F",
-  --     update = "R",
-  --     goto_node = "<cr>",
-  --     show_help = "?",
-  --   },
-  -- },
-
   -- Rainbow Delimiters
   rainbow = {
     enable = true,
     extended_mode = true, -- Highlight also non-parentheses delimiters, like HTML, jsx elements
     max_file_lines = 1000,
     colors = {
-      "#7f9626",
-      "#76be9f",
-      "#9bcfde",
-      "#599f8c",
-      "#8b9dc3",
+      "#D3ECA7",
+      "#a5a58d",
+      "#4FD3C4",
+      "#7C99AC",
     }, -- table of hex strings
   },
 
@@ -85,47 +65,54 @@ require("nvim-treesitter.configs").setup({
   --   -- highlight_current_scope = {enable = true}
   -- },
 
-  -- textobjects = {
-  --   lsp_interop = {
-  --     enable = true,
-  --     border = "none",
-  --     peek_definition_code = {
-  --       ["<leader>df"] = "@function.outer",
-  --       ["<leader>dF"] = "@class.outer",
-  --     },
-  --   },
-  --   move = {
-  --     enable = true,
-  --     set_jumps = true, -- whether to set jumps in the jumplist
-  --     goto_next_start = {
-  --       ["]m"] = "@function.outer",
-  --       ["]]"] = "@class.outer",
-  --     },
-  --     goto_next_end = {
-  --       ["]M"] = "@function.outer",
-  --       ["]["] = "@class.outer",
-  --     },
-  --     goto_previous_start = {
-  --       ["[m"] = "@function.outer",
-  --       ["[["] = "@class.outer",
-  --     },
-  --     goto_previous_end = {
-  --       ["[M"] = "@function.outer",
-  --       ["[]"] = "@class.outer",
-  --     },
-  --   },
-  --   -- @TODO: these selectors may or may not helpful workflow
-  --   select = {
-  --     enable = true,
-  --     lookahead = true,
-  --     keymaps = {
-  --       ["af"] = "@function.outer",
-  --       ["if"] = "@function.inner",
-  --       ["ab"] = "@block.outer",
-  --       ["ib"] = "@block.inner",
-  --       ["ac"] = "@call.outer",
-  --       ["ic"] = "@call.inner",
-  --     },
-  --   },
-  -- },
+  textobjects = {
+    -- lsp_interop = {
+    --   enable = true,
+    --   border = "none",
+    --   peek_definition_code = {
+    --     ["<leader>df"] = "@function.outer",
+    --     ["<leader>dF"] = "@class.outer",
+    --   },
+    -- },
+
+    --   move = {
+    --     enable = true,
+    --     set_jumps = true, -- whether to set jumps in the jumplist
+    --     goto_next_start = {
+    --       ["]m"] = "@function.outer",
+    --       ["]]"] = "@class.outer",
+    --     },
+    --     goto_next_end = {
+    --       ["]M"] = "@function.outer",
+    --       ["]["] = "@class.outer",
+    --     },
+    --     goto_previous_start = {
+    --       ["[m"] = "@function.outer",
+    --       ["[["] = "@class.outer",
+    --     },
+    --     goto_previous_end = {
+    --       ["[M"] = "@function.outer",
+    --       ["[]"] = "@class.outer",
+    --     },
+    --   },
+
+    -- @TODO: these selectors may or may not helpful workflow
+    select = {
+      enable = true,
+      lookahead = true,
+      keymaps = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ab"] = "@block.outer",
+        ["ib"] = "@block.inner",
+        ["ac"] = "@call.outer",
+        ["ic"] = "@call.inner",
+      },
+    },
+  },
 })
+
+-- vim.opt.foldmethod = "expr"
+-- vim.opt.foldminlines = 9
+-- vim.cmd("set foldexpr=nvim_treesitter#foldexpr()")
+

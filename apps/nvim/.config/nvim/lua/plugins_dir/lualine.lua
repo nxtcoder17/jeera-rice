@@ -69,7 +69,7 @@ lualine.setup({
         file_status = true,
         symbols = { modified = "  ", readonly = " [-]" },
       },
-      'lsp_progress'
+      -- 'lsp_progress'
     },
     lualine_x = {
       {
