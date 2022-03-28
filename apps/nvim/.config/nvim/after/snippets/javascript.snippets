@@ -5,9 +5,8 @@ snippet resolver
 	}
 
 
-# eslint-disable no-console for entire file
 snippet eslint-disable-no-console
-	/* eslint-disable no-console */
+	// eslint-disable-next-line no-console
 
 
 snippet exec-promise
@@ -23,18 +22,6 @@ snippet exec-promise
 		});
 	}
 
-snippet logi
-	logger.info({
-		context: '${1:context}',
-		data: {},
-	}, '${2:msg}');
-
-snippet logd
-	logger.debug({
-		context: '${1:context}',
-		data: {},
-	}, '${2:msg}');
-
 snippet tryc
 	try {
 	  ${1}
@@ -49,7 +36,6 @@ snippet iife
 
 snippet template_cli
 	const program = new Command();
-	program.version('1.0.0');
 
 	program.command('${1:command}').description('${2:description}').option('-d, --debug', 'debug mode').action(async (opts) => {
 	${3}

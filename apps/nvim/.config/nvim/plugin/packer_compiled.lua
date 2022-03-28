@@ -80,7 +80,7 @@ _G.packer_plugins = {
     url = "https://github.com/stevearc/aerial.nvim"
   },
   ["auto-session"] = {
-    config = { "\27LJ\2\n×\2\0\0\6\0\15\0\0216\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\4\0'\2\5\0B\0\2\0029\0\6\0005\2\a\0005\3\b\0=\3\t\0026\3\0\0009\3\n\0039\3\v\3'\5\f\0B\3\2\2'\4\r\0&\3\4\3=\3\14\2B\0\2\1K\0\1\0\26auto_session_root_dir\15/sessions/\tdata\fstdpath\afn\31auto_session_suppress_dirs\1\2\0\0\a~/\1\0\3\14log_level\tinfo\25auto_restore_enabled\2\25auto_session_enabled\2\nsetup\17auto-session\frequire?buffers,curdir,folds,help,tabpages,winsize,winpos,terminal\19sessionoptions\6o\bvim\0" },
+    config = { "\27LJ\2\n×\2\0\0\6\0\15\0\0216\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\4\0'\2\5\0B\0\2\0029\0\6\0005\2\a\0005\3\b\0=\3\t\0026\3\0\0009\3\n\0039\3\v\3'\5\f\0B\3\2\2'\4\r\0&\3\4\3=\3\14\2B\0\2\1K\0\1\0\26auto_session_root_dir\15/sessions/\tdata\fstdpath\afn\31auto_session_suppress_dirs\1\2\0\0\a~/\1\0\3\14log_level\tinfo\25auto_session_enabled\2\25auto_restore_enabled\2\nsetup\17auto-session\frequire?buffers,curdir,folds,help,tabpages,winsize,winpos,terminal\19sessionoptions\6o\bvim\0" },
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/auto-session",
     url = "https://github.com/rmagatti/auto-session"
@@ -142,13 +142,18 @@ _G.packer_plugins = {
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/crates.nvim",
     url = "https://github.com/Saecki/crates.nvim"
   },
-  ["focus.nvim"] = {
-    config = { "\27LJ\2\nF\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\15cursorline\1\nsetup\nfocus\frequire\0" },
+  ["diffview.nvim"] = {
     loaded = false,
     needs_bufread = false,
     only_cond = false,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/focus.nvim",
-    url = "https://github.com/beauwilliams/focus.nvim"
+    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/diffview.nvim",
+    url = "https://github.com/sindrets/diffview.nvim"
+  },
+  ["fidget.nvim"] = {
+    config = { "\27LJ\2\n4\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\vfidget\frequire\0" },
+    loaded = true,
+    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/fidget.nvim",
+    url = "https://github.com/j-hui/fidget.nvim"
   },
   fzf = {
     loaded = true,
@@ -170,6 +175,12 @@ _G.packer_plugins = {
     only_cond = false,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/glow.nvim",
     url = "https://github.com/ellisonleao/glow.nvim"
+  },
+  ["graphql-cli"] = {
+    config = { "\27LJ\2\nM\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\fcommand\tGql2\nsetup\16graphql-cli\frequire\0" },
+    loaded = true,
+    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/graphql-cli",
+    url = "https://github.com/nxtcoder17/graphql-cli"
   },
   ["i3config.vim"] = {
     loaded = false,
@@ -242,13 +253,8 @@ _G.packer_plugins = {
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/nvim-colorizer.lua",
     url = "https://github.com/norcalli/nvim-colorizer.lua"
   },
-  ["nvim-fzf"] = {
-    loaded = true,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/nvim-fzf",
-    url = "https://github.com/vijaymarupudi/nvim-fzf"
-  },
   ["nvim-hlslens"] = {
-    config = { "\27LJ\2\no\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\3\17nearest_only\2\14calm_down\2\23nearest_float_when\valways\nsetup\fhlslens\frequire\0" },
+    config = { "\27LJ\2\no\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\3\23nearest_float_when\valways\14calm_down\2\17nearest_only\2\nsetup\fhlslens\frequire\0" },
     loaded = false,
     needs_bufread = false,
     only_cond = false,
@@ -265,7 +271,7 @@ _G.packer_plugins = {
     url = "https://github.com/williamboman/nvim-lsp-installer"
   },
   ["nvim-lspconfig"] = {
-    after = { "symbols-outline.nvim", "aerial.nvim", "nvim-lsp-installer", "lsp-colors.nvim" },
+    after = { "lsp-colors.nvim", "aerial.nvim", "nvim-lsp-installer", "symbols-outline.nvim" },
     config = { "\27LJ\2\n#\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\blsp\frequire\0" },
     loaded = false,
     needs_bufread = false,
@@ -304,7 +310,7 @@ _G.packer_plugins = {
     url = "https://github.com/caenrique/nvim-toggle-terminal"
   },
   ["nvim-treesitter"] = {
-    after = { "nvim-ts-autotag", "nvim-ts-context-commentstring", "nvim-treesitter-refactor", "nvim-treesitter-textobjects" },
+    after = { "nvim-ts-context-commentstring", "nvim-treesitter-textobjects", "nvim-treesitter-refactor", "nvim-ts-autotag" },
     config = { "\27LJ\2\n6\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\27plugins_dir.treesitter\frequire\0" },
     loaded = false,
     needs_bufread = true,
@@ -440,12 +446,6 @@ _G.packer_plugins = {
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/tokyonight.nvim",
     url = "https://github.com/folke/tokyonight.nvim"
   },
-  ["twilight.nvim"] = {
-    config = { "\27LJ\2\ná\1\0\0\5\0\n\0\r6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0005\4\5\0=\4\6\3=\3\a\0025\3\b\0=\3\t\2B\0\2\1K\0\1\0\vexpand\1\5\0\0\rfunction\vmethod\ntable\17if_statement\fdimming\ncolor\1\3\0\0\vNormal\f#ffffff\1\0\2\rinactive\1\nalpha\4\0€€ ÿ\3\1\0\4\15treesitter\2\bopt\2\venable\1\fcontext\3\n\nsetup\rtwilight\frequire\0" },
-    loaded = true,
-    path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/twilight.nvim",
-    url = "https://github.com/folke/twilight.nvim"
-  },
   ["vim-commentary"] = {
     loaded = true,
     path = "/home/nxtcoder17/.local/share/nvim/site/pack/packer/start/vim-commentary",
@@ -527,26 +527,30 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: telescope.nvim
-time([[Config for telescope.nvim]], true)
-try_loadstring("\27LJ\2\n5\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\26plugins_dir.telescope\frequire\0", "config", "telescope.nvim")
-time([[Config for telescope.nvim]], false)
--- Config for: cmp-copilot
-time([[Config for cmp-copilot]], true)
-try_loadstring("\27LJ\2\n3\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\24plugins_dir.copilot\frequire\0", "config", "cmp-copilot")
-time([[Config for cmp-copilot]], false)
+-- Config for: fidget.nvim
+time([[Config for fidget.nvim]], true)
+try_loadstring("\27LJ\2\n4\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\vfidget\frequire\0", "config", "fidget.nvim")
+time([[Config for fidget.nvim]], false)
 -- Config for: kanagawa.nvim
 time([[Config for kanagawa.nvim]], true)
 try_loadstring("\27LJ\2\n7\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\28plugins_dir.colorscheme\frequire\0", "config", "kanagawa.nvim")
 time([[Config for kanagawa.nvim]], false)
+-- Config for: graphql-cli
+time([[Config for graphql-cli]], true)
+try_loadstring("\27LJ\2\nM\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\fcommand\tGql2\nsetup\16graphql-cli\frequire\0", "config", "graphql-cli")
+time([[Config for graphql-cli]], false)
+-- Config for: telescope.nvim
+time([[Config for telescope.nvim]], true)
+try_loadstring("\27LJ\2\n5\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\26plugins_dir.telescope\frequire\0", "config", "telescope.nvim")
+time([[Config for telescope.nvim]], false)
 -- Config for: auto-session
 time([[Config for auto-session]], true)
-try_loadstring("\27LJ\2\n×\2\0\0\6\0\15\0\0216\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\4\0'\2\5\0B\0\2\0029\0\6\0005\2\a\0005\3\b\0=\3\t\0026\3\0\0009\3\n\0039\3\v\3'\5\f\0B\3\2\2'\4\r\0&\3\4\3=\3\14\2B\0\2\1K\0\1\0\26auto_session_root_dir\15/sessions/\tdata\fstdpath\afn\31auto_session_suppress_dirs\1\2\0\0\a~/\1\0\3\14log_level\tinfo\25auto_restore_enabled\2\25auto_session_enabled\2\nsetup\17auto-session\frequire?buffers,curdir,folds,help,tabpages,winsize,winpos,terminal\19sessionoptions\6o\bvim\0", "config", "auto-session")
+try_loadstring("\27LJ\2\n×\2\0\0\6\0\15\0\0216\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\4\0'\2\5\0B\0\2\0029\0\6\0005\2\a\0005\3\b\0=\3\t\0026\3\0\0009\3\n\0039\3\v\3'\5\f\0B\3\2\2'\4\r\0&\3\4\3=\3\14\2B\0\2\1K\0\1\0\26auto_session_root_dir\15/sessions/\tdata\fstdpath\afn\31auto_session_suppress_dirs\1\2\0\0\a~/\1\0\3\14log_level\tinfo\25auto_session_enabled\2\25auto_restore_enabled\2\nsetup\17auto-session\frequire?buffers,curdir,folds,help,tabpages,winsize,winpos,terminal\19sessionoptions\6o\bvim\0", "config", "auto-session")
 time([[Config for auto-session]], false)
--- Config for: twilight.nvim
-time([[Config for twilight.nvim]], true)
-try_loadstring("\27LJ\2\ná\1\0\0\5\0\n\0\r6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0005\4\5\0=\4\6\3=\3\a\0025\3\b\0=\3\t\2B\0\2\1K\0\1\0\vexpand\1\5\0\0\rfunction\vmethod\ntable\17if_statement\fdimming\ncolor\1\3\0\0\vNormal\f#ffffff\1\0\2\rinactive\1\nalpha\4\0€€ ÿ\3\1\0\4\15treesitter\2\bopt\2\venable\1\fcontext\3\n\nsetup\rtwilight\frequire\0", "config", "twilight.nvim")
-time([[Config for twilight.nvim]], false)
+-- Config for: cmp-copilot
+time([[Config for cmp-copilot]], true)
+try_loadstring("\27LJ\2\n3\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\24plugins_dir.copilot\frequire\0", "config", "cmp-copilot")
+time([[Config for cmp-copilot]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
@@ -558,34 +562,34 @@ vim.cmd [[au!]]
   -- Filetype lazy-loads
 time([[Defining lazy-load filetype autocommands]], true)
 vim.cmd [[au FileType typescript ++once lua require("packer.load")({'nvim-ts-context-commentstring'}, { ft = "typescript" }, _G.packer_plugins)]]
-vim.cmd [[au FileType typescriptreact ++once lua require("packer.load")({'vim-jsx-pretty', 'nvim-ts-context-commentstring'}, { ft = "typescriptreact" }, _G.packer_plugins)]]
-vim.cmd [[au FileType javascriptreact ++once lua require("packer.load")({'vim-jsx-pretty', 'nvim-ts-context-commentstring'}, { ft = "javascriptreact" }, _G.packer_plugins)]]
-vim.cmd [[au FileType yaml ++once lua require("packer.load")({'vim-kubernetes'}, { ft = "yaml" }, _G.packer_plugins)]]
-vim.cmd [[au FileType i3config ++once lua require("packer.load")({'i3config.vim'}, { ft = "i3config" }, _G.packer_plugins)]]
-vim.cmd [[au FileType markdown ++once lua require("packer.load")({'glow.nvim', 'nvim-markdown-preview'}, { ft = "markdown" }, _G.packer_plugins)]]
+vim.cmd [[au FileType typescriptreact ++once lua require("packer.load")({'nvim-ts-context-commentstring', 'vim-jsx-pretty'}, { ft = "typescriptreact" }, _G.packer_plugins)]]
 vim.cmd [[au FileType kitty ++once lua require("packer.load")({'vim-kitty'}, { ft = "kitty" }, _G.packer_plugins)]]
 vim.cmd [[au FileType javascript ++once lua require("packer.load")({'nvim-ts-context-commentstring'}, { ft = "javascript" }, _G.packer_plugins)]]
+vim.cmd [[au FileType javascriptreact ++once lua require("packer.load")({'nvim-ts-context-commentstring', 'vim-jsx-pretty'}, { ft = "javascriptreact" }, _G.packer_plugins)]]
+vim.cmd [[au FileType i3config ++once lua require("packer.load")({'i3config.vim'}, { ft = "i3config" }, _G.packer_plugins)]]
+vim.cmd [[au FileType yaml ++once lua require("packer.load")({'vim-kubernetes'}, { ft = "yaml" }, _G.packer_plugins)]]
+vim.cmd [[au FileType markdown ++once lua require("packer.load")({'nvim-markdown-preview', 'glow.nvim'}, { ft = "markdown" }, _G.packer_plugins)]]
 time([[Defining lazy-load filetype autocommands]], false)
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
-vim.cmd [[au BufReadPre * ++once lua require("packer.load")({'indent-blankline.nvim', 'nvim-ts-autotag', 'todo-comments.nvim', 'nvim-ts-rainbow', 'nvim-colorizer.lua'}, { event = "BufReadPre *" }, _G.packer_plugins)]]
-vim.cmd [[au BufEnter * ++once lua require("packer.load")({'lualine.nvim', 'vim-jsx-pretty', 'nvim-treesitter'}, { event = "BufEnter *" }, _G.packer_plugins)]]
-vim.cmd [[au BufReadPost * ++once lua require("packer.load")({'vim-visual-multi', 'vim-kubernetes', 'nvim-cmp', 'tabular', 'symbols-outline.nvim', 'stabilize.nvim', 'fzf-lua', 'nvim-lspconfig', 'nvim-toggle-terminal', 'nvim-spectre', 'nvim-markdown-preview', 'nvim-hlslens'}, { event = "BufReadPost *" }, _G.packer_plugins)]]
-vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'vim-surround', 'nvim-autopairs', 'nvim-snippy', 'vim-wordmotion'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
-vim.cmd [[au VimEnter * ++once lua require("packer.load")({'vim-matchup', 'tabby.nvim', 'focus.nvim'}, { event = "VimEnter *" }, _G.packer_plugins)]]
+vim.cmd [[au BufReadPost * ++once lua require("packer.load")({'nvim-cmp', 'nvim-toggle-terminal', 'nvim-spectre', 'nvim-markdown-preview', 'nvim-hlslens', 'vim-visual-multi', 'nvim-lspconfig', 'vim-kubernetes', 'fzf-lua', 'tabular', 'symbols-outline.nvim', 'stabilize.nvim'}, { event = "BufReadPost *" }, _G.packer_plugins)]]
+vim.cmd [[au BufReadPre * ++once lua require("packer.load")({'nvim-ts-rainbow', 'nvim-colorizer.lua', 'indent-blankline.nvim', 'todo-comments.nvim', 'diffview.nvim', 'nvim-ts-autotag'}, { event = "BufReadPre *" }, _G.packer_plugins)]]
+vim.cmd [[au VimEnter * ++once lua require("packer.load")({'tabby.nvim', 'vim-matchup'}, { event = "VimEnter *" }, _G.packer_plugins)]]
+vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'nvim-snippy', 'vim-wordmotion', 'nvim-autopairs', 'vim-surround'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
 vim.cmd [[au BufRead * ++once lua require("packer.load")({'glow.nvim'}, { event = "BufRead *" }, _G.packer_plugins)]]
+vim.cmd [[au BufEnter * ++once lua require("packer.load")({'nvim-treesitter', 'vim-jsx-pretty', 'lualine.nvim'}, { event = "BufEnter *" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]
-time([[Sourcing ftdetect script at: /home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/i3config.vim/ftdetect/i3config.vim]], true)
-vim.cmd [[source /home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/i3config.vim/ftdetect/i3config.vim]]
-time([[Sourcing ftdetect script at: /home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/i3config.vim/ftdetect/i3config.vim]], false)
 time([[Sourcing ftdetect script at: /home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/vim-kubernetes/ftdetect/kubeconf.vim]], true)
 vim.cmd [[source /home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/vim-kubernetes/ftdetect/kubeconf.vim]]
 time([[Sourcing ftdetect script at: /home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/vim-kubernetes/ftdetect/kubeconf.vim]], false)
 time([[Sourcing ftdetect script at: /home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim]], true)
 vim.cmd [[source /home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim]]
 time([[Sourcing ftdetect script at: /home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim]], false)
+time([[Sourcing ftdetect script at: /home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/i3config.vim/ftdetect/i3config.vim]], true)
+vim.cmd [[source /home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/i3config.vim/ftdetect/i3config.vim]]
+time([[Sourcing ftdetect script at: /home/nxtcoder17/.local/share/nvim/site/pack/packer/opt/i3config.vim/ftdetect/i3config.vim]], false)
 vim.cmd("augroup END")
 if should_profile then save_profiles(1) end
 

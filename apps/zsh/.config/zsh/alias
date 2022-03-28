@@ -39,3 +39,7 @@ alias gfbs='git flow bugfix start'
 alias gfbf='git flow bugfix finish'
 alias gfbp='git flow bugfix publish'
 alias gf='git flow'
+
+### monitor
+alias tolaptop="xrandr --output eDP-1-1 --auto"
+alias tomonitor="xrandr --output HDMI-1-2 --auto"

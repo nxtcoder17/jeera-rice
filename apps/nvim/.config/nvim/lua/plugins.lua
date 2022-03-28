@@ -107,6 +107,11 @@ local function withCodingSetup()
   use({ "mboughaba/i3config.vim", ft = "i3config" })
   use({ "fladson/vim-kitty", ft = "kitty" })
   use{ "sheerun/vim-polyglot"}
+  use({"nxtcoder17/graphql-cli", run = "pnpm i", config = function()
+    require("graphql-cli").setup({
+        command = "Gql"
+      })
+  end})
 
   -- color schemes
   use({ "folke/tokyonight.nvim", disable = false })
@@ -216,6 +221,8 @@ local function withCodingSetup()
         require("indent_blankline").setup()
       end
     })
+
+  use({"sindrets/diffview.nvim", event = events.BufReadPre})
 end
 
 local function withAsthetics()
@@ -227,38 +234,17 @@ local function withAsthetics()
     end,
   })
 
-  use {
-    "folke/twilight.nvim",
-    config = function()
-      require("twilight").setup {
-        enable = false,
-        opt = true,
-        dimming = {
-          alpha = 0.75, -- amount of dimming
-          color = { "Normal", "#ffffff" },
-          inactive = false, -- when true, other windows will be fully dimmed (unless they contain the same buffer)
-        },
-        context = 10, -- amount of lines we will try to show around the current line
-        treesitter = true, -- use treesitter when available for the filetype
-        expand = { -- for treesitter, we we always try to expand to the top-most ancestor with these types
-        "function",
-        "method",
-        "table",
-        "if_statement",
-      },
-    }
-    end
-  }
-
-  use({
-    "beauwilliams/focus.nvim", 
-    event=events.VimEnter, 
-    config = function() 
-      require("focus").setup({
-        cursorline = false
-      })
-    end
-  })
+  -- use({
+  --   "beauwilliams/focus.nvim", 
+  --   event = events.VimEnter, 
+  --   config = function() 
+  --     require("focus").setup({
+  --       enable = false,
+  --       autoresize = false,
+  --       cursorline = false
+  --     })
+  --   end
+  -- })
 
   use({
     "folke/todo-comments.nvim",
@@ -270,6 +256,10 @@ local function withAsthetics()
 
   --  align vertically based on search
   use({ "godlygeek/tabular", event = events.BufReadPost })
+
+  use({"j-hui/fidget.nvim", config = function() 
+    require("fidget").setup()
+  end})
 
   -- tabs with names
   use({
@@ -322,7 +312,6 @@ local function withAsthetics()
     "ibhagwan/fzf-lua",
     event = "BufReadPost",
     requires = {
-      "vijaymarupudi/nvim-fzf",
       "kyazdani42/nvim-web-devicons",
       { "junegunn/fzf", run = "./install --bin" },
     },
@@ -560,7 +549,6 @@ local function packages()
 			"ibhagwan/fzf-lua",
 			event = "BufReadPost",
 			requires = {
-				"vijaymarupudi/nvim-fzf",
 				"kyazdani42/nvim-web-devicons",
 				{ "junegunn/fzf", run = "./install --bin" },
 			},

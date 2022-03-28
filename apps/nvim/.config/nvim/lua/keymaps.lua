@@ -156,9 +156,7 @@ vim.cmd("command! -nargs=1 Cd execute 'windo tcd <f-args> <CR>'")
 
 -- gql
 
-vim.cmd [[
-  command! -nargs=0 Gql  execute 'vne | setlocal buftype=nofile | setlocal bufhidden=hide | setlocal noswapfile | set ft=json | r! node --es-module-specifier-resolution=node /home/nxtcoder17/workspace/nxtcoder17/graph-cli/src/index.js' . ' '. expand('%:p') . ' gqlenv.json'. ' '. line('.')
-]]
+-- vim.cmd [[ command! -nargs=0 Gql  execute 'vne | setlocal buftype=nofile | setlocal bufhidden=hide | setlocal noswapfile | set ft=json | r! node --es-module-specifier-resolution=node /home/nxtcoder17/workspace/nxtcoder17/graph-cli/src/index.js' . ' '. expand('%:p') . ' gqlenv.json'. ' '. line('.') ]]
 
 -- function _G.NxtFormatMap()
 --   if vim.bo.filetype == "sh" then

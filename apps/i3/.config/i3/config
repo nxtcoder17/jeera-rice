@@ -20,14 +20,15 @@ for_window [class="^.*"] border pixel 3
 # Smart Borders mean no border if only one window is open
 smart_borders on
 
-# client.focused #86bd8e #86bd8e #000088 #86bd8e
-client.focused           #9aa5ce #364A82 #c0caf5 #9aa5ce   #9aa5ce
-client.focused_inactive  #16161d #16161d #c0caf5 #16161d   #16161d
-client.unfocused         #16161d #16161d #c0caf5 #16161d   #16161d
-# gaps outer so that Single Window consumes full space
+# group										 border			 background		text			indicator		childborder
+# client.focused					 #86bd8e		 #86bd8e		  #000088		#86bd8e
+client.focused						 #6687cc		 #364A82			#c0caf5		#9aa5ce			#6687cc
+client.focused_inactive		 #16161d		 #16161d			#c0caf5		#16161d			#16161d
+client.unfocused					 #16161d		 #16161d			#c0caf5		#16161d			#16161d
 
-gaps inner 7
-gaps outer -7
+# gaps outer so that Single Window consumes full space
+gaps inner 15
+gaps outer -15
 
 # font pango: mononoki Nerd Font Regular 10
 font pango: OperatorMono Nerd Font Regular 10
@@ -47,8 +48,6 @@ set $return Return
 
 # commons vars
 set $noid --no-startup-id
-
-# Workspaces
 
 # Jumping among workspaces
 bindsym $mod+1 workspace 1

@@ -84,7 +84,7 @@ lsp_config.sumneko_lua.setup(config({
         globals = { "vim", "use" },
       },
       workspace = {
-        checkThirdParty = false,
+        checkThirdParty = true,
         -- Make the server aware of Neovim runtime files
         library = vim.api.nvim_get_runtime_file("", true),
         maxPreload = 2000,
