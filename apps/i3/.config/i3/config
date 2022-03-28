@@ -21,9 +21,9 @@ for_window [class="^.*"] border pixel 3
 smart_borders on
 
 # group										 border			 background		text			indicator		childborder
-client.focused						 #6687cc		 #364A82			#c0caf5		#9aa5ce			#6687cc
-client.focused_inactive		 #16161d		 #16161d			#c0caf5		#16161d			#16161d
-client.unfocused					 #16161d		 #16161d			#c0caf5		#16161d			#16161d
+# client.focused						 #6687cc		 #364A82			#c0caf5		#9aa5ce			#6687cc
+# client.focused_inactive		 #16161d		 #16161d			#c0caf5		#16161d			#16161d
+# client.unfocused					 #16161d		 #16161d			#c0caf5		#16161d			#16161d
 
 # gaps outer so that Single Window consumes full space
 gaps inner 15
@@ -41,7 +41,7 @@ set $alt Mod1
 set $shift Shift
 set $tab Tab
 set $ctrl Control
-set $period Period
+set $period period
 set $bs BackSpace
 set $return Return
 
@@ -283,15 +283,16 @@ for_window [title="NxtTerm"] border pixel 3
 set $startNxtTerm '$noid konsole --hide-menubar -p tabtitle=NxtTerm'
 set $toggleNxtTerm '[title="NxtTerm"] scratchpad show; move position center'
 
-set $startHelperTerm '$noid kitty --title nxthelper'
-set $toggleHelperTerm '[title="nxthelper"] scratchpad show; move position center'
+set $startHelperTerm $noid kitty --title nxthelper
+set $toggleHelperTerm [title="nxthelper"] scratchpad show; move position center
 
 # bindsym $ctrl+$period [title="nxthelper"] scratchpad show; move position center
-bindsym Control+Period [title="nxthelper"] scratchpad show; move position center
+bindsym $ctrl+$period $toggleHelperTerm
 
 for_window [title="nxthelper"] floating enable
 for_window [title="nxthelper"] resize set 1800 1200
-for_window [title="nxthelper"] move scratchpad, fullscreen enable
+# for_window [title="nxthelper"] move scratchpad, fullscreen enable
+for_window [title="nxthelper"] move scratchpad
 for_window [title="nxthelper"] border pixel 3
 
-exec $startNxtTerm
+exec "$startNxtTerm"
