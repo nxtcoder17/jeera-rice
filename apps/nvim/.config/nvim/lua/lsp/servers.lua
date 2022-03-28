@@ -21,31 +21,31 @@ local lsp_servers = {
   },
   tailwindcss = {
     base_dir .. "/tailwindcss_npm/node_modules/.bin/tailwindcss-language-server",
-    '--stdio',
+    "--stdio",
   },
   json = {
     base_dir .. "/jsonls/node_modules/.bin/vscode-json-language-server",
-    '--stdio',
+    "--stdio",
   },
   docker = {
     base_dir .. "/dockerfile/node_modules/.bin/docker-langserver",
-    '--stdio'
+    "--stdio",
   },
   bashls = {
     base_dir .. "/bash/node_modules/.bin/bash-language-server",
-    "start"
+    "start",
   },
   python = {
     base_dir .. "/python/node_modules/.bin/pyright-langserver",
-    "--stdio"
+    "--stdio",
   },
   eslint = {
     base_dir .. "/vscode-eslint/node_modules/.bin/vscode-eslint-language-server",
-    "--stdio"
+    "--stdio",
   },
   quicklint = {
     base_dir .. "/quick_lint_js/bin/quick-lint-js",
-    "--lsp"
+    "--lsp",
   },
   -- php = {
   --   base_dir .. "/quick_lint_js/bin/quick-lint-js",
@@ -68,7 +68,7 @@ lsp_config.tsserver.setup(config({
       client.config.flags.allow_incremental_sync = true
     end
     client.resolved_capabilities.document_formatting = false
-  end
+  end,
 }))
 
 -- sumneko_lua
@@ -122,10 +122,10 @@ lsp_config.cssls.setup({
 -- Tailwind CSS
 lsp_config.tailwindcss.setup({
   cmd = lsp_servers.tailwindcss,
-  filetypes = {"javascriptreact", "typescriptreact", "html", "css"},
-  root_dir = lsp_config.util.root_pattern('tailwind.config.js'),
-  log_level = vim.lsp.protocol.MessageType.Warning;
-  settings = {};
+  filetypes = { "javascriptreact", "typescriptreact", "html", "css" },
+  root_dir = lsp_config.util.root_pattern("tailwind.config.js"),
+  log_level = vim.lsp.protocol.MessageType.Warning,
+  settings = {},
 })
 
 -- json
@@ -147,7 +147,7 @@ lsp_config.jsonls.setup({
           url = "https://json.schemastore.org/tsconfig.json",
         },
         {
-          fileMatch = {".eslintrc.json", ".eslintrc"},
+          fileMatch = { ".eslintrc.json", ".eslintrc" },
           url = "https://json.schemastore.org/eslintrc.json",
         },
       },
@@ -158,16 +158,16 @@ lsp_config.jsonls.setup({
 -- Bash
 lsp_config.bashls.setup({
   cmd = lsp_servers.bashls,
-  filetypes = {"sh"},
+  filetypes = { "sh" },
 })
 
 -- Dockerfile
 lsp_config.dockerls.setup({
   cmd = lsp_servers.docker,
-  filetypes = {"Dockerfile", "dockerfile"};
-  root_dir = lsp_config.util.root_pattern("Dockerfile");
-  log_level = vim.lsp.protocol.MessageType.Warning;
-  settings = {};
+  filetypes = { "Dockerfile", "dockerfile" },
+  root_dir = lsp_config.util.root_pattern("Dockerfile"),
+  log_level = vim.lsp.protocol.MessageType.Warning,
+  settings = {},
 })
 
 -- EFM
@@ -175,7 +175,7 @@ lsp_config.dockerls.setup({
 local eslint = {
   lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT}",
   lintStdin = true,
-  lintFormats = {"%f:%l:%c: %m"},
+  lintFormats = { "%f:%l:%c: %m" },
   lintIgnoreExitCode = true,
   formatCommand = "eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}",
   formatStdin = true,
@@ -183,25 +183,25 @@ local eslint = {
 
 local shell = {
   lintCommand = "shellcheck -f gcc -x",
-  lintSource = 'shellcheck',
+  lintSource = "shellcheck",
   lintFormats = {
     "%f:%l:%c: %m",
     "%f:%l:%c: %m (warning)",
     "%f:%l:%c: %m (error)",
   },
   formatCommand = "shfmt -c -i 2 -s -bn",
-  formatStdin = true
+  formatStdin = true,
 }
 
 local golangcilint = {
   lintCommand = "golangci-lint run",
   lintSource = "golanci-lint",
-  init_options = {documentFormatting = false}, 
+  init_options = { documentFormatting = false },
 }
 
-lsp_config.efm.setup {
+lsp_config.efm.setup({
   cmd = {
-    vim.fn.stdpath('data') .. '/lsp_servers/efm/efm-langserver',
+    vim.fn.stdpath("data") .. "/lsp_servers/efm/efm-langserver",
   },
   on_attach = function(client)
     client.resolved_capabilities.document_formatting = true
@@ -209,15 +209,15 @@ lsp_config.efm.setup {
   root_dir = lsp_config.util.root_pattern(".eslintrc.yml"),
   settings = {
     languages = {
-      javascript = {eslint},
-      javascriptreact = {eslint},
-      ["javascript.jsx"] = {eslint},
-      typescript = {eslint},
-      ["typescript.tsx"] = {eslint},
-      typescriptreact = {eslint},
-      sh = {shell},
-      go= {golangcilint},
-    }
+      javascript = { eslint },
+      javascriptreact = { eslint },
+      ["javascript.jsx"] = { eslint },
+      typescript = { eslint },
+      ["typescript.tsx"] = { eslint },
+      typescriptreact = { eslint },
+      sh = { shell },
+      go = { golangcilint },
+    },
   },
   filetypes = {
     "javascript",
@@ -225,9 +225,9 @@ lsp_config.efm.setup {
     "javascript.jsx",
     "typescript",
     "typescript.tsx",
-    "typescriptreact"
+    "typescriptreact",
   },
-}
+})
 
 -- python lsp
 require("lspconfig").pyright.setup({
@@ -237,14 +237,14 @@ require("lspconfig").pyright.setup({
 lsp_config.gopls.setup({
   cmd = lsp_servers.go,
   filetypes = { "go", "gomod", "gotmpl" },
-  root_dir = lsp_config.util.root_pattern("go.mod")
-});
+  root_dir = lsp_config.util.root_pattern("go.mod"),
+})
 
-require'lspconfig'.intelephense.setup{
+require("lspconfig").intelephense.setup({
   cmd = { "intelephense", "--stdio" },
   filetypes = { "php" },
-  root_dir = lsp_config.util.root_pattern("composer.json", ".git")
-}
+  root_dir = lsp_config.util.root_pattern("composer.json", ".git"),
+})
 
 -- lsp_config.quick_lint_js.setup({
 --   cmd = lsp_servers.quicklint,

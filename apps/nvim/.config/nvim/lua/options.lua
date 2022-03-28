@@ -59,9 +59,7 @@ opt.termguicolors = true
 opt.wildmenu = true
 opt.wildmode = "full"
 
-opt.wildignore:append(
-  "node_modules",".git",".next","build","dist"
-)
+opt.wildignore:append("node_modules", ".git", ".next", "build", "dist")
 
 -- Completion PopUp Transparency
 opt.wildoptions = "pum"
@@ -78,7 +76,7 @@ opt.completeopt = "menu,menuone,noinsert,noselect"
 -- Tab and Spaces
 opt.tabstop = 2
 opt.softtabstop = 2
-opt.shiftwidth = 2   -- spaces per tab when using >> or <<
+opt.shiftwidth = 2 -- spaces per tab when using >> or <<
 opt.expandtab = true -- expand tabs into spaces
 opt.autoindent = true
 opt.smarttab = true
@@ -97,9 +95,9 @@ opt.swapfile = false
 opt.inccommand = "split" -- shows live incremental status of substitution in split buffer
 
 -- gui
-opt.guifont="Operator Mono Lig Medium:h13.5"
+opt.guifont = "Operator Mono Lig Medium:h13.5"
 opt.linespace = 4
-opt.guifontwide="FiraCode Nerd Font Medium:h13"
+opt.guifontwide = "FiraCode Nerd Font Medium:h13"
 
 opt.mouse = "a"
 
@@ -116,7 +114,7 @@ vim.g.matchup_surround_enabled = 1
 opt.foldmethod = "manual"
 opt.foldmarker = "👉,👈"
 
-function _G.custom_fold_text()-- 👉
+function _G.custom_fold_text() -- 👉
   local line = vim.fn.getline(vim.v.foldstart)
   local nextLine = vim.fn.getline(vim.v.foldstart + 1)
   local line_count = vim.v.foldend - vim.v.foldstart + 1
@@ -124,20 +122,14 @@ function _G.custom_fold_text()-- 👉
   local start_char = " ✂️ "
   local fill_char = " • "
 
-
   local showLine = line
   if #line < 25 then
     showLine = showLine .. nextLine:sub(1, math.min(20, #nextLine))
   end
 
-  local ds = start_char
-    .. string.format("[%3s lines] | ", line_count)
-    .. showLine
-    .. " "
+  local ds = start_char .. string.format("[%3s lines] | ", line_count) .. showLine .. " "
 
   return ds .. fill_char:rep(math.max(vim.fn.winwidth(0) - #ds - (#fill_char - 1) - 3, 0))
-
-end-- 👈
+end -- 👈
 
 opt.foldtext = "v:lua.custom_fold_text()"
-

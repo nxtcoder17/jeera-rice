@@ -1,19 +1,21 @@
 local maps = require("lib.mapping")
 
+local M = {}
+
 -- resets
 maps["nnoremap"]("S", "")
 maps["nnoremap"]("S", "")
 maps["nnoremap"]("s", "")
 maps["vnoremap"]("s", "")
 
-maps['nnoremap']('H', '')
-maps['nnoremap']('M', '')
-maps['nnoremap']('L', '')
+maps["nnoremap"]("H", "")
+maps["nnoremap"]("M", "")
+maps["nnoremap"]("L", "")
 
 maps["nnoremap"]("Q", "")
 maps["vnoremap"]("Q", "")
 
-maps['nnoremap']("'", "")
+maps["nnoremap"]("'", "")
 
 -- ; to :
 maps["nnoremap"](";", ":")
@@ -72,7 +74,7 @@ maps["nnoremap"]("qo", ":copen<CR>")
 maps["nnoremap"]("qc", ":cclose<CR>")
 
 -- maps['nnoremap']('tt', ':ToggleTerm<CR>')
-maps['nnoremap']('tt', ':ToggleTerm<CR>')
+maps["nnoremap"]("tt", ":ToggleTerm<CR>")
 
 -- making splits
 maps["nnoremap"]("si", ":vsplit<CR>")
@@ -102,7 +104,7 @@ local function lspNative()
   maps["vnoremap"]("<M-CR>", ":Telescope lsp_code_actions<CR>")
 
   -- formatting
-  maps["nnoremap"]("f;", ":lua vim.lsp.buf.formatting()<CR>")
+  -- maps["nnoremap"]("f;", ":lua vim.lsp.buf.formatting()<CR>")
 
   -- commands
   maps["nnoremap"]("gd", ":Telescope lsp_definitions<CR>")
@@ -116,14 +118,46 @@ end
 
 lspNative()
 
+function _G.CodeFormatting()
+  -- formatting
+  if vim.bo.filetype == "lua" then
+    maps["nnoremap"]("f;", "<cmd>!stylua --indent-width 2 --indent-type Spaces %<CR> <bar> <cmd>e!<CR>")
+    return
+  end
+
+  if vim.bo.filetype == "javascript" or vim.bo.filetype == "typescript" or vim.bo.filetype == "javascriptreact" then
+    maps["nnoremap"]("f;", ":lua vim.lsp.buf.formatting()<CR>")
+    return
+  end
+
+  if vim.bo.filetype == "sh" then
+    -- maps["nnoremap"]("f;", ":!shfmt -i 2 -w -ci '%' <CR>|:e!<CR>")
+    maps["nnoremap"]("f;", "<cmd>!shfmt -i 2 -w -ci '%' <CR> <bar> <cmd>e!<CR>")
+    return
+  end
+
+  if vim.bo.filetype == "go" then
+    maps["nnoremap"]("f;", ":!gofmt -w '%'<CR>|:e!<CR>")
+    return
+  end
+
+  if vim.bo.filetype == "make" then
+    maps["nnoremap"]("f;", nil)
+    return
+  end
+end
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "*",
+  callback = _G.CodeFormatting,
+})
+
 local function withFuzzyFinders()
-  -- maps['nnoremap']('<leader>f', '<cmd>:FzfLua blines<CR>')
-  maps['nnoremap']('<leader>f', '<cmd>:Telescope current_buffer_fuzzy_find<CR>')
+  maps["nnoremap"]("<leader>f", "<cmd>:Telescope current_buffer_fuzzy_find<CR>")
+  maps["nnoremap"]("sb", "<cmd>Telescope buffers<CR>")
 end
 
 withFuzzyFinders()
-
-maps["nnoremap"]("sb", ":Telescope buffers<CR>")
 
 -- rnvimr (file explorer)
 maps["nnoremap"]("<M-o>", ":RnvimrToggle<CR>")
@@ -133,7 +167,7 @@ maps["cnoremap"]("wqa", "wa! | qa")
 
 -- for tabs
 maps["nnoremap"]("tn", "<cmd>tabnew<CR>")
-maps["nnoremap"]("te", "<cmd>tabedit % |:windo tcd " .. vim.g.root_dir .. '<CR>')
+maps["nnoremap"]("te", "<cmd>tabedit % |:windo tcd " .. vim.g.root_dir .. "<CR>")
 maps["nnoremap"]("tl", ":lua require('plugins_dir.telescope').tabs()<CR>")
 
 -- [Source]: https://gist.github.com/benfrain/97f2b91087121b2d4ba0dcc4202d252f
