@@ -21,7 +21,6 @@ for_window [class="^.*"] border pixel 3
 smart_borders on
 
 # group										 border			 background		text			indicator		childborder
-# client.focused					 #86bd8e		 #86bd8e		  #000088		#86bd8e
 client.focused						 #6687cc		 #364A82			#c0caf5		#9aa5ce			#6687cc
 client.focused_inactive		 #16161d		 #16161d			#c0caf5		#16161d			#16161d
 client.unfocused					 #16161d		 #16161d			#c0caf5		#16161d			#16161d
@@ -287,7 +286,8 @@ set $toggleNxtTerm '[title="NxtTerm"] scratchpad show; move position center'
 set $startHelperTerm '$noid kitty --title nxthelper'
 set $toggleHelperTerm '[title="nxthelper"] scratchpad show; move position center'
 
-bindsym $ctrl+$period [title="nxthelper"] scratchpad show; move position center
+# bindsym $ctrl+$period [title="nxthelper"] scratchpad show; move position center
+bindsym Control+Period [title="nxthelper"] scratchpad show; move position center
 
 for_window [title="nxthelper"] floating enable
 for_window [title="nxthelper"] resize set 1800 1200

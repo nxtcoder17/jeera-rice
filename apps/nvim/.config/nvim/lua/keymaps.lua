@@ -2,21 +2,27 @@ local maps = require("lib.mapping")
 
 local M = {}
 
+local function reset()
+  maps["nnoremap"]("S", "")
+  maps["nnoremap"]("S", "")
+  maps["nnoremap"]("s", "")
+  maps["vnoremap"]("s", "")
+
+  maps["nnoremap"]("H", "")
+  maps["nnoremap"]("M", "")
+  maps["nnoremap"]("L", "")
+
+  maps["nnoremap"]("Q", "")
+  maps["vnoremap"]("Q", "")
+
+  maps["nnoremap"]("'", "")
+
+  maps["nnoremap"]("<C-.>", "")
+end
+
+reset()
+
 -- resets
-maps["nnoremap"]("S", "")
-maps["nnoremap"]("S", "")
-maps["nnoremap"]("s", "")
-maps["vnoremap"]("s", "")
-
-maps["nnoremap"]("H", "")
-maps["nnoremap"]("M", "")
-maps["nnoremap"]("L", "")
-
-maps["nnoremap"]("Q", "")
-maps["vnoremap"]("Q", "")
-
-maps["nnoremap"]("'", "")
-
 -- ; to :
 maps["nnoremap"](";", ":")
 maps["vnoremap"](";", ":")
