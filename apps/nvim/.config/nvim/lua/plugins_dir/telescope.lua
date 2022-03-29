@@ -6,7 +6,7 @@ local finders = require("telescope.finders")
 local sorters = require("telescope.sorters")
 local themes = require("telescope.themes")
 local conf = require("telescope.config").values
-local action_state = require('telescope.actions.state')
+local action_state = require("telescope.actions.state")
 
 -- Custom Find Command
 local findCmd
@@ -45,8 +45,8 @@ telescope.setup({
   defaults = {
     previewer = previewMaker,
     cache_picker = {
-      num_pickers = -1
-    }
+      num_pickers = -1,
+    },
   },
   extensions = {
     fzf = {
@@ -94,10 +94,6 @@ telescope.load_extension("fzf")
 
 local M = {}
 
-M.tabs = function()
-  return telescope.tabs()
-end
-
 M.grep = function()
   telescope_builtin.grep_string({
     prompt_title = " Grep word",
@@ -107,21 +103,21 @@ M.grep = function()
 end
 
 M.nvim_config = function()
-  require("telescope.builtin").find_files({
+  telescope_builtin.find_files({
     prompt_title = "  Nvim Config",
     cwd = "~/me/jeera-rice",
     layout_strategy = "horizontal",
     layout_config = { preview_width = 0.65, width = 0.75 },
-    theme='ivy'
+    theme = "ivy",
   })
 end
 
 M.jeera_rice = function()
-  M.find_files({
+  telescope_builtin.find_files({
     prompt_title = "  Jeera Rice",
     cwd = "~/me/jeera-rice",
-    theme='ivy',
-  });
+    theme = "ivy",
+  })
 end
 
 M.list_sessions = function()
@@ -133,14 +129,18 @@ M.dockerImages = function()
   pickers.new({
     theme = "ivy",
     results_title = "Docker Images",
-    finder = finders.new_oneshot_job({"docker", "images"}),
+    finder = finders.new_oneshot_job({ "sh", "-c",  "docker images | tail +2 "}),
     sorter = sorters.get_fuzzy_file(),
     mappings = {
       n = {
-        ["<C-d>"] = function(args) print(args) end,
+        ["<C-d>"] = function(args)
+          print(args)
+        end,
       },
       i = {
-        ["<C-d>"] = function(args) print(args) end,
+        ["<C-d>"] = function(args)
+          print(args)
+        end,
       },
     },
   }):find()
@@ -160,47 +160,52 @@ end
 local getTabName = nil
 
 local hasTabby = function()
-  return packer_plugins['tabby.nvim'] and packer_plugins['tabby.nvim'].loaded
+  return packer_plugins["tabby.nvim"] and packer_plugins["tabby.nvim"].loaded
 end
 
 M.tabs = function()
   local tabs = vim.api.nvim_list_tabpages()
-  local windows = {};
+  local windows = {}
   for tabidx, tabnr in ipairs(tabs) do
     local windownrs = vim.api.nvim_tabpage_list_wins(tabnr)
     for windownr, windowid in ipairs(windownrs) do
       local bufnr = vim.api.nvim_win_get_buf(windowid)
-      local bufLabel = string.sub(vim.api.nvim_buf_get_name(bufnr), vim.fn.getcwd():len()+2)
+      local bufLabel = string.sub(vim.api.nvim_buf_get_name(bufnr), vim.fn.getcwd():len() + 2)
 
-      if getTabName  == nil then
+      if getTabName == nil then
         if hasTabby() then
           local tn = require("tabby.util").get_tab_name
-          getTabLabel = function(tabnr) 
-            return '[TAB] ( ' .. tn(tabnr) .. ' )'
+          getTabLabel = function(tabnr)
+            return "[TAB] ( " .. tn(tabnr) .. " )"
           end
         end
         getTabName = "from:tabby"
       end
 
-      local bufstr = getTabLabel(tabnr) .. ' ' .. bufLabel
+      local bufstr = getTabLabel(tabnr) .. " " .. bufLabel
 
-      table.insert(windows, { 
-        ordinal = bufstr , display = bufstr, value = windowid 
+      table.insert(windows, {
+        ordinal = bufstr,
+        display = bufstr,
+        value = windowid,
       })
     end
   end
-  pickers.new({
-    theme = "ivy",
+
+  pickers.new(themes.get_ivy(), {
     results_title = "Tabs",
+    prompt_title = "hi",
     finder = finders.new_table({
       results = windows,
-      entry_maker = function (x) return x end,
+      entry_maker = function(x)
+        return x
+      end,
     }),
     sorter = conf.generic_sorter({}),
     attach_mappings = function(item, map)
       -- use our custom action to go the window id
-      map( 'i', '<CR>', goto_window)
-      map( 'n', '<CR>', goto_window)
+      map("i", "<CR>", goto_window)
+      map("n", "<CR>", goto_window)
       return true
     end,
   }):find()

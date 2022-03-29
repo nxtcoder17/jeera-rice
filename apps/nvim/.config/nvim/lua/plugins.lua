@@ -1,5 +1,6 @@
 local fn = vim.fn
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+
 if fn.empty(fn.glob(install_path)) > 0 then
   local packer_bootstrap = fn.system({
     "git",
@@ -37,13 +38,6 @@ local function withLsp()
     end,
     requires = {
       { "williamboman/nvim-lsp-installer", after = first },
-      {
-        "stevearc/aerial.nvim",
-        after = first,
-        config = function()
-          require("aerial").setup({})
-        end,
-      },
       { "folke/lsp-colors.nvim", after = first },
       -- { "tami5/lspsaga.nvim", after = "nvim-lspconfig", config = function()
       -- 		require("lspsaga").setup()
@@ -103,6 +97,7 @@ local function withTelescope()
       { "nvim-lua/popup.nvim" },
       { "nvim-lua/plenary.nvim" },
       { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+      { "nvim-telescope/telescope-symbols.nvim" },
     },
   })
 end
@@ -285,10 +280,10 @@ local function withAsthetics()
   -- tabs with names
   use({
     "nanozuki/tabby.nvim",
-    commit = "2ac781cae7aedade8def03d48a3a0616dce279ae",
+    -- commit = "2ac781cae7aedade8def03d48a3a0616dce279ae",
     event = events.VimEnter,
     config = function()
-      require("tabby").setup()
+      require("tabby").setup({})
     end,
   })
 
@@ -316,7 +311,7 @@ local function withAsthetics()
   })
 
   -- back to where you left
-  use("farmergreg/vim-lastplace")
+  use({ "farmergreg/vim-lastplace", event = events.VimEnter })
 
   -- status line
   use({
@@ -720,10 +715,6 @@ local function packages()
 
     -- async
     use("tpope/vim-dispatch")
-
-    if packer_bootstrap then
-      require("packer").sync()
-    end
   end)
 end
 
