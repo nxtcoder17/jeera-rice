@@ -6,7 +6,7 @@ require("impatient")
 require("options")
 require("plugins")
 require("keymaps")
--- require("plugins_dir")
+require("plugins_dir")
 require("autocmds")
 
 local dirExtension = vim.fn.getcwd() .. "/.nxtcoder17.lua"

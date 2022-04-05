@@ -102,6 +102,9 @@ local function lspNative()
   --show line diagnositcs
   maps["nnoremap"]("se", ":lua vim.diagnostic.open_float()<CR>")
 
+  -- lsp formatting
+  maps['nnoremap']('f;', '<cmd>lua vim.lsp.buf.formatting()<CR>')
+
   maps["nnoremap"]("K", "<Cmd>lua vim.lsp.buf.hover()<CR>")
   maps["inoremap"]("<C-k>", "<Cmd>lua vim.lsp.buf.signature_help()<CR>")
 
@@ -124,39 +127,40 @@ end
 
 lspNative()
 
-function _G.CodeFormatting()
-  -- formatting
-  if vim.bo.filetype == "lua" then
-    maps["nnoremap"]("f;", "<cmd>!stylua --indent-width 2 --indent-type Spaces %<CR> <bar> <cmd>e!<CR>")
-    return
-  end
+-- function _G.CodeFormatting()
+--   maps["nmap"]("f;", "")
+--   -- formatting
+--   if vim.bo.filetype == "lua" then
+--     maps["nmap"]("f;", "<cmd>!stylua --indent-width 2 --indent-type Spaces %<CR> <bar> <cmd>e!<CR>")
+--     return
+--   end
 
-  if vim.bo.filetype == "javascript" or vim.bo.filetype == "typescript" or vim.bo.filetype == "javascriptreact" then
-    maps["nnoremap"]("f;", ":lua vim.lsp.buf.formatting()<CR>")
-    return
-  end
+--   if vim.bo.filetype == "javascript" or vim.bo.filetype == "typescript" or vim.bo.filetype == "javascriptreact" then
+--     maps["nmap"]("f;", ":lua vim.lsp.buf.formatting()<CR>")
+--     return
+--   end
 
-  if vim.bo.filetype == "sh" then
-    -- maps["nnoremap"]("f;", ":!shfmt -i 2 -w -ci '%' <CR>|:e!<CR>")
-    maps["nnoremap"]("f;", "<cmd>!shfmt -i 2 -w -ci '%' <CR> <bar> <cmd>e!<CR>")
-    return
-  end
+--   if vim.bo.filetype == "sh" then
+--     -- maps["nmap"]("f;", ":!shfmt -i 2 -w -ci '%' <CR>|:e!<CR>")
+--     maps["nmap"]("f;", "<cmd>!shfmt -i 2 -w -ci '%' <CR> <bar> <cmd>e!<CR>")
+--     return
+--   end
 
-  if vim.bo.filetype == "go" then
-    maps["nnoremap"]("f;", ":!gofmt -w '%'<CR>|:e!<CR>")
-    return
-  end
+--   if vim.bo.filetype == "go" then
+--     maps["nmap"]("f;", ":!gofmt -w '%'<CR>|:e!<CR>")
+--     return
+--   end
 
-  if vim.bo.filetype == "make" then
-    maps["nnoremap"]("f;", nil)
-    return
-  end
-end
+--   if vim.bo.filetype == "make" then
+--     maps["nmap"]("f;", "")
+--     return
+--   end
+-- end
 
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "*",
-  callback = _G.CodeFormatting,
-})
+-- vim.api.nvim_create_autocmd("BufReadPre", {
+--   pattern = "*",
+--   callback = _G.CodeFormatting,
+-- })
 
 local function withFuzzyFinders()
   maps["nnoremap"]("<leader>f", "<cmd>:Telescope current_buffer_fuzzy_find<CR>")

@@ -1,32 +1,23 @@
-local nls = require('null-ls')
-
-local fmt = nls.builtins.formatting
-local dgn = nls.builtins.diagnostics
+local nls = require("null-ls")
 
 -- Configuring null-ls
 nls.setup({
-    sources = {
-        fmt.trim_whitespace.with({
-            filetypes = { 'text', 'sh', 'zsh', 'toml', 'make', 'conf', 'tmux' },
-        }),
+  sources = {
+    -- eslint
+    nls.builtins.diagnostics.eslint_d,
+    nls.builtins.code_actions.eslint_d,
+    nls.builtins.formatting.eslint_d,
 
-        -- NOTE:
-        -- 1. both needs to be enabled to so prettier can apply eslint fixes
-        -- 2. prettierd should come first to prevent occassional race condition
-        fmt.prettierd,
-        fmt.eslint_d,
+    nls.builtins.formatting.stylua,
 
-        fmt.rustfmt,
-        fmt.stylua,
-        fmt.terraform_fmt,
-        fmt.gofmt,
-        -- fmt.zigfmt,
-        -- fmt.shfmt,
-        -- # DIAGNOSTICS #
-        dgn.eslint_d,
-        dgn.shellcheck,
-        dgn.luacheck.with({
-            extra_args = { '--globals', 'vim', '--std', 'luajit' },
-        }),
-    },
+    -- nls.builtins.completion.spell,
+    nls.builtins.code_actions.refactoring,
+    -- nls.builtins.diagnostics.golangci_lint,
+
+    nls.builtins.formatting.terraform_fmt,
+  },
 })
+
+--[[
+golangci-lint: (AUR) `yay golangci-lint`
+--]]

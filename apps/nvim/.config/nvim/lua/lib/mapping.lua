@@ -1,21 +1,14 @@
 local M = {}
 
 local modes = {
-  "n",
-  "v",
-  "c",
-  "i",
-  "x",
-  "t",
-  "s",
-  "r",
+  "n", "v", "c", "i", "x", "t", "s", "r",
 }
 
 -- iterate over lua table modes
 
 for _, m in ipairs(modes) do
   M[string.format("%smap", m)] = function(key, value, opts)
-    vim.api.nvim_set_keymap(m, key, value, opts)
+    vim.api.nvim_set_keymap(m, key, value, opts or {})
   end
 
   local globalOpts = { noremap = true, silent = true }
