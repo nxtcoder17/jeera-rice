@@ -1,5 +1,5 @@
 vim.g.root_dir = vim.fn.getcwd()
-vim.cmd('set runtimepath+=' .. vim.g.root_dir .. '/.editor')
+vim.cmd('set runtimepath+=' .. vim.g.root_dir .. '/.tools')
 
 require('disable-builtins')
 require("impatient")

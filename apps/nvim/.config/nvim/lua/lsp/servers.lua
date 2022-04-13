@@ -53,19 +53,31 @@ local lsp_servers = {
 	},
 }
 
+-- local capabilities = vim.lsp.protocol.make_client_capabilities()
+-- capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+
+local extendCapabilites = function()
+	local capabilities = vim.lsp.protocol.make_client_capabilities()
+	capabilities.textDocument.completion.completionItem.snippetSupport = true
+	return capabilities
+end
+
 local function disableFormatting(client)
 	client.resolved_capabilities.document_formatting = false
 end
 
 local function config(_config)
+	local capabilities = vim.lsp.protocol.make_client_capabilities()
+	capabilities.textDocument.completion.completionItem.snippetSupport = true
 	return vim.tbl_deep_extend("force", {
-		-- capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+		capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities),
 	}, _config or {})
 end
 
 -- tsserver
 lsp_config.tsserver.setup(config({
 	cmd = lsp_servers.tsserver,
+	capabilities = extendCapabilites(),
 	root_dir = lsp_config.util.root_pattern("jsconfig.json", "tsconfig.json", ".git"),
 	on_attach = function(client)
 		if client.config.flags then
@@ -174,73 +186,36 @@ lsp_config.dockerls.setup({
 	settings = {},
 })
 
--- EFM
-
--- local eslint = {
---   lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT}",
---   lintStdin = true,
---   lintFormats = { "%f:%l:%c: %m" },
---   lintIgnoreExitCode = true,
---   formatCommand = "eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}",
---   formatStdin = true,
--- }
-
--- local shell = {
---   lintCommand = "shellcheck -f gcc -x",
---   lintSource = "shellcheck",
---   lintFormats = {
---     "%f:%l:%c: %m",
---     "%f:%l:%c: %m (warning)",
---     "%f:%l:%c: %m (error)",
---   },
---   formatCommand = "shfmt -c -i 2 -s -bn",
---   formatStdin = true,
--- }
-
--- local golangcilint = {
---   lintCommand = "golangci-lint run",
---   lintSource = "golanci-lint",
---   init_options = { documentFormatting = false },
--- }
-
--- lsp_config.efm.setup({
---   cmd = {
---     vim.fn.stdpath("data") .. "/lsp_servers/efm/efm-langserver",
---   },
---   on_attach = function(client)
---     client.resolved_capabilities.document_formatting = true
---   end,
---   root_dir = lsp_config.util.root_pattern(".eslintrc.yml"),
---   settings = {
---     languages = {
---       javascript = { eslint },
---       javascriptreact = { eslint },
---       ["javascript.jsx"] = { eslint },
---       typescript = { eslint },
---       ["typescript.tsx"] = { eslint },
---       typescriptreact = { eslint },
---       sh = { shell },
---       go = { golangcilint },
---     },
---   },
---   filetypes = {
---     "javascript",
---     "javascriptreact",
---     "javascript.jsx",
---     "typescript",
---     "typescript.tsx",
---     "typescriptreact",
---   },
--- })
-
 -- python lsp
 lsp_config.pyright.setup({
 	cmd = lsp_servers.python,
 })
 
+local extendCapabilites = function()
+	local capabilities = vim.lsp.protocol.make_client_capabilities()
+	capabilities.textDocument.completion.completionItem.snippetSupport = true
+	return capabilities
+end
+
 lsp_config.gopls.setup({
 	cmd = lsp_servers.go,
+	capabilities = extendCapabilites(),
 	filetypes = { "go", "gomod", "gotmpl" },
+	settings = {
+		gopls = {
+			experimentalPostfixCompletions = true,
+			analyses = {
+				unusedparams = true,
+				shadow = true,
+			},
+			staticcheck = true,
+		},
+	},
+	init_options = {
+		directoryFilters = { "-.task", "-node_modules" },
+		memoryMode = "DegradeClosed",
+		-- usePlaceholders = true,
+	},
 	root_dir = lsp_config.util.root_pattern("go.mod"),
 })
 
@@ -258,13 +233,3 @@ lsp_config.terraformls.setup(config({
 	end,
 	-- root_dir = lsp_config.util.root_pattern(".git", ".terraform"),
 }))
-
--- lsp_config.quick_lint_js.setup({
---   cmd = lsp_servers.quicklint,
--- })
-
--- require("lspconfig").eslint.setup({
---   cmd = lsp_servers.eslint,
---   root_dir = lsp_config.util.root_pattern(".eslintrc.yml"),
---   log_level = vim.lsp.protocol.MessageType.Warning;
--- })

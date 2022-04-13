@@ -1,4 +1,5 @@
-.zcompdump
+.zcompdump*
 .pyc$
 __pycache__
 .idea
+

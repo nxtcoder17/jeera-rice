@@ -70,6 +70,7 @@ local function withTS()
 				event = events.BufReadPre,
 			},
 			{ "andymass/vim-matchup", after = first },
+			{ "nvim-treesitter/playground", after = first },
 		},
 	})
 end
@@ -102,7 +103,13 @@ local function withCodingSetup()
 	-- syntax highlighting
 	use({ "mboughaba/i3config.vim", ft = "i3config" })
 	use({ "fladson/vim-kitty", ft = "kitty" })
-	use({ "sheerun/vim-polyglot" })
+	use({
+		"sheerun/vim-polyglot",
+		config = function()
+			-- vim.g.polyglot_disabled = { "go" }
+		end,
+	})
+
 	use({
 		"nxtcoder17/graphql-cli",
 		run = "pnpm i",
@@ -117,6 +124,8 @@ local function withCodingSetup()
 	})
 
 	-- language specific
+	-- INFO: for go1.18 with generic types, comment ERROR in treesitter query cause it messed up the colorscheme
+	-- INFO: should not cause any issue, as lsp would throw error anyway when there is an error
 	use({
 		"ray-x/go.nvim",
 		event = events.BufReadPost,
@@ -161,6 +170,17 @@ local function withCodingSetup()
 	use({ "kevinhwang91/rnvimr", commit = "e93671b4ea8" }) -- something broke in latest, i could not do splits
 
 	use({ "github/copilot.vim", event = events.OnInsert, opt = true }) -- copilot is bottleneck, for poor startup, and lags telescope
+
+	-- use({
+	-- 	"zbirenbaum/copilot.lua",
+	-- 	event = { "VimEnter" },
+	-- 	config = function()
+	-- 		vim.defer_fn(function()
+	-- 			require("copilot").setup()
+	-- 		end, 100)
+	-- 	end,
+	-- })
+
 	use({ "tpope/vim-commentary" })
 
 	use({
@@ -218,12 +238,17 @@ local function withCodingSetup()
 			{ "Saecki/crates.nvim" },
 			{ "dcampos/cmp-snippy" },
 			{ "f3fora/cmp-spell" },
+			{ "hrsh7th/cmp-nvim-lsp-signature-help" },
 			{
 				"hrsh7th/cmp-copilot",
 				config = function()
 					require("plugins_dir.copilot")
 				end,
 			},
+			-- {
+			-- 	"zbirenbaum/copilot-cmp",
+			-- 	after = { "copilot.lua", "nvim-cmp" },
+			-- },
 		},
 		-- event = "InsertEnter",
 		event = events.BufReadPost,
@@ -234,6 +259,15 @@ local function withCodingSetup()
 
 	-- kubernetes
 	use({ "andrewstuart/vim-kubernetes", ft = "yaml", event = events.BufReadPost })
+
+	-- auto session with tabby names
+	-- use({
+	-- 	"jedrzejboczar/possession.nvim",
+	-- 	config = function()
+	-- 		vim.o.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
+	-- 		require("possession").setup({})
+	-- 	end,
+	-- })
 
 	-- auto session
 	use({
@@ -264,7 +298,12 @@ local function withCodingSetup()
 		"lukas-reineke/indent-blankline.nvim",
 		event = "BufReadPre",
 		config = function()
-			require("indent_blankline").setup()
+			require("indent_blankline").setup({
+				char = "┊",
+				filetype_exclude = { "help", "packer" },
+				buftype_exclude = { "terminal", "nofile" },
+				show_trailing_blankline_indent = true,
+			})
 		end,
 	})
 
@@ -280,17 +319,16 @@ local function withAsthetics()
 		end,
 	})
 
-	-- use({
-	--   "beauwilliams/focus.nvim",
-	--   event = events.VimEnter,
-	--   config = function()
-	--     require("focus").setup({
-	--       enable = false,
-	--       autoresize = false,
-	--       cursorline = false
-	--     })
-	--   end
-	-- })
+	use({
+		"stevearc/dressing.nvim",
+		config = function()
+			require("dressing").setup({
+				input = {
+					enabled = true,
+				},
+			})
+		end,
+	})
 
 	use({
 		"folke/todo-comments.nvim",
@@ -313,7 +351,6 @@ local function withAsthetics()
 	-- tabs with names
 	use({
 		"nanozuki/tabby.nvim",
-		-- commit = "2ac781cae7aedade8def03d48a3a0616dce279ae",
 		event = events.VimEnter,
 		config = function()
 			require("tabby").setup({})

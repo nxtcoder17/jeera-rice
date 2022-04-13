@@ -64,6 +64,7 @@ opt.wildignore:append("node_modules", ".git", ".next", "build", "dist")
 -- Completion PopUp Transparency
 opt.wildoptions = "pum"
 opt.pumblend = 9
+opt.pumheight = 20
 
 -- Copy Previous Indentation
 opt.smartindent = true
@@ -115,21 +116,21 @@ opt.foldmethod = "manual"
 opt.foldmarker = "👉,👈"
 
 function _G.custom_fold_text() -- 👉
-  local line = vim.fn.getline(vim.v.foldstart)
-  local nextLine = vim.fn.getline(vim.v.foldstart + 1)
-  local line_count = vim.v.foldend - vim.v.foldstart + 1
+	local line = vim.fn.getline(vim.v.foldstart)
+	local nextLine = vim.fn.getline(vim.v.foldstart + 1)
+	local line_count = vim.v.foldend - vim.v.foldstart + 1
 
-  local start_char = " ✂️ "
-  local fill_char = " • "
+	local start_char = " ✂️ "
+	local fill_char = " • "
 
-  local showLine = line
-  if #line < 25 then
-    showLine = showLine .. nextLine:sub(1, math.min(20, #nextLine))
-  end
+	local showLine = line
+	if #line < 25 then
+		showLine = showLine .. nextLine:sub(1, math.min(20, #nextLine))
+	end
 
-  local ds = start_char .. string.format("[%3s lines] | ", line_count) .. showLine .. " "
+	local ds = start_char .. string.format("[%3s lines] | ", line_count) .. showLine .. " "
 
-  return ds .. fill_char:rep(math.max(vim.fn.winwidth(0) - #ds - (#fill_char - 1) - 3, 0))
+	return ds .. fill_char:rep(math.max(vim.fn.winwidth(0) - #ds - (#fill_char - 1) - 3, 0))
 end -- 👈
 
 opt.foldtext = "v:lua.custom_fold_text()"

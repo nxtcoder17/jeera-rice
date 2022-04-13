@@ -20,22 +20,22 @@ dc() {
   shift 1;
   case $command  in 
     "up")
-      command docker compose up -d --remove-orphans $@
+      command docker compose up -d -t 0 --remove-orphans $@
       ;;
     "p"|"ps")
       command docker compose ps
       ;;
     "re"|"restart")
       svc=$(cat docker-compose.yml | yq '.services | keys| .[]' | tr -d '"' | fzf --prompt="restart service 👉 ")
-      command docker compose restart $svc
+      command docker compose restart -t 0 $svc
       ;;
     "start")
       svc=$(cat docker-compose.yml | yq '.services | keys| .[]' | tr -d '"' | fzf --prompt="service 👉 ")
-      docker compose start $svc
+      docker compose start -t 0 $svc
       ;;
     "stop")
       svc=$(cat docker-compose.yml | yq '.services | keys| .[]' | tr -d '"' | fzf --prompt="service 👉 ")
-      docker compose stop $svc
+      docker compose stop -t 0 $svc
       ;;
     "l"|"logs")
       opt=$1
@@ -51,7 +51,7 @@ dc() {
       command docker compose exec $svc $shell
       ;;
     "d"|"down")
-      docker-compose down
+      docker-compose down -t 0
       ;;
   esac
 }
