@@ -88,28 +88,24 @@ lsp_config.tsserver.setup(config({
 }))
 
 -- sumneko_lua
-lsp_config.sumneko_lua.setup(config({
-	cmd = lsp_servers.lua,
-	settings = {
-		Lua = {
-			runtime = {
-				version = "LuaJIT",
+local luadev = require("lua-dev").setup({
+	lspconfig = {
+		cmd = lsp_servers.lua,
+		settings = {
+			Lua = {
+				runtime = {
+					version = "LuaJIT",
+				},
+				completion = { callSnippet = "Both" },
+				diagnostics = {
+					globals = { "vim", "use" },
+				},
 			},
-			completion = { callSnippet = "Both" },
-			diagnostics = {
-				globals = { "vim", "use" },
-			},
-			workspace = {
-				checkThirdParty = true,
-				-- Make the server aware of Neovim runtime files
-				library = vim.api.nvim_get_runtime_file("", true),
-				maxPreload = 2000,
-				preloadFileSize = 50000,
-			},
-			telemetry = { enable = true },
 		},
 	},
-}))
+})
+
+lsp_config.sumneko_lua.setup(luadev)
 
 -- -- yamlls
 -- lsp_config.yamlls.setup(config({

@@ -3,21 +3,21 @@ local maps = require("lib.mapping")
 local M = {}
 
 local function reset()
-  maps["nnoremap"]("S", "")
-  maps["nnoremap"]("S", "")
-  maps["nnoremap"]("s", "")
-  maps["vnoremap"]("s", "")
+	maps["nnoremap"]("S", "")
+	maps["nnoremap"]("S", "")
+	maps["nnoremap"]("s", "")
+	maps["vnoremap"]("s", "")
 
-  maps["nnoremap"]("H", "")
-  maps["nnoremap"]("M", "")
-  maps["nnoremap"]("L", "")
+	maps["nnoremap"]("H", "")
+	maps["nnoremap"]("M", "")
+	maps["nnoremap"]("L", "")
 
-  maps["nnoremap"]("Q", "")
-  maps["vnoremap"]("Q", "")
+	maps["nnoremap"]("Q", "")
+	maps["vnoremap"]("Q", "")
 
-  maps["nnoremap"]("'", "")
+	maps["nnoremap"]("'", "")
 
-  maps["nnoremap"]("<C-.>", "")
+	maps["nnoremap"]("<C-.>", "")
 end
 
 reset()
@@ -34,13 +34,17 @@ maps["nnoremap"]("j", "gj")
 maps["nnoremap"]("k", "gk")
 
 -- copy to system clipboard
-maps["nnoremap"]("cc", '"+y')
+maps["nnoremap"]("cc", '"+Y')
 maps["vnoremap"]("cc", '"+y')
 
 maps["vnoremap"]("scc", ":OSCYank<CR>")
 
 -- cancel highlighting
-maps["nnoremap"]("<BS>", ":set nohls <CR>|:HlSearchLensToggle <CR>|:HlSearchLensToggle <CR>")
+-- maps["nnoremap"]("<BS>", ":set nohls <CR>|:HlSearchLensToggle <CR>|:HlSearchLensToggle <CR>")
+maps["nnoremap"](
+	"<BS>",
+	":set nohls <CR>|:HlSearchLensToggle <CR>|:HlSearchLensToggle <CR> |:lua require('functions').closeFloating()<CR>"
+)
 
 -- Resizing Splits
 maps["nnoremap"]("<C-M-Right>", ":vert resize +10<CR>")
@@ -66,7 +70,7 @@ maps["nnoremap"]("sk", "<C-w>k<CR>")
 -- buffer management
 maps["nnoremap"]("sdb", ":BDelete this<CR>")
 maps["nnoremap"]("sdo", ":BDelete other<CR>")
-maps["nnoremap"]("sda", ":tabc<CR>")
+maps["nnoremap"]("sda", ":BDelete all<CR>")
 maps["nnoremap"]("sdn", ":BDelete nameless<CR>")
 
 -- Debugging
@@ -91,38 +95,38 @@ maps["nnoremap"]("sf", ":Telescope find_files<CR>")
 maps["nnoremap"]("ff", ":lua require'plugins_dir.telescope'.grep()<CR>")
 
 local function lspNative()
-  -- rename variable
-  maps["nnoremap"]("sr", ":lua vim.lsp.buf.rename()<CR>")
-  -- maps["nnoremap"]("sr", "<cmd>Lspsaga rename<cr>")
+	-- rename variable
+	maps["nnoremap"]("sr", ":lua vim.lsp.buf.rename()<CR>")
+	-- maps["nnoremap"]("sr", "<cmd>Lspsaga rename<cr>")
 
-  -- jump to next / prev error
-  maps["nnoremap"]("sn", ":lua vim.diagnostic.goto_next({ severity = 'error' })<CR>")
-  maps["nnoremap"]("sp", ":lua vim.diagnostic.goto_prev({ severity = 'error'})<CR>")
+	-- jump to next / prev error
+	maps["nnoremap"]("sn", ":lua vim.diagnostic.goto_next({ severity = 'error' })<CR>")
+	maps["nnoremap"]("sp", ":lua vim.diagnostic.goto_prev({ severity = 'error'})<CR>")
 
-  --show line diagnositcs
-  maps["nnoremap"]("se", ":lua vim.diagnostic.open_float()<CR>")
+	--show line diagnositcs
+	maps["nnoremap"]("se", ":lua vim.diagnostic.open_float()<CR>")
 
-  -- lsp formatting
-  maps['nnoremap']('f;', '<cmd>lua vim.lsp.buf.formatting()<CR>')
+	-- lsp formatting
+	maps["nnoremap"]("f;", "<cmd>lua vim.lsp.buf.formatting()<CR>")
 
-  maps["nnoremap"]("K", "<Cmd>lua vim.lsp.buf.hover()<CR>")
-  maps["inoremap"]("<C-k>", "<Cmd>lua vim.lsp.buf.signature_help()<CR>")
+	maps["nnoremap"]("K", "<Cmd>lua vim.lsp.buf.hover()<CR>")
+	maps["inoremap"]("<C-k>", "<Cmd>lua vim.lsp.buf.signature_help()<CR>")
 
-  -- code actions
-  maps["nnoremap"]("<M-CR>", ":Telescope lsp_code_actions<CR>")
-  maps["vnoremap"]("<M-CR>", ":Telescope lsp_code_actions<CR>")
+	-- code actions
+	maps["nnoremap"]("<M-CR>", ":Telescope lsp_code_actions<CR>")
+	maps["vnoremap"]("<M-CR>", ":Telescope lsp_code_actions<CR>")
 
-  -- formatting
-  -- maps["nnoremap"]("f;", ":lua vim.lsp.buf.formatting()<CR>")
+	-- formatting
+	-- maps["nnoremap"]("f;", ":lua vim.lsp.buf.formatting()<CR>")
 
-  -- commands
-  maps["nnoremap"]("gd", ":Telescope lsp_definitions<CR>")
-  maps["nnoremap"]("gr", ":Telescope lsp_references<CR>")
-  maps["nnoremap"]("gi", ":Telescope lsp_implementations<CR>")
-  maps["nnoremap"]("gdd", ":Telescope lsp_document_diagnostics<CR>")
-  maps["nnoremap"]("gds", ":Telescope lsp_document_symbols<CR>")
-  maps["nnoremap"]("gwd", ":Telescope lsp_workspace_diagnostics<CR>")
-  maps["nnoremap"]("gws", ":Telescope lsp_workspace_symbols<CR>")
+	-- commands
+	maps["nnoremap"]("gd", ":Telescope lsp_definitions<CR>")
+	maps["nnoremap"]("gr", ":Telescope lsp_references<CR>")
+	maps["nnoremap"]("gi", ":Telescope lsp_implementations<CR>")
+	maps["nnoremap"]("gdd", ":Telescope lsp_document_diagnostics<CR>")
+	maps["nnoremap"]("gds", ":Telescope lsp_document_symbols<CR>")
+	maps["nnoremap"]("gwd", ":Telescope lsp_workspace_diagnostics<CR>")
+	maps["nnoremap"]("gws", ":Telescope lsp_workspace_symbols<CR>")
 end
 
 lspNative()
@@ -163,8 +167,8 @@ lspNative()
 -- })
 
 local function withFuzzyFinders()
-  maps["nnoremap"]("<leader>f", "<cmd>:Telescope current_buffer_fuzzy_find<CR>")
-  maps["nnoremap"]("sb", "<cmd>Telescope buffers<CR>")
+	maps["nnoremap"]("<leader>f", "<cmd>:Telescope current_buffer_fuzzy_find<CR>")
+	maps["nnoremap"]("sb", "<cmd>Telescope buffers<CR>")
 end
 
 withFuzzyFinders()
@@ -176,7 +180,8 @@ maps["tnoremap"]("<M-o>", "<C-\\><C-n>:RnvimrToggle<CR>")
 maps["cnoremap"]("wqa", "wa! | qa")
 
 -- for tabs
-maps["nnoremap"]("tn", "<cmd>tabnew<CR>")
+-- maps["nnoremap"]("tn", "<cmd>tabnew<CR>")
+maps["nnoremap"]("tn", "<cmd>tabnew<CR>|:windo tcd " .. vim.g.root_dir .. "<CR>")
 maps["nnoremap"]("te", "<cmd>tabedit % |:windo tcd " .. vim.g.root_dir .. "<CR>")
 maps["nnoremap"]("tl", ":lua require('plugins_dir.telescope').tabs()<CR>")
 
@@ -197,6 +202,10 @@ maps["nnoremap"]("<M-j>", ":TmuxNavigateDown<cr>")
 
 vim.cmd("command! -nargs=0 Root execute 'windo tcd g:root_dir'")
 vim.cmd("command! -nargs=1 Cd execute 'windo tcd <f-args> <CR>'")
+
+--
+
+vim.cmd("cnoreabbrev tcd windo tcd")
 
 -- gql
 

@@ -22,3 +22,4 @@ vim.api.nvim_create_autocmd("BufEnter", {
 		vim.opt.laststatus = 3
 	end,
 })
+

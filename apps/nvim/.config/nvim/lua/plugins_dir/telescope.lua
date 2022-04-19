@@ -150,7 +150,9 @@ local goto_window = function(prompt_bufnr)
 end
 
 local getTabLabel = function(tabnr)
-	return "[TAB] " .. tabnr
+	-- return "[TAB] " .. tabnr
+	-- return tabnr .. " [TAB] "
+	return ""
 end
 
 local getTabName = nil
@@ -171,14 +173,14 @@ M.tabs = function()
 			if getTabName == nil then
 				if hasTabby() then
 					local tn = require("tabby.util").get_tab_name
-					getTabLabel = function(tabnr)
-						return "[TAB] ( " .. tn(tabnr) .. " )"
+					getTabLabel = function(tabnr, idx)
+						return idx .. " [TAB] ( " .. tn(tabnr) .. " )"
 					end
 				end
 				getTabName = "from:tabby"
 			end
 
-			local bufstr = getTabLabel(tabnr) .. " " .. bufLabel
+			local bufstr = getTabLabel(tabnr, tabidx) .. " " .. bufLabel
 
 			table.insert(windows, {
 				ordinal = bufstr,
@@ -197,7 +199,7 @@ M.tabs = function()
 				return x
 			end,
 		}),
-		sorter = conf.generic_sorter({}),
+		sorter = sorters.get_fzy_sorter({}),
 		attach_mappings = function(item, map)
 			-- use our custom action to go the window id
 			map("i", "<CR>", goto_window)

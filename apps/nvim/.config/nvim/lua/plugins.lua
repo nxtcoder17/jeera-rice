@@ -208,7 +208,16 @@ local function withCodingSetup()
 	use({ "chaoren/vim-wordmotion", event = events.InsertEnter })
 	use({ "mg979/vim-visual-multi", event = events.BufReadPost })
 
-	use({ "simrat39/symbols-outline.nvim", event = events.BufReadPost, after = "nvim-lspconfig" })
+	use({
+		"simrat39/symbols-outline.nvim",
+		event = events.BufReadPost,
+		after = "nvim-lspconfig",
+		config = function()
+			vim.g.symbols_outline = {
+				auto_preview = false,
+			}
+		end,
+	})
 
 	use({
 		"windwp/nvim-autopairs",
@@ -252,8 +261,9 @@ local function withCodingSetup()
 		},
 		-- event = "InsertEnter",
 		event = events.BufReadPost,
+		-- commit = "f573479528cac39ff5917a4679529e4435b71ffe", -- cause the next version breaking it all
 		config = function()
-			require("plugins_dir.nvim-cmp")
+			require("plugins_dir.nvim-cmp-new")
 		end,
 	})
 
@@ -308,6 +318,11 @@ local function withCodingSetup()
 	})
 
 	use({ "sindrets/diffview.nvim", event = events.BufReadPre })
+
+	use_rocks({ "lrexlib-pcre" })
+	use_rocks({ "dkjson" })
+
+	use({ "folke/lua-dev.nvim" })
 end
 
 local function withAsthetics()
@@ -353,7 +368,9 @@ local function withAsthetics()
 		"nanozuki/tabby.nvim",
 		event = events.VimEnter,
 		config = function()
-			require("tabby").setup({})
+			require("tabby").setup({
+					require("functions.dev").restore_tabs()
+			})
 		end,
 	})
 
@@ -416,6 +433,7 @@ local function minimalPackages()
 	require("packer").startup({
 		function()
 			_G.use = use
+			_G.use_rocks = use_rocks
 
 			use("wbthomason/packer.nvim")
 			use({ "dstein64/vim-startuptime", cmd = "StartupTime" })
