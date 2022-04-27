@@ -18,14 +18,17 @@ local function reset()
 	maps["nnoremap"]("'", "")
 
 	maps["nnoremap"]("<C-.>", "")
+	maps["nnoremap"]("<C-[>", "")
+	maps["nnoremap"]("<C-]>", "")
+
+	maps["nnoremap"](";", ":")
+	maps["vnoremap"](";", ":")
 end
 
 reset()
 
 -- resets
 -- ; to :
-maps["nnoremap"](";", ":")
-maps["vnoremap"](";", ":")
 
 vim.g.mapleader = "'"
 
@@ -97,11 +100,10 @@ maps["nnoremap"]("ff", ":lua require'plugins_dir.telescope'.grep()<CR>")
 local function lspNative()
 	-- rename variable
 	maps["nnoremap"]("sr", ":lua vim.lsp.buf.rename()<CR>")
-	-- maps["nnoremap"]("sr", "<cmd>Lspsaga rename<cr>")
 
-	-- jump to next / prev error
-	maps["nnoremap"]("sn", ":lua vim.diagnostic.goto_next({ severity = 'error' })<CR>")
-	maps["nnoremap"]("sp", ":lua vim.diagnostic.goto_prev({ severity = 'error'})<CR>")
+	-- jump to next / prev warning/error
+	maps["nnoremap"]("sn", ":lua vim.diagnostic.goto_next({ severity = {min='WARN', max='ERROR'}})<CR>")
+	maps["nnoremap"]("sp", ":lua vim.diagnostic.goto_prev({ severity = {min='WARN', max='ERROR'}})<CR>")
 
 	--show line diagnositcs
 	maps["nnoremap"]("se", ":lua vim.diagnostic.open_float()<CR>")
@@ -183,7 +185,7 @@ maps["cnoremap"]("wqa", "wa! | qa")
 -- maps["nnoremap"]("tn", "<cmd>tabnew<CR>")
 maps["nnoremap"]("tn", "<cmd>tabnew<CR>|:windo tcd " .. vim.g.root_dir .. "<CR>")
 maps["nnoremap"]("te", "<cmd>tabedit % |:windo tcd " .. vim.g.root_dir .. "<CR>")
-maps["nnoremap"]("tl", ":lua require('plugins_dir.telescope').tabs()<CR>")
+maps["nnoremap"]("tl", "<cmd>lua require('plugins_dir.telescope').tabs()<CR>")
 
 -- [Source]: https://gist.github.com/benfrain/97f2b91087121b2d4ba0dcc4202d252f
 -- Keep search results centred
@@ -193,37 +195,14 @@ maps["nnoremap"]("J", "mzJ`z")
 
 -- from:plugin / navigator.nvim
 vim.g.tmux_navigator_no_mappings = 1
-maps["nnoremap"]("<M-h>", ":TmuxNavigateLeft<cr>")
-maps["nnoremap"]("<M-l>", ":TmuxNavigateRight<cr>")
-maps["nnoremap"]("<M-k>", ":TmuxNavigateUp<cr>")
-maps["nnoremap"]("<M-j>", ":TmuxNavigateDown<cr>")
+maps["nnoremap"]("<M-h>", "<cmd>lua require'nvim-tmux-navigation'.NvimTmuxNavigateLeft()<CR>")
+maps["nnoremap"]("<M-l>", "<cmd>lua require'nvim-tmux-navigation'.NvimTmuxNavigateRight()<CR>")
+maps["nnoremap"]("<M-j>", "<cmd>lua require'nvim-tmux-navigation'.NvimTmuxNavigateDown()<CR>")
+maps["nnoremap"]("<M-k>", "<cmd>lua require'nvim-tmux-navigation'.NvimTmuxNavigateUp()<CR>")
 
 -- lsp
-
 vim.cmd("command! -nargs=0 Root execute 'windo tcd g:root_dir'")
 vim.cmd("command! -nargs=1 Cd execute 'windo tcd <f-args> <CR>'")
 
 --
-
 vim.cmd("cnoreabbrev tcd windo tcd")
-
--- gql
-
--- vim.cmd [[ command! -nargs=0 Gql  execute 'vne | setlocal buftype=nofile | setlocal bufhidden=hide | setlocal noswapfile | set ft=json | r! node --es-module-specifier-resolution=node /home/nxtcoder17/workspace/nxtcoder17/graph-cli/src/index.js' . ' '. expand('%:p') . ' gqlenv.json'. ' '. line('.') ]]
-
--- function _G.NxtFormatMap()
---   if vim.bo.filetype == "sh" then
---     maps["nnoremap"]("f;", ":!shfmt -i 2 -w -ci '%' <CR>|:e!<CR>")
---   elseif vim.bo.filetype == "javascript" then
---     -- maps["nnoremap"]("f;", ":!eslint_d --fix '%' <CR>|:e!<CR>")
---     maps["nnoremap"]("f;", ":EslintFixAll<CR>")
---   elseif vim.bo.filetype == "go" then
---     maps["nnoremap"]("f;", ":!gofmt -w '%'<CR>|:e!<CR>")
---   elseif vim.bo.filetype == "make" then
---     maps["nnoremap"]("f;", nil)
---   end
--- end
-
--- vim.cmd([[
---  autocmd! FileType sh,javascript,javascriptreact,go :lua NxtFormatMap()
--- ]])

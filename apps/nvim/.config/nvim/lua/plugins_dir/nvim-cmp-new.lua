@@ -48,7 +48,7 @@ cmp.setup({
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp_signature_help" },
 		{ name = "nvim_lsp", max_item_count = 15, group_index = 1 },
-		{ name = "snippy", max_item_count = 10, group_index = 1 },
+		{ name = "snippy" },
 		-- { name = "copilot", group_index = 2 },
 		{ name = "treesitter", group_index = 2 },
 		{ name = "path", max_item_count = 10, group_index = 2 },

@@ -23,3 +23,16 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	end,
 })
 
+-- vim.api.nvim_create_autocmd("BufWritePost", {
+-- 	pattern = "*",
+-- 	callback = function()
+-- 		vim.cmd(":PossessionSave! " .. vim.g.root_dir .. "<CR>")
+-- 	end,
+-- })
+
+-- vim.api.nvim_create_autocmd("VimEnter", {
+-- 	pattern = "*",
+-- 	callback = function()
+-- 		vim.cmd(":PossessionLoad " .. vim.g.root_dir .. "<CR>")
+-- 	end,
+-- })

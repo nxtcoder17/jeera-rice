@@ -28,7 +28,7 @@ local no_really = {
 		end,
 	},
 }
-null_ls.register(no_really)
+-- null_ls.register(no_really)
 
 local frozen_string_actions = {
 	method = null_ls.methods.CODE_ACTION,
@@ -53,7 +53,7 @@ local frozen_string_actions = {
 	},
 }
 
-null_ls.register(frozen_string_actions)
+-- null_ls.register(frozen_string_actions)
 
 local go_implement_interface = {
 	method = null_ls.methods.CODE_ACTION,
@@ -77,7 +77,20 @@ local go_implement_interface = {
 	},
 }
 
-null_ls.register(go_implement_interface)
+-- null_ls.register(go_implement_interface)
+
+local go_actions = {
+	method = null_ls.methods.CODE_ACTION,
+	filetypes = { "go" },
+	generator = {
+		fn = function(ctx)
+			vim.cmd("GoAddTag")
+			return {
+				{ title = "AddTag" },
+			}
+		end,
+	},
+}
 
 -- Configuring null-ls
 null_ls.setup({
@@ -90,7 +103,7 @@ null_ls.setup({
 		null_ls.builtins.formatting.stylua,
 
 		-- null_ls.builtins.completion.spell,
-		null_ls.builtins.code_actions.refactoring,
+		-- null_ls.builtins.code_actions.refactoring,
 		-- null_ls.builtins.diagnostics.golangci_lint,
 
 		null_ls.builtins.formatting.terraform_fmt,

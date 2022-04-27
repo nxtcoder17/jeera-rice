@@ -46,7 +46,7 @@ local function goto_definition(split_cmd)
 			util.jump_to_location(result[1])
 
 			if #result > 1 then
-				util.set_qflist(util.locations_to_items(result))
+				vim.lsp.util.locations_to_items(result)
 				api.nvim_command("copen")
 				api.nvim_command("wincmd p")
 			end
@@ -58,6 +58,5 @@ local function goto_definition(split_cmd)
 	return handler
 end
 
-vim.lsp.handlers["textDocument/definition"] = goto_definition("split")
-
 require("lsp.servers")
+vim.lsp.handlers["textDocument/definition"] = goto_definition("split")

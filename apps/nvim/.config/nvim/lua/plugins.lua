@@ -198,6 +198,7 @@ local function withCodingSetup()
 		event = events.InsertEnter,
 		config = function()
 			require("snippy").setup({})
+			require("plugins_dir.nvim-snippy")
 		end,
 	})
 
@@ -208,16 +209,16 @@ local function withCodingSetup()
 	use({ "chaoren/vim-wordmotion", event = events.InsertEnter })
 	use({ "mg979/vim-visual-multi", event = events.BufReadPost })
 
-	use({
-		"simrat39/symbols-outline.nvim",
-		event = events.BufReadPost,
-		after = "nvim-lspconfig",
-		config = function()
-			vim.g.symbols_outline = {
-				auto_preview = false,
-			}
-		end,
-	})
+	-- use({
+	-- 	"simrat39/symbols-outline.nvim",
+	-- 	event = events.BufReadPost,
+	-- 	after = "nvim-lspconfig",
+	-- 	config = function()
+	-- 		vim.g.symbols_outline = {
+	-- 			auto_preview = false,
+	-- 		}
+	-- 	end,
+	-- })
 
 	use({
 		"windwp/nvim-autopairs",
@@ -270,15 +271,16 @@ local function withCodingSetup()
 	-- kubernetes
 	use({ "andrewstuart/vim-kubernetes", ft = "yaml", event = events.BufReadPost })
 
-	-- auto session with tabby names
+	-- auto session reloading
 	-- use({
 	-- 	"jedrzejboczar/possession.nvim",
+	-- 	requires = { "nvim-lua/plenary.nvim" },
 	-- 	config = function()
-	-- 		vim.o.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
+	-- 		-- vim.o.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
+	-- 		-- vim.o.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,winpos"
 	-- 		require("possession").setup({})
 	-- 	end,
 	-- })
-
 	-- auto session
 	use({
 		"rmagatti/auto-session",
@@ -305,17 +307,44 @@ local function withCodingSetup()
 	})
 
 	use({
-		"lukas-reineke/indent-blankline.nvim",
-		event = "BufReadPre",
+		"echasnovski/mini.nvim",
+		branch = "stable",
+		disable = false,
 		config = function()
-			require("indent_blankline").setup({
-				char = "┊",
-				filetype_exclude = { "help", "packer" },
-				buftype_exclude = { "terminal", "nofile" },
-				show_trailing_blankline_indent = true,
+			require("mini.indentscope").setup({
+				draw = {
+					delay = 2,
+					animation = require("mini.indentscope").gen_animation("none"),
+				},
+			})
+
+			vim.api.nvim_create_autocmd("InsertEnter", {
+				pattern = "*",
+				callback = function()
+					_G.MiniIndentscope.undraw()
+				end,
+			})
+			vim.api.nvim_create_autocmd("InsertLeave", {
+				pattern = "*",
+				callback = function()
+					_G.MiniIndentscope.draw()
+				end,
 			})
 		end,
 	})
+
+	-- use({
+	-- 	"lukas-reineke/indent-blankline.nvim",
+	-- 	event = "BufReadPre",
+	-- 	config = function()
+	-- 		require("indent_blankline").setup({
+	-- 			char = "┊",
+	-- 			filetype_exclude = { "help", "packer" },
+	-- 			buftype_exclude = { "terminal", "nofile" },
+	-- 			show_trailing_blankline_indent = true,
+	-- 		})
+	-- 	end,
+	-- })
 
 	use({ "sindrets/diffview.nvim", event = events.BufReadPre })
 
@@ -368,9 +397,7 @@ local function withAsthetics()
 		"nanozuki/tabby.nvim",
 		event = events.VimEnter,
 		config = function()
-			require("tabby").setup({
-					require("functions.dev").restore_tabs()
-			})
+			require("tabby").setup({})
 		end,
 	})
 
@@ -426,7 +453,8 @@ local function withAsthetics()
 	})
 
 	-- tmux
-	use("christoomey/vim-tmux-navigator")
+	-- use("christoomey/vim-tmux-navigator")
+	use({ "alexghergh/nvim-tmux-navigation" })
 end
 
 local function minimalPackages()
@@ -439,12 +467,12 @@ local function minimalPackages()
 			use({ "dstein64/vim-startuptime", cmd = "StartupTime" })
 			use("lewis6991/impatient.nvim") -- for faster neovim
 
-			-- use({
-			--   "nathom/filetype.nvim",
-			--   config = function()
-			--     vim.g.did_load_filetypes = 1
-			--   end,
-			-- })
+			use({
+				"nathom/filetype.nvim",
+				config = function()
+					vim.g.did_load_filetypes = 1
+				end,
+			})
 
 			withTelescope()
 			withLsp()

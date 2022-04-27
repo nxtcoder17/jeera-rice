@@ -1,6 +1,6 @@
 require("nvim-treesitter.configs").setup({
 	ensure_installed = "all",
-	ignore_install = { "ocamllex", "swift","phpdoc" },
+	ignore_install = { "ocamllex", "swift", "phpdoc" },
 
 	highlight = {
 		enable = true,

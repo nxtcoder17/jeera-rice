@@ -15,6 +15,7 @@ function kanagawa()
 
 	local colors = {
 		nxtSelection1 = "#273e5e",
+		MiniIndentscopeSymbol = "red",
 	}
 
 	local overrides = {

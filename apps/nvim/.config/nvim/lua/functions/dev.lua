@@ -24,10 +24,27 @@ M.restore_tabs = function()
 	print(vim.inspect(tbl), pos, err)
 	for i, tabnr in ipairs(vim.api.nvim_list_tabpages()) do
 		-- tu.set_tab_name(tabnr, string.gsub(vim.cmd("pwd"), path, ""))
-		-- local x = vim.fn.getcwd()
-		-- x = re.gsub(x, ".*/", "")
-		-- vim.cmd(string.format("TabRename %s", re.gsub(vim.fn.getcwd(), ".*/", "")))
 		tu.set_tab_name(tabnr, re.gsub(vim.fn.getcwd(), ".*/", ""))
+	end
+end
+
+local hasTabby = function()
+	return packer_plugins["tabby.nvim"] and packer_plugins["tabby.nvim"].loaded
+end
+
+M.run = function()
+	if hasTabby() then
+		local tabs = vim.api.nvim_list_tabpages()
+		vim.cmd("tabrewind")
+		for tabidx, tabnr in ipairs(tabs) do
+			pwd = vim.fn.getcwd()
+			name = string.gsub(pwd, "(.*(/))", "")
+
+			vim.cmd("TabRename " .. name)
+			vim.cmd("tabnext")
+		end
+
+		vim.cmd("tabrewind")
 	end
 end
 
@@ -43,11 +60,6 @@ M.save_tabs = function()
 	local test = assert(io.open("/tmp/abc.txt", "w"))
 	test:write(s)
 	test:close()
-end
-
-M.x = function()
-	local X = vim.fn.getcwd()
-	re.gsub(X, ".*/", "")
 end
 
 return M
