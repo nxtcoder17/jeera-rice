@@ -103,12 +103,12 @@ local function withCodingSetup()
 	-- syntax highlighting
 	use({ "mboughaba/i3config.vim", ft = "i3config" })
 	use({ "fladson/vim-kitty", ft = "kitty" })
-	use({
-		"sheerun/vim-polyglot",
-		config = function()
-			-- vim.g.polyglot_disabled = { "go" }
-		end,
-	})
+	-- use({
+	-- 	"sheerun/vim-polyglot",
+	-- 	config = function()
+	-- 		-- vim.g.polyglot_disabled = { "go" }
+	-- 	end,
+	-- })
 
 	use({
 		"nxtcoder17/graphql-cli",
@@ -117,7 +117,7 @@ local function withCodingSetup()
 			require("graphql-cli").setup({
 				command = "Gql",
 				envFile = function()
-					return string.format("%s/%s", vim.env.PWD, ".tools/gqlenv.json")
+					return string.format("%s/%s", vim.env.PWD, ".tools/gqlenv.yml")
 				end,
 			})
 		end,
@@ -138,7 +138,8 @@ local function withCodingSetup()
 	-- linters
 	use({
 		"jose-elias-alvarez/null-ls.nvim",
-		-- event = events.BufReadPost,
+		after = "nvim-lspconfig",
+		event = events.BufReadPost,
 		requires = {
 			{ "nvim-lua/plenary.nvim" },
 		},

@@ -1,10 +1,23 @@
+" vim plugins to emulate
 set hlsearch
 set ignorecase
 set smartcase
 set incsearch
-
 set surround
 set multiple-cursors
+Plug 'machakann/vim-highlightedyank'
+let g:highlightedyank_highlight_duration = "200"
+let g:highlightedyank_highlight_color = "rgba(160, 160, 160, 155)"
+
+"-- conflicting keys
+sethandler <C-w> a:ide
+sethandler cc n-v:vim
+sethandler <C-o> n:vim
+sethandler <C-i> n:vim
+sethandler <C-e> a:ide
+"------------------
+" idea specifics
+set ideajoin=true
 
 " keep some lines before and after the cursor visible
 set scrolloff=5 sidescrolloff=10
@@ -12,7 +25,7 @@ set scrolloff=5 sidescrolloff=10
 " integrate with system clipboard
 " set clipboard=unnamedplus,unnamed,ideaput
 
-let mapleader = " "
+let mapleader = "'"
 nnoremap <leader>= :action EditorIncreaseFontSize<CR>
 nnoremap <leader>- :action EditorDecreaseFontSize<CR>
 
@@ -27,6 +40,9 @@ nnoremap s <nop>
 nnoremap cc <nop>
 nnoremap ss :w<CR>
 
+"-- actions
+nnoremap zz :action ToggleDistractionFreeMode<CR>
+
 nnoremap sf :action GotoFile<CR>
 
 nnoremap sj <C-w>j
@@ -37,29 +53,27 @@ nnoremap sh <C-w>h
 nnoremap si :action SplitVertically<CR>
 nnoremap sm :action SplitHorizontally<CR>
 
-nnoremap s<space> :action CommentByLineComment<CR>
-vnoremap s<space> :action CommentByLineComment<CR>
+nnoremap s; :action CommentByLineComment<CR>
+vnoremap s; :action CommentByLineComment<CR>
 
-map sx :action CloseAllEditorsButActive<CR>
+nnoremap sx :action CloseAllEditorsButActive<CR>
 
 nnoremap ; :
 
+" -- the goto's
+nnoremap gi :action GotoImplementation<CR>
 nnoremap gr :action ShowUsages<CR>
 nnoremap gd :action GotoImplementation<CR>
+nnoremap gu :action GotoSuperMethod<CR>
+
+nnoremap rr :action Refactorings.QuickListPopupAction<CR>
 
 nmap <C-p> :action ParameterInfo<CR>
 imap <C-p> <C-o>:action ParameterInfo<CR>
 
 nmap sn :action GotoNextError<CR>
-nmap sN :action GotoPrevError<CR>
 nmap sp :action GotoPrevError<CR>
 nmap se :action ShowErrorDescription<CR>
-
-nmap <leader>rm :action ExtractMethod<CR>
-vmap <leader>rm :action ExtractMethod<CR>
-nmap <leader>rv :action IntroduceVariable<CR>
-vmap <leader>rv :action IntroduceVariable<CR>
-nmap <leader>ro :action OptimizeImports<CR>
 
 nnoremap <C-CR> :action EditorCompleteStatement<CR>
 

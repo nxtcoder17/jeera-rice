@@ -79,18 +79,18 @@ local go_implement_interface = {
 
 -- null_ls.register(go_implement_interface)
 
-local go_actions = {
-	method = null_ls.methods.CODE_ACTION,
-	filetypes = { "go" },
-	generator = {
-		fn = function(ctx)
-			vim.cmd("GoAddTag")
-			return {
-				{ title = "AddTag" },
-			}
-		end,
-	},
-}
+-- local go_actions = {
+-- 	method = null_ls.methods.CODE_ACTION,
+-- 	filetypes = { "go" },
+-- 	generator = {
+-- 		fn = function(ctx)
+-- 			vim.cmd("GoAddTag")
+-- 			return {
+-- 				{ title = "AddTag" },
+-- 			}
+-- 		end,
+-- 	},
+-- }
 
 -- Configuring null-ls
 null_ls.setup({
