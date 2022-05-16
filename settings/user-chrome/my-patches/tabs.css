@@ -1,0 +1,16 @@
+.tabbrowser-tab {
+  /* min-height: 36px !important; */
+  overflow: visible !important;
+  font-size: 1.10rem !important;
+  font-family: var(--font) !important;
+  font-style: var(--font-style) !important;
+
+  border: 0 !important;
+  /* background: var(--tab-bg-color) !important; */
+}
+
+/* currently active tab */
+.tabbrowser-tab[visuallyselected] {
+  font-style: SemiBold;
+  color: var(--tab-active-text-color) !important;
+}

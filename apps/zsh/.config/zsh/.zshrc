@@ -149,6 +149,9 @@ export LESS=-FRX
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
 
+[ -f $PWD/.auto.env ] && source $PWD/.auto.env
+[ $EUID -eq 0 ] && source $ZDOTDIR/.zprofile
+
 # Load syntax highlighting; should be last.
 # source /home/nxtcoder17/.local/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
 

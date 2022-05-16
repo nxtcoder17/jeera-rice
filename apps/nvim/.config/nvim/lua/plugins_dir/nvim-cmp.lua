@@ -30,19 +30,11 @@ local icons = {
 cmp.setup({
 	snippet = {
 		expand = function(args)
-			require("snippy").expand_snippet(args.body)
+			-- require("snippy").expand_snippet(args.body)
+			vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
 		end,
 	},
 
-	-- mapping = {
-	-- 	["<C-d>"] = cmp.mapping.scroll_docs(-4),
-	-- 	["<C-f>"] = cmp.mapping.scroll_docs(4),
-	-- 	["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-	-- 	["<CR>"] = cmp.mapping.confirm({ select = true }),
-	-- 	["<C-e>"] = cmp.mapping.close(),
-	-- 	["<C-p>"] = cmp.mapping.select_prev_item(),
-	-- 	["<C-n>"] = cmp.mapping.select_next_item(),
-	-- },
 	mapping = {
 		["<C-d>"] = cmp.mapping.scroll_docs(-4),
 		["<C-f>"] = cmp.mapping.scroll_docs(4),
@@ -61,26 +53,15 @@ cmp.setup({
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp_signature_help" },
 		{ name = "nvim_lsp", max_item_count = 15 },
-		{ name = "snippy", max_item_count = 10, group_index = 1 },
+		-- { name = "snippy", max_item_count = 10, group_index = 1 },
+		-- { name = "ultisnips", max_item_count = 10, group_index = 1 },
+		{ name = "ultisnips" },
 		-- { name = "copilot", group_index = 2 },
 		{ name = "treesitter", group_index = 2 },
 		{ name = "path", max_item_count = 10, group_index = 2 },
 		{ name = "tmux", max_item_count = 10, group_index = 5 },
 		{ name = "buffer", max_item_count = 5, group_index = 5 },
 	}),
-	-- {
-	-- {
-	-- 	name = "buffer",
-	-- 	max_item_count = 1,
-	-- 	group_index = 5,
-	-- 	options = {
-	-- 		get_bufnrs = function()
-	-- 			return vim.api.nvim_list_bufs()
-	-- 		end,
-	-- 	},
-	-- },
-	-- }
-	-- ),
 
 	formatting = {
 		format = function(entry, vim_item)

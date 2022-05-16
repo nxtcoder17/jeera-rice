@@ -1,4 +1,6 @@
 :root {
-  --opertator-font: OperatorMono Nerd Font;
+  /* --opertator-font: OperatorMono Nerd Font; */
+  --primary-font: Comic Code Ligatures;
+  --primary-font-style: Medium;
   --operator-font-style: Medium;
 }

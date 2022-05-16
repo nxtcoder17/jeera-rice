@@ -15,9 +15,10 @@ sethandler cc n-v:vim
 sethandler <C-o> n:vim
 sethandler <C-i> n:vim
 sethandler <C-e> a:ide
+
+sethandler <Tab> n:vim
+sethandler <S-Tab> n:vim
 "------------------
-" idea specifics
-set ideajoin=true
 
 " keep some lines before and after the cursor visible
 set scrolloff=5 sidescrolloff=10
@@ -31,9 +32,6 @@ nnoremap <leader>- :action EditorDecreaseFontSize<CR>
 
 nnoremap <leader>x :action CloseAllEditorsButActive<CR>
 
-nnoremap <c-o> :action Back<cr>
-nnoremap <c-i> :action Forward<cr>
-
 nmap <BS> :nohlsearch<CR>
 
 nnoremap s <nop>
@@ -41,22 +39,32 @@ nnoremap cc <nop>
 nnoremap ss :w<CR>
 
 "-- actions
+nnoremap <Tab> :action PreviousTab<CR>
+nnoremap <S-Tab> :action NextTab<CR>
 nnoremap zz :action ToggleDistractionFreeMode<CR>
 
 nnoremap sf :action GotoFile<CR>
 
 nnoremap sj <C-w>j
-nnoremap sl <C-w>l
 nnoremap sk <C-w>k
-nnoremap sh <C-w>h
+" nnoremap sl <C-w>l
+" nnoremap sh <C-w>h
+
+nnoremap sl :action NextSplitter<CR>
+nnoremap sh :action PrevSplitter<CR>
 
 nnoremap si :action SplitVertically<CR>
 nnoremap sm :action SplitHorizontally<CR>
+nnoremap s0 :action Unsplit<CR>
 
 nnoremap s; :action CommentByLineComment<CR>
 vnoremap s; :action CommentByLineComment<CR>
 
 nnoremap sx :action CloseAllEditorsButActive<CR>
+
+nnoremap s/ :action FindInPath<CR>
+
+nnoremap te :action EditSourceInNewWindow<CR>
 
 nnoremap ; :
 
@@ -66,7 +74,11 @@ nnoremap gr :action ShowUsages<CR>
 nnoremap gd :action GotoImplementation<CR>
 nnoremap gu :action GotoSuperMethod<CR>
 
+nmap <C-o> <Action>(Back)
+nmap <C-i> <Action>(Forward)
+
 nnoremap rr :action Refactorings.QuickListPopupAction<CR>
+nnoremap K :action ShowErrorDescription<CR>
 
 nmap <C-p> :action ParameterInfo<CR>
 imap <C-p> <C-o>:action ParameterInfo<CR>

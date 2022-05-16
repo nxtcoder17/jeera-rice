@@ -103,12 +103,12 @@ local function withCodingSetup()
 	-- syntax highlighting
 	use({ "mboughaba/i3config.vim", ft = "i3config" })
 	use({ "fladson/vim-kitty", ft = "kitty" })
-	-- use({
-	-- 	"sheerun/vim-polyglot",
-	-- 	config = function()
-	-- 		-- vim.g.polyglot_disabled = { "go" }
-	-- 	end,
-	-- })
+	use({
+		"sheerun/vim-polyglot",
+		config = function()
+			-- vim.g.polyglot_disabled = { "go" }
+		end,
+	})
 
 	use({
 		"nxtcoder17/graphql-cli",
@@ -168,8 +168,8 @@ local function withCodingSetup()
 			require("plugins_dir.colorscheme")
 		end,
 	})
-	use({ "kevinhwang91/rnvimr", commit = "e93671b4ea8" }) -- something broke in latest, i could not do splits
 
+	use({ "kevinhwang91/rnvimr", commit = "e93671b4ea8" }) -- something broke in latest, i could not do splits
 	use({ "github/copilot.vim", event = events.OnInsert, opt = true }) -- copilot is bottleneck, for poor startup, and lags telescope
 
 	-- use({
@@ -195,13 +195,20 @@ local function withCodingSetup()
 	})
 
 	use({
-		"dcampos/nvim-snippy",
-		event = events.InsertEnter,
+		"SirVer/ultisnips",
 		config = function()
-			require("snippy").setup({})
-			require("plugins_dir.nvim-snippy")
+			vim.g.UltiSnipsJumpForwardTrigger = "<C-i>"
 		end,
 	})
+
+	-- use({
+	-- 	"dcampos/nvim-snippy",
+	-- 	event = events.InsertEnter,
+	-- 	config = function()
+	-- 		require("snippy").setup({})
+	-- 		require("plugins_dir.nvim-snippy")
+	-- 	end,
+	-- })
 
 	-- info: language: markdown
 	use({ "davidgranstrom/nvim-markdown-preview", ft = "markdown", event = events.BufReadPost })
@@ -247,7 +254,8 @@ local function withCodingSetup()
 			{ "hrsh7th/cmp-nvim-lua" },
 			{ "ray-x/cmp-treesitter" },
 			{ "Saecki/crates.nvim" },
-			{ "dcampos/cmp-snippy" },
+			{ "quangnguyen30192/cmp-nvim-ultisnips" },
+			-- { "dcampos/cmp-snippy" },
 			{ "f3fora/cmp-spell" },
 			{ "hrsh7th/cmp-nvim-lsp-signature-help" },
 			{
@@ -272,16 +280,6 @@ local function withCodingSetup()
 	-- kubernetes
 	use({ "andrewstuart/vim-kubernetes", ft = "yaml", event = events.BufReadPost })
 
-	-- auto session reloading
-	-- use({
-	-- 	"jedrzejboczar/possession.nvim",
-	-- 	requires = { "nvim-lua/plenary.nvim" },
-	-- 	config = function()
-	-- 		-- vim.o.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
-	-- 		-- vim.o.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,winpos"
-	-- 		require("possession").setup({})
-	-- 	end,
-	-- })
 	-- auto session
 	use({
 		"rmagatti/auto-session",

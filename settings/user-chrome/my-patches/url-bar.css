@@ -1,0 +1,19 @@
+#urlbar-input-container {
+  padding: 0.2rem !important;
+  font-size: 1.25rem !important;
+  font-family: var(--font);
+  font-style: var(--font-style);
+}
+
+#urlbar-input-container *::selection {
+  color: var(--selection-foreground) !important;
+  background-color: var(--selection-background) !important;
+}
+
+.urlbarView-row .urlbarView-title {
+  font-size: 1.2rem !important;
+}
+
+.urlbarView-row:is([selected]) * {
+  background-color: var(--selection-background) !important;
+}

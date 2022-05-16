@@ -17,4 +17,5 @@ keyboard-defaults.sh
 
 redshift -O 3000
 
+export PATH="/home/nxtcoder17/workspace/nxtcoder17/forks/i3/build:$PATH"
 exec i3 &>> "/tmp/i3.log"

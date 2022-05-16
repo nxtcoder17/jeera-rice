@@ -21,9 +21,9 @@ for_window [class="^.*"] border pixel 3
 smart_borders on
 
 # group										 border			 background		text			indicator		childborder
-# client.focused						 #6687cc		 #364A82			#c0caf5		#9aa5ce			#6687cc
-# client.focused_inactive		 #16161d		 #16161d			#c0caf5		#16161d			#16161d
-# client.unfocused					 #16161d		 #16161d			#c0caf5		#16161d			#16161d
+client.focused						 #6687cc		 #364A82			#c0caf5		#9aa5ce			#6687cc
+client.focused_inactive		 #16161d		 #16161d			#c0caf5		#16161d			#16161d
+client.unfocused					 #16161d		 #16161d			#c0caf5		#16161d			#16161d
 
 # gaps outer so that Single Window consumes full space
 gaps inner 15
@@ -47,6 +47,9 @@ set $return Return
 
 # commons vars
 set $noid --no-startup-id
+
+## workspace layouts
+bindsym $mod+t layout tabbed
 
 # Jumping among workspaces
 bindsym $mod+1 workspace 1
@@ -210,7 +213,7 @@ exec $noid source $HOME/.fehbg
 exec $noid nm-applet
 
 # window compositing with blur
-exec $noid picom --experimental-backends
+exec_always $noid picom --experimental-backends
 
 # -> Notification daemon
 exec $noid dunst
@@ -255,6 +258,12 @@ bar {
 		urgent_workspace    $transparent    $bg3				$transparent
 	}
 }
+
+# intellij idea specifics
+# for_window [class="jetbrains-idea" title="win0"] floating enable; resize set 768 768
+# for_window [class="jetbrains-.*" title="win0"] floating enable border none
+# for_window [class="^jetbrains-.*" title="^Run -.*"] floating enable; move scratchpad; resize set 800 800;
+for_window [class="^jetbrains-.*" title="^Run -.*"] floating enable; move position center; resize set 800 800;
 
 # Defaults for application popups
 # floating_maximum_size 1366 x 768

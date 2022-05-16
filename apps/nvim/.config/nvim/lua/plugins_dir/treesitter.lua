@@ -67,34 +67,34 @@ require("nvim-treesitter.configs").setup({
 
 	textobjects = {
 		-- lsp_interop = {
-		--   enable = true,
-		--   border = "none",
-		--   peek_definition_code = {
-		--     ["<leader>df"] = "@function.outer",
-		--     ["<leader>dF"] = "@class.outer",
-		--   },
+		-- 	enable = true,
+		-- 	border = "none",
+		-- 	peek_definition_code = {
+		-- 		["<leader>df"] = "@function.outer",
+		-- 		["<leader>dF"] = "@class.outer",
+		-- 	},
 		-- },
 
-		--   move = {
-		--     enable = true,
-		--     set_jumps = true, -- whether to set jumps in the jumplist
-		--     goto_next_start = {
-		--       ["]m"] = "@function.outer",
-		--       ["]]"] = "@class.outer",
-		--     },
-		--     goto_next_end = {
-		--       ["]M"] = "@function.outer",
-		--       ["]["] = "@class.outer",
-		--     },
-		--     goto_previous_start = {
-		--       ["[m"] = "@function.outer",
-		--       ["[["] = "@class.outer",
-		--     },
-		--     goto_previous_end = {
-		--       ["[M"] = "@function.outer",
-		--       ["[]"] = "@class.outer",
-		--     },
-		--   },
+		-- move = {
+		-- 	enable = true,
+		-- 	set_jumps = true, -- whether to set jumps in the jumplist
+		-- 	goto_next_start = {
+		-- 		["]m"] = "@function.outer",
+		-- 		["]]"] = "@class.outer",
+		-- 	},
+		-- 	goto_next_end = {
+		-- 		["]M"] = "@function.outer",
+		-- 		["]["] = "@class.outer",
+		-- 	},
+		-- 	goto_previous_start = {
+		-- 		["[m"] = "@function.outer",
+		-- 		["[["] = "@class.outer",
+		-- 	},
+		-- 	goto_previous_end = {
+		-- 		["[M"] = "@function.outer",
+		-- 		["[]"] = "@class.outer",
+		-- 	},
+		-- },
 
 		-- @TODO: these selectors may or may not helpful workflow
 		select = {

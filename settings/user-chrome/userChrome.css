@@ -1,20 +1,5 @@
-@import "./base.css";
-@import "./tabs-and-tabbar/style.css";
+@import "./from-firefox-css-hacks/autohide_bookmarks_and_main_toolbars.css";
 
-
-#urlbar-input-container {
-  padding: 0.2rem !important;
-  font-size: 1.4rem !important;
-  font-family: var(--opertator-font);
-  font-style: var(--operator-font-style);
-}
-
-.urlbarView-row .urlbarView-title {
-  font-size: 1.3rem !important;
-}
-
-/* .urlbarView-row:is([selected]) * { */
-/*   background-color: #7aa2f7 !important; */
-/* } */
-
- /* .urlbarView-row:not([selected]) .urlbarView-url  { */
+@import "./my-patches/init.css";
+@import "./my-patches/url-bar.css";
+@import "./my-patches/tabs.css";
