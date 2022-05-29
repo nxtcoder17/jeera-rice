@@ -1,4 +1,9 @@
-" vim plugins to emulate
+"-- idea enhancements
+set idearefactormode=keep
+set ideajoin
+set ideamarks
+
+"-- vim plugins to emulate
 set hlsearch
 set ignorecase
 set smartcase
@@ -6,7 +11,8 @@ set incsearch
 set surround
 set multiple-cursors
 Plug 'machakann/vim-highlightedyank'
-let g:highlightedyank_highlight_duration = "200"
+
+let g:highlightedyank_highlight_duration = "300"
 let g:highlightedyank_highlight_color = "rgba(160, 160, 160, 155)"
 
 "-- conflicting keys
@@ -15,12 +21,21 @@ sethandler cc n-v:vim
 sethandler <C-o> n:vim
 sethandler <C-i> n:vim
 sethandler <C-e> a:ide
+sethandler <C-j> n:vim
+sethandler <C-k> n:vim
+sethandler <C-S-j> n:vim
+sethandler <C-S-k> n:vim
 
 sethandler <Tab> n:vim
 sethandler <S-Tab> n:vim
 "------------------
 
-" keep some lines before and after the cursor visible
+" -- key resets
+nnoremap s <nop>
+nnoremap cc <nop>
+nnoremap ss :w<CR>
+nnoremap ; :
+
 set scrolloff=5 sidescrolloff=10
 
 " integrate with system clipboard
@@ -33,25 +48,23 @@ nnoremap <leader>- :action EditorDecreaseFontSize<CR>
 nnoremap <leader>x :action CloseAllEditorsButActive<CR>
 
 nmap <BS> :nohlsearch<CR>
-
-nnoremap s <nop>
-nnoremap cc <nop>
-nnoremap ss :w<CR>
-
 "-- actions
-nnoremap <Tab> :action PreviousTab<CR>
-nnoremap <S-Tab> :action NextTab<CR>
+nnoremap <Tab> :action NextTab<CR>
+nnoremap <S-Tab> :action PreviousTab<CR>
 nnoremap zz :action ToggleDistractionFreeMode<CR>
 
 nnoremap sf :action GotoFile<CR>
 
+"-- split navigation
 nnoremap sj <C-w>j
 nnoremap sk <C-w>k
-" nnoremap sl <C-w>l
-" nnoremap sh <C-w>h
-
 nnoremap sl :action NextSplitter<CR>
 nnoremap sh :action PrevSplitter<CR>
+
+nmap sL :action TabShiftActions.ShiftRight<CR>
+nmap sH :action TabShiftActions.ShiftLeft<CR>
+nmap sJ :action TabShiftActions.ShiftDown<CR>
+nmap sK :action TabShiftActions.ShiftUp<CR>
 
 nnoremap si :action SplitVertically<CR>
 nnoremap sm :action SplitHorizontally<CR>
@@ -66,18 +79,19 @@ nnoremap s/ :action FindInPath<CR>
 
 nnoremap te :action EditSourceInNewWindow<CR>
 
-nnoremap ; :
-
 " -- the goto's
 nnoremap gi :action GotoImplementation<CR>
 nnoremap gr :action ShowUsages<CR>
-nnoremap gd :action GotoImplementation<CR>
+nnoremap gd :action GotoDeclaration<CR>
 nnoremap gu :action GotoSuperMethod<CR>
+nmap gn :action GotoNextError<CR>
+nmap gp :action GotoPrevError<CR>
 
 nmap <C-o> <Action>(Back)
 nmap <C-i> <Action>(Forward)
 
 nnoremap rr :action Refactorings.QuickListPopupAction<CR>
+vnoremap rr :action Refactorings.QuickListPopupAction<CR>
 nnoremap K :action ShowErrorDescription<CR>
 
 nmap <C-p> :action ParameterInfo<CR>
@@ -85,19 +99,21 @@ imap <C-p> <C-o>:action ParameterInfo<CR>
 
 nmap sn :action GotoNextError<CR>
 nmap sp :action GotoPrevError<CR>
+nmap sr :action Refactorings.QuickListPopupAction<CR>
 nmap se :action ShowErrorDescription<CR>
 
 nnoremap <C-CR> :action EditorCompleteStatement<CR>
 
-nmap Y "+y
-vmap Y "+y
-
+" -- copy and pasting stuffs
+nmap Y v$y
 nmap cc "+y
 vmap cc "+y
-
-" don't overwrite register when pasting over selection
+"don't overwrite register when pasting over selection
 vnoremap p pgvy
 
 " Folding
-nnoremap <C-j> :action CollapseRegionRecursively<CR>
-nnoremap <C-k> :action ExpandRegionRecursively<CR>
+nnoremap <C-S-j> :action CollapseRegionRecursively<CR>
+nnoremap <C-S-k> :action ExpandRegionRecursively<CR>
+
+nnoremap <C-j> :action MethodDown<CR>
+nnoremap <C-k> :action MethodUp<CR>

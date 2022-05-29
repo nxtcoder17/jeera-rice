@@ -49,7 +49,10 @@ set $return Return
 set $noid --no-startup-id
 
 ## workspace layouts
-bindsym $mod+t layout tabbed
+# bindsym $mod+t layout tabbed
+bindsym $mod+$shift+t layout tabbed
+bindsym $mod+$shift+s layout stacking
+bindsym $mod+$shift+e layout toggle split
 
 # Jumping among workspaces
 bindsym $mod+1 workspace 1
@@ -97,7 +100,10 @@ popup_during_fullscreen             smart
 bindsym $alt+$period                fullscreen disable; focus right ; fullscreen enable
 
 # Jumping back and forth b/w Workspaces
-bindsym $mod+$tab                    workspace back_and_forth
+bindsym $mod+$tab                   workspace back_and_forth
+
+# switching amonng opened windows in current workspace
+bindsym $alt + $tab										focus right
 
 # Make a window stick to the screen (always on top)
 bindsym $alt + s                    sticky toggle
@@ -157,8 +163,8 @@ bindsym $alt + $$shift + plus     exec $majorInc
 set $minorDec $noid pamixer --allow-boost -d 5
 set $majorDec $noid pamixer --allow-boost -d 10
 
-bindsym $alt + minus            exec $minorDec
-bindsym $alt + $shift + minus    exec $majorDec
+bindsym $alt + minus          exec $minorDec
+bindsym $alt + $shift + minus exec $majorDec
 
 # Mute/Unmute vars
 set $toggleMute $noid pamixer -t
@@ -260,7 +266,7 @@ bar {
 }
 
 # intellij idea specifics
-# for_window [class="jetbrains-idea" title="win0"] floating enable; resize set 768 768
+for_window [class="jetbrains-idea" title="win0"] floating enable;
 # for_window [class="jetbrains-.*" title="win0"] floating enable border none
 # for_window [class="^jetbrains-.*" title="^Run -.*"] floating enable; move scratchpad; resize set 800 800;
 for_window [class="^jetbrains-.*" title="^Run -.*"] floating enable; move position center; resize set 800 800;

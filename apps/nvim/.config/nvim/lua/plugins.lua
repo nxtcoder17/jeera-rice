@@ -348,6 +348,7 @@ local function withCodingSetup()
 	use({ "sindrets/diffview.nvim", event = events.BufReadPre })
 
 	use_rocks({ "lrexlib-pcre" })
+	use_rocks({ "base64" })
 	use_rocks({ "dkjson" })
 
 	use({ "folke/lua-dev.nvim" })

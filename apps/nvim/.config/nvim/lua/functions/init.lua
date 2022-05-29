@@ -5,6 +5,10 @@ _G.R = function(pkg)
 	return require(pkg or "functions.dev")
 end
 
+_G.F = function()
+	return require("functions")
+end
+
 M.closeFloating = function()
 	for _, win in ipairs(vim.api.nvim_list_wins()) do
 		local config = vim.api.nvim_win_get_config(win)
@@ -71,6 +75,37 @@ M.impl = function()
 		end
 	end
 	my_custom_picker(l)
+end
+
+-- source: https://github.com/kristijanhusak/neovim-config/blob/6d52b0abd8bbdd810854c0655bc158c536210829/nvim/lua/partials/search.lua#L44
+M.getSelection = function()
+	local s_start = vim.fn.getpos("'<")
+	local s_end = vim.fn.getpos("'>")
+	local n_lines = math.abs(s_end[2] - s_start[2]) + 1
+	local lines = vim.api.nvim_buf_get_lines(0, s_start[2] - 1, s_end[2], false)
+	lines[1] = string.sub(lines[1], s_start[3], -1)
+	if n_lines == 1 then
+		lines[n_lines] = string.sub(lines[n_lines], 1, s_end[3] - s_start[3] + 1)
+	else
+		lines[n_lines] = string.sub(lines[n_lines], 1, s_end[3])
+	end
+	return table.concat(lines, "\n")
+end
+
+M.b64Decode = function(text)
+	local b64 = require("base64")
+	text = text or M.getSelection()
+	local v = b64.decode(text)
+	print(v)
+	return v
+end
+
+M.b64Encode = function(text)
+	local b64 = require("base64")
+	text = text or M.getSelection()
+	local v = b64.encode(text)
+	print(v)
+	return v
 end
 
 return M
