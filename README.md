@@ -4,3 +4,7 @@
 
 https://www.noizer.one/
 
+
+## radio
+- [EN/On Soft Pop(Germany)](http://radio.garden/listen/on-soft-pop/5AVqURnX)
+- [EN/Dimesione Suono Soft(Italy)](http://radio.garden/listen/dimensione-suono-soft-nord/cVgAPFtj)

@@ -110,18 +110,27 @@ local function withCodingSetup()
 		end,
 	})
 
-	use({
-		"nxtcoder17/graphql-cli",
-		run = "pnpm i",
-		config = function()
+	use({"~/workspace/nxtcoder17/graph-cli", config = function()
 			require("graphql-cli").setup({
 				command = "Gql",
 				envFile = function()
 					return string.format("%s/%s", vim.env.PWD, ".tools/gqlenv.yml")
 				end,
 			})
-		end,
-	})
+	end})
+
+	-- use({
+	-- 	"nxtcoder17/graphql-cli",
+	-- 	run = "pnpm i",
+	-- 	config = function()
+	-- 		require("graphql-cli").setup({
+	-- 			command = "Gql",
+	-- 			envFile = function()
+	-- 				return string.format("%s/%s", vim.env.PWD, ".tools/gqlenv.yml")
+	-- 			end,
+	-- 		})
+	-- 	end,
+	-- })
 
 	-- language specific
 	-- INFO: for go1.18 with generic types, comment ERROR in treesitter query cause it messed up the colorscheme
@@ -134,6 +143,8 @@ local function withCodingSetup()
 			require("go").setup()
 		end,
 	})
+	
+	use({"ActivityWatch/aw-watcher-vim", event=events.VimEnter})
 
 	-- linters
 	use({

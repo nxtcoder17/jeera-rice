@@ -11,11 +11,12 @@ fi
 alias kl='kl dev'
 
 alias kx='kubie ctx'
-alias kn='kubie ns'
 
 alias nv='nvim'
 
 alias k='kubectl'
+
+alias k9s="k9s --logoless --headless"
 
 alias tel='telepresence'
 

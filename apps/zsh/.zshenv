@@ -4,7 +4,7 @@
 export EDITOR="nvim"
 export PAGER="less"
 export EMAIL="nxtcoder17@gmail.com"
-export BROWSER="vivaldi-snapshot"
+export BROWSER="vivaldi-stable"
 
 # export PATH="$HOME/apps/bin:$PATH"
 # export PATH="$HOME/apps/jeera-rice/bin:$PATH"

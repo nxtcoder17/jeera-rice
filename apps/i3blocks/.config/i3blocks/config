@@ -18,8 +18,9 @@ interval=5
 
 [battery]
 interval=2
-color=#ff5555
-border=#ff5555
+command=acpi | awk -F, '{print $2}' | tr -d ' '
+border=#4b57e3
+label=<span color="#838581"> POW </span>
 border_top=1
 border_right=0
 border_bottom=0
@@ -40,6 +41,16 @@ border_left=0
 command=df -h /home | awk 'FNR==2 { gsub(/[A-Za-z]/, ""); printf "%i<span color=\"#808fad\">G</span>\n", $4 }'
 interval=3
 label=<span color="#838581"> </span>
+border=#838581
+border_top=1
+border_right=0
+border_bottom=0
+border_left=0
+
+[cpu]
+command=mpstat | grep -i all | awk '{print $4}'
+interval=2
+label=<span color="#838581"> CPU </span>
 border=#838581
 border_top=1
 border_right=0

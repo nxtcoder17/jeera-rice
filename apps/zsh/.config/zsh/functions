@@ -64,6 +64,11 @@ _fzf_complete_prun() {
   _fzf_complete --multi --reverse --prompt="package.json script> " -- "pnpm run ${@:2}" < <(cat ./package.json | jq '.scripts' | grep -i '"' | awk '{print $1}' | sed 's/:$//g' | sed 's/"//g')
 }
 
+_fzf_complete_task() {
+  _fzf_complete --multi --reverse --prompt="Taskfile task> " -- "task ${@:2}" < <(cat Taskfile.yml | yq -o json | jq -r '.tasks | keys |.[]| tostring' 
+)
+}
+
 # _fzf_complete_sample() {
 #   _fzf_complete --multi --reverse --prompt="target> " -- "$@" < <()
 # }

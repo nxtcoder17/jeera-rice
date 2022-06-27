@@ -122,9 +122,9 @@ lsp_config.sumneko_lua.setup(luadev)
 -- }))
 
 -- GoLang
-lsp_config.gopls.setup({
-	cmd = lsp_servers.go,
-})
+-- lsp_config.gopls.setup({
+-- 	cmd = lsp_servers.go,
+-- })
 
 -- Css
 lsp_config.cssls.setup({
@@ -199,10 +199,12 @@ lsp_config.gopls.setup({
 	filetypes = { "go", "gomod", "gotmpl" },
 	settings = {
 		gopls = {
+			usePlaceholders = true,
+			completeUnimported = true,
 			experimentalPostfixCompletions = true,
 			analyses = {
 				unusedparams = true,
-				shadow = true,
+				shadow = false,
 			},
 			staticcheck = true,
 		},

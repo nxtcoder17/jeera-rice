@@ -97,6 +97,7 @@ M.b64Decode = function(text)
 	text = text or M.getSelection()
 	local v = b64.decode(text)
 	print(v)
+	os.execute(string.format("echo %s | xclip -sel clip", v))
 	return v
 end
 
@@ -105,6 +106,7 @@ M.b64Encode = function(text)
 	text = text or M.getSelection()
 	local v = b64.encode(text)
 	print(v)
+	os.execute(string.format("echo %s | xclip -sel clip", v))
 	return v
 end
 

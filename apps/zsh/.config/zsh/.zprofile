@@ -1,5 +1,6 @@
 x=$(lua $ZDOTDIR/zprofile.lua)
 export PATH="$x:$PATH"
+fpath+=("$ZDOTDIR/fns")
 # # add this line, $ZDOTDIR/zprofile at top of /etc/zsh/zprofile
 
 # # load bin directories from $XDG_DATA_HOME

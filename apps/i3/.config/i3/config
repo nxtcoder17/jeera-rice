@@ -37,13 +37,26 @@ hide_edge_borders vertical
 
 # Modifier Keys
 set $mod Mod4
+set $window Mod4
 set $alt Mod1
 set $shift Shift
 set $tab Tab
 set $ctrl Control
-set $period period
-set $bs BackSpace
 set $return Return
+
+set $grave grave
+set $bs BackSpace
+set $period period
+set $exclam exclamm
+set $dot period
+set $plus plus
+set $minus minus
+set $space space
+
+set $left Left
+set $right Right
+set $up Up
+set $down Down
 
 # commons vars
 set $noid --no-startup-id
@@ -90,7 +103,7 @@ bindsym $mod + $shift + r            restart
 bindsym $mod + $shift + q            kill
 
 # Toggle Floating Window
-bindsym $mod+space                  floating toggle
+bindsym $mod + $space                  floating toggle
 
 # Toggle full screen window
 bindsym $mod+f                      fullscreen toggle
@@ -103,7 +116,7 @@ bindsym $alt+$period                fullscreen disable; focus right ; fullscreen
 bindsym $mod+$tab                   workspace back_and_forth
 
 # switching amonng opened windows in current workspace
-bindsym $alt + $tab										focus right
+bindsym $window + $grave										focus right
 
 # Make a window stick to the screen (always on top)
 bindsym $alt + s                    sticky toggle
@@ -136,11 +149,15 @@ bindsym $mod+$shift+Up move up
 
 
 # Resize windows
-bindsym $alt + Left     resize shrink width 10 px or 1 ppt
-bindsym $alt + Right    resize grow width 10 px or 1 ppt
-bindsym $alt + Up       resize shrink height 10 px or 1 ppt
-bindsym $alt + Down     resize grow height 10 px or 1 ppt
+# bindsym $alt + Left     resize shrink width 10 px or 1 ppt
+# bindsym $alt + Right    resize grow width 10 px or 1 ppt
+# bindsym $alt + Up       resize shrink height 10 px or 1 ppt
+# bindsym $alt + Down     resize grow height 10 px or 1 ppt
 
+bindsym $alt + $shift + $left     resize shrink width 10 px or 1 ppt
+bindsym $alt + $shift + $right    resize grow width 10 px or 1 ppt
+bindsym $alt + $shift + $up       resize shrink height 10 px or 1 ppt
+bindsym $alt + $shift + $down     resize grow height 10 px or 1 ppt
 # Keyboard Media Key Bindings
 
 # Brightness controls
@@ -156,19 +173,19 @@ bindsym XF86AudioMute exec $noid pactl set-sink-mute 0 toggle
 set $minorInc $noid pamixer --allow-boost -i 5
 set $majorInc $noid pamixer --allow-boost -i 10
 
-bindsym $alt + plus             exec $minorInc
-bindsym $alt + $$shift + plus     exec $majorInc
+bindsym $alt + $plus             exec $minorInc
+bindsym $alt + $$shift + $plus     exec $majorInc
 
 # Increasing volume vars
 set $minorDec $noid pamixer --allow-boost -d 5
 set $majorDec $noid pamixer --allow-boost -d 10
 
-bindsym $alt + minus          exec $minorDec
-bindsym $alt + $shift + minus exec $majorDec
+bindsym $alt + $minus          exec $minorDec
+bindsym $alt + $shift + $minus exec $majorDec
 
 # Mute/Unmute vars
 set $toggleMute $noid pamixer -t
-bindsym $ctrl + exclam           exec $noid $toggleMute
+bindsym $ctrl + $exclam           exec $noid $toggleMute
 
 # Key Mappings
 # -> Opening Terminal
@@ -179,6 +196,9 @@ bindsym $mod + $ctrl + $return exec $noid $term2
 
 # -> Rofi combined run:window
 bindsym $mod + d exec $noid rofi -show combi
+
+# dunstctl
+bindsym $mod + $bs exec $noid dunstctl close
 
 # -> Executing Rofi Run Window
 bindsym $mod + $shift + d exec $noid rofi -show drun -lines 5 -eh 1 -width 600 -location 0 -hide-scrollbar -bw 4 -opacity 100 -bc "#283e26" -bg "#1f1513" -fg "$ffffff" -hlbg "#283e26" -hlfg "#ffffff" -bgalt "#527d41" -separator-style "solid" -padding 50 
@@ -201,8 +221,8 @@ set $turnMonitorOn xrandr --output $monitorDisplay --mode $monitorMode --auto &&
 
 set $turnMonitorOff xrandr --output $laptopDisplay --auto && xrandr --output $monitorDisplay --off
 
-bindsym Control + $alt + $shift + m     exec "$turnMonitorOff"
-bindsym Control + $alt + m              exec "$turnMonitorOn"
+bindsym $ctrl + $alt + $shift + m     exec "$turnMonitorOff"
+bindsym $ctrl + $alt + m              exec "$turnMonitorOn"
 
 # lock screen
 bindsym $mod + x            exec $noid ~/.config/i3/scripts/lock.sh
@@ -219,7 +239,7 @@ exec $noid source $HOME/.fehbg
 exec $noid nm-applet
 
 # window compositing with blur
-exec_always $noid picom --experimental-backends
+exec $noid picom --experimental-backends
 
 # -> Notification daemon
 exec $noid dunst

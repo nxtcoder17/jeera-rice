@@ -1,7 +1,7 @@
 "-- idea enhancements
-set idearefactormode=keep
 set ideajoin
 set ideamarks
+set idearefactormode=keep
 
 "-- vim plugins to emulate
 set hlsearch
@@ -10,7 +10,8 @@ set smartcase
 set incsearch
 set surround
 set multiple-cursors
-Plug 'machakann/vim-highlightedyank'
+
+set vim-highlightedyank
 
 let g:highlightedyank_highlight_duration = "300"
 let g:highlightedyank_highlight_color = "rgba(160, 160, 160, 155)"
@@ -22,7 +23,7 @@ sethandler <C-o> n:vim
 sethandler <C-i> n:vim
 sethandler <C-e> a:ide
 sethandler <C-j> n:vim
-sethandler <C-k> n:vim
+sethandler <C-k> i-n:vim
 sethandler <C-S-j> n:vim
 sethandler <C-S-k> n:vim
 sethandler <C-m> a:ide
@@ -52,7 +53,7 @@ nmap <BS> :nohlsearch<CR>
 "-- actions
 nnoremap <Tab> :action NextTab<CR>
 nnoremap <S-Tab> :action PreviousTab<CR>
-nnoremap zz :action ToggleDistractionFreeMode<CR>
+nnoremap zz :action ViewNavigationBar \| :action ViewStatusBar<CR> \| :action EditorBreadcrumbsHideBoth<CR>
 
 nnoremap sf :action GotoFile<CR>
 
@@ -94,6 +95,7 @@ nmap <C-i> <Action>(Forward)
 nnoremap rr :action Refactorings.QuickListPopupAction<CR>
 vnoremap rr :action Refactorings.QuickListPopupAction<CR>
 nnoremap K :action ShowErrorDescription<CR>
+nnoremap <A-k> :action QuickImplementations<CR>
 
 nmap <C-p> :action ParameterInfo<CR>
 imap <C-p> <C-o>:action ParameterInfo<CR>

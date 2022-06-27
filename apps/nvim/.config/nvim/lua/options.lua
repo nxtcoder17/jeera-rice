@@ -3,8 +3,10 @@ local opt = vim.opt
 -- cause i always use a dark variant theme
 opt.background = "dark"
 
--- opt.cursorline = true
+-- intellihide cmd mode
+opt.cmdheight = 0
 
+-- opt.cursorline = true
 -- silently move between windows
 opt.hidden = true
 
