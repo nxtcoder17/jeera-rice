@@ -158,3 +158,6 @@ eval "$(starship init zsh)"
 # export LUA_PATH='/usr/share/lua/5.4/?.lua;/usr/share/lua/5.4/?/init.lua;/usr/lib/lua/5.4/?.lua;/usr/lib/lua/5.4/?/init.lua;./?.lua;./?/init.lua;/home/nxtcoder17/.luarocks/share/lua/5.4/?.lua;/home/nxtcoder17/.luarocks/share/lua/5.4/?/init.lua'
 # export LUA_CPATH='/usr/lib/lua/5.4/?.so;/usr/lib/lua/5.4/loadall.so;./?.so;/home/nxtcoder17/.luarocks/lib/lua/5.4/?.so'
 # export PATH='/home/nxtcoder17/.luarocks/bin:/home/nxtcoder17/apps/jeera-rice/bin:/home/nxtcoder17/.local/share/go/bin:/home/nxtcoder17/.local/share/node/bin:/opt/google-cloud-sdk/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl'
+
+# bun completions
+[ -s "/home/nxtcoder17/.bun/_bun" ] && source "/home/nxtcoder17/.bun/_bun"

@@ -1,26 +1,32 @@
 #! /usr/bin/env bash
 
+USERNAME=$1
+shift 1;
 NAMESPACES=( "$@" )
 
 primaryNamespace=${NAMESPACES[0]}
 
-username=kl-${primaryNamespace}-user
+username=$USERNAME
 contextName=kl-context
 
-[ -d "$primaryNamespace" ] || mkdir "$primaryNamespace"
-pushd "$primaryNamespace" || (echo "pushd failed, exiting ..." && exit 1)
+KUBECTL=${KUBECTL:-kubectl}
 
 # current-context
-currentCtx=$(kubectl config view -o jsonpath='{.current-context}')
+currentCtx=$($KUBECTL config view -o jsonpath='{.current-context}')
+clusterName=$($KUBECTL config view -o json | jq -r ".contexts[] | select(.name == \"$currentCtx\")| .context.cluster")
+clusterUrl=$($KUBECTL config view -o json | jq -r ".clusters[] | select(.name == \"$currentCtx\") | .cluster.server")
 
-clusterName=$(kubectl config view -o json | jq -r ".contexts[] | select(.name == \"$currentCtx\")| .context.cluster")
+contextName="$currentCtx-user"
 
-clusterUrl=$(kubectl config view -o json | jq -r ".clusters[] | select(.name == \"$currentCtx\") | .cluster.server")
-
-#echo $currentCtx $clusterUrl $clusterName
+dir="$PWD/$username"
+manifestsDir="$dir/manifests"
+[ -d "$manifestsDir" ] || mkdir -p "$manifestsDir"
+pushd "$dir" || (echo "pushd failed, exiting ..." && exit 1)
+echo "$primaryNamespace" > PRIMARY_NAMESPACE
+pushd "$manifestsDir" || (echo "pushd failed, exiting ..." && exit 1)
 
 # kubectl config current-context set namespace $NAMESPACE
-kubectl apply -f - <<EOF
+cat > svc-account.sh <<EOF
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -28,16 +34,21 @@ metadata:
   namespace: $primaryNamespace
 EOF
 
-secret=$(kubectl get sa "$username" -n "$primaryNamespace" -o json | jq -r .secrets[].name)
+$KUBECTL apply -f svc-account.sh
+popd
+
+secret=$($KUBECTL get sa "$username" -n "$primaryNamespace" -o json | jq -r .secrets[].name)
 
 # Get ca.crt from secret
-kubectl get secret "$secret" -n "$primaryNamespace" -o json | jq -r '.data["ca.crt"]' | base64 -d > ca.crt
+$KUBECTL get secret "$secret" -n "$primaryNamespace" -o json | jq -r '.data["ca.crt"]' | base64 -d > ./ca.crt
 
 # Get service account token from secret
-user_token=$(kubectl get secret "$secret" -n "$primaryNamespace" -o json | jq -r '.data["token"]' | base64 -d)
+user_token=$($KUBECTL get secret "$secret" -n "$primaryNamespace" -o json | jq -r '.data["token"]' | base64 -d)
+
+pushd $manifestsDir
 
 ## for primary namespace, all actions allowed
-cat > "$username"-primary-role.yml <<EOF
+cat > primary-$primaryNamespace-role.yml <<EOF
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -70,11 +81,10 @@ subjects:
     name: $username
     namespace: $primaryNamespace
 EOF
-kubectl apply -f "$username"-primary-role.yml
-
+kubectl apply -f primary-$primaryNamespace-role.yml
 
 # creating role for secondary namespaces
-cat > "$username"-role.yml <<EOF
+cat > cluster-role.yml <<EOF
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -83,7 +93,9 @@ rules:
   - apiGroups:
       - ""
       - apps
+      - batch
     resources:
+      - jobs
       - deployments
       - services
       - clusterroles
@@ -91,177 +103,56 @@ rules:
       - get
       - list
       - watch
+  - apiGroups:
+      - ""
+    resources:
+      - namespaces
+    verbs:
+      - get
+      - list
 EOF
-kubectl apply -f "$username"-role.yml
+kubectl apply -f cluster-role.yml
 
-for ns in "${NAMESPACES[@]:1}"
-do
-  # apply role bindings in secondary namespace
-kubectl apply -f - <<EOF
+cat > cluster-rb.yml <<EOF
 apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
+kind: ClusterRoleBinding
 metadata:
-  name: $username-rb
-  namespace: $ns
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: $username-role
+  name: $username-cluster-rb
 subjects:
   - kind: ServiceAccount
     name: $username
     namespace: $primaryNamespace
+roleRef:
+  kind: ClusterRole
+  name: $username-cluster-role
+  apiGroup: "rbac.authorization.k8s.io"
 EOF
-done
+$KUBECTL apply -f cluster-rb.yml
 
-## telepresence requirements
-#kubectl apply -f - <<EOF
-#kind: ClusterRole
-#apiVersion: rbac.authorization.k8s.io/v1
-#metadata:
-#  name:  telepresence-role
-#rules:
-#- apiGroups:
-#  - ""
-#  resources: ["pods"]
-#  verbs: ["get", "list", "create", "watch", "delete"]
-#- apiGroups:
-#  - ""
-#  resources: ["services"]
-#  verbs: ["update"]
-#- apiGroups:
-#  - ""
-#  resources: ["pods/portforward"]
-#  verbs: ["create"]
-#
-#- apiGroups:
-#  - "apps"
-#  resources: ["deployments", "replicasets", "statefulsets"]
-#  verbs: ["get", "list", "update", "watch"]
-#
-#- apiGroups:
-#  - "getambassador.io"
-#  resources: ["hosts", "mappings"]
-#  verbs: ["*"]
-#
-#- apiGroups:
-#  - ""
-#  resources: ["endpoints"]
-#  verbs: ["get", "list", "watch"]
-#
-#---
-#
-#kind: Role
-#apiVersion: rbac.authorization.k8s.io/v1
-#metadata:
-#  name:  telepresence-only-ambassador-role
-#  namespace: ambassador
-#rules:
-#  - apiGroups:
-#    - "*"
-#    resources:
-#    - "*"
-#    verbs:
-#    - "*"
-#  - apiGroups:
-#    - "rbac.authorization.k8s.io"
-#    resources:
-#      - "*"
-#    verbs:
-#      - list
-#      - get
-#      - watch
-#---
-#
-#kind: RoleBinding
-#apiVersion: rbac.authorization.k8s.io/v1
-#metadata:
-#  name: telepresence-only-ambassador-binding
-#  namespace: ambassador
-#subjects:
-#  - kind: ServiceAccount
-#    name: $username
-#    namespace: $primaryNamespace
-#roleRef:
-#  kind: Role
-#  name: telepresence-only-ambassador-role
-#  apiGroup: rbac.authorization.k8s.io
-#
-#---
-#
-## RBAC to access ambassador namespace
-#kind: RoleBinding
-#apiVersion: rbac.authorization.k8s.io/v1
-#metadata:
-#  name: telepresence-self-binding
-#  namespace: ambassador
-#subjects:
-#- kind: ServiceAccount
-#  name: $username
-#  namespace: $primaryNamespace
-#roleRef:
-#  kind: ClusterRole
-#  name: telepresence-role
-#  apiGroup: rbac.authorization.k8s.io
-#
-#---
-#
-## :TELEPRESENCE: for namespaces that have to be intercepted
-#kind: RoleBinding
-#apiVersion: rbac.authorization.k8s.io/v1
-#metadata:
-#  name: telepresence-role-binding
-#  namespace: $primaryNamespace
-#subjects:
-#- kind: ServiceAccount
-#  name: $username
-#  namespace: $primaryNamespace
-#roleRef:
-#  kind: ClusterRole
-#  name: telepresence-role
-#  apiGroup: rbac.authorization.k8s.io
-#
-#---
-#
-#kind: ClusterRole
-#apiVersion: rbac.authorization.k8s.io/v1
-#metadata:
-#  name:  telepresence-namespace-role
-#rules:
-#- apiGroups:
-#  - ""
-#  - apps
-#  resources:
-#    - namespaces
-#    - services
-#    - deployments
-#  verbs: ["get", "list", "watch"]
-#
-#- apiGroups:
-#  - "rbac.authorization.k8s.io"
-#  - "admissionregistration.k8s.io"
-#  resources:
-#    - "*"
-#  verbs:
-#    - list
-#    - get
-#    - watch
-#
-#---
-#
-#kind: ClusterRoleBinding
-#apiVersion: rbac.authorization.k8s.io/v1
-#metadata:
-#  name: telepresence-namespace-binding
-#subjects:
-#- kind: ServiceAccount
-#  name: $username
-#  namespace: $primaryNamespace
-#roleRef:
-#  kind: ClusterRole
-#  name: telepresence-namespace-role
-#  apiGroup: rbac.authorization.k8s.io
-#EOF
+# for ns in "${NAMESPACES[@]:1}"
+# do
+#   # apply role bindings in secondary namespace
+#   name=cluster-rb-ns-$ns.yml
+# cat > $name <<EOF
+# apiVersion: rbac.authorization.k8s.io/v1
+# kind: RoleBinding
+# metadata:
+#   name: $username-cluster-rb
+#   namespace: $ns
+# roleRef:
+#   apiGroup: rbac.authorization.k8s.io
+#   kind: ClusterRole
+#   name: $username-cluster-role
+# subjects:
+#   - kind: ServiceAccount
+#     name: $username
+#     namespace: $primaryNamespace
+# EOF
+
+# $KUBECTL apply -f $name
+# done
+
+popd
 
 # ############ using
 kubectl config set-cluster "$clusterName"  --embed-certs=true --server="$clusterUrl" --certificate-authority=./ca.crt
@@ -275,7 +166,7 @@ kubectl config use-context $contextName
 
 #kubectl config view --raw --minify=true
 echo "saving account kubeconfig to $username-kubeconfig.yml"
-kubectl config view --raw --minify=true > "$username"-kubeconfig.yml
+kubectl config view --raw --minify=true > kubeconfig.yml
 kubectl config use-context "$currentCtx"
 
 echo "cleaning up existing kubeconfig for sanity reasons ..."

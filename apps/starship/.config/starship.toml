@@ -14,6 +14,9 @@ truncate_to_repo = false # truncates directory to root folder if in github repo
 # style = "bold italic #94f07d"
 style = "bold italic #4da9ff"
 
+[git_state]
+format = '[\($state( $progress_current of $progress_total)\)]($style) '
+
 
 [nodejs]
 detect_folders = ['node_modules']

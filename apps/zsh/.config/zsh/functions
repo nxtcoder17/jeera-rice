@@ -65,7 +65,7 @@ _fzf_complete_prun() {
 }
 
 _fzf_complete_task() {
-  _fzf_complete --multi --reverse --prompt="Taskfile task> " -- "task ${@:2}" < <(cat Taskfile.yml | yq -o json | jq -r '.tasks | keys |.[]| tostring' 
+  _fzf_complete --multi --reverse --prompt="Taskfile task> " -- "task ${@:2}" < <(cat Taskfile.yml | yq | jq -r '.tasks | keys |.[]| tostring' 
 )
 }
 

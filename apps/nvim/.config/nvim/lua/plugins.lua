@@ -144,7 +144,7 @@ local function withCodingSetup()
 		end,
 	})
 	
-	use({"ActivityWatch/aw-watcher-vim", event=events.VimEnter})
+	-- use({"ActivityWatch/aw-watcher-vim", event=events.VimEnter})
 
 	-- linters
 	use({

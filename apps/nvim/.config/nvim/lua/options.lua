@@ -4,7 +4,7 @@ local opt = vim.opt
 opt.background = "dark"
 
 -- intellihide cmd mode
-opt.cmdheight = 0
+opt.cmdheight = 1
 
 -- opt.cursorline = true
 -- silently move between windows
@@ -98,9 +98,11 @@ opt.swapfile = false
 opt.inccommand = "split" -- shows live incremental status of substitution in split buffer
 
 -- gui
-opt.guifont = "Operator Mono Lig Medium:h13.5"
+-- opt.guifont = "Operator Mono Lig Medium:h14.5"
+opt.guifont = "Comic Code Ligatures Medium:h11.5"
 opt.linespace = 4
-opt.guifontwide = "FiraCode Nerd Font Medium:h13"
+-- opt.guifontwide = "FiraCode Nerd Font Medium:h13"
+opt.guifontwide = "Comic Code Ligatures Medium:h12"
 
 opt.mouse = "a"
 

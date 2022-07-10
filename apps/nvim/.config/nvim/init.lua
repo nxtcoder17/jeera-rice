@@ -3,6 +3,7 @@ vim.cmd("set runtimepath+=" .. vim.g.root_dir .. "/.tools")
 
 pcall(require, "disable-builtins")
 pcall(require, "impatient")
+pcall(require, "neovide")
 require("options")
 require("functions")
 require("plugins")

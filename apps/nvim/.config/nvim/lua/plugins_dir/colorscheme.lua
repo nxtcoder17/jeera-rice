@@ -7,7 +7,7 @@ function tokyoNight()
 	-- vim.g.tokyonight_colors = {
 	-- 	comment = "#61768c",
 	-- }
-	vim.cmd("colorscheme tokyonight")
+	-- vim.cmd("colorscheme tokyonight")
 end
 
 function kanagawa()

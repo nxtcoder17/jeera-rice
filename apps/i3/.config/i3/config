@@ -116,7 +116,7 @@ bindsym $alt+$period                fullscreen disable; focus right ; fullscreen
 bindsym $mod+$tab                   workspace back_and_forth
 
 # switching amonng opened windows in current workspace
-bindsym $window + $grave										focus right
+bindsym $window + $grave						focus right
 
 # Make a window stick to the screen (always on top)
 bindsym $alt + s                    sticky toggle
@@ -173,7 +173,7 @@ bindsym XF86AudioMute exec $noid pactl set-sink-mute 0 toggle
 set $minorInc $noid pamixer --allow-boost -i 5
 set $majorInc $noid pamixer --allow-boost -i 10
 
-bindsym $alt + $plus             exec $minorInc
+bindsym $alt + $plus							 exec $minorInc
 bindsym $alt + $$shift + $plus     exec $majorInc
 
 # Increasing volume vars
@@ -331,3 +331,4 @@ for_window [title="nxthelper"] move scratchpad
 for_window [title="nxthelper"] border pixel 3
 
 exec "$startNxtTerm"
+exec_always --no-startup-id i3-auto-layout

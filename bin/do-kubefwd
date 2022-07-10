@@ -1,0 +1,22 @@
+#! /usr/bin/env bash
+
+command=$1
+DKR_NAME=kubefwd-dkr
+case $command in
+  start)
+    cp /etc/hosts /var/cache/hosts.bkp
+    docker run -d --network host --rm --name $DKR_NAME -v "$KUBECONFIG":/root/.kube/config -v /etc/hosts:/etc/hosts txn2/kubefwd services --all-namespaces
+    ;;
+
+  stop)
+    cp /var/cache/hosts.bkp /etc/hosts
+    ;;
+
+  logs)
+    docker logs --tail=100 -f $DKR_NAME
+    ;;
+
+  restart)
+    docker restart $DKR_NAME 2>&1 /dev/null
+    ;;
+esac
