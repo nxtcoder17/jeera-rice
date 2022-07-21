@@ -13,5 +13,4 @@ pkill -9 xcape
 
 # make space toggle b/w space and Shift_L
 xcape -e 'Shift_L=space'
-
 xcape -e 'Control_L=Escape'

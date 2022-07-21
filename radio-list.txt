@@ -1,0 +1,11 @@
+mirchi-toota-dil  https://mirchiplaylive.akamaized.net/hls/live/2036929/MUM/TOODIL64kbps.m3u8
+mirchi-98.3FM http://peridot.streamguys.com:7150/Mirchi
+vividh-bharti https://air.pc.cdn.bitgravity.com/air/live/pbaudio001/chunklist.m3u8
+radio-namkeen http://node-35.zeno.fm/yg1qhsbaqv5tv?rj-ttl=5&rj-tok=AAABgh7D5MQAXFWkLdNqD-koug
+beem-fm http://shoutcast.beamfm.net:8512/;
+bollywood-punjabi-radio https://stream-18.zeno.fm/1k0y9f0cm0quv?zs=5LtmMHaWRF6rrQ4sp2q5Tw
+love-104-FM https://mirchiplaylive.akamaized.net/hls/live/2036929/PNE/MILOVE96kbps.m3u8
+977-today-hits https://26283.live.streamtheworld.com/977_HITS_SC
+radio-olive https://25653.live.streamtheworld.com/OLIVE1063.mp3
+humm-fm https://tunein-icecast.mediaworks.nz/humm_128kbps
+desi-world-radio https://stream-25.zeno.fm/4mbfcn4mf24tv?zs=Q0DDh77rQFmxRl21S477hg

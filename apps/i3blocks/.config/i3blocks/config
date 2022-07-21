@@ -18,9 +18,11 @@ interval=5
 
 [battery]
 interval=2
-command=acpi | awk -F, '{print $2}' | tr -d ' '
+# command=echo -e "<span fgcolor='#4b57e3'><b>$( acpi | awk -F, '{print $2}' | tr -d ' ' ) </b></span>"
+command=acpi | awk -F, '{print $2}' | tr -d ' ' 
 border=#4b57e3
 label=<span color="#838581"> POW </span>
+# label=<span color="#4b57e3">  POW </span>
 border_top=1
 border_right=0
 border_bottom=0

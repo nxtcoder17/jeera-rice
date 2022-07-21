@@ -30,7 +30,8 @@ gaps inner 15
 gaps outer -15
 
 # font pango: mononoki Nerd Font Regular 10
-font pango: OperatorMono Nerd Font Regular 10
+# font pango: OperatorMono Nerd Font Regular 10
+font pango: Comic Code Ligatures Medium 10
 
 focus_follows_mouse false
 hide_edge_borders vertical
@@ -67,6 +68,10 @@ bindsym $mod+$shift+t layout tabbed
 bindsym $mod+$shift+s layout stacking
 bindsym $mod+$shift+e layout toggle split
 
+## new workspaces
+workspace x1 output eDP-1-1
+workspace x2 output eDP-1-1
+
 # Jumping among workspaces
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
@@ -78,6 +83,7 @@ bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
+bindsym $mod+$shift+<F10> workspace -1
 
 # Throw windows to other workspaces
 bindsym $mod+$shift+1 move container to workspace 1
@@ -146,13 +152,6 @@ bindsym $mod+$shift+Down move down
 
 bindsym $mod+Up focus up
 bindsym $mod+$shift+Up move up
-
-
-# Resize windows
-# bindsym $alt + Left     resize shrink width 10 px or 1 ppt
-# bindsym $alt + Right    resize grow width 10 px or 1 ppt
-# bindsym $alt + Up       resize shrink height 10 px or 1 ppt
-# bindsym $alt + Down     resize grow height 10 px or 1 ppt
 
 bindsym $alt + $shift + $left     resize shrink width 10 px or 1 ppt
 bindsym $alt + $shift + $right    resize grow width 10 px or 1 ppt
@@ -264,7 +263,8 @@ bar {
 	mode hide
 	modifier $mod
 
-	font pango: Operator Mono Lig Book Bold 12
+	# font pango: Operator Mono Lig Book Bold 12
+	font pango: Comic Code Ligatures Medium 10
 
 	# setting from i3blocks
 	separator_symbol " " 

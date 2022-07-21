@@ -1,2 +1,0 @@
-#! /usr/bin/env node
-kubectl get deployment/app-nxtcoder17 -o jsonpath="{.spec.template.spec.containers[?(@.name=='honeypot')].name}"
