@@ -94,7 +94,7 @@ nmap <C-i> <Action>(Forward)
 
 nnoremap rr :action Refactorings.QuickListPopupAction<CR>
 vnoremap rr :action Refactorings.QuickListPopupAction<CR>
-nnoremap K :action ShowErrorDescription<CR>
+nmap K <Action>(QuickJavaDoc)
 nnoremap <A-k> :action QuickImplementations<CR>
 
 nmap <C-p> :action ParameterInfo<CR>
