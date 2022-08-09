@@ -11,4 +11,4 @@ fi
 
 scrot -s $name
 
-dragon-drag-and-drop $name
+dragon-drag-and-drop $name --and-exit

@@ -68,7 +68,7 @@ nmap sH :action TabShiftActions.ShiftLeft<CR>
 nmap sJ :action TabShiftActions.ShiftDown<CR>
 nmap sK :action TabShiftActions.ShiftUp<CR>
 
-nnoremap si :action SplitVertically<CR>
+  nnoremap si :action SplitVertically<CR>
 nnoremap sm :action SplitHorizontally<CR>
 nnoremap s0 :action Unsplit<CR>
 

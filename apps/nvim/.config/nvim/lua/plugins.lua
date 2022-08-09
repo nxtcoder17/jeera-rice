@@ -1,5 +1,5 @@
 local fn = vim.fn
-local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+local install_path = fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
 
 if fn.empty(fn.glob(install_path)) > 0 then
 	local packer_bootstrap = fn.system({
@@ -12,6 +12,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
 	})
 end
 
+vim.cmd [[packadd packer.nvim]]
 local packer = require("packer")
 
 local events = {
@@ -160,16 +161,16 @@ local function withCodingSetup()
 	})
 
 	-- refactoring
-	use({
-		"ThePrimeagen/refactoring.nvim",
-		requires = {
-			{ "nvim-lua/plenary.nvim" },
-			{ "nvim-treesitter/nvim-treesitter" },
-		},
-		config = function()
-			require("refactoring").setup({})
-		end,
-	})
+	-- use({
+	-- 	"ThePrimeagen/refactoring.nvim",
+	-- 	requires = {
+	-- 		{ "nvim-lua/plenary.nvim" },
+	-- 		{ "nvim-treesitter/nvim-treesitter" },
+	-- 	},
+	-- 	config = function()
+	-- 		require("refactoring").setup({})
+	-- 	end,
+	-- })
 
 	-- color schemes
 	use({ "folke/tokyonight.nvim", disable = false })
@@ -469,12 +470,13 @@ local function withAsthetics()
 end
 
 local function minimalPackages()
+	vim.cmd [[packadd packer.nvim]]
 	require("packer").startup({
 		function()
 			_G.use = use
 			_G.use_rocks = use_rocks
 
-			use("wbthomason/packer.nvim")
+			use{"wbthomason/packer.nvim", opt=true}
 			use({ "dstein64/vim-startuptime", cmd = "StartupTime" })
 			use("lewis6991/impatient.nvim") -- for faster neovim
 
@@ -485,6 +487,11 @@ local function minimalPackages()
 				end,
 			})
 
+			use {
+				'glacambre/firenvim',
+				run = function() vim.fn['firenvim#install'](0) end 
+			}
+
 			withTelescope()
 			withLsp()
 			withTS()
@@ -493,6 +500,7 @@ local function minimalPackages()
 			withAsthetics()
 		end,
 		config = {
+			-- opt_default = true,
 			profile = { enable = true, threshold = 1 },
 		},
 	})
