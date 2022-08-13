@@ -32,7 +32,7 @@ metadata:
   name: $username
   namespace: $primaryNamespace
 EOF
-kubectl apply -f 
+kubectl apply -f svc-account.sh
 
 secret=$(kubectl get sa "$username" -n "$primaryNamespace" -o json | jq -r .secrets[].name)
 
