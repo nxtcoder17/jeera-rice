@@ -1,3 +1,6 @@
+// RUN this to directly execute go file as script:
+// echo ':golang:E::go::/home/nxtcoder17/.local/bin/gorun:OC' | sudo tee /proc/sys/fs/binfmt_misc/register
+
 package main
 
 import (
