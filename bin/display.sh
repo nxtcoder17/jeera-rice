@@ -17,6 +17,7 @@ case $cmd in
     [ -f ~/.fehbg ] && source ~/.fehbg
     ;;
   left-right)
+    xrandr --output $laptop --auto
     xrandr --output $monitor --right-of $laptop --mode $monitorMode --auto
     [ -f ~/.fehbg ] && source ~/.fehbg
     ;;
