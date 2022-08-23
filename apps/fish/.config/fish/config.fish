@@ -11,11 +11,10 @@ abbr gs 'git status'
 abbr gss 'git status -s'
 abbr nv 'nvim'
 
-
 alias k 'kubectl'
 alias k9s 'k9s --logoless --headless -c ns'
 alias cc 'xclip -sel clip'
-alias ls 'ls -FG'
+alias ls 'exa --icons -FG'
 alias rm 'rm -i'
 
 if type -q kubie
@@ -102,4 +101,3 @@ function fish_user_key_bindings
     bind \ce 'edit_cmd'
     bind -M insert \ce 'edit_cmd'
 end
-
