@@ -34,3 +34,5 @@ settings:
     global: true
   content.blocking.method:
     global: both
+  qt.highdpi:
+    global: true

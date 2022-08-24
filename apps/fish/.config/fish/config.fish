@@ -1,5 +1,9 @@
 set fish_greeting
 
+function fish_mode_prompt
+  # NOOP - Disable vim mode indicator
+end
+
 # if test (command -v exa | wc -l) -gt 0
 if type -q exa 
     alias ls 'exa --icons'
@@ -116,6 +120,13 @@ set __fish_git_prompt_char_upstream_diverged '  '
 set __fish_git_prompt_char_upstream_equal '  '
 set __fish_git_prompt_char_upstream_prefix ' '
 
-# set --global hydro_symbol_git_dirty	$__fish_git_prompt_char_dirtystate
-# set --global hydro_symbol_git_ahead $__fish_git_prompt_char_upstream_ahead
-# set --global hydro_symbol_git_behind $__fish_git_prompt_char_upstream_behind
+set --global hydro_multiline true
+set --global hydro_color_git "#71bd80"
+set --global hydro_color_prompt "#3a73d6"
+set --global hydro_color_pwd "#2fbaf5"
+set --global hydro_symbol_git_dirty	$__fish_git_prompt_char_dirtystate
+set --global hydro_symbol_git_ahead $__fish_git_prompt_char_upstream_ahead
+set --global hydro_symbol_git_behind $__fish_git_prompt_char_upstream_behind
+
+zoxide init fish | source
+# starship init fish | source

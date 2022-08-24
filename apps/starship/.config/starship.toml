@@ -2,8 +2,8 @@ add_newline = true
 
 [character]
 success_symbol = "[⚡](bold green)"
-error_symbol = "[](bold red)"
-# error_symbol = "[💢](bold red)"
+# error_symbol = "[](bold red)"
+error_symbol = "[💢](bold red)"
 
 [gcloud]
 disabled = true
@@ -12,14 +12,18 @@ disabled = true
 truncation_length = 2
 truncate_to_repo = false # truncates directory to root folder if in github repo
 # style = "bold italic #94f07d"
-style = "bold italic #4da9ff"
+style = "bold  #4da9ff"
 
 [git_state]
 format = '[\($state( $progress_current of $progress_total)\)]($style) '
+# disabled = true
 
 
 [nodejs]
 detect_folders = ['node_modules']
+disabled = true
+
+[php]
 disabled = true
 
 [package]
