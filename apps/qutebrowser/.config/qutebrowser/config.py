@@ -64,7 +64,7 @@ def resetDefaultBindings():
     nmap("zz", "zoom")
 
     unmap("O")
-    nmap("e", "set-cmd-text :open -t {url:pretty}")
+    nmap("e", "set-cmd-text :open {url:pretty}")
     nmap("O", "set-cmd-text -s :open -t ")
 
 def keybindings():
@@ -72,6 +72,7 @@ def keybindings():
 
     # copying
     nmap("y", "yank")
+    nmap("cc", "yank")
     nmap("Y", "yank selection")
 
     # hints
@@ -81,7 +82,7 @@ def keybindings():
     unmap("<ctrl-n>")
 
     # url
-    nmap("<ctrl-l>", "set-cmd-text :open -t {url:pretty}")
+    nmap("<ctrl-l>", "set-cmd-text :open {url:pretty}")
 
     # tabs
     nmap("tn", "tab-next")
@@ -89,6 +90,9 @@ def keybindings():
     nmap("tt", "set-cmd-text -s :tab-select ")
 
     pmap("<escape>", "mode-enter normal")
+
+    # watching videos
+    nmap('M', 'hint links spawn --userscript view_in_mpv {hint-url}')
 
 keybindings()
 
@@ -149,6 +153,7 @@ c.url.searchengines = {
     'DEFAULT': 'https://duckduckgo.com?q=!g+{}',
     'lh': 'http://localhost{}',
     'yt': 'https://yewtu.be/search?q={}',
+    'dh': 'https://hub.docker.com/search?q={}'
 }
 
 

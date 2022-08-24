@@ -27,14 +27,11 @@ end
 
 function addToPath --description "add item to system path"
     for item in $argv
-        contains $item $PATH or set -x PATH $PATH $item
+        contains $item $PATH 
+        or set -x PATH $PATH $item
     end
 end
 
-if status is-interactive
-    # Commands to run in interactive sessions can go here
-    
-    # constant Environments
     set -gx EDITOR nvim
     set -gx PAGER less
     set -gx EMAIL "nxtcoder17@gmail.com"
@@ -44,7 +41,7 @@ if status is-interactive
     set -gx XDG_CACHE_HOME "$HOME/.cache"
     set -gx XDG_CONFIG_HOME "$HOME/.config"
 
-    set -gx XINITRC "$XDG_CONFIG_HOME/x11/xinitrc"
+    # set -gx XINITRC "$XDG_CONFIG_HOME/x11/xinitrc"
     set -gx INPUTRC "$XDG_CONFIG_HOME/inputrc"
 
     # APPLICATION specifics
@@ -62,20 +59,23 @@ if status is-interactive
     set -gx NPM_CONFIG_STORE_DIR "$XDG_DATA_HOME/node/bin"
     
 
-
     # set -gx FZF_DEFAULT_COMMAND "rg --files --hidden --follow --smart-case"
 
     set -gx GPG_TTY (tty) # to make GPG work
 
     #--------------------------------------------------
     addToPath /usr/local/bin
-    addToPath $HOME/.local/bin $HOME/.local/jeera-rice/bin
+    addToPath $HOME/.local/bin $HOME/me/jeera-rice/bin
 
     # node js global install packages
     addToPath $XDG_DATA_HOME/node/bin
     
     # go install binaries
     addToPath $XDG_DATA_HOME/go/bin
+
+if status is-interactive
+    # Commands to run in interactive sessions can go here
+    # constant Environments
 end
 
 set fish_cursor_default block
@@ -101,3 +101,21 @@ function fish_user_key_bindings
     bind \ce 'edit_cmd'
     bind -M insert \ce 'edit_cmd'
 end
+
+### fish bindings
+set __fish_git_prompt_char_cleanstate '  '
+set __fish_git_prompt_char_dirtystate '  '
+set __fish_git_prompt_char_invalidstate '  '
+set __fish_git_prompt_char_stagedstate '  '
+set __fish_git_prompt_char_stashstate '  '
+set __fish_git_prompt_char_stateseparator ' '
+set __fish_git_prompt_char_untrackedfiles '  '
+set __fish_git_prompt_char_upstream_ahead '  '
+set __fish_git_prompt_char_upstream_behind '  '
+set __fish_git_prompt_char_upstream_diverged '  '
+set __fish_git_prompt_char_upstream_equal '  '
+set __fish_git_prompt_char_upstream_prefix ' '
+
+# set --global hydro_symbol_git_dirty	$__fish_git_prompt_char_dirtystate
+# set --global hydro_symbol_git_ahead $__fish_git_prompt_char_upstream_ahead
+# set --global hydro_symbol_git_behind $__fish_git_prompt_char_upstream_behind
