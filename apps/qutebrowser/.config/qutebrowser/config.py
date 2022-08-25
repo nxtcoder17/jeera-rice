@@ -71,9 +71,8 @@ def keybindings():
     resetDefaultBindings()
 
     # copying
-    nmap("y", "yank")
-    nmap("cc", "yank")
-    nmap("Y", "yank selection")
+    nmap("cc", "yank selection")
+    nmap("y", "yank selection")
 
     # hints
     nmap("gi", "hint images")
@@ -93,6 +92,7 @@ def keybindings():
 
     # watching videos
     nmap('M', 'hint links spawn --userscript view_in_mpv {hint-url}')
+    nmap('cc','hint links spawn --userscript copy-url {hint-url}')
 
 keybindings()
 

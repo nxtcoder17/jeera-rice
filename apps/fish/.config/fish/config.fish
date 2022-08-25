@@ -128,5 +128,16 @@ set --global hydro_symbol_git_dirty	$__fish_git_prompt_char_dirtystate
 set --global hydro_symbol_git_ahead $__fish_git_prompt_char_upstream_ahead
 set --global hydro_symbol_git_behind $__fish_git_prompt_char_upstream_behind
 
+# export LD_LIBRARY_PATH=/usr/local/boost_1_54_0/stage/lib:$LD_LIBRARY_PATH
+
+if [ $EUID -eq 0 ]
+    # set --global hydro_symbol_prompt ❱
+    # set --global hydro_symbol_prompt 👹
+    set --global hydro_symbol_prompt 🚫
+else
+    # set --global hydro_symbol_prompt ❱
+    set --global hydro_symbol_prompt 😎
+end
+
 zoxide init fish | source
 # starship init fish | source

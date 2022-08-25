@@ -7,3 +7,4 @@ CMD="$HOME/.local/tars.uz/idea-IU-222.3345.118/bin/idea.sh"
 [ -f $CMD ] || (echo "executable CMD ($CMD) does not exist" && exit 1)
 
 nohup "$CMD" "$@" &> /dev/null &
+# "$CMD" "$@"

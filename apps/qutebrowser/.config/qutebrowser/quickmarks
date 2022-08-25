@@ -3,3 +3,6 @@ infinite ink https://www.ii.com/
 apollo https://studio.apollographql.com/sandbox/explorer
 hydrop https://github.com/jorgebucaran/hydro
 mysql proxy https://alexravikovich.medium.com/quarantine-journey-writing-mysql-proxy-in-go-for-self-learning-part-1-tcp-proxy-39810479b7e9
+kubebuilder https://book.kubebuilder.io/reference/controller-gen.html
+xorg authentication error fix https://serverfault.com/questions/51005/how-to-use-xauth-to-run-graphical-application-via-other-user-on-linux
+ent graphql https://entgo.io/
