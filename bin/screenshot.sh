@@ -1,6 +1,7 @@
 #! /usr/bin/env bash
 
 name=""
+
 if [ -z "$1" ]; then
   name="/tmp/screenshot-$RANDOM".png
 else
@@ -10,5 +11,4 @@ else
 fi
 
 scrot -s $name
-
-dragon-drag-and-drop $name --and-exit
+[ -f "$name" ] && dragon-drag-and-drop $name --and-exit
