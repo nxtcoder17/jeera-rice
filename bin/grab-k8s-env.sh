@@ -40,7 +40,7 @@ podName="$deployment-grab-k8s-env-$RANDOM"
 kubectl get deploy/$deployment -n kl-core -o json | jq --arg name $podName --arg ns $namespace '.spec.template | .spec.containers[].args=[] | .spec.containers[].command=["tail", "-f", "/dev/null"] | .spec.containers[].resources={} | .spec.containers[].image="nxtcoder17/alpine:nonroot" | .spec.containers[].imagePullPolicy="IfNotPresent" | del(.spec.containers[].livenessProbe)| del (.spec.containers[].readinessProbe) | .metadata={} | .metadata.name=$name| .metadata.namespace=$ns | .apiVersion="v1" | .kind="Pod"' | kubectl apply -n "$namespace" -f - > /dev/null
 
 # run a pod with same everything to grab env
-kubectl -n $namespace wait --for=condition=Ready=True pod/$podName
+kubectl -n $namespace wait --for=condition=Ready=True pod/$podName > /dev/null
 
 if [ -z $container ]; then
   kubectl -n "$namespace" exec pod/$podName  -- sh -c "$x"

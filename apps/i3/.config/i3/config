@@ -70,7 +70,6 @@ bindsym $mod+$shift+e layout toggle split
 
 ## new workspaces
 workspace x1 output eDP-1-1
-workspace x2 output eDP-1-1
 
 # Jumping among workspaces
 bindsym $mod+1 workspace 1
@@ -99,32 +98,15 @@ bindsym $mod+$shift+0 move container to workspace 10
 
 # Basic i3wm controls
 
-# Reloading i3wm
-bindsym $mod + $shift + c            reload
-
-# Restarting i3wm
-bindsym $mod + $shift + r            restart
-
-# Killing windows
-bindsym $mod + $shift + q            kill
-
-# Toggle Floating Window
-bindsym $mod + $space                  floating toggle
-
-# Toggle full screen window
+bindsym $mod + $shift + c           reload
+bindsym $mod + $shift + r           restart
+bindsym $mod + $shift + q           kill
+bindsym $mod + $space               floating toggle
 bindsym $mod+f                      fullscreen toggle
 popup_during_fullscreen             smart
-
-# Toggle among splits while in fullscreen
 bindsym $alt+$period                fullscreen disable; focus right ; fullscreen enable
-
-# Jumping back and forth b/w Workspaces
 bindsym $mod+$tab                   workspace back_and_forth
-
-# switching amonng opened windows in current workspace
 bindsym $window + $grave						focus right
-
-# Make a window stick to the screen (always on top)
 bindsym $alt + s                    sticky toggle
 
 # Navigation between windows
@@ -244,6 +226,9 @@ exec $noid picom --experimental-backends
 
 # -> Notification daemon
 exec $noid dunst
+
+# -> blueman applet
+exec $noid blueman-applet
 
 # TouchPad: Tap To Click
 exec $noid xinput set-prop 'Synaptics TM3276-022' 'libinput Tapping Enabled' 1

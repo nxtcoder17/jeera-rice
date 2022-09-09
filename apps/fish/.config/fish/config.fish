@@ -36,46 +36,49 @@ function addToPath --description "add item to system path"
     end
 end
 
-    set -gx EDITOR nvim
-    set -gx PAGER less
-    set -gx EMAIL "nxtcoder17@gmail.com"
-    set -gx BROWSER "firefox"
+set -gx EDITOR nvim
+set -gx PAGER less
+set -gx EMAIL "nxtcoder17@gmail.com"
+set -gx BROWSER "firefox"
 
-    set -gx XDG_DATA_HOME "$HOME/.local/share"
-    set -gx XDG_CACHE_HOME "$HOME/.cache"
-    set -gx XDG_CONFIG_HOME "$HOME/.config"
+set -gx XDG_DATA_HOME "$HOME/.local/share"
+set -gx XDG_CACHE_HOME "$HOME/.cache"
+set -gx XDG_CONFIG_HOME "$HOME/.config"
 
-    # set -gx XINITRC "$XDG_CONFIG_HOME/x11/xinitrc"
-    set -gx INPUTRC "$XDG_CONFIG_HOME/inputrc"
+# set -gx XINITRC "$XDG_CONFIG_HOME/x11/xinitrc"
+set -gx INPUTRC "$XDG_CONFIG_HOME/inputrc"
 
-    # APPLICATION specifics
-    
-    set -gx GOPATH "$XDG_DATA_HOME/go"
-    set -gx K9SCONFIG "$XDG_CONFIG_HOME/k9s"
-    set -gx DOCKER_CONFIG "$XDG_CONFIG_HOME/docker"
-    set -gx GTK2_RC_FILES "$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
-    set -gx _JAVA_OPTIONS "-DJava.util.prefs.userRoot=$XDG_CONFIG_HOME/java"
+# APPLICATION specifics
 
-    set -gx NODE_REPL_HISTORY "$XDG_DATA_HOME/node_repl_history"
-    set -gx NPM_CONFIG_USERCONFIG "$XDG_CONFIG_HOME/npm/npmrc"
-    set -gx NPM_CONFIG_CACHE "$XDG_CACHE_HOME/npm"
-    set -gx NPM_CONFIG_TMP "$XDG_RUNTIME_DIR/npm"
-    set -gx NPM_CONFIG_STORE_DIR "$XDG_DATA_HOME/node/bin"
-    
+set -gx GOPATH "$XDG_DATA_HOME/go"
+set -gx K9SCONFIG "$XDG_CONFIG_HOME/k9s"
+set -gx DOCKER_CONFIG "$XDG_CONFIG_HOME/docker"
+set -gx GTK2_RC_FILES "$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
+set -gx _JAVA_OPTIONS "-DJava.util.prefs.userRoot=$XDG_CONFIG_HOME/java"
 
-    # set -gx FZF_DEFAULT_COMMAND "rg --files --hidden --follow --smart-case"
+set -gx NODE_REPL_HISTORY "$XDG_DATA_HOME/node_repl_history"
+set -gx NPM_CONFIG_USERCONFIG "$XDG_CONFIG_HOME/npm/npmrc"
+set -gx NPM_CONFIG_CACHE "$XDG_CACHE_HOME/npm"
+set -gx NPM_CONFIG_TMP "$XDG_RUNTIME_DIR/npm"
+set -gx NPM_CONFIG_STORE_DIR "$XDG_DATA_HOME/node/bin"
 
-    set -gx GPG_TTY (tty) # to make GPG work
+set -gx XAUTHORITY "$HOME/.Xauthority"
+set -gx _JAVA_AWT_WM_NONREPARENTING "1"
 
-    #--------------------------------------------------
-    addToPath /usr/local/bin
-    addToPath $HOME/.local/bin $HOME/me/jeera-rice/bin
 
-    # node js global install packages
-    addToPath $XDG_DATA_HOME/node/bin
-    
-    # go install binaries
-    addToPath $XDG_DATA_HOME/go/bin
+# set -gx FZF_DEFAULT_COMMAND "rg --files --hidden --follow --smart-case"
+
+set -gx GPG_TTY (tty) # to make GPG work
+
+#--------------------------------------------------
+addToPath /usr/local/bin
+addToPath $HOME/.local/bin $HOME/me/jeera-rice/bin
+
+# node js global install packages
+addToPath $XDG_DATA_HOME/node/bin
+
+# go install binaries
+addToPath $XDG_DATA_HOME/go/bin
 
 if status is-interactive
     # Commands to run in interactive sessions can go here
@@ -129,10 +132,21 @@ set --global hydro_symbol_git_ahead $__fish_git_prompt_char_upstream_ahead
 set --global hydro_symbol_git_behind $__fish_git_prompt_char_upstream_behind
 
 # export LD_LIBRARY_PATH=/usr/local/boost_1_54_0/stage/lib:$LD_LIBRARY_PATH
+#
+function wr --description "restarts wireguard"
+    wg-quick down "$argv"
+    wg-quick up "$argv"
+end
+
+function xfix --description "fixes x clipboard"
+echo "
+#!/sbin/bash
+export XAUTHORITY=~/.Xauthority
+" > /etc/profile.d/xauth.sh
+end
 
 if [ $EUID -eq 0 ]
     # set --global hydro_symbol_prompt ❱
-    # set --global hydro_symbol_prompt 👹
     set --global hydro_symbol_prompt 🚫
 else
     # set --global hydro_symbol_prompt ❱

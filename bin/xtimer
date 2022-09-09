@@ -1,0 +1,15 @@
+#! /usr/bin/env bash
+
+x=${1:-300}
+mkdir -p /tmp/xtimer
+
+function print() {
+  i3-nagbar -t error -m "$@"
+}
+
+[ -f /tmp/xtimer/lock ] && print "lock already exists" && exit 1
+touch /tmp/xtimer/lock
+sleep $x
+rm /tmp/xtimer/lock
+
+print "passed"

@@ -1,0 +1,4 @@
+#! /usr/bin/env bash
+
+url="$@"
+echo "open " "$@" | sed 's/www.youtube.com/www.yewtu.be/' >> "$QUTE_FIFO"

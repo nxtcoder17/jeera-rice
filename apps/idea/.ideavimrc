@@ -1,8 +1,3 @@
-"-- idea enhancements
-set ideajoin
-set ideamarks
-set idearefactormode=keep
-
 "-- vim plugins to emulate
 set hlsearch
 set ignorecase
@@ -10,11 +5,21 @@ set smartcase
 set incsearch
 set surround
 set multiple-cursors
+set textobj-entire
+Plug 'bkad/CamelCaseMotion'
+
+set argtextobj
+let g:argtextobj_pairs="[:],(:),<:>"
 
 set vim-highlightedyank
-
 let g:highlightedyank_highlight_duration = "300"
 let g:highlightedyank_highlight_color = "rgba(160, 160, 160, 155)"
+
+"-- idea enhancements
+set ideajoin
+set ideamarks
+set idearefactormode=keep
+set ideastatusicon=gray
 
 "-- conflicting keys
 sethandler <C-w> a:ide
@@ -27,6 +32,8 @@ sethandler <C-k> i-n:vim
 sethandler <C-S-j> n:vim
 sethandler <C-S-k> n:vim
 sethandler <C-m> a:ide
+sethandler <C-n> n:vim
+
 
 sethandler <Tab> n:vim
 sethandler <S-Tab> n:vim
@@ -43,11 +50,20 @@ set scrolloff=5 sidescrolloff=10
 " integrate with system clipboard
 " set clipboard=unnamedplus,unnamed,ideaput
 
+"-- motions
+
+"-- camelcase motions
+"map w [w
+"map e ]w
+"map b [b
+
 let mapleader = "'"
 nnoremap <leader>= :action EditorIncreaseFontSize<CR>
 nnoremap <leader>- :action EditorDecreaseFontSize<CR>
 
 nnoremap <leader>x :action CloseAllEditorsButActive<CR>
+
+map <C-n> <Plug>NextWholeOccurrence
 
 nmap <BS> :nohlsearch<CR>
 "-- actions
@@ -120,3 +136,5 @@ nnoremap <C-S-k> :action ExpandRegionRecursively<CR>
 
 nnoremap <C-j> :action MethodDown<CR>
 nnoremap <C-k> :action MethodUp<CR>
+
+set ideastrictmode

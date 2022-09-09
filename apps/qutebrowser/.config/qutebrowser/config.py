@@ -1,5 +1,6 @@
 from qutebrowser.config.configfiles import ConfigAPI
 from qutebrowser.config.config import ConfigContainer
+from qutebrowser.api import interceptor
 
 def fromGlobals() -> tuple[ConfigAPI, ConfigContainer]:
     g = globals()
@@ -56,6 +57,7 @@ def resetDefaultBindings():
     # tab-close
     unmap("d")
     nmap("dd", "tab-close")
+    unmap("yy")
 
     # zooming, undo zooming
     unmap("+", "-", "=")
@@ -72,7 +74,7 @@ def keybindings():
 
     # copying
     nmap("cc", "yank selection")
-    nmap("y", "yank selection")
+    nmap('yy', "yank url")
 
     # hints
     nmap("gi", "hint images")
@@ -87,12 +89,14 @@ def keybindings():
     nmap("tn", "tab-next")
     nmap("tp", "tab-prev")
     nmap("tt", "set-cmd-text -s :tab-select ")
+    nmap('<alt-b>', 'hint links spawn gobble vivaldi-stable {hint-url}')
 
+    imap("<escape>", "mode-enter normal")
     pmap("<escape>", "mode-enter normal")
 
     # watching videos
-    nmap('M', 'hint links spawn --userscript view_in_mpv {hint-url}')
-    nmap('cc','hint links spawn --userscript copy-url {hint-url}')
+    nmap('cu','hint links spawn --userscript copy-url {hint-url}')
+    nmap('M', 'hint links spawn --userscript youtube-to-yewtu {hint-url}')
 
 keybindings()
 
@@ -123,10 +127,7 @@ def options():
     c.content.headers.user_agent = 'Mozilla/5.0 ({os_info}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99 Safari/537.36'
     c.content.headers.do_not_track = True
     c.content.plugins = True
-    c.content.blocking.adblock.lists = [
-        'https://easylist.to/easylist/easylist.txt',
-        'https://easylist.to/easylist/easyprivacy.txt'
-    ]
+    c.content.blocking.adblock.lists = ['https://easylist.to/easylist/easylist.txt', 'https://easylist.to/easylist/easyprivacy.txt', 'https://easylist-downloads.adblockplus.org/easylistdutch.txt', 'https://easylist-downloads.adblockplus.org/abp-filters-anti-cv.txt', 'https://www.i-dont-care-about-cookies.eu/abp/', 'https://secure.fanboy.co.nz/fanboy-cookiemonster.txt', 'https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2021.txt']
 
     # tabs
     c.tabs.select_on_remove = "prev"
@@ -162,7 +163,8 @@ c.aliases = {
 
 # search engines
 c.url.searchengines = {
-    'DEFAULT': 'https://duckduckgo.com?q=!g+{}',
+    'DEFAULT': 'https://www.google.com/search?hl=en&q={}',
+    'ddg': 'https://duckduckgo.com?q=!g+{}',
     'lh': 'http://localhost{}',
     'yt': 'https://yewtu.be/search?q={}',
     'dh': 'https://hub.docker.com/search?q={}'
@@ -177,3 +179,19 @@ blood(c,{
         'horizontal': 8,
     },
 })
+
+# def int_fn(info: interceptor.Request):
+#     """Block the given request if necessary."""
+#     # if (info.resource_type != interceptor.ResourceType.main_frame or info.request_url.scheme() in {"data", "blob"}):
+#     #     return
+#     # url = info.request_url
+#     # if url.startswith("https://youtube.com/watch?v="):
+#     #     info.redirect(url.replace("www.youtube.com", "www.yewtu.be"))
+#     # redir = REDIRECT_MAP.get(url.host())
+#     # if redir is not None and redir(url) is not False:
+#     # 	message.info("Redirecting to " + url.toString())
+#     # info.redirect(url)
+
+
+# interceptor.register(int_fn)
+
