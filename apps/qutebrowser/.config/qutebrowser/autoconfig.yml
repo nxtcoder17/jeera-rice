@@ -6,33 +6,7 @@
 
 config_version: 2
 settings:
-  bindings.commands:
-    global:
-      normal:
-        +: null
-        '-': null
-        ;: 'set-cmd-text :'
-        <Alt+k>: 'set-cmd-text -s :quickmark-add '
-        <Ctrl+->: zoom-out
-        <Ctrl+=>: zoom-in
-        <Ctrl+n>: null
-        '=': null
-        O: 'set-cmd-text -s :open -t '
-        Y: yank selection
-        d: null
-        dd: tab-close
-        e: set-cmd-text :open -t {url:pretty}
-        gi: hint inputs
-        sn: tab-next
-        sp: tab-prev
-        tn: tab-next
-        tp: tab-prev
-        tt: 'set-cmd-text -s :tab-select '
-        y: yank
-        zz: zoom
-  colors.webpage.darkmode.enabled:
-    global: true
-  content.blocking.method:
-    global: both
-  qt.highdpi:
-    global: true
+  colors.webpage.darkmode.algorithm:
+    global: brightness-rgb
+  colors.webpage.darkmode.contrast:
+    global: 0.0

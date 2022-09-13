@@ -1,15 +1,13 @@
 from qutebrowser.config.configfiles import ConfigAPI
 from qutebrowser.config.config import ConfigContainer
-from qutebrowser.api import interceptor
 
 def fromGlobals() -> tuple[ConfigAPI, ConfigContainer]:
     g = globals()
     return g["config"], g["c"]
 
-config, c = fromGlobals()
 
+config, c = fromGlobals()
 config.load_autoconfig(True)
-config.set("colors.webpage.darkmode.enabled", True)
 
 def nmap(key, command):
     config.bind(key, command, mode="normal")
@@ -30,7 +28,7 @@ def unmap(*argv):
 nmap(';', 'set-cmd-text :')
 
 def hints():
-    c.hints.chars = "ajskdlfei"
+    c.hints.chars = "asdfghjkl"
     c.hints.auto_follow = "always"
     c.hints.scatter =  False
 
@@ -50,6 +48,7 @@ def fonts():
     c.fonts.completion.entry = f"default_size '{myFont}'"
     c.fonts.tabs.selected = f"default_size '{myFont}'"
     c.fonts.tabs.unselected = f"15px '{myFont}'"
+    c.fonts.contextmenu = c.fonts.hints
 
 fonts()
 
@@ -111,12 +110,24 @@ def options():
     c.auto_save.session = True
     c.session.lazy_restore = True
 
+    c.downloads.position = "bottom"
+
     # zoom levels
     c.zoom.levels = ['25%', '33%', '50%', '67%', '75%', '90%', '100%', '110%', '125%', '150%', '175%', '200%', '250%', '300%', '400%', '500%']
     c.zoom.default = '125%'
 
     # colors:
     c.colors.webpage.darkmode.enabled = True
+    c.colors.webpage.darkmode.contrast = 0.1717
+
+    # source: https://www.reddit.com/r/qutebrowser/comments/o0dl4y/comment/h2p8dri/?utm_source=share&utm_medium=web2x&context=3
+    # c.colors.webpage.darkmode.enabled = True
+    # c.colors.webpage.darkmode.algorithm = 'lightness-hsl'
+    # c.colors.webpage.darkmode.contrast = -.022
+    # c.colors.webpage.darkmode.threshold.text = 150
+    # c.colors.webpage.darkmode.threshold.background = 100
+    # c.colors.webpage.darkmode.policy.images = 'always'
+    # c.colors.webpage.darkmode.grayscale.images = 0.35
 
     # webpage, content, headers
     c.scrolling.smooth = False
@@ -129,6 +140,11 @@ def options():
     c.content.plugins = True
     c.content.blocking.adblock.lists = ['https://easylist.to/easylist/easylist.txt', 'https://easylist.to/easylist/easyprivacy.txt', 'https://easylist-downloads.adblockplus.org/easylistdutch.txt', 'https://easylist-downloads.adblockplus.org/abp-filters-anti-cv.txt', 'https://www.i-dont-care-about-cookies.eu/abp/', 'https://secure.fanboy.co.nz/fanboy-cookiemonster.txt', 'https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2021.txt']
 
+    c.content.user_stylesheets = [
+        "./stylesheets/dark-defaults-override.css",
+    ]
+
+
     # tabs
     c.tabs.select_on_remove = "prev"
 
@@ -139,6 +155,7 @@ def options():
     # mode settings
     c.input.insert_mode.auto_leave = True
     c.input.insert_mode.auto_load = True
+
 
 options()
 
@@ -165,7 +182,7 @@ c.aliases = {
 c.url.searchengines = {
     'DEFAULT': 'https://www.google.com/search?hl=en&q={}',
     'ddg': 'https://duckduckgo.com?q=!g+{}',
-    'lh': 'http://localhost{}',
+    'lh': 'http://localhost:{}',
     'yt': 'https://yewtu.be/search?q={}',
     'dh': 'https://hub.docker.com/search?q={}'
 }
@@ -180,18 +197,5 @@ blood(c,{
     },
 })
 
-# def int_fn(info: interceptor.Request):
-#     """Block the given request if necessary."""
-#     # if (info.resource_type != interceptor.ResourceType.main_frame or info.request_url.scheme() in {"data", "blob"}):
-#     #     return
-#     # url = info.request_url
-#     # if url.startswith("https://youtube.com/watch?v="):
-#     #     info.redirect(url.replace("www.youtube.com", "www.yewtu.be"))
-#     # redir = REDIRECT_MAP.get(url.host())
-#     # if redir is not None and redir(url) is not False:
-#     # 	message.info("Redirecting to " + url.toString())
-#     # info.redirect(url)
-
-
-# interceptor.register(int_fn)
-
+from themes.nxtcoder17 import useTheme
+useTheme(c)

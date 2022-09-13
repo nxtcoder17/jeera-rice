@@ -111,7 +111,7 @@ nmap <C-i> <Action>(Forward)
 nnoremap rr :action Refactorings.QuickListPopupAction<CR>
 vnoremap rr :action Refactorings.QuickListPopupAction<CR>
 nmap K <Action>(QuickJavaDoc)
-nnoremap <A-k> :action QuickImplementations<CR>
+"nnoremap <A-k> :action QuickImplementations<CR>
 
 nmap <C-p> :action ParameterInfo<CR>
 imap <C-p> <C-o>:action ParameterInfo<CR>
@@ -136,5 +136,8 @@ nnoremap <C-S-k> :action ExpandRegionRecursively<CR>
 
 nnoremap <C-j> :action MethodDown<CR>
 nnoremap <C-k> :action MethodUp<CR>
+
+nnoremap <A-j> }
+nnoremap <A-k> {
 
 set ideastrictmode
