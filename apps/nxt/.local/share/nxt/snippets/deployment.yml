@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Name}}
+  namespace: kl-core
+  labels:
+    app: {{.Name}}
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: {{.Name}}
+  template:
+    metadata:
+      labels:
+        app: {{.Name}}
+    spec:
+      serviceAccountName: {{.SvcAccountName}}
+      containers:
+      - name: main
+        image: {{.Image}}
+        imagePullPolicy: Always
+        # envFrom:
+          # - secretRef:
+          #     name: <name-of-resource>
+          # - configMapRef:
+          #     name: <name-of-resource>
+          #
+        # env:
+        #   - key:
+        #     value: 
+        resources:
+          requests:
+            cpu: 10m
+            memory: 20Mi
+          limits:
+            memory: 100Mi

@@ -9,4 +9,14 @@ settings:
   colors.webpage.darkmode.algorithm:
     global: brightness-rgb
   colors.webpage.darkmode.contrast:
-    global: 0.0
+    global: 1.0
+  colors.webpage.darkmode.enabled:
+    global: false
+  colors.webpage.darkmode.grayscale.all:
+    global: true
+  colors.webpage.darkmode.grayscale.images:
+    global: 0.9
+  colors.webpage.darkmode.policy.images:
+    global: smart
+  colors.webpage.darkmode.policy.page:
+    global: smart

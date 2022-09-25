@@ -3,17 +3,18 @@ set hlsearch
 set ignorecase
 set smartcase
 set incsearch
-set surround
-set multiple-cursors
-set textobj-entire
+Plug 'kana/vim-textobj-entire'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-surround'
 Plug 'bkad/CamelCaseMotion'
-
-set argtextobj
+Plug 'dbakker/vim-paragraph-motion'
+Plug 'machakann/vim-highlightedyank'
+Plug 'vim-scripts/argtextobj.vim'
 let g:argtextobj_pairs="[:],(:),<:>"
 
-set vim-highlightedyank
+
 let g:highlightedyank_highlight_duration = "300"
-let g:highlightedyank_highlight_color = "rgba(160, 160, 160, 155)"
+let g:highlightedyank_highlight_color = "rgba(30, 102, 212, 115)"
 
 "-- idea enhancements
 set ideajoin
@@ -33,7 +34,7 @@ sethandler <C-S-j> n:vim
 sethandler <C-S-k> n:vim
 sethandler <C-m> a:ide
 sethandler <C-n> n:vim
-
+sethandler <C-x> n:vim
 
 sethandler <Tab> n:vim
 sethandler <S-Tab> n:vim
@@ -65,11 +66,11 @@ nnoremap <leader>x :action CloseAllEditorsButActive<CR>
 
 map <C-n> <Plug>NextWholeOccurrence
 
-nmap <BS> :nohlsearch<CR>
+nmap <BS> :nohlsearch<CR> \| :action CloseAllNotifications<CR>
 "-- actions
 nnoremap <Tab> :action NextTab<CR>
 nnoremap <S-Tab> :action PreviousTab<CR>
-nnoremap zz :action ViewNavigationBar \| :action ViewStatusBar<CR> \| :action EditorBreadcrumbsHideBoth<CR>
+nnoremap zz :action ViewNavigationBar \| :action ViewStatusBar<CR> \| :action EditorBreadcrumbsHideBoth<CR> \| :action CloseAllNotifications<CR>
 
 nnoremap sf :action GotoFile<CR>
 
@@ -84,7 +85,7 @@ nmap sH :action TabShiftActions.ShiftLeft<CR>
 nmap sJ :action TabShiftActions.ShiftDown<CR>
 nmap sK :action TabShiftActions.ShiftUp<CR>
 
-  nnoremap si :action SplitVertically<CR>
+nnoremap si :action SplitVertically<CR>
 nnoremap sm :action SplitHorizontally<CR>
 nnoremap s0 :action Unsplit<CR>
 
@@ -111,6 +112,7 @@ nmap <C-i> <Action>(Forward)
 nnoremap rr :action Refactorings.QuickListPopupAction<CR>
 vnoremap rr :action Refactorings.QuickListPopupAction<CR>
 nmap K <Action>(QuickJavaDoc)
+"nmap K :action ShowErrorDescription<CR>
 "nnoremap <A-k> :action QuickImplementations<CR>
 
 nmap <C-p> :action ParameterInfo<CR>

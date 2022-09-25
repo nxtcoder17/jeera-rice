@@ -1,5 +1,4 @@
 # vim: set ft=i3config:
-
 #  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄        ▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄
 # ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░▌      ▐░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌
 #  ▀▀▀▀█░█▀▀▀▀  ▀▀▀▀▀▀▀▀▀█░▌▐░█▀▀▀▀▀▀▀▀▀ ▐░█▀▀▀▀▀▀▀█░▌▐░▌░▌     ▐░▌▐░█▀▀▀▀▀▀▀▀▀  ▀▀▀▀█░█▀▀▀▀ ▐░█▀▀▀▀▀▀▀▀▀ 
@@ -123,17 +122,17 @@ bindsym $mod+$shift+j move down
 bindsym $mod+k focus up
 bindsym $mod+$shift+k move up
 
-bindsym $mod+Left focus Left
-bindsym $mod+$shift+Left move left
+bindsym $mod+$left focus Left
+bindsym $mod+$shift+$left move left
 
-bindsym $mod+Right focus right
-bindsym $mod+$shift+Right move right
+bindsym $mod+$right focus right
+bindsym $mod+$shift+$right move right
 
-bindsym $mod+Down focus down
-bindsym $mod+$shift+Down move down
+bindsym $mod+$down focus down
+bindsym $mod+$shift+$down move down
 
-bindsym $mod+Up focus up
-bindsym $mod+$shift+Up move up
+bindsym $mod+$up focus up
+bindsym $mod+$shift+$up move up
 
 bindsym $alt + $shift + $left     resize shrink width 10 px or 1 ppt
 bindsym $alt + $shift + $right    resize grow width 10 px or 1 ppt
@@ -319,3 +318,5 @@ for_window [title="nxthelper"] border pixel 3
 
 exec "$startNxtTerm"
 exec_always --no-startup-id i3-auto-layout
+
+bindsym $ctrl+x exec warpd --hint; echo "hello-world"

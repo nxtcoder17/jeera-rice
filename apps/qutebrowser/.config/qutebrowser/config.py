@@ -153,7 +153,7 @@ def options():
     c.url.default_page = "about:blank"
 
     # mode settings
-    c.input.insert_mode.auto_leave = True
+    # c.input.insert_mode.auto_leave = True
     c.input.insert_mode.auto_load = True
 
 
