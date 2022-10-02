@@ -23,6 +23,8 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	end,
 })
 
+vim.cmd("au! BufNewFile *.cpp :-1r " .. "~/.config/nvim/templates/competitive.cpp")
+
 -- vim.api.nvim_create_autocmd("BufWritePost", {
 -- 	pattern = "*",
 -- 	callback = function()

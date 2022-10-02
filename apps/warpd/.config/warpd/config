@@ -1,1 +1,8 @@
-exit: x
+exit: C-e
+cursor_color: #27f2db
+cursor_size: 11
+scroll_speed: 500
+
+# hint_bgcolor: #8aa7ab
+hint_fgcolor: #38e8ff
+hint_font: "Comic Code Ligatures Medium"

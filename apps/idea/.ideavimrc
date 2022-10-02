@@ -35,6 +35,8 @@ sethandler <C-S-k> n:vim
 sethandler <C-m> a:ide
 sethandler <C-n> n:vim
 sethandler <C-x> n:vim
+sethandler <C-[> a:ide
+sethandler <C-]> a:ide
 
 sethandler <Tab> n:vim
 sethandler <S-Tab> n:vim

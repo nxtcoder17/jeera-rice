@@ -133,7 +133,7 @@ set --global hydro_symbol_git_behind $__fish_git_prompt_char_upstream_behind
 
 # export LD_LIBRARY_PATH=/usr/local/boost_1_54_0/stage/lib:$LD_LIBRARY_PATH
 #
-function wr --description "restarts wireguard"
+function wgr --description "restarts wireguard"
     wg-quick down "$argv"
     wg-quick up "$argv"
 end

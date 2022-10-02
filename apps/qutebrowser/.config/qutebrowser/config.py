@@ -118,7 +118,8 @@ def options():
 
     # colors:
     c.colors.webpage.darkmode.enabled = True
-    c.colors.webpage.darkmode.contrast = 0.1717
+    # c.colors.webpage.darkmode.contrast = 0.5
+    # c.colors.webpage.darkmode.contrast = 0.1717
 
     # source: https://www.reddit.com/r/qutebrowser/comments/o0dl4y/comment/h2p8dri/?utm_source=share&utm_medium=web2x&context=3
     # c.colors.webpage.darkmode.enabled = True
