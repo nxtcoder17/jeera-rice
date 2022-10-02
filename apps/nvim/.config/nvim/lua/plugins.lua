@@ -229,17 +229,6 @@ local function withCodingSetup()
 	use({ "chaoren/vim-wordmotion", event = events.InsertEnter })
 	use({ "mg979/vim-visual-multi", event = events.BufReadPost })
 
-	-- use({
-	-- 	"simrat39/symbols-outline.nvim",
-	-- 	event = events.BufReadPost,
-	-- 	after = "nvim-lspconfig",
-	-- 	config = function()
-	-- 		vim.g.symbols_outline = {
-	-- 			auto_preview = false,
-	-- 		}
-	-- 	end,
-	-- })
-
 	use({
 		"windwp/nvim-autopairs",
 		event = events.InsertEnter,
@@ -467,6 +456,19 @@ local function withAsthetics()
 	-- tmux
 	-- use("christoomey/vim-tmux-navigator")
 	use({ "alexghergh/nvim-tmux-navigation" })
+
+	use ({ "anuvyklack/windows.nvim",
+		requires = {
+			"anuvyklack/middleclass",
+			"anuvyklack/animation.nvim"
+		},
+		config = function()
+			vim.o.winwidth = 10
+			vim.o.winminwidth = 10
+			vim.o.equalalways = false
+			require('windows').setup()
+		end
+	})
 end
 
 local function minimalPackages()
