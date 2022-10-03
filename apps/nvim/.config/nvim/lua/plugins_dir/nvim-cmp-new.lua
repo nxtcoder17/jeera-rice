@@ -30,14 +30,10 @@ local icons = {
 cmp.setup({
 	snippet = {
 		expand = function(args)
-			-- require("snippy").expand_snippet(args.body)
-			vim.fn["UltiSnips#Anon"](args.body)
-		end,
+			require("snippy").expand_snippet(args.body)
+		end
 	},
-	-- window = {
-	-- 	completion = cmp.config.window.bordered(),
-	-- 	documentation = cmp.config.window.bordered(),
-	-- },
+	window = {},
 	mapping = cmp.mapping.preset.insert({
 		["<C-b>"] = cmp.mapping.scroll_docs(-4),
 		["<C-f>"] = cmp.mapping.scroll_docs(4),
@@ -49,7 +45,7 @@ cmp.setup({
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp_signature_help" },
 		{ name = "nvim_lsp", max_item_count = 15, group_index = 1 },
-		{ name = "ultisnips" },
+		-- { name = "ultisnips" },
 		-- { name = "copilot", group_index = 2 },
 		{ name = "treesitter", group_index = 2 },
 		{ name = "path", max_item_count = 10, group_index = 2 },
@@ -80,7 +76,8 @@ cmp.setup.filetype("gitcommit", {
 cmp.setup.cmdline("/", {
 	mapping = cmp.mapping.preset.cmdline(),
 	sources = {
-		{ name = "buffer" },
+		-- { name = "buffer" },
+		{ name = "cmdline" },
 	},
 })
 

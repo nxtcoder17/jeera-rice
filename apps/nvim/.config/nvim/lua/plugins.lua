@@ -1,18 +1,5 @@
 local fn = vim.fn
-local install_path = fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
 
-if fn.empty(fn.glob(install_path)) > 0 then
-	local packer_bootstrap = fn.system({
-		"git",
-		"clone",
-		"--depth",
-		"1",
-		"https://github.com/wbthomason/packer.nvim",
-		install_path,
-	})
-end
-
-vim.cmd [[packadd packer.nvim]]
 local packer = require("packer")
 
 local events = {
@@ -29,22 +16,69 @@ local FileTypes = {
 	javascriptreact = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
 }
 
-local function withLsp()
-	local first = "nvim-lspconfig"
+---------------------------------------------------------------------------------------
+local function colors()
 	use({
-		"neovim/nvim-lspconfig",
-		event = events.BufReadPost,
+		"rebelot/kanagawa.nvim",
 		config = function()
-			require("lsp")
+			local defaultColors = require("kanagawa.colors").setup()
+			local colors = {
+				nxtSelection1 = "#273e5e",
+				MiniIndentscopeSymbol = "red",
+			}
+
+			local overrides = {
+				Visual = {
+					bg = colors.nxtSelection1,
+				},
+				TSException = {
+					fg = defaultColors.oniViolet,
+				},
+				TSKeywordReturn = {
+					fg = defaultColors.lightBlue,
+				},
+				javascriptTSVariableBuiltin = {
+					fg = defaultColors.lightBlue,
+				},
+			}
+
+			vim.opt.fillchars:append({
+				horiz = "━",
+				horizup = "┻",
+				horizdown = "┳",
+				vert = "┃",
+				vertleft = "┨",
+				vertright = "┣",
+				verthoriz = "╋",
+			})
+
+			require("kanagawa").setup({
+				globalStatus = true,
+				transparent = true,
+				overrides = overrides,
+				colors = colors,
+			})
+
+			vim.cmd("colorscheme kanagawa")
+			-- require("kanagawa").setup({})
 		end,
-		requires = {
-			{ "williamboman/nvim-lsp-installer", after = first },
-			{ "folke/lsp-colors.nvim", after = first },
-		},
 	})
+
+	use({ "folke/tokyonight.nvim", config = function()
+		vim.g.tokyonight_style = "night"
+		vim.g.tokyonight_italic_functions = true
+		vim.g.tokyonight_transparent = true
+		vim.g.tokyonight_italic_variables = true
+	end })
+
+	-- vim.cmd("colorscheme kanagawa")
 end
 
-local function withTS()
+local function fileManager()
+	use({ "kevinhwang91/rnvimr" })
+end
+
+local function treesitter()
 	local first = "nvim-treesitter"
 	use({
 		"nvim-treesitter/nvim-treesitter",
@@ -67,7 +101,7 @@ local function withTS()
 			},
 			{
 				"p00f/nvim-ts-rainbow",
-				commit = "7e1af3e61b8f529031",
+				-- commit = "7e1af3e61b8f529031",
 				event = events.BufReadPre,
 			},
 			{ "andymass/vim-matchup", after = first },
@@ -76,7 +110,8 @@ local function withTS()
 	})
 end
 
-local function withTelescope()
+local function fuzzyFinders()
+	-- telescope
 	local first = "telescope.nvim"
 	use({
 		"nvim-telescope/telescope.nvim",
@@ -98,44 +133,88 @@ local function withTelescope()
 			},
 		},
 	})
+
+	-- FZF lua
+	use({
+		"ibhagwan/fzf-lua",
+		event = "BufReadPost",
+		requires = {
+			"kyazdani42/nvim-web-devicons",
+			{ "junegunn/fzf", run = "./install --bin" },
+		},
+		config = function()
+			require("plugins_dir.fzf-lua")
+		end,
+	})
 end
 
-local function withCodingSetup()
-	-- syntax highlighting
-	use({ "mboughaba/i3config.vim", ft = "i3config" })
-	use({ "fladson/vim-kitty", ft = "kitty" })
+local function findAndReplace()
+	use({
+		"kevinhwang91/nvim-hlslens",
+		event = "BufReadPost",
+		config = function()
+			require("hlslens").setup({
+				calm_down = true,
+				nearest_only = true,
+				nearest_float_when = "always",
+			})
+		end,
+	})
+end
+
+local function completionEngine()
+	use({
+		"hrsh7th/nvim-cmp",
+		requires = {
+			{ "hrsh7th/cmp-nvim-lsp" },
+			{ "hrsh7th/cmp-buffer" },
+			{ "hrsh7th/cmp-path" },
+			{ "ray-x/cmp-treesitter" },
+			{ "hrsh7th/cmp-nvim-lsp-signature-help" },
+			{ "dcampos/nvim-snippy"},
+			{ "dcampos/cmp-snippy"},
+		},
+		event = events.BufReadPost,
+		config = function()
+			require("plugins_dir.nvim-cmp-new")
+		end,
+	})
+end
+
+local function lsp()
+	local lspconfig = "nvim-lspconfig"
+	use({
+		"neovim/nvim-lspconfig",
+		event = events.BufReadPost,
+		config = function()
+			require("lsp")
+		end,
+		requires = {
+			{ "williamboman/nvim-lsp-installer", after = lspconfig },
+			{ "folke/lsp-colors.nvim", after = lspconfig },
+		},
+	})
+
+	use({ "folke/lua-dev.nvim" })
+
+	-- use({ "j-hui/fidget.nvim", config = function()
+	-- 	require("fidget").setup()
+	-- end,
+	-- })
+end
+
+local function syntax()
 	use({
 		"sheerun/vim-polyglot",
 		config = function()
 			-- vim.g.polyglot_disabled = { "go" }
 		end,
 	})
+	use({ "mboughaba/i3config.vim", ft = "i3config" })
+	use({ "fladson/vim-kitty", ft = "kitty" })
+end
 
-	use({"~/workspace/nxtcoder17/graph-cli", config = function()
-			require("graphql-cli").setup({
-				command = "Gql",
-				envFile = function()
-					return string.format("%s/%s", vim.env.PWD, ".tools/gqlenv.yml")
-				end,
-			})
-	end})
-
-	-- use({
-	-- 	"nxtcoder17/graphql-cli",
-	-- 	run = "pnpm i",
-	-- 	config = function()
-	-- 		require("graphql-cli").setup({
-	-- 			command = "Gql",
-	-- 			envFile = function()
-	-- 				return string.format("%s/%s", vim.env.PWD, ".tools/gqlenv.yml")
-	-- 			end,
-	-- 		})
-	-- 	end,
-	-- })
-
-	-- language specific
-	-- INFO: for go1.18 with generic types, comment ERROR in treesitter query cause it messed up the colorscheme
-	-- INFO: should not cause any issue, as lsp would throw error anyway when there is an error
+local function lang_go()
 	use({
 		"ray-x/go.nvim",
 		event = events.BufReadPost,
@@ -144,168 +223,67 @@ local function withCodingSetup()
 			require("go").setup()
 		end,
 	})
-	
-	-- use({"ActivityWatch/aw-watcher-vim", event=events.VimEnter})
+end
 
-	-- linters
-	use({
-		"jose-elias-alvarez/null-ls.nvim",
-		after = "nvim-lspconfig",
-		event = events.BufReadPost,
-		requires = {
-			{ "nvim-lua/plenary.nvim" },
-		},
-		config = function()
-			require("plugins_dir.null-ls")
-		end,
-	})
+local function apiClients()
+	use({ "~/workspace/nxtcoder17/graph-cli", config = function()
+		require("graphql-cli").setup({
+			command = "Gql",
+			envFile = function()
+				return string.format("%s/%s", vim.env.PWD, ".tools/gqlenv.yml")
+			end,
+		})
+	end })
+end
 
-	-- refactoring
-	-- use({
-	-- 	"ThePrimeagen/refactoring.nvim",
-	-- 	requires = {
-	-- 		{ "nvim-lua/plenary.nvim" },
-	-- 		{ "nvim-treesitter/nvim-treesitter" },
-	-- 	},
-	-- 	config = function()
-	-- 		require("refactoring").setup({})
-	-- 	end,
-	-- })
-
-	-- color schemes
-	use({ "folke/tokyonight.nvim", disable = false })
-	use({
-		"rebelot/kanagawa.nvim",
-		config = function()
-			require("plugins_dir.colorscheme")
-		end,
-	})
-
-	use({ "kevinhwang91/rnvimr", commit = "e93671b4ea8" }) -- something broke in latest, i could not do splits
-	use({ "github/copilot.vim", event = events.OnInsert, opt = true }) -- copilot is bottleneck, for poor startup, and lags telescope
-
-	-- use({
-	-- 	"zbirenbaum/copilot.lua",
-	-- 	event = { "VimEnter" },
-	-- 	config = function()
-	-- 		vim.defer_fn(function()
-	-- 			require("copilot").setup()
-	-- 		end, 100)
-	-- 	end,
-	-- })
-
+local function commenting()
 	use({ "tpope/vim-commentary" })
-
 	use({
-		"ellisonleao/glow.nvim",
-		ft = "markdown",
-		event = "BufRead",
+		"folke/todo-comments.nvim",
+		event = events.BufReadPre,
 		config = function()
-			vim.g.glow_binary_path = vim.fn.stdpath("data") .. "bin"
-			vim.g.glow_border = "rounded"
+			require("plugins_dir.todo-comments")
+		end,
+	})
+
+end
+
+local function tui()
+	use({
+		"nvim-lualine/lualine.nvim",
+		requires = {
+			{ "kyazdani42/nvim-web-devicons" },
+			-- { "arkav/lualine-lsp-progress" },
+		},
+		event = "BufEnter",
+		config = function()
+			require("plugins_dir.lualine")
 		end,
 	})
 
 	use({
-		"SirVer/ultisnips",
+		"luukvbaal/stabilize.nvim",
+		event = events.BufReadPost,
 		config = function()
-			vim.g.UltiSnipsJumpForwardTrigger = "<C-i>"
+			require("stabilize").setup()
 		end,
 	})
 
 	-- use({
-	-- 	"dcampos/nvim-snippy",
-	-- 	event = events.InsertEnter,
+	-- 	"nanozuki/tabby.nvim",
+	-- 	event = events.VimEnter,
 	-- 	config = function()
-	-- 		require("snippy").setup({})
-	-- 		require("plugins_dir.nvim-snippy")
+	-- 		require("tabby").setup({})
 	-- 	end,
 	-- })
 
-	-- info: language: markdown
-	use({ "davidgranstrom/nvim-markdown-preview", ft = "markdown", event = events.BufReadPost })
+	use("kazhala/close-buffers.nvim")
 
-	use({ "tpope/vim-surround", event = events.InsertEnter })
-	use({ "chaoren/vim-wordmotion", event = events.InsertEnter })
-	use({ "mg979/vim-visual-multi", event = events.BufReadPost })
+	use({ "farmergreg/vim-lastplace", event = events.VimEnter })
+end
 
-	use({
-		"windwp/nvim-autopairs",
-		event = events.InsertEnter,
-		after = "nvim-cmp",
-		config = function()
-			require("nvim-autopairs").setup({})
-
-			local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-			local cmp = require("cmp")
-			cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
-		end,
-	})
-
-	use({ "caenrique/nvim-toggle-terminal", event = events.BufReadPost })
-
-	-- AutoCompletion
-	use({
-		"hrsh7th/nvim-cmp",
-		requires = {
-			{ "hrsh7th/cmp-nvim-lsp" },
-			{ "hrsh7th/cmp-buffer" },
-			{ "hrsh7th/cmp-path" },
-			{ "hrsh7th/nvim-cmp" },
-			{ "hrsh7th/cmp-nvim-lua" },
-			{ "ray-x/cmp-treesitter" },
-			{ "Saecki/crates.nvim" },
-			{ "quangnguyen30192/cmp-nvim-ultisnips" },
-			-- { "dcampos/cmp-snippy" },
-			{ "f3fora/cmp-spell" },
-			{ "hrsh7th/cmp-nvim-lsp-signature-help" },
-			{
-				"hrsh7th/cmp-copilot",
-				config = function()
-					require("plugins_dir.copilot")
-				end,
-			},
-			-- {
-			-- 	"zbirenbaum/copilot-cmp",
-			-- 	after = { "copilot.lua", "nvim-cmp" },
-			-- },
-		},
-		-- event = "InsertEnter",
-		event = events.BufReadPost,
-		-- commit = "f573479528cac39ff5917a4679529e4435b71ffe", -- cause the next version breaking it all
-		config = function()
-			require("plugins_dir.nvim-cmp-new")
-		end,
-	})
-
-	-- kubernetes
-	use({ "andrewstuart/vim-kubernetes", ft = "yaml", event = events.BufReadPost })
-
-	-- auto session
-	use({
-		"rmagatti/auto-session",
-		config = function()
-			vim.o.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
-			require("auto-session").setup({
-				log_level = "info",
-				-- auto_session_enabled = true,
-				auto_session_enabled = true,
-				auto_restore_enabled = true,
-				auto_session_suppress_dirs = { "~/" },
-				auto_session_root_dir = vim.fn.stdpath("data") .. "/sessions/",
-			})
-		end,
-	})
-
-	-- search and replace
-	use({
-		"nvim-pack/nvim-spectre",
-		event = events.BufReadPost,
-		config = function()
-			require("spectre").setup()
-		end,
-	})
-
+local function navigation()
+	use({ "alexghergh/nvim-tmux-navigation" })
 	use({
 		"echasnovski/mini.nvim",
 		branch = "stable",
@@ -332,180 +310,53 @@ local function withCodingSetup()
 			})
 		end,
 	})
-
-	-- use({
-	-- 	"lukas-reineke/indent-blankline.nvim",
-	-- 	event = "BufReadPre",
-	-- 	config = function()
-	-- 		require("indent_blankline").setup({
-	-- 			char = "┊",
-	-- 			filetype_exclude = { "help", "packer" },
-	-- 			buftype_exclude = { "terminal", "nofile" },
-	-- 			show_trailing_blankline_indent = true,
-	-- 		})
-	-- 	end,
-	-- })
-
-	use({ "sindrets/diffview.nvim", event = events.BufReadPre })
-
-	use_rocks({ "lrexlib-pcre" })
-	use_rocks({ "base64" })
-	use_rocks({ "dkjson" })
-
-	use({ "folke/lua-dev.nvim" })
 end
 
-local function withAsthetics()
+local function session()
 	use({
-		"luukvbaal/stabilize.nvim",
-		event = events.BufReadPost,
+		"rmagatti/auto-session",
 		config = function()
-			require("stabilize").setup()
-		end,
-	})
-
-	use({
-		"stevearc/dressing.nvim",
-		config = function()
-			require("dressing").setup({
-				input = {
-					enabled = true,
-				},
+			vim.o.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
+			require("auto-session").setup({
+				log_level = "info",
+				-- auto_session_enabled = true,
+				auto_session_enabled = true,
+				auto_restore_enabled = true,
+				auto_session_suppress_dirs = { "~/" },
+				auto_session_root_dir = vim.fn.stdpath("data") .. "/sessions/",
 			})
 		end,
 	})
-
-	use({
-		"folke/todo-comments.nvim",
-		event = events.BufReadPre,
-		config = function()
-			require("plugins_dir.todo-comments")
-		end,
-	})
-
-	--  align vertically based on search
-	use({ "godlygeek/tabular", event = events.BufReadPost })
-
-	use({
-		"j-hui/fidget.nvim",
-		config = function()
-			require("fidget").setup()
-		end,
-	})
-
-	-- tabs with names
-	use({
-		"nanozuki/tabby.nvim",
-		event = events.VimEnter,
-		config = function()
-			require("tabby").setup({})
-		end,
-	})
-
-	-- buffers
-	use("kazhala/close-buffers.nvim")
-
-	use({
-		"kevinhwang91/nvim-hlslens",
-		event = "BufReadPost",
-		config = function()
-			require("hlslens").setup({
-				calm_down = true,
-				nearest_only = true,
-				nearest_float_when = "always",
-			})
-		end,
-	})
-
-	use({
-		"norcalli/nvim-colorizer.lua",
-		event = events.BufReadPre,
-		config = function()
-			require("colorizer").setup()
-		end,
-	})
-
-	-- back to where you left
-	use({ "farmergreg/vim-lastplace", event = events.VimEnter })
-
-	-- status line
-	use({
-		"nvim-lualine/lualine.nvim",
-		requires = {
-			{ "kyazdani42/nvim-web-devicons" },
-			-- { "arkav/lualine-lsp-progress" },
-		},
-		event = "BufEnter",
-		config = function()
-			require("plugins_dir.lualine")
-		end,
-	})
-
-	use({
-		"ibhagwan/fzf-lua",
-		event = "BufReadPost",
-		requires = {
-			"kyazdani42/nvim-web-devicons",
-			{ "junegunn/fzf", run = "./install --bin" },
-		},
-		config = function()
-			require("plugins_dir.fzf-lua")
-		end,
-	})
-
-	-- tmux
-	-- use("christoomey/vim-tmux-navigator")
-	use({ "alexghergh/nvim-tmux-navigation" })
-
-	use ({ "anuvyklack/windows.nvim",
-		requires = {
-			"anuvyklack/middleclass",
-			"anuvyklack/animation.nvim"
-		},
-		config = function()
-			vim.o.winwidth = 10
-			vim.o.winminwidth = 10
-			vim.o.equalalways = false
-			require('windows').setup()
-		end
-	})
 end
 
-local function minimalPackages()
-	vim.cmd [[packadd packer.nvim]]
-	require("packer").startup({
-		function()
-			_G.use = use
-			_G.use_rocks = use_rocks
+vim.cmd [[packadd packer.nvim]]
+require("packer").startup({
+	function()
+		_G.use = use
+		_G.use_rocks = use_rocks
 
-			use{"wbthomason/packer.nvim", opt=true}
-			use({ "dstein64/vim-startuptime", cmd = "StartupTime" })
-			use("lewis6991/impatient.nvim") -- for faster neovim
-
-			use({
-				"nathom/filetype.nvim",
-				config = function()
-					vim.g.did_load_filetypes = 1
-				end,
-			})
-
-			use {
-				'glacambre/firenvim',
-				run = function() vim.fn['firenvim#install'](0) end 
-			}
-
-			withTelescope()
-			withLsp()
-			withTS()
-
-			withCodingSetup()
-			withAsthetics()
+		use({ "wbthomason/packer.nvim", opt = true })
+		use("lewis6991/impatient.nvim") -- for faster neovim
+		use({ "nathom/filetype.nvim", config = function()
+			vim.g.did_load_filetypes = 1
 		end,
-		config = {
-			-- opt_default = true,
-			profile = { enable = true, threshold = 1 },
-		},
-	})
-end
-
-minimalPackages()
+		})
+		syntax()
+		colors()
+		navigation()
+		fileManager()
+		treesitter()
+		fuzzyFinders()
+		findAndReplace()
+		completionEngine()
+		lsp()
+		apiClients()
+		commenting()
+		tui()
+		lang_go()
+		session()
+	end,
+	config = {
+		profile = { enable = true, threshold = 1 },
+	}
+})

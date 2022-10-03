@@ -109,7 +109,7 @@ local function lspNative()
 	maps["nnoremap"]("se", ":lua vim.diagnostic.open_float()<CR>")
 
 	-- lsp formatting
-	maps["nnoremap"]("f;", "<cmd>lua vim.lsp.buf.formatting()<CR>")
+	maps["nnoremap"]("f;", "<cmd>lua vim.lsp.buf.format({async = true })<CR>")
 
 	maps["nnoremap"]("K", "<Cmd>lua vim.lsp.buf.hover()<CR>")
 	maps["inoremap"]("<C-k>", "<Cmd>lua vim.lsp.buf.signature_help()<CR>")
@@ -201,8 +201,6 @@ maps["nnoremap"]("<M-j>", "<cmd>lua require'nvim-tmux-navigation'.NvimTmuxNaviga
 maps["nnoremap"]("<M-k>", "<cmd>lua require'nvim-tmux-navigation'.NvimTmuxNavigateUp()<CR>")
 
 -- lsp
-vim.cmd("command! -nargs=0 Root execute 'windo tcd g:root_dir'")
-vim.cmd("command! -nargs=1 Cd execute 'windo tcd <f-args> <CR>'")
-
+vim.cmd("command! -nargs=0 Root execute 'windo tcd g:root_dir'") vim.cmd("command! -nargs=1 Cd execute 'windo tcd <f-args> <CR>'")
 --
 vim.cmd("cnoreabbrev tcd windo tcd")

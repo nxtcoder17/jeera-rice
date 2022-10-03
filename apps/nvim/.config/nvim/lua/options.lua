@@ -1,3 +1,5 @@
+-- for neovim: 0.8
+
 local opt = vim.opt
 
 -- cause i always use a dark variant theme
@@ -9,6 +11,8 @@ opt.cmdheight = 1
 -- opt.cursorline = true
 -- silently move between windows
 opt.hidden = true
+
+opt.shortmess = opt.shortmess + 'F'
 
 -- better response to file changes from external effects
 opt.autoread = true

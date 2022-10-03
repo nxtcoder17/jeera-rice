@@ -8,7 +8,10 @@ vim.diagnostic.config({
 	-- },
 	virtual_text = false,
 	signs = {
-		severity = { min = vim.diagnostic.severity.WARN, max = vim.diagnostic.severity.ERROR },
+		severity = {
+		  min = vim.diagnostic.severity.WARN,
+		  max = vim.diagnostic.severity.ERROR,
+		},
 	},
 	float = {
 		source = "always",
