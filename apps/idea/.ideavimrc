@@ -3,13 +3,16 @@ set hlsearch
 set ignorecase
 set smartcase
 set incsearch
-Plug 'kana/vim-textobj-entire'
+
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-surround'
 Plug 'bkad/CamelCaseMotion'
 Plug 'dbakker/vim-paragraph-motion'
 Plug 'machakann/vim-highlightedyank'
 Plug 'vim-scripts/argtextobj.vim'
+Plug 'kana/vim-textobj-entire'
+Plug 'michaeljsmith/vim-indent-object'
+
 let g:argtextobj_pairs="[:],(:),<:>"
 
 

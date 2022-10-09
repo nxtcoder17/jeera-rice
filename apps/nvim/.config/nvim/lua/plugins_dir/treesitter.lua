@@ -10,10 +10,10 @@ require("nvim-treesitter.configs").setup({
 	incremental_selection = {
 		enable = true,
 		keymaps = {
-			init_selection = "<C-k>",
-			node_incremental = "<c-k>",
+			init_selection = "<C-e>",
+			node_incremental = "<c-e>",
 			-- scope_incremental = "<c-w>",
-			node_decremental = "<C-j>",
+			node_decremental = "<C-r>",
 		},
 	},
 	indent = { enable = false },
@@ -66,14 +66,14 @@ require("nvim-treesitter.configs").setup({
 	-- },
 
 	textobjects = {
-		-- lsp_interop = {
-		-- 	enable = true,
-		-- 	border = "none",
-		-- 	peek_definition_code = {
-		-- 		["<leader>df"] = "@function.outer",
-		-- 		["<leader>dF"] = "@class.outer",
-		-- 	},
-		-- },
+		lsp_interop = {
+			enable = true,
+			border = "none",
+			peek_definition_code = {
+				["<leader>df"] = "@function.outer",
+				["<leader>dF"] = "@class.outer",
+			},
+		},
 
 		-- move = {
 		-- 	enable = true,

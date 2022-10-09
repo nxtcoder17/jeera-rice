@@ -160,6 +160,8 @@ local function findAndReplace()
 			})
 		end,
 	})
+
+	use({"mg979/vim-visual-multi"})
 end
 
 local function completionEngine()
@@ -171,8 +173,8 @@ local function completionEngine()
 			{ "hrsh7th/cmp-path" },
 			{ "ray-x/cmp-treesitter" },
 			{ "hrsh7th/cmp-nvim-lsp-signature-help" },
-			{ "dcampos/nvim-snippy"},
-			{ "dcampos/cmp-snippy"},
+			{ "dcampos/nvim-snippy" },
+			{ "dcampos/cmp-snippy" },
 		},
 		event = events.BufReadPost,
 		config = function()
@@ -196,6 +198,10 @@ local function lsp()
 	})
 
 	use({ "folke/lua-dev.nvim" })
+
+	use({"jose-elias-alvarez/null-ls.nvim", config = function() 
+		require("plugins_dir.null-ls")
+	end})
 
 	-- use({ "j-hui/fidget.nvim", config = function()
 	-- 	require("fidget").setup()
@@ -234,6 +240,9 @@ local function apiClients()
 			end,
 		})
 	end })
+
+	-- kubernetes
+	use({ "andrewstuart/vim-kubernetes", ft = "yaml", event = events.BufReadPost })
 end
 
 local function commenting()
@@ -282,8 +291,9 @@ local function tui()
 	use({ "farmergreg/vim-lastplace", event = events.VimEnter })
 end
 
-local function navigation()
+local function motions()
 	use({ "alexghergh/nvim-tmux-navigation" })
+
 	use({
 		"echasnovski/mini.nvim",
 		branch = "stable",
@@ -310,6 +320,17 @@ local function navigation()
 			})
 		end,
 	})
+
+	use({
+		"kylechui/nvim-surround",
+		tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+		config = function()
+			require("nvim-surround").setup({
+				-- Configuration here, or leave empty to use defaults
+			})
+		end
+	})
+
 end
 
 local function session()
@@ -343,7 +364,7 @@ require("packer").startup({
 		})
 		syntax()
 		colors()
-		navigation()
+		motions()
 		fileManager()
 		treesitter()
 		fuzzyFinders()

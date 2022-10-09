@@ -31,6 +31,7 @@ func main() {
 
 	runServerProxy := fmt.Sprintf("kubectl run %s --namespace %s --image=nxtcoder17/alpine.python3:nonroot --restart=Never -- sh -c 'tail -f /dev/null'", name, namespace)
 	b, err := exec.Command("bash", "-c", runServerProxy).CombinedOutput()
+
 	fmt.Printf("(kubectl): %s", b)
 	if err != nil {
 		fmt.Printf("trying to use existing pod, in case it already exists\n")
