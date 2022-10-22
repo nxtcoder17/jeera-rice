@@ -48,4 +48,4 @@ else
   kubectl -n "$namespace" exec pod/$podName -c "$container" -- sh -c "$x"
 fi
 
-kubectl -n "$namespace" delete pod/$podName --force &> /dev/null
+kubectl -n "$namespace" delete pod/$podName &> /dev/null

@@ -108,7 +108,7 @@ local function lspNative()
 	maps.nnoremap("gws", ":Telescope lsp_workspace_symbols<CR>")
 end
 
-lspNative()
+-- lspNative()
 
 -- function _G.CodeFormatting()
 --   maps.nmap("f;", "")

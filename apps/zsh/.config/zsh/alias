@@ -8,7 +8,7 @@ else
   alias ll='ls -l'
 fi
 
-alias kl='kl dev'
+# alias kl='kl dev'
 
 alias kx='kubie ctx'
 

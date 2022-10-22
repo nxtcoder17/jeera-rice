@@ -46,6 +46,15 @@ end
 M.tnoremap = function(key, value, opts) 
 	vim.api.nvim_set_keymap('t', key, value, mergeOpts({noremap= true, silent=true}, opts))
 end
+
+M.inoremap = function(key, value, opts) 
+	vim.api.nvim_set_keymap('i', key, value, mergeOpts({noremap= true, silent=true}, opts))
+end
+
+M.cnoremap = function(key, value, opts) 
+	vim.api.nvim_set_keymap('c', key, value, mergeOpts({noremap= true, silent=true}, opts))
+end
+
 -- M.vnoremap = M["vnoremap"]
 -- M.tnoremap = M["tnoremap"]
 

@@ -1,3 +1,47 @@
+vim.diagnostic.config({
+	underline = {
+		severity = {
+		  min = vim.diagnostic.severity.WARN,
+		  max = vim.diagnostic.severity.ERROR 
+		},
+	},
+	-- virtual_text = {
+	--   prefix = '☠ ',
+	--   severity = 'Error',
+	-- },
+	virtual_text = false,
+	signs = {
+		severity = {
+		  min = vim.diagnostic.severity.WARN,
+		  max = vim.diagnostic.severity.ERROR,
+		},
+	},
+	float = {
+		source = "always",
+		focusable = false,
+		border = "single",
+	},
+})
+
+-- LSP signs default
+local signs = { 
+  Error = " ",
+  Warn = " ", 
+  Hint = " ",
+  Info = " ",
+}
+
+for type, icon in pairs(signs) do
+	local hl = "DiagnosticSign" .. type
+	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+
+-- lsp handlers
+-- vim.lsp.handlers["textDocument/codeAction"] = require('fzf-lua').lsp_code_actions
+-- vim.lsp.handlers["textDocument/definition"] = require("telescope").lsp_references
+
+-- setting up lsp servers
+
 local lsp_config = require("lspconfig")
 
 local base_dir = vim.fn.stdpath("data") .. "/lsp_servers"
@@ -70,7 +114,7 @@ local function config(_config)
 	local capabilities = vim.lsp.protocol.make_client_capabilities()
 	capabilities.textDocument.completion.completionItem.snippetSupport = true
 	return vim.tbl_deep_extend("force", {
-		capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities),
+		capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities),
 	}, _config or {})
 end
 
@@ -87,44 +131,38 @@ lsp_config.tsserver.setup(config({
 	end,
 }))
 
--- sumneko_lua
-local luadev = require("lua-dev").setup({
-	lspconfig = {
-		cmd = lsp_servers.lua,
-		settings = {
-			Lua = {
-				runtime = {
-					version = "LuaJIT",
-				},
-				completion = { callSnippet = "Both" },
-				diagnostics = {
-					globals = { "vim", "use" },
-				},
-			},
-		},
-	},
+-- lua setup
+require("neodev").setup({})
+
+lsp_config.sumneko_lua.setup({
+  cmd = lsp_servers.lua,
+  -- on_attach = function()
+		-- vim.lsp.handlers["textDocument/codeAction"] = require('fzf-lua').lsp_code_actions
+		-- vim.lsp.handlers["textDocument/definition"] = require("telescope").lsp_references
+	-- end,
+  filetypes = {"lua"},
+  settings = {
+    Lua = {
+      completion = {
+        callSnippet = "Replace"
+      }
+    }
+  }
 })
 
-lsp_config.sumneko_lua.setup(luadev)
-
 -- -- yamlls
--- lsp_config.yamlls.setup(config({
---   cmd = lsp_servers.yaml,
---   filetypes = {"yaml", "yml"},
---   settings = {
---     yaml = {
---       schemaStore = {
---         url = "https://www.schemastore.org/api/json/catalog.json",
---         enable = true,
---       },
---     },
---   },
--- }))
-
--- GoLang
--- lsp_config.gopls.setup({
--- 	cmd = lsp_servers.go,
--- })
+lsp_config.yamlls.setup(config({
+  cmd = lsp_servers.yaml,
+  filetypes = {"yaml", "yml"},
+  settings = {
+    yaml = {
+      schemaStore = {
+        url = "https://www.schemastore.org/api/json/catalog.json",
+        enable = true,
+      },
+    },
+  },
+}))
 
 -- Css
 lsp_config.cssls.setup({
@@ -231,3 +269,5 @@ lsp_config.terraformls.setup(config({
 	end,
 	-- root_dir = lsp_config.util.root_pattern(".git", ".terraform"),
 }))
+
+-- require("lsp.servers")

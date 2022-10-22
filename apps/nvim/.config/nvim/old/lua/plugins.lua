@@ -1,6 +1,7 @@
 local fn = vim.fn
 
 local packer = require("packer")
+local globals = require("core.globals")
 
 local events = {
 	BufReadPost = "BufReadPost",
@@ -16,7 +17,6 @@ local FileTypes = {
 	javascriptreact = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
 }
 
----------------------------------------------------------------------------------------
 local function colors()
 	use({
 		"rebelot/kanagawa.nvim",
@@ -57,6 +57,7 @@ local function colors()
 				transparent = true,
 				overrides = overrides,
 				colors = colors,
+				specialReturn = { fg = defaultColors.lightBlue },
 			})
 
 			vim.cmd("colorscheme kanagawa")
@@ -64,12 +65,15 @@ local function colors()
 		end,
 	})
 
-	use({ "folke/tokyonight.nvim", config = function()
-		vim.g.tokyonight_style = "night"
-		vim.g.tokyonight_italic_functions = true
-		vim.g.tokyonight_transparent = true
-		vim.g.tokyonight_italic_variables = true
-	end })
+	use({
+		"folke/tokyonight.nvim",
+		config = function()
+			vim.g.tokyonight_style = "night"
+			vim.g.tokyonight_italic_functions = true
+			vim.g.tokyonight_transparent = true
+			vim.g.tokyonight_italic_variables = true
+		end,
+	})
 
 	-- vim.cmd("colorscheme kanagawa")
 end
@@ -92,7 +96,6 @@ local function treesitter()
 			{ "nvim-treesitter/nvim-treesitter-refactor", after = first },
 			{ "nvim-treesitter/nvim-treesitter-textobjects", after = first },
 			-- { "RRethy/nvim-treesitter-textsubjects", after = "nvim-treesitter" },
-			{ "andymass/vim-matchup", event = events.VimEnter },
 			{ "windwp/nvim-ts-autotag", event = events.BufReadPre, after = first },
 			{
 				"JoosepAlviste/nvim-ts-context-commentstring",
@@ -107,6 +110,15 @@ local function treesitter()
 			{ "andymass/vim-matchup", after = first },
 			{ "nvim-treesitter/playground", after = first },
 		},
+	})
+
+	use({
+		"windwp/nvim-autopairs",
+		config = function()
+			require("nvim-autopairs").setup({
+				disable_filetype = { "TelescopePrompt", "vim" },
+			})
+		end,
 	})
 end
 
@@ -131,6 +143,7 @@ local function fuzzyFinders()
 				end,
 				requires = { "tami5/sqlite.lua" },
 			},
+			{ "gbrlsnchs/telescope-lsp-handlers.nvim" },
 		},
 	})
 
@@ -161,7 +174,7 @@ local function findAndReplace()
 		end,
 	})
 
-	use({"mg979/vim-visual-multi"})
+	use({ "mg979/vim-visual-multi" })
 end
 
 local function completionEngine()
@@ -169,12 +182,21 @@ local function completionEngine()
 		"hrsh7th/nvim-cmp",
 		requires = {
 			{ "hrsh7th/cmp-nvim-lsp" },
+			{ "hrsh7th/cmp-cmdline" },
 			{ "hrsh7th/cmp-buffer" },
 			{ "hrsh7th/cmp-path" },
 			{ "ray-x/cmp-treesitter" },
 			{ "hrsh7th/cmp-nvim-lsp-signature-help" },
 			{ "dcampos/nvim-snippy" },
 			{ "dcampos/cmp-snippy" },
+			{ "saadparwaiz1/cmp_luasnip" },
+			{
+				-- "L3MON4D3/LuaSnip",
+				-- config = function()
+				-- 		require('nvim.plugins.luasnip.snippet_manager').setup()
+				-- 		require('nvim.plugins.luasnip.snippets').setup()
+				-- end,
+			},
 		},
 		event = events.BufReadPost,
 		config = function()
@@ -189,7 +211,7 @@ local function lsp()
 		"neovim/nvim-lspconfig",
 		event = events.BufReadPost,
 		config = function()
-			require("lsp")
+			require("plugins_dir.lspconfig")
 		end,
 		requires = {
 			{ "williamboman/nvim-lsp-installer", after = lspconfig },
@@ -197,11 +219,14 @@ local function lsp()
 		},
 	})
 
-	use({ "folke/lua-dev.nvim" })
+	use({ "folke/neodev.nvim" })
 
-	use({"jose-elias-alvarez/null-ls.nvim", config = function() 
-		require("plugins_dir.null-ls")
-	end})
+	use({
+		"jose-elias-alvarez/null-ls.nvim",
+		config = function()
+			require("plugins_dir.null-ls")
+		end,
+	})
 
 	-- use({ "j-hui/fidget.nvim", config = function()
 	-- 	require("fidget").setup()
@@ -212,15 +237,13 @@ end
 local function syntax()
 	use({
 		"sheerun/vim-polyglot",
-		config = function()
-			-- vim.g.polyglot_disabled = { "go" }
-		end,
+		config = function() end,
 	})
 	use({ "mboughaba/i3config.vim", ft = "i3config" })
 	use({ "fladson/vim-kitty", ft = "kitty" })
 end
 
-local function lang_go()
+local function languages()
 	use({
 		"ray-x/go.nvim",
 		event = events.BufReadPost,
@@ -232,14 +255,17 @@ local function lang_go()
 end
 
 local function apiClients()
-	use({ "~/workspace/nxtcoder17/graph-cli", config = function()
-		require("graphql-cli").setup({
-			command = "Gql",
-			envFile = function()
-				return string.format("%s/%s", vim.env.PWD, ".tools/gqlenv.yml")
-			end,
-		})
-	end })
+	use({
+		"~/workspace/nxtcoder17/graph-cli",
+		config = function()
+			require("graphql-cli").setup({
+				command = "Gql",
+				envFile = function()
+					return string.format("%s/%s", vim.env.PWD, ".tools/gqlenv.yml")
+				end,
+			})
+		end,
+	})
 
 	-- kubernetes
 	use({ "andrewstuart/vim-kubernetes", ft = "yaml", event = events.BufReadPost })
@@ -254,7 +280,6 @@ local function commenting()
 			require("plugins_dir.todo-comments")
 		end,
 	})
-
 end
 
 local function tui()
@@ -278,17 +303,35 @@ local function tui()
 		end,
 	})
 
-	-- use({
-	-- 	"nanozuki/tabby.nvim",
-	-- 	event = events.VimEnter,
-	-- 	config = function()
-	-- 		require("tabby").setup({})
-	-- 	end,
-	-- })
+	use({ "godlygeek/tabular" })
+
+	use({
+		"nanozuki/tabby.nvim",
+		event = events.VimEnter,
+		config = function()
+			require("tabby").setup({})
+		end,
+	})
 
 	use("kazhala/close-buffers.nvim")
 
 	use({ "farmergreg/vim-lastplace", event = events.VimEnter })
+
+	use({
+		"stevearc/dressing.nvim",
+		config = function()
+			require("dressing").setup({})
+		end,
+	})
+
+	--[[
+	use({
+		"rcarriga/nvim-notify",
+		config = function()
+			require("nxtcoder17.plugins.nvim-notify")
+		end,
+	})
+	--]]
 end
 
 local function motions()
@@ -328,9 +371,8 @@ local function motions()
 			require("nvim-surround").setup({
 				-- Configuration here, or leave empty to use defaults
 			})
-		end
+		end,
 	})
-
 end
 
 local function session()
@@ -339,8 +381,7 @@ local function session()
 		config = function()
 			vim.o.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
 			require("auto-session").setup({
-				log_level = "info",
-				-- auto_session_enabled = true,
+				log_level = "error",
 				auto_session_enabled = true,
 				auto_restore_enabled = true,
 				auto_session_suppress_dirs = { "~/" },
@@ -350,7 +391,19 @@ local function session()
 	})
 end
 
-vim.cmd [[packadd packer.nvim]]
+local function debugging()
+	use({ "mfussenegger/nvim-dap" })
+	use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
+	use({
+		"leoluz/nvim-dap-go",
+		config = function()
+			require("dap-go").setup()
+		end,
+	})
+	-- use({ "Pocco81/dap-buddy.nvim" })
+end
+
+vim.cmd([[packadd packer.nvim]])
 require("packer").startup({
 	function()
 		_G.use = use
@@ -358,9 +411,11 @@ require("packer").startup({
 
 		use({ "wbthomason/packer.nvim", opt = true })
 		use("lewis6991/impatient.nvim") -- for faster neovim
-		use({ "nathom/filetype.nvim", config = function()
-			vim.g.did_load_filetypes = 1
-		end,
+		use({
+			"nathom/filetype.nvim",
+			config = function()
+				vim.g.did_load_filetypes = 1
+			end,
 		})
 		syntax()
 		colors()
@@ -372,12 +427,15 @@ require("packer").startup({
 		completionEngine()
 		lsp()
 		apiClients()
+		debugging()
 		commenting()
 		tui()
-		lang_go()
+		languages()
 		session()
 	end,
 	config = {
 		profile = { enable = true, threshold = 1 },
-	}
+	},
 })
+
+-- vim.cmd(string.format("autocmd BufWritePost %s :PackerCompile", vim.fn.expand("%s")))

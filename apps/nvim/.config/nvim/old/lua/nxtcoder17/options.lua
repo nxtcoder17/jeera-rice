@@ -79,14 +79,11 @@ opt.autoindent = true
 
 -- Completion, popup
 opt.completeopt = "menu,menuone,noinsert,noselect"
-
 -- Tab and Spaces
 opt.tabstop = 2
 opt.softtabstop = 2
 opt.shiftwidth = 2 -- spaces per tab when using >> or <<
 opt.expandtab = true -- expand tabs into spaces
-opt.autoindent = true
-opt.smarttab = true
 opt.shiftround = true
 
 -- search options
@@ -120,8 +117,8 @@ vim.g.matchup_surround_enabled = 1
 
 -- opt.foldcolumn = "1"
 -- opt.foldmethod = "marker"
-opt.foldmethod = "manual"
-opt.foldmarker = "👉,👈"
+-- opt.foldmethod = "manual"
+-- opt.foldmarker = "👉,👈"
 
 function _G.custom_fold_text() -- 👉
 	local line = vim.fn.getline(vim.v.foldstart)
@@ -142,3 +139,5 @@ function _G.custom_fold_text() -- 👉
 end -- 👈
 
 opt.foldtext = "v:lua.custom_fold_text()"
+opt.foldminlines = 15
+opt.foldnestmax = 2
