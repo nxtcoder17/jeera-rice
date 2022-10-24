@@ -177,8 +177,4 @@ maps.nnoremap("<M-l>", "<cmd>lua require'nvim-tmux-navigation'.NvimTmuxNavigateR
 maps.nnoremap("<M-j>", "<cmd>lua require'nvim-tmux-navigation'.NvimTmuxNavigateDown()<CR>")
 maps.nnoremap("<M-k>", "<cmd>lua require'nvim-tmux-navigation'.NvimTmuxNavigateUp()<CR>")
 
--- lsp
-vim.cmd("command! -nargs=0 Root execute 'windo tcd g:root_dir'")
-vim.cmd("command! -nargs=1 Cd execute 'windo tcd <f-args> <CR>'")
---
 vim.cmd("cnoreabbrev tcd windo tcd")

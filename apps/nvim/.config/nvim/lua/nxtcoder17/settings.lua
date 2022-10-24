@@ -5,7 +5,9 @@ opt.background = "dark"
 opt.number = true
 
 -- global statusline
-opt.laststatus = 3 
+opt.laststatus = 3
+
+opt.cmdheight = 0
 
 opt.splitright = true
 opt.splitbelow = true
@@ -13,7 +15,7 @@ opt.splitbelow = true
 opt.swapfile = false
 
 -- no awkward shitty horizontal shifting due to Diagnostics, GitSigns, etc.
-opt.signcolumn = "yes:2" 
+opt.signcolumn = "yes:2"
 
 opt.wrap = true
 
@@ -30,8 +32,8 @@ opt.undofile = true
 -- Tab and Spaces
 opt.tabstop = 2
 opt.softtabstop = 2
-opt.shiftwidth = 2 	-- spaces per tab when using >> or <<
-opt.expandtab = true 	-- expand tabs into spaces
+opt.shiftwidth = 2 -- spaces per tab when using >> or <<
+opt.expandtab = true -- expand tabs into spaces
 opt.autoindent = true
 opt.smarttab = true
 opt.shiftround = true
@@ -60,7 +62,7 @@ opt.smartindent = true
 opt.copyindent = true
 opt.autoindent = true
 
--- search 
+-- search
 opt.incsearch = true
 opt.smartcase = true
 opt.ignorecase = true

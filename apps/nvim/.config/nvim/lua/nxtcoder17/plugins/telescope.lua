@@ -90,7 +90,7 @@ telescope.setup({
 })
 
 telescope.load_extension("fzf")
--- telescope.load_extension("dap")
+telescope.load_extension("dap")
 
 local M = {}
 
@@ -161,11 +161,73 @@ local hasTabby = function()
 	return packer_plugins["tabby.nvim"] and packer_plugins["tabby.nvim"].loaded
 end
 
-M.tabs = function()
-	local tabs = vim.api.nvim_list_tabpages()
+local function trim(s)
+	return (s:gsub("^%s*(.-)%s*$", "%1"))
+end
+
+M.buffers = function()
 	local windows = {}
+
+	local bufs = vim.api.nvim_list_bufs()
+	for _, bufnr in ipairs(bufs) do
+		print(bufnr)
+		local bufName = vim.api.nvim_buf_get_name(bufnr)
+		local bufLabel = trim(string.sub(vim.api.nvim_buf_get_name(bufnr), vim.fn.getcwd():len() + 2))
+
+		if vim.fn.buflisted(bufnr)
+				and vim.api.nvim_buf_is_loaded(bufnr)
+				and vim.api.nvim_get_current_buf() ~= bufnr
+				and bufName ~= ""
+		then
+			table.insert(windows, {
+				ordinal = bufLabel,
+				display = bufLabel,
+				-- value = bufnr,
+				value = vim.fn.winbufnr(bufnr),
+			})
+		end
+	end
+
+	pickers.new(themes.get_ivy(), {
+		results_title = "Buffers",
+		prompt_title = "Fuzzy Search your buffers, and switch to them",
+		finder = finders.new_table({
+			results = windows,
+			entry_maker = function(x)
+				return x
+			end,
+		}),
+		sorter = sorters.get_fzy_sorter({}),
+		attach_mappings = function(item, map)
+			-- use our custom action to go the window id
+			map("i", "<CR>", goto_window)
+			map("n", "<CR>", goto_window)
+			return true
+		end,
+	}):find()
+end
+
+M.tabs = function()
+	local windows = {}
+
+	local bufs = vim.api.nvim_list_bufs()
+	for _, bufnr in ipairs(bufs) do
+		local bufName = vim.api.nvim_buf_get_name(bufnr)
+		local bufLabel = trim(string.sub(vim.api.nvim_buf_get_name(bufnr), vim.fn.getcwd():len() + 2))
+
+		if vim.api.nvim_buf_is_loaded(bufnr) and vim.api.nvim_get_current_buf() ~= bufnr and bufName ~= "" then
+			table.insert(windows, {
+				ordinal = bufLabel,
+				display = bufLabel,
+				value = bufnr,
+			})
+		end
+	end
+
+	local tabs = vim.api.nvim_list_tabpages()
 	for tabidx, tabnr in ipairs(tabs) do
 		local windownrs = vim.api.nvim_tabpage_list_wins(tabnr)
+
 		for windownr, windowid in ipairs(windownrs) do
 			local bufnr = vim.api.nvim_win_get_buf(windowid)
 			local bufLabel = string.sub(vim.api.nvim_buf_get_name(bufnr), vim.fn.getcwd():len() + 2)
@@ -210,22 +272,46 @@ M.tabs = function()
 end
 
 M.actions = function()
+	items = {
+		{
+			key = "Buffer Delete Nameless",
+			value = function()
+				require("close_buffers").wipe({ type = "nameless" })
+			end,
+		},
+
+		{
+			key = "Buffer Delete Others",
+			value = function()
+				require("close_buffers").wipe({ type = "other" })
+			end,
+		},
+
+		{
+			key = "Base64 Encode",
+			value = Fn().b64Encode,
+		},
+
+		{
+			key = "Base64 Decode",
+			value = Fn().b64Decode,
+		},
+	}
+
+	m = {}
+	for _, item in ipairs(items) do
+		table.insert(m, {
+			ordinal = item.key,
+			display = item.key,
+			value = item.value,
+		})
+	end
+
 	pickers.new(themes.get_ivy(), {
 		results_title = "Nxt Actions",
 		prompt_title = "Hub for some common actions",
 		finder = finders.new_table({
-			results = {
-				{
-					ordinal = "Base64 Encode",
-					display = "Base64 Encode",
-					value = Fn().b64Encode,
-				},
-				{
-					ordinal = "Base64 Decode",
-					display = "Base64 Decode",
-					value = Fn().b64Decode,
-				},
-			},
+			results = m,
 			entry_maker = function(x)
 				return x
 			end,
@@ -235,9 +321,56 @@ M.actions = function()
 			return actions.select_default:replace(function()
 				actions.close(prompt_bufnr)
 				local selection = action_state.get_selected_entry()
-				print(vim.inspect(selection))
 				selection.value()
-				vim.api.nvim_put({ selection[1] }, "", false, true)
+			end)
+		end,
+	}):find()
+end
+
+M.dapActions = function()
+	local dap, dapui = require("dap"), require("dapui")
+	items = {
+		{ key = "start", value = dap.continue },
+		{ key = "continue", value = dap.continue },
+		{ key = "end", value = dap.close },
+		{ key = "toggle breakpoint", value = dap.toggle_breakpoint },
+		{
+			key = "conditional breakpoint",
+			value = function()
+				dap.set_breakpoint(vim.fn.input("[Condition] > "))
+			end,
+		},
+		{ key = "run to cursor", value = dap.run_to_cursor },
+		{ key = "close dap ui", value = dapui.close },
+		{ key = "step over", value = dap.step_over },
+		{ key = "step into", value = dap.step_into },
+		{ key = "step out", value = dap.step_out },
+	}
+
+	m = {}
+	for _, item in ipairs(items) do
+		table.insert(m, {
+			ordinal = item.key,
+			display = item.key,
+			value = item.value,
+		})
+	end
+
+	pickers.new(themes.get_ivy(), {
+		results_title = "DAP Actions",
+		prompt_title = "Hub for dap actions",
+		finder = finders.new_table({
+			results = m,
+			entry_maker = function(x)
+				return x
+			end,
+		}),
+		sorter = sorters.get_fzy_sorter({}),
+		attach_mappings = function(prompt_bufnr, map)
+			return actions.select_default:replace(function()
+				actions.close(prompt_bufnr)
+				local selection = action_state.get_selected_entry()
+				selection.value()
 			end)
 		end,
 	}):find()

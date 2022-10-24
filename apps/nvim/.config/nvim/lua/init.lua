@@ -20,7 +20,7 @@ local events = {
 	VimEnter = "VimEnter",
 }
 
-local function useLSP()
+local function withLSP()
 	use({
 		"neovim/nvim-lspconfig",
 		after = "nvim-cmp",
@@ -31,9 +31,24 @@ local function useLSP()
 		requires = {
 			{ "b0o/schemastore.nvim" },
 			{ "folke/lsp-colors.nvim", after = "nvim-lspconfig" },
-			-- { "williamboman/nvim-lsp-installer", after = "nvim-lspconfig" },
 		},
 	})
+
+	use({
+		"williamboman/mason.nvim",
+		config = function()
+			require("mason").setup({})
+		end,
+	})
+
+	use({
+		"jose-elias-alvarez/null-ls.nvim",
+		config = function()
+			require("nxtcoder17.plugins.null-ls")
+		end,
+	})
+
+	use({ "folke/neodev.nvim" })
 
 	vim.lsp.handlers["$/progress"] = function(_, result, ctx)
 		local client_id = ctx.client_id
@@ -53,16 +68,118 @@ local function useLSP()
 	-- })
 end
 
-local function useSyntaxes()
+local function withCompletions()
+	use({
+		"hrsh7th/nvim-cmp",
+		requires = {
+			{ "hrsh7th/cmp-nvim-lsp" },
+			{ "hrsh7th/cmp-buffer", after = "nvim-cmp" },
+			{ "hrsh7th/cmp-path", after = "nvim-cmp" },
+			{ "ray-x/cmp-treesitter", after = "nvim-cmp" },
+			{ "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" },
+			{ "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" },
+			{
+				"L3MON4D3/LuaSnip",
+				config = function()
+					require("nxtcoder17.plugins.luasnip")
+				end,
+				-- config = function()
+				--   require('nvim.plugins.luasnip.snippet_manager').setup()
+				--   require('nvim.plugins.luasnip.snippets').setup()
+				-- end,
+			},
+		},
+		event = events.BufReadPost,
+		config = function()
+			require("nxtcoder17.plugins.nvim-cmp")
+		end,
+	})
+end
+
+local function withTreesitter()
+	use({
+		"nvim-treesitter/nvim-treesitter",
+		run = ":TSUpdate",
+		-- event = "BufEnter",
+		config = function()
+			require("nxtcoder17.plugins.treesitter")
+			require("treesitter-context").setup()
+		end,
+		requires = {
+			{ "MaxMEllon/vim-jsx-pretty", event = events.BufEnter, ft = FileTypes.react },
+			{ "nvim-treesitter/nvim-treesitter-refactor", after = "nvim-treesitter" },
+			{ "nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter" },
+			-- { "RRethy/nvim-treesitter-textsubjects", after = "nvim-treesitter" },
+			{ "andymass/vim-matchup", event = events.VimEnter },
+			{ "windwp/nvim-ts-autotag", event = events.BufReadPre, after = "nvim-treesitter" },
+			{
+				"JoosepAlviste/nvim-ts-context-commentstring",
+				after = "nvim-treesitter",
+				-- ft = FileTypes.javascriptreact,
+			},
+			{ "p00f/nvim-ts-rainbow", event = events.BufReadPre },
+			{ "andymass/vim-matchup", after = "nvim-treesitter" },
+			{ "nvim-treesitter/playground", after = "nvim-treesitter" },
+			{ "nvim-treesitter/nvim-treesitter-context" },
+		},
+	})
+end
+
+local function withFuzzyFinders()
+	use({
+		"nvim-telescope/telescope.nvim",
+		config = function()
+			pcall(require, "nxtcoder17.plugins.telescope")
+			-- require("plugins_dir.telescope")
+		end,
+		requires = {
+			{ "nvim-lua/popup.nvim" },
+			{ "nvim-lua/plenary.nvim" },
+			{ "nvim-telescope/telescope-dap.nvim" },
+			{ "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+			{ "nvim-telescope/telescope-symbols.nvim" },
+			{
+				"nvim-telescope/telescope-frecency.nvim",
+				config = function()
+					require("telescope").load_extension("frecency")
+				end,
+				requires = { "tami5/sqlite.lua" },
+			},
+		},
+	})
+
+	use({
+		"ibhagwan/fzf-lua",
+		event = "BufReadPost",
+		requires = {
+			"kyazdani42/nvim-web-devicons",
+			{ "junegunn/fzf", run = "./install --bin" },
+		},
+		config = function()
+			pcall(require, "nxtcoder17.plugins.fzf-lua")
+		end,
+	})
+end
+
+local function withSyntaxPlugins()
 	use({
 		"sheerun/vim-polyglot",
 		config = function() end,
 	})
 	use({ "mboughaba/i3config.vim", ft = "i3config" })
 	use({ "fladson/vim-kitty", ft = "kitty" })
+
+	use({
+		"folke/todo-comments.nvim",
+		event = events.BufReadPre,
+		config = function()
+			-- require("nxtcoder17.todo-comments")
+			-- require("plugins_dir.todo-comments")
+		end,
+	})
 end
 
-local function useApiClients()
+local function withApiClients()
 	use({
 		"~/workspace/nxtcoder17/graph-cli",
 		config = function()
@@ -79,7 +196,7 @@ local function useApiClients()
 	use({ "andrewstuart/vim-kubernetes", ft = "yaml", event = events.BufReadPost })
 end
 
-local function debugging()
+local function withDebugging()
 	use({
 		"mfussenegger/nvim-dap",
 		config = function()
@@ -88,17 +205,80 @@ local function debugging()
 		requires = {
 			"rcarriga/nvim-dap-ui",
 			"theHamsta/nvim-dap-virtual-text",
-			"nvim-telescope/telescope-dap.nvim",
 			{ "jbyuki/one-small-step-for-vimkind", module = "osv" },
 		},
 	})
-	-- use({
-	--   "leoluz/nvim-dap-go",
-	--   config = function()
-	--     -- require("dap-go").setup()
-	--   end,
-	-- })
+	use({
+		"leoluz/nvim-dap-go",
+		config = function()
+			require("dap-go").setup()
+		end,
+	})
 	-- use({ "Pocco81/dap-buddy.nvim" })
+end
+
+local function withColorschemes()
+	use({ "folke/tokyonight.nvim" })
+
+	use({
+		"rebelot/kanagawa.nvim",
+		config = function()
+			require("nxtcoder17.plugins.kanagawa")
+		end,
+	})
+	use({
+		"brenoprata10/nvim-highlight-colors",
+		config = function()
+			require("nvim-highlight-colors").setup({
+				render = "background",
+				enable_tailwind =  "true",
+			})
+		end,
+	})
+end
+
+local function withNavigation()
+	use({ "kevinhwang91/rnvimr" })
+	use({ "alexghergh/nvim-tmux-navigation" })
+	use({ "mg979/vim-visual-multi" })
+	use({ "kazhala/close-buffers.nvim" })
+end
+
+local function withTuiModifications()
+	use({
+		"luukvbaal/stabilize.nvim",
+		event = events.BufReadPost,
+		config = function()
+			require("stabilize").setup()
+		end,
+	})
+
+	use({
+		"stevearc/dressing.nvim",
+		config = function()
+			require("dressing").setup({})
+		end,
+	})
+
+	-- use({
+	-- 	"nanozuki/tabby.nvim",
+	-- 	event = events.VimEnter,
+	-- 	config = function()
+	-- 		require("tabby").setup({})
+	-- 	end,
+	-- })
+
+	-- use({
+	-- 	"nvim-lualine/lualine.nvim",
+	-- 	requires = {
+	-- 		{ "kyazdani42/nvim-web-devicons" },
+	-- 		-- { "arkav/lualine-lsp-progress" },
+	-- 	},
+	-- 	event = "BufEnter",
+	-- 	config = function()
+	-- 		require("nxtcoder17.plugins.lualine")
+	-- 	end,
+	-- })
 end
 
 vim.cmd([[packadd packer.nvim]])
@@ -108,130 +288,16 @@ require("packer").startup({
 		_G.use_rocks = use_rocks
 
 		use({ "wbthomason/packer.nvim", opt = true })
-		use({ "kevinhwang91/rnvimr" })
-		use({
-			"williamboman/mason.nvim",
-			config = function()
-				require("mason").setup({})
-			end,
-		})
-
 		use_rocks("base64")
 
-		use({
-			"nvim-treesitter/nvim-treesitter",
-			run = ":TSUpdate",
-			-- event = "BufEnter",
-			config = function()
-				require("nxtcoder17.plugins.treesitter")
-				require("treesitter-context").setup()
-			end,
-			requires = {
-				{ "MaxMEllon/vim-jsx-pretty", event = events.BufEnter, ft = FileTypes.react },
-				{ "nvim-treesitter/nvim-treesitter-refactor", after = "nvim-treesitter" },
-				{ "nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter" },
-				-- { "RRethy/nvim-treesitter-textsubjects", after = "nvim-treesitter" },
-				{ "andymass/vim-matchup", event = events.VimEnter },
-				{ "windwp/nvim-ts-autotag", event = events.BufReadPre, after = "nvim-treesitter" },
-				{
-					"JoosepAlviste/nvim-ts-context-commentstring",
-					after = "nvim-treesitter",
-					-- ft = FileTypes.javascriptreact,
-				},
-				{ "p00f/nvim-ts-rainbow", event = events.BufReadPre },
-				{ "andymass/vim-matchup", after = "nvim-treesitter" },
-				{ "nvim-treesitter/playground", after = "nvim-treesitter" },
-				{ "nvim-treesitter/nvim-treesitter-context" },
-			},
-		})
-
-		use({ "tpope/vim-commentary" })
-		use({
-			"folke/todo-comments.nvim",
-			event = events.BufReadPre,
-			config = function()
-				-- require("nxtcoder17.todo-comments")
-				-- require("plugins_dir.todo-comments")
-			end,
-		})
-
-		use({
-			"nvim-telescope/telescope.nvim",
-			config = function()
-				pcall(require, "nxtcoder17.plugins.telescope")
-				-- require("plugins_dir.telescope")
-			end,
-			requires = {
-				{ "nvim-lua/popup.nvim" },
-				{ "nvim-lua/plenary.nvim" },
-				{ "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
-				{ "nvim-telescope/telescope-symbols.nvim" },
-				{
-					"nvim-telescope/telescope-frecency.nvim",
-					config = function()
-						require("telescope").load_extension("frecency")
-					end,
-					requires = { "tami5/sqlite.lua" },
-				},
-			},
-		})
+		withNavigation()
+		withColorschemes()
+		withTreesitter()
+		withFuzzyFinders()
+		withLSP()
+		withCompletions()
 
 		-- FZF lua
-		use({
-			"ibhagwan/fzf-lua",
-			event = "BufReadPost",
-			requires = {
-				"kyazdani42/nvim-web-devicons",
-				{ "junegunn/fzf", run = "./install --bin" },
-			},
-			config = function()
-				pcall(require, "nxtcoder17.plugins.fzf-lua")
-				-- require("plugins_dir.fzf-lua")
-			end,
-		})
-
-		use({ "folke/tokyonight.nvim" })
-
-		use({
-			"rebelot/kanagawa.nvim",
-			config = function()
-				require("nxtcoder17.plugins.kanagawa")
-			end,
-		})
-
-		use({ "folke/neodev.nvim" })
-
-		use({
-			"jose-elias-alvarez/null-ls.nvim",
-			config = function()
-				require("nxtcoder17.plugins.null-ls")
-			end,
-		})
-
-		use({
-			"hrsh7th/nvim-cmp",
-			requires = {
-				{ "neovim/nvim-lspconfig" },
-				{ "hrsh7th/cmp-nvim-lsp" },
-				{ "hrsh7th/cmp-buffer", after = "nvim-cmp" },
-				{ "hrsh7th/cmp-path", after = "nvim-cmp" },
-				{ "ray-x/cmp-treesitter", after = "nvim-cmp" },
-				{ "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" },
-				{ "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" },
-				{
-					"L3MON4D3/LuaSnip",
-					after = "nvim-cmp",
-					-- config = function()
-					--   require('nvim.plugins.luasnip.snippet_manager').setup()
-					--   require('nvim.plugins.luasnip.snippets').setup()
-					-- end,
-				},
-			},
-			event = events.BufReadPost,
-			config = function()
-				require("nxtcoder17.plugins.nvim-cmp")
-			end,
-		})
 
 		use({
 			"echasnovski/mini.nvim",
@@ -240,65 +306,29 @@ require("packer").startup({
 			end,
 		})
 
-		useLSP()
-		useSyntaxes()
-		useApiClients()
-		debugging()
-		use({ "alexghergh/nvim-tmux-navigation" })
-		use({
-			"nanozuki/tabby.nvim",
-			event = events.VimEnter,
-			config = function()
-				require("tabby").setup({})
-			end,
-		})
+		withSyntaxPlugins()
+		withApiClients()
+		withDebugging()
 
-		use({
-			"nvim-lualine/lualine.nvim",
-			requires = {
-				{ "kyazdani42/nvim-web-devicons" },
-				-- { "arkav/lualine-lsp-progress" },
-			},
-			event = "BufEnter",
-			config = function()
-				require("nxtcoder17.plugins.lualine")
-			end,
-		})
+		withTuiModifications()
 
-		use({
-			"luukvbaal/stabilize.nvim",
-			event = events.BufReadPost,
-			config = function()
-				require("stabilize").setup()
-			end,
-		})
+		-- use({
+		-- 	"lewis6991/gitsigns.nvim",
+		-- 	config = function()
+		-- 		require("nxtcoder17.plugins.gitsigns")
+		-- 	end,
+		-- })
 
-		use({
-			"stevearc/dressing.nvim",
-			config = function()
-				require("dressing").setup({})
-			end,
-		})
-
-		use({
-			"lewis6991/gitsigns.nvim",
-			config = function()
-				require("nxtcoder17.plugins.gitsigns")
-			end,
-		})
-
-		use({
-			"kevinhwang91/nvim-hlslens",
-			event = "BufReadPost",
-			config = function()
-				require("hlslens").setup({
-					calm_down = true,
-					nearest_only = true,
-					nearest_float_when = "always",
-				})
-			end,
-		})
-
-		use({ "mg979/vim-visual-multi" })
+		-- use({
+		-- 	"kevinhwang91/nvim-hlslens",
+		-- 	event = "BufReadPost",
+		-- 	config = function()
+		-- 		require("hlslens").setup({
+		-- 			calm_down = true,
+		-- 			nearest_only = true,
+		-- 			nearest_float_when = "always",
+		-- 		})
+		-- 	end,
+		-- })
 	end,
 })

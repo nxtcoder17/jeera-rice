@@ -5,14 +5,20 @@ require("nvim-dap-virtual-text").setup({
 local dap, dapui = require("dap"), require("dapui")
 dapui.setup({}) -- use default
 dap.listeners.after.event_initialized["dapui_config"] = function()
+  print("dapui opened")
   dapui.open()
 end
 dap.listeners.before.event_terminated["dapui_config"] = function()
+  print("dapui closed")
   dapui.close()
 end
 dap.listeners.before.event_exited["dapui_config"] = function()
+  print("dapui closed")
   dapui.close()
 end
+
+vim.fn.sign_define("DapBreakpoint", { text = "🟥", texthl = "", linehl = "", numhl = "" })
+vim.fn.sign_define("DapStopped", { text = "⭐️", texthl = "", linehl = "", numhl = "" })
 
 local function setupLua()
   local dap = require("dap")
@@ -43,16 +49,3 @@ local function setupLua()
 end
 
 setupLua()
-
-local function setupGo()
-  dap.configurations.go = {
-    {
-      type = "go",
-      name = "Debug",
-      request = "launch",
-      program = "${workspaceFolder}",
-    },
-  }
-end
-
-setupGo()
