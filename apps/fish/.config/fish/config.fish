@@ -29,9 +29,9 @@ if [ -f "$__fish_config_dir/nxtfns.fish" ]
     source "$__fish_config_dir/nxtfns.fish"
 end
 
-if [ -f "$__fish_config_dir/themes/kanagawa.fish" ]
-    source "$__fish_config_dir/themes/kanagawa.fish"
-end
+# if [ -f "$__fish_config_dir/themes/kanagawa.fish" ]
+#     source "$__fish_config_dir/themes/kanagawa.fish"
+# end
 
 function addToPath --description "add item to system path"
     for item in $argv
