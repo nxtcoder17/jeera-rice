@@ -23,10 +23,10 @@ vim.keymap.set("n", "sk", "<C-w>k<CR>")
 
 -- lsp keymaps
 vim.keymap.set("n", "sn", function()
-  vim.diagnostic.goto_next({ severity = { min = vim.diagnostic.severity.WARN, max = vim.diagnostic.severity.ERROR } })
+	vim.diagnostic.goto_next({ severity = { min = vim.diagnostic.severity.WARN, max = vim.diagnostic.severity.ERROR } })
 end)
 vim.keymap.set("n", "sp", function()
-  vim.diagnostic.goto_prev({ severity = { min = vim.diagnostic.severity.WARN, max = vim.diagnostic.severity.ERROR } })
+	vim.diagnostic.goto_prev({ severity = { min = vim.diagnostic.severity.WARN, max = vim.diagnostic.severity.ERROR } })
 end)
 
 vim.keymap.set("n", "se", vim.diagnostic.open_float)
@@ -35,7 +35,7 @@ vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help)
 vim.keymap.set("n", "<M-CR>", vim.lsp.buf.code_action)
 vim.keymap.set("v", "<M-CR>", vim.lsp.buf.code_action)
 vim.keymap.set("n", "f;", function()
-  vim.lsp.buf.format({ async = true })
+	vim.lsp.buf.format({ async = true })
 end)
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 vim.keymap.set("n", "gi", vim.lsp.buf.implementation)
@@ -43,6 +43,7 @@ vim.keymap.set("n", "gr", vim.lsp.buf.references)
 vim.keymap.set("n", "sr", vim.lsp.buf.rename)
 
 -- tabs
+vim.cmd("cnoreabbrev tcd windo tcd")
 vim.keymap.set("n", "tn", "<cmd>tabnew<CR>|:windo tcd " .. vim.g.root_dir .. "<CR>")
 vim.keymap.set("n", "te", "<cmd>tabedit % |:windo tcd " .. vim.g.root_dir .. "<CR>")
 

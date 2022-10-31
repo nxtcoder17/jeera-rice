@@ -121,9 +121,12 @@ local go_implement_interface = {
 null_ls.setup({
 	sources = {
 		-- eslint
-		null_ls.builtins.diagnostics.eslint_d,
-		null_ls.builtins.code_actions.eslint_d,
-		null_ls.builtins.formatting.eslint_d,
+		-- null_ls.builtins.diagnostics.eslint_d,
+		-- null_ls.builtins.code_actions.eslint_d,
+		-- null_ls.builtins.formatting.eslint_d,
+		null_ls.builtins.formatting.rome,
+
+		-- lua
 
 		null_ls.builtins.formatting.stylua,
 

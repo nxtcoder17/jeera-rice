@@ -2,6 +2,12 @@ require("nvim-treesitter.configs").setup({
 	ensure_installed = "all",
 	ignore_install = { "ocamllex", "swift", "phpdoc" },
 
+	query_linter = {
+		enable = true,
+		use_virtual_text = true,
+		lint_events = { "BufWrite", "CursorHold" },
+	},
+
 	highlight = {
 		enable = true,
 		additional_vim_regex_highlighting = true,
@@ -111,8 +117,6 @@ require("nvim-treesitter.configs").setup({
 		},
 	},
 })
-
--- require("treesitter-context").setup()
 
 -- vim.opt.foldmethod = "expr"
 -- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"

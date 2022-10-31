@@ -76,7 +76,6 @@ vim.cmd([[au! BufEnter * set fo-=c fo-=r fo-=o]])
 
 -- clipboard
 opt.clipboard = "unnamedplus"
-opt.ignorecase = true
 opt.lazyredraw = true
 
 -- colors

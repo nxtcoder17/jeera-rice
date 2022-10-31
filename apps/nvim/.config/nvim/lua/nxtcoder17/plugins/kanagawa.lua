@@ -31,7 +31,7 @@ vim.opt.fillchars:append({
 
 require("kanagawa").setup({
   globalStatus = true,
-  transparent = true,
+  transparent = false,
   overrides = overrides,
   colors = colors,
 })

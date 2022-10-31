@@ -46,6 +46,16 @@ local lsp_servers = {
 		base_dir .. "/typescript-language-server",
 		"--stdio",
 	},
+	graphql = {
+		base_dir .. "/graphql-lsp",
+		"server",
+		"-m",
+		"stream",
+	},
+	rome = {
+		base_dir .. "/rome",
+		-- "--stdio",
+	},
 	yaml = {
 		base_dir .. "/yaml/node_modules/.bin/yaml-language-server",
 		"--stdio",
@@ -125,6 +135,13 @@ lsp_config.tsserver.setup(config({
 		end
 		disableFormatting(client)
 	end,
+}))
+
+lsp_config.rome.setup({})
+
+lsp_config.graphql.setup(config({
+	cmd = lsp_servers.graphql,
+	root_dir = lsp_config.util.root_pattern("gqlgen.yml", ".git", ".graphqlrc*", ".graphql.config.*", "graphql.config.*"),
 }))
 
 -- sumneko_lua

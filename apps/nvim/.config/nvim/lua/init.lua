@@ -20,6 +20,15 @@ local events = {
 	VimEnter = "VimEnter",
 }
 
+local function withLanguages()
+	use({
+		"ray-x/go.nvim",
+		config = function()
+			require("go").setup({})
+		end,
+	})
+end
+
 local function withLSP()
 	use({
 		"neovim/nvim-lspconfig",
@@ -50,15 +59,15 @@ local function withLSP()
 
 	use({ "folke/neodev.nvim" })
 
-	vim.lsp.handlers["$/progress"] = function(_, result, ctx)
-		local client_id = ctx.client_id
-
-		local val = result.value
-		if not val.kind then
-			return
-		end
-		-- print(val.message)
-	end
+	-- vim.lsp.handlers["$/progress"] = function(_, result, ctx)
+	-- 	local client_id = ctx.client_id
+	--
+	-- 	local val = result.value
+	-- 	if not val.kind then
+	-- 		return
+	-- 	end
+	-- 	-- print(val.message)
+	-- end
 
 	-- use({
 	-- 	"rcarriga/nvim-notify",
@@ -66,6 +75,17 @@ local function withLSP()
 	-- 		require("nxtcoder17.plugins.nvim-notify")
 	-- 	end,
 	-- })
+
+	use({
+		"j-hui/fidget.nvim",
+		config = function()
+			require("fidget").setup({
+				window = {
+					blend = 0,
+				},
+			})
+		end,
+	})
 end
 
 local function withCompletions()
@@ -223,7 +243,7 @@ local function withColorschemes()
 	use({
 		"rebelot/kanagawa.nvim",
 		config = function()
-			require("nxtcoder17.plugins.kanagawa")
+			-- require("nxtcoder17.plugins.kanagawa")
 		end,
 	})
 	use({
@@ -231,8 +251,16 @@ local function withColorschemes()
 		config = function()
 			require("nvim-highlight-colors").setup({
 				render = "background",
-				enable_tailwind =  "true",
+				enable_tailwind = "true",
 			})
+		end,
+	})
+
+	use({
+		"catppuccin/nvim",
+		as = "catppuccin",
+		config = function()
+			require("nxtcoder17.plugins.catppuccin")
 		end,
 	})
 end
@@ -309,6 +337,8 @@ require("packer").startup({
 		withSyntaxPlugins()
 		withApiClients()
 		withDebugging()
+
+		withLanguages()
 
 		withTuiModifications()
 

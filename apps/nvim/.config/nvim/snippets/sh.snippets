@@ -1,0 +1,20 @@
+snippet cmd
+	#! /usr/bin/env bash
+
+	set -o nounset
+	set -o pipefail
+	set -o errexit
+
+	cmd=$$1
+	shift 1;
+
+	case $$cmd in
+		${1:install})
+			$0
+			;;
+		${2:uninstall})
+			;;
+		*)
+			echo "bad command: $1|$2"
+			;;
+	esac

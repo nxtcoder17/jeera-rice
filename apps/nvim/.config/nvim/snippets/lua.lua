@@ -35,7 +35,25 @@ local fn = s(
     }
   )
 )
-
 table.insert(snippets, fn)
+
+local fn2 = s(
+  "fn2",
+  fmt(
+    [[
+local function {}({})
+  {}
+end
+]]   ,
+    {
+      i(1, "myFn"),
+      i(2, "args"),
+      d(3, function(args)
+        return sn(nil, i(1, string.upper(args[1][1])))
+      end, { 1 }),
+    }
+  )
+)
+table.insert(snippets, fn2)
 
 return snippets, autosnippets

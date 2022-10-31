@@ -1,83 +1,39 @@
--- [source](https://github.com/rcarriga/nvim-notify/wiki/Usage-Recipes)
+local notify = require("notify")
 
-local client_notifs = {}
+notify.setup({
+  background_colour = "#33647a",
+})
 
-local function get_notif_data(client_id, token)
-  if not client_notifs[client_id] then
-    client_notifs[client_id] = {}
-  end
-
-  if not client_notifs[client_id][token] then
-    client_notifs[client_id][token] = {}
-  end
-
-  return client_notifs[client_id][token]
-end
-
-local spinner_frames = { "\\u28fe", "\\u29fd", "\\u28fb", "\\u28bf", "\\u287f", "\\u28df", "\\u28ef", "\\u28f7" }
-
-local function update_spinner(client_id, token)
-  local notif_data = get_notif_data(client_id, token)
-
-  if notif_data.spinner then
-    local new_spinner = (notif_data.spinner + 1) % #spinner_frames
-    notif_data.spinner = new_spinner
-
-    notif_data.notification = vim.notify(nil, nil, {
-      hide_from_history = true,
-      icon = spinner_frames[new_spinner],
-      replace = notif_data.notification,
+local function show_message(lang, msg)
+  if not msg then
+    notify.notify("Language server: " .. lang .. " is ready!", "info", {
+      title = "Lsp Start Notification",
     })
-
-    vim.defer_fn(function()
-      update_spinner(client_id, token)
-    end, 100)
   end
+  notify.notify(msg, "info", { title = "Lsp Notification" })
 end
 
-local function format_title(title, client_name)
-  return client_name .. (#title > 0 and ": " .. title or "")
-end
+local notified = {}
 
-local function format_message(message, percentage)
-  return (percentage and percentage .. "%\t" or "") .. (message or "")
-end
+group = vim.api.nvim_create_augroup("Lsp Notify", {})
 
-vim.lsp.handlers["$/progress"] = function(_, result, ctx)
-  local client_id = ctx.client_id
-
-  local val = result.value
-
-  if not val.kind then
-    return
-  end
-
-  local notif_data = get_notif_data(client_id, result.token)
-
-  if val.kind == "begin" then
-    local message = format_message(val.message, val.percentage)
-
-    notif_data.notification = vim.notify(message, "info", {
-      title = format_title(val.title, vim.lsp.get_client_by_id(client_id).name),
-      icon = spinner_frames[1],
-      timeout = false,
-      hide_from_history = false,
-    })
-
-    notif_data.spinner = 1
-    update_spinner(client_id, result.token)
-  elseif val.kind == "report" and notif_data then
-    notif_data.notification = vim.notify(format_message(val.message, val.percentage), "info", {
-      replace = notif_data.notification,
-      hide_from_history = false,
-    })
-  elseif val.kind == "end" and notif_data then
-    notif_data.notification = vim.notify(val.message and format_message(val.message) or "Complete", "info", {
-      icon = "\\uf058",
-      replace = notif_data.notification,
-      timeout = 3000,
-    })
-
-    notif_data.spinner = nil
-  end
-end
+-- vim.api.nvim_create_autocmd("LspProgressUpdate", {
+--   callback = function(arg)
+--     local name = vim.lsp.get_client_by_id(arg.data.client_id).name
+--     show_message(name, vim.lsp.util.get_progress_messages())
+--   end,
+--   group = group,
+-- })
+--
+-- vim.api.nvim_create_autocmd("LspAttach", {
+--   callback = function(arg)
+--     local name = vim.lsp.get_client_by_id(arg.data.client_id).name
+--
+--     if not notified[name] then
+--       show_message(name)
+--     end
+--
+--     notified[name] = true
+--   end,
+--   group = group,
+-- })
