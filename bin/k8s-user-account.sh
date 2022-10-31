@@ -26,18 +26,37 @@ echo "$primaryNamespace" > PRIMARY_NAMESPACE
 pushd "$manifestsDir" || (echo "pushd failed, exiting ..." && exit 1)
 
 # kubectl config current-context set namespace $NAMESPACE
-cat > svc-account.sh <<EOF
+cat > svc-account.yaml <<EOF
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: $username
   namespace: $primaryNamespace
+# secrets:
+#   - name: $username-svc-acc-secret
 EOF
 
-$KUBECTL apply -f svc-account.sh
+$KUBECTL apply -f svc-account.yaml
+
+cat > svc-account-secret.yml <<EOF
+apiVersion: v1
+kind: Secret
+metadata:
+  name: $username-svc-acc-secret
+  namespace: $primaryNamespace
+  annotations:
+    kubernetes.io/service-account.name: $username
+type: kubernetes.io/service-account-token
+EOF
+
+$KUBECTL apply -f svc-account-secret.yml
+# exit 0
 popd
 
-secret=$($KUBECTL get sa "$username" -n "$primaryNamespace" -o json | jq -r .secrets[].name)
+# secret=$($KUBECTL get sa "$username" -n "$primaryNamespace" -o json | jq -r .secrets[].name)
+secret="$username-svc-acc-secret"
+
+echo "secret found: $secret"
 
 # Get ca.crt from secret
 $KUBECTL get secret "$secret" -n "$primaryNamespace" -o json | jq -r '.data["ca.crt"]' | base64 -d > ./ca.crt
@@ -63,7 +82,10 @@ rules:
     resources:
       - "*"
     verbs:
-      - "*"
+      # - "*"
+      - get
+      - watch
+      - list
 
 ---
 
@@ -110,6 +132,7 @@ rules:
     verbs:
       - get
       - list
+      - watch
 EOF
 kubectl apply -f cluster-role.yml
 
