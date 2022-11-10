@@ -86,6 +86,19 @@ local function withLSP()
 			})
 		end,
 	})
+
+	-- use({
+	-- 	"kevinhwang91/nvim-ufo",
+	-- 	opt = true,
+	-- 	event = { "BufReadPre" },
+	-- 	wants = { "promise-async" },
+	-- 	requires = "kevinhwang91/promise-async",
+	-- 	config = function()
+	-- 		require("ufo").setup()
+	-- 		vim.keymap.set("n", "zR", require("ufo").openAllFolds)
+	-- 		vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
+	-- 	end,
+	-- })
 end
 
 local function withCompletions()
@@ -95,6 +108,7 @@ local function withCompletions()
 			{ "hrsh7th/cmp-nvim-lsp" },
 			{ "hrsh7th/cmp-buffer", after = "nvim-cmp" },
 			{ "hrsh7th/cmp-path", after = "nvim-cmp" },
+			{ "hrsh7th/cmp-cmdline", after = "nvim-cmp" },
 			{ "ray-x/cmp-treesitter", after = "nvim-cmp" },
 			{ "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" },
 			{ "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" },
@@ -129,7 +143,6 @@ local function withTreesitter()
 			{ "MaxMEllon/vim-jsx-pretty", event = events.BufEnter, ft = FileTypes.react },
 			{ "nvim-treesitter/nvim-treesitter-refactor", after = "nvim-treesitter" },
 			{ "nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter" },
-			-- { "RRethy/nvim-treesitter-textsubjects", after = "nvim-treesitter" },
 			{ "andymass/vim-matchup", event = events.VimEnter },
 			{ "windwp/nvim-ts-autotag", event = events.BufReadPre, after = "nvim-treesitter" },
 			{
@@ -309,6 +322,10 @@ local function withTuiModifications()
 	-- })
 end
 
+local function withRefactoring()
+	use({ "windwp/nvim-spectre" })
+end
+
 vim.cmd([[packadd packer.nvim]])
 require("packer").startup({
 	function()
@@ -324,9 +341,6 @@ require("packer").startup({
 		withFuzzyFinders()
 		withLSP()
 		withCompletions()
-
-		-- FZF lua
-
 		use({
 			"echasnovski/mini.nvim",
 			config = function()
@@ -339,26 +353,8 @@ require("packer").startup({
 		withDebugging()
 
 		withLanguages()
+		withRefactoring()
 
 		withTuiModifications()
-
-		-- use({
-		-- 	"lewis6991/gitsigns.nvim",
-		-- 	config = function()
-		-- 		require("nxtcoder17.plugins.gitsigns")
-		-- 	end,
-		-- })
-
-		-- use({
-		-- 	"kevinhwang91/nvim-hlslens",
-		-- 	event = "BufReadPost",
-		-- 	config = function()
-		-- 		require("hlslens").setup({
-		-- 			calm_down = true,
-		-- 			nearest_only = true,
-		-- 			nearest_float_when = "always",
-		-- 		})
-		-- 	end,
-		-- })
 	end,
 })

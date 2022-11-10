@@ -1,5 +1,7 @@
 local opt = vim.opt
 
+opt.startofline = true
+
 opt.background = "dark"
 
 opt.number = true
@@ -39,16 +41,16 @@ opt.smarttab = true
 opt.shiftround = true
 
 -- wild menu
-opt.wildmenu = true
-opt.wildmode = "full"
+-- opt.wildmenu = true
+-- opt.wildmode = "full"
 opt.wildoptions = "pum"
 opt.pumblend = 9
 opt.pumheight = 20
-
+--
 opt.wildignore:append("node_modules", ".git", ".next", "build", "dist")
 
 -- completion
-opt.completeopt = "menu,menuone,noinsert,noselect"
+opt.completeopt = "menuone,noselect"
 
 -- Fast Scrolling
 opt.ttimeoutlen = 10
@@ -75,7 +77,7 @@ opt.inccommand = "split" -- shows live incremental status of substitution in spl
 vim.cmd([[au! BufEnter * set fo-=c fo-=r fo-=o]])
 
 -- clipboard
-opt.clipboard = "unnamedplus"
+-- opt.clipboard = "unnamedplus"
 opt.lazyredraw = true
 
 -- colors
@@ -87,6 +89,16 @@ opt.switchbuf = "useopen,usetab,newtab"
 
 -- folds
 opt.foldminlines = 10
-opt.foldnestmax = 2
+-- opt.foldnestmax = 2
 
 vim.o.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
+vim.o.foldcolumn = "1" -- '0' is not bad
+vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+vim.o.foldlevelstart = 99
+vim.o.foldenable = true
+
+-- neovide settings
+opt.guifont = "ComicCodeLigatures-Medium:h11"
+vim.g.neovide_cursor_animation_length = 0
+vim.g.neovide_cursor_trail_size = 0
+

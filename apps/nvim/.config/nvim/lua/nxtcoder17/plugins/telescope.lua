@@ -107,7 +107,7 @@ M.nvim_config = function()
 		prompt_title = "  Nvim Config",
 		cwd = "~/me/jeera-rice",
 		layout_strategy = "horizontal",
-		layout_config = { preview_width = 0.65, width = 0.75 },
+		layout_config = { preview_width = 0.65, width = 0.75, height=0.5 },
 		theme = "ivy",
 	})
 end

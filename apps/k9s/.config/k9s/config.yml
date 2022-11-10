@@ -15,16 +15,17 @@ k9s:
     fullScreenLogs: false
     textWrap: false
     showTime: false
-  currentContext: legacy-do-blr1
-  currentCluster: legacy-do-blr1
+  currentContext: kl-prod
+  currentCluster: kl-prod
   clusters:
-    legacy-do-blr1:
+    kl-prod:
       namespace:
-        active: com-djbdosing
+        active: kl-core
         lockFavorites: false
         favorites:
-        - com-djbdosing
-        - android-36199794-production
+        - kl-init-harbor
+        - all
+        - kl-core
         - default
       view:
         active: pods

@@ -78,9 +78,12 @@ cmp.setup({
 		{ name = "treesitter", group_index = 2 },
 		{ name = "path", max_item_count = 10, group_index = 2 },
 		{ name = "tmux", max_item_count = 10, group_index = 5 },
-	}, {
-		{ name = "buffer", max_item_count = 5, group_index = 5 },
-	}),
+		{ name = "buffer" },
+	}
+	-- {
+	-- 	{ name = "buffer", max_item_count = 5, group_index = 5 },
+	-- }
+	),
 
 	formatting = {
 		format = function(entry, vim_item)
@@ -105,5 +108,11 @@ cmp.setup.cmdline({ "/" }, {
 	sources = cmp.config.sources({
 		{ name = "buffer" },
 		{ name = "path" },
+	}),
+})
+cmp.setup.cmdline({ ":" }, {
+	mapping = cmp.mapping.preset.cmdline(),
+	sources = cmp.config.sources({
+		{ name = "cmdline" },
 	}),
 })

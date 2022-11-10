@@ -75,7 +75,7 @@ nmap <BS> :nohlsearch<CR> \| :action CloseAllNotifications<CR>
 "-- actions
 nnoremap <Tab> :action NextTab<CR>
 nnoremap <S-Tab> :action PreviousTab<CR>
-nnoremap zz :action ViewNavigationBar \| :action ViewStatusBar<CR> \| :action EditorBreadcrumbsHideBoth<CR> \| :action CloseAllNotifications<CR>
+nnoremap mm :action ViewNavigationBar \| :action ViewStatusBar<CR> \| :action EditorBreadcrumbsHideBoth<CR> \| :action CloseAllNotifications<CR>
 
 nnoremap sf :action GotoFile<CR>
 
@@ -146,5 +146,9 @@ nnoremap <C-k> :action MethodUp<CR>
 
 nnoremap <A-j> }
 nnoremap <A-k> {
+
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
 
 set ideastrictmode

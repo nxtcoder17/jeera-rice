@@ -57,7 +57,7 @@ local lsp_servers = {
 		-- "--stdio",
 	},
 	yaml = {
-		base_dir .. "/yaml/node_modules/.bin/yaml-language-server",
+		base_dir .. "/yaml-language-server",
 		"--stdio",
 	},
 	lua = {
@@ -109,6 +109,10 @@ local lsp_servers = {
 local extendCapabilites = function()
 	local capabilities = vim.lsp.protocol.make_client_capabilities()
 	capabilities.textDocument.completion.completionItem.snippetSupport = true
+	capabilities.textDocument.foldingRange = {
+		dynamicRegistration = false,
+		lineFoldingOnly = true,
+	}
 	return capabilities
 end
 
@@ -141,7 +145,13 @@ lsp_config.rome.setup({})
 
 lsp_config.graphql.setup(config({
 	cmd = lsp_servers.graphql,
-	root_dir = lsp_config.util.root_pattern("gqlgen.yml", ".git", ".graphqlrc*", ".graphql.config.*", "graphql.config.*"),
+	root_dir = lsp_config.util.root_pattern(
+		"gqlgen.yml",
+		".git",
+		".graphqlrc*",
+		".graphql.config.*",
+		"graphql.config.*"
+	),
 }))
 
 -- sumneko_lua
@@ -179,7 +189,7 @@ lsp_config.sumneko_lua.setup({
 })
 
 -- -- yamlls
-lsp_config.yamlls.setup(config({
+lsp_config.yamlls.setup({
 	cmd = lsp_servers.yaml,
 	filetypes = { "yaml", "yml" },
 	settings = {
@@ -190,7 +200,7 @@ lsp_config.yamlls.setup(config({
 			},
 		},
 	},
-}))
+})
 
 -- Css
 lsp_config.cssls.setup({

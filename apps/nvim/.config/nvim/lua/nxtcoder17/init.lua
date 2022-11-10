@@ -14,3 +14,5 @@ end
 pcall(require, "nxtcoder17.settings")
 pcall(require, "nxtcoder17.plugins")
 pcall(require, "nxtcoder17.keymaps")
+
+vim.cmd([[ autocmd! BufEnter *.tpl.yml set ft=helm ]])
