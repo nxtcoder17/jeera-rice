@@ -1,0 +1,12 @@
+-Xms128m
+-Xmx724m
+-XX:PermSize=128m
+-XX:MaxPermSize=384m
+-XX:ReservedCodeCacheSize=96m
+
+-XX:+UseG1GC
+-XX:TieredStopAtLevel=1
+-XX:CICompilerCount=2
+-XX:Tier4MinInvocationThreshold=100000
+-XX:Tier4InvocationThreshold=110000
+-XX:Tier4CompileThreshold=120000

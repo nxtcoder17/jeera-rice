@@ -15,20 +15,17 @@ k9s:
     fullScreenLogs: false
     textWrap: false
     showTime: false
-  currentContext: kl-prod
-  currentCluster: kl-prod
+  currentContext: new-kl-01
+  currentCluster: new-kl-01
   clusters:
-    kl-prod:
+    new-kl-01:
       namespace:
-        active: kl-core
+        active: all
         lockFavorites: false
         favorites:
-        - kl-init-harbor
-        - all
-        - kl-core
         - default
       view:
-        active: pods
+        active: secrets
       featureGates:
         nodeShell: false
       shellPod:

@@ -14,7 +14,7 @@ require("mini.comment").setup({
 require("mini.indentscope").setup({
   draw = {
     delay = 2,
-    animation = require("mini.indentscope").gen_animation("none"),
+    animation = require("mini.indentscope").gen_animation.none(),
   },
 })
 
@@ -41,7 +41,7 @@ require("mini.pairs").setup({})
 require("mini.surround").setup({
   mappings = {
     add = "ssa",
-    delete = "ssd",
+    delete = "ds",
     replace = "cs",
 
     find = "", -- Find surrounding (to the right)

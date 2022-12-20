@@ -32,6 +32,7 @@ vim.keymap.set("n", "sp", function()
 end)
 
 vim.keymap.set("n", "se", vim.diagnostic.open_float)
+vim.keymap.set("n", "sb", require("telescope.builtin").buffers)
 vim.keymap.set("n", "K", vim.lsp.buf.hover)
 vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help)
 vim.keymap.set("n", "<M-CR>", vim.lsp.buf.code_action)

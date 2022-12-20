@@ -15,7 +15,6 @@ Plug 'michaeljsmith/vim-indent-object'
 
 let g:argtextobj_pairs="[:],(:),<:>"
 
-
 let g:highlightedyank_highlight_duration = "300"
 let g:highlightedyank_highlight_color = "rgba(30, 102, 212, 115)"
 
@@ -51,7 +50,7 @@ nnoremap cc <nop>
 nnoremap ss :w<CR>
 nnoremap ; :
 
-set scrolloff=5 sidescrolloff=10
+set scrolloff=7 sidescrolloff=10
 
 " integrate with system clipboard
 " set clipboard=unnamedplus,unnamed,ideaput
@@ -101,6 +100,9 @@ nnoremap sx :action CloseAllEditorsButActive<CR>
 
 nnoremap s/ :action FindInPath<CR>
 
+"nnoremap s] :action StepOver<CR>
+nnoremap s] <Action>(StepOver)
+
 nnoremap te :action EditSourceInNewWindow<CR>
 
 " -- the goto's
@@ -147,8 +149,10 @@ nnoremap <C-k> :action MethodUp<CR>
 nnoremap <A-j> }
 nnoremap <A-k> {
 
-nnoremap n nzz
-nnoremap N Nzz
+nnoremap n nzzzv
+nnoremap N Nzzzv
 nnoremap * *zz
+
+nnoremap J mzJ`z
 
 set ideastrictmode
