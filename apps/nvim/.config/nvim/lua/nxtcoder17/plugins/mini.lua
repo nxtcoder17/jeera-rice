@@ -11,30 +11,30 @@ require("mini.comment").setup({
   },
 })
 
-require("mini.indentscope").setup({
-  draw = {
-    delay = 2,
-    animation = require("mini.indentscope").gen_animation.none(),
-  },
-})
-
-local miniGrp = vim.api.nvim_create_augroup("MiniGrp", {})
-
-vim.api.nvim_create_autocmd("InsertEnter", {
-  group = miniGrp,
-  pattern = "*",
-  callback = function()
-    _G.MiniIndentscope.undraw()
-  end,
-})
-
-vim.api.nvim_create_autocmd("InsertLeave", {
-  group = miniGrp,
-  pattern = "*",
-  callback = function()
-    _G.MiniIndentscope.draw()
-  end,
-})
+-- require("mini.indentscope").setup({
+--   draw = {
+--     delay = 2,
+--     animation = require("mini.indentscope").gen_animation.none(),
+--   },
+-- })
+--
+-- local miniGrp = vim.api.nvim_create_augroup("MiniGrp", {})
+--
+-- vim.api.nvim_create_autocmd("InsertEnter", {
+--   group = miniGrp,
+--   pattern = "*",
+--   callback = function()
+--     _G.MiniIndentscope.undraw()
+--   end,
+-- })
+--
+-- vim.api.nvim_create_autocmd("InsertLeave", {
+--   group = miniGrp,
+--   pattern = "*",
+--   callback = function()
+--     _G.MiniIndentscope.draw()
+--   end,
+-- })
 
 require("mini.pairs").setup({})
 

@@ -1,6 +1,7 @@
 exit: C-e
 cursor_color: #27f2db
 cursor_size: 11
+speed: 700
 scroll_speed: 500
 
 # hint_bgcolor: #8aa7ab

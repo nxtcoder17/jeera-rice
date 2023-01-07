@@ -5,6 +5,8 @@ opt.startofline = true
 opt.background = "dark"
 
 opt.number = true
+opt.numberwidth = 4
+opt.showmode = false
 
 -- global statusline
 opt.laststatus = 3
@@ -26,6 +28,7 @@ opt.scrolloff = 10
 opt.backspace = "indent,eol,start"
 
 opt.fileformat = "unix"
+opt.fileencoding = "utf-8"
 
 -- persistent undo
 opt.undodir = vim.fn.stdpath("cache") .. "undodir"
@@ -87,18 +90,9 @@ opt.updatetime = 100
 -- buffers
 opt.switchbuf = "useopen,usetab,newtab"
 
--- folds
-opt.foldminlines = 10
--- opt.foldnestmax = 2
-
 vim.o.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
-vim.o.foldcolumn = "1" -- '0' is not bad
-vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-vim.o.foldlevelstart = 99
-vim.o.foldenable = true
 
 -- neovide settings
 opt.guifont = "ComicCodeLigatures-Medium:h11"
 vim.g.neovide_cursor_animation_length = 0
 vim.g.neovide_cursor_trail_size = 0
-

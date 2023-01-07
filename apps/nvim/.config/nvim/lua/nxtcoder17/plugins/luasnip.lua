@@ -11,16 +11,21 @@ local d = ls.dynamic_node
 local r = ls.restore_node
 local fmt = require("luasnip.extras.fmt").fmt
 
-require("luasnip.loaders.from_lua").load({ paths = { vim.g.nvim_dir .. "/snippets" } })
+require("luasnip.loaders.from_lua").load({
+  paths = {
+    vim.g.nvim_dir .. "/snippets",
+    vim.g.root_dir .. "/.tools/snippets",
+  },
+})
 
 ls.setup({
-	history = true,
-	update_events = "TextChanged,TextChangedI",
-	delete_check_events = "TextChanged",
+  history = true,
+  update_events = "TextChanged,TextChangedI",
+  delete_check_events = "TextChanged",
 })
 
 ls.add_snippets("lua", {
-	s("hi", fmt("hi hello", {})),
+  s("hi", fmt("hi hello", {})),
 })
 
 require("luasnip.loaders.from_snipmate").lazy_load({ paths = { vim.g.nvim_dir .. "/snippets" } })

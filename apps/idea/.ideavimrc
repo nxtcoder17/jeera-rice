@@ -100,8 +100,8 @@ nnoremap sx :action CloseAllEditorsButActive<CR>
 
 nnoremap s/ :action FindInPath<CR>
 
-"nnoremap s] :action StepOver<CR>
-nnoremap s] <Action>(StepOver)
+nnoremap s] :action StepOver<CR>
+"nnoremap s] <Action>(StepOver)
 
 nnoremap te :action EditSourceInNewWindow<CR>
 
@@ -110,8 +110,6 @@ nnoremap gi :action GotoImplementation<CR>
 nnoremap gr :action ShowUsages<CR>
 nnoremap gd :action GotoDeclaration<CR>
 nnoremap gu :action GotoSuperMethod<CR>
-nmap gn :action GotoNextError<CR>
-nmap gp :action GotoPrevError<CR>
 
 nmap <C-o> <Action>(Back)
 nmap <C-i> <Action>(Forward)
