@@ -21,7 +21,7 @@ opt.swapfile = false
 -- no awkward shitty horizontal shifting due to Diagnostics, GitSigns, etc.
 opt.signcolumn = "yes:2"
 
-opt.wrap = true
+opt.wrap = false
 
 opt.scrolloff = 10
 
@@ -91,6 +91,11 @@ opt.updatetime = 100
 opt.switchbuf = "useopen,usetab,newtab"
 
 vim.o.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
+
+-- fold text
+vim.cmd(
+  [[ set foldtext=substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').'...'.trim(getline(v:foldend)) ]]
+)
 
 -- neovide settings
 opt.guifont = "ComicCodeLigatures-Medium:h11"

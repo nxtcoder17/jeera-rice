@@ -39,7 +39,7 @@ vim.opt.fillchars:append({
 
 require("kanagawa").setup({
 	globalStatus = true,
-	transparent = false,
+	transparent = true,
 	overrides = overrides,
 	colors = colors,
 	specialReturn = false, -- special highlight for the return keyword

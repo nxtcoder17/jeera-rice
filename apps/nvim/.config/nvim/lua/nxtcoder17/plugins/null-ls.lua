@@ -85,7 +85,7 @@ local go_implement_interface = {
 	filetypes = { "go" },
 	generator = {
 		fn = function(context)
-			d = vim.lsp.diagnostic.get_line_diagnostics()
+			d =vim.lsp.diagnostic.get_line_diagnostics()
 			for _, v in ipairs(d) do
 				if v.code == "InvalidTypeArg" then
 					op = string.gsub(msg, "(.*(does not implement ))", "")
@@ -120,11 +120,10 @@ local go_implement_interface = {
 -- Configuring null-ls
 null_ls.setup({
 	sources = {
-		-- eslint
-		-- null_ls.builtins.diagnostics.eslint_d,
-		-- null_ls.builtins.code_actions.eslint_d,
-		-- null_ls.builtins.formatting.eslint_d,
-		null_ls.builtins.formatting.rome,
+		null_ls.builtins.diagnostics.eslint_d,
+		null_ls.builtins.code_actions.eslint_d,
+		null_ls.builtins.formatting.eslint_d,
+		-- null_ls.builtins.formatting.rome,
 
 		-- lua
 

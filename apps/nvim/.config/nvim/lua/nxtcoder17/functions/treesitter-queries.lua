@@ -10,6 +10,8 @@ M.jumps = function(bufnr, lang, opts)
 
 	opts = opts or { down = true }
 
+  vim.treesitter.get_string_parser(str, lang, opts)
+
 	local lang_tree = vim.treesitter.get_parser(bufnr, lang)
 	local syntax_tree = lang_tree:parse()
 	local root = syntax_tree[1]:root()
@@ -18,7 +20,7 @@ M.jumps = function(bufnr, lang, opts)
 
 	local row = 0
 	local prev_row = 0
-	-- print(name)
+
 	for c in root:iter_children() do
 		if c:type() ~= "\n" then
 			if row < curr_line_nr then

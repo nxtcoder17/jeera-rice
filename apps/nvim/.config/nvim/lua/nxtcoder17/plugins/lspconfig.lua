@@ -44,17 +44,20 @@ local function on_attach(client, bufnr)
   vim.keymap.set("n", "sb", require("telescope.builtin").buffers, opts)
   vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
   vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, opts)
-  -- vim.keymap.set({ "n", "v" }, "<M-CR>", vim.lsp.buf.code_action, opts)
-  vim.keymap.set({ "n", "v" }, "<M-CR>", require("fzf-lua").lsp_code_actions, opts)
+  vim.keymap.set({ "n", "v" }, "<M-CR>", vim.lsp.buf.code_action, opts)
+  -- vim.keymap.set({ "n", "v" }, "<M-CR>", require("fzf-lua").lsp_code_actions, opts)
   vim.keymap.set("n", "f;", function()
     vim.lsp.buf.format({ async = true })
   end, opts)
 
   -- vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-  vim.keymap.set("n", "gd", require("fzf-lua").lsp_definitions, opts)
-  vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-  -- vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-  vim.keymap.set("n", "gr", require("fzf-lua").lsp_references, opts)
+  -- vim.keymap.set("n", "gd", require("fzf-lua").lsp_definitions, opts)
+  vim.keymap.set("n", "gi", "<Cmd>Telescope lsp_implementations<CR>", opts)
+  -- vim.keymap.set("n", "gr", "<Cmd>Telescope lsp_references<CR>", opts)
+  vim.keymap.set("n", "gr", function()
+    require("telescope.builtin").lsp_references({ include_current_line = false, show_line = false })
+  end, opts)
+  vim.keymap.set("n", "gd", "<Cmd>Telescope lsp_definitions<CR>", opts)
   vim.keymap.set("n", "sr", vim.lsp.buf.rename, opts)
 end
 
@@ -101,6 +104,10 @@ local lsp_servers = {
   go = {
     base_dir .. "/gopls",
   },
+  eslint_d = {
+    base_dir .. "/eslint_d",
+    "--stdio",
+  },
   css = {
     base_dir .. "/vscode-langservers-extracted/node_modules/.bin/vscode-css-language-server",
   },
@@ -122,10 +129,6 @@ local lsp_servers = {
   },
   python = {
     base_dir .. "/python/node_modules/.bin/pyright-langserver",
-    "--stdio",
-  },
-  eslint = {
-    base_dir .. "/vscode-eslint/node_modules/.bin/vscode-eslint-language-server",
     "--stdio",
   },
   quicklint = {
@@ -179,6 +182,12 @@ lsp_config.tsserver.setup(config({
   end,
 }))
 
+-- lsp_config.eslint.setup(config({
+--   cmd = lsp_servers.eslint_d,
+--   on_attach = on_attach,
+--   -- root_dir = lsp_config.util.root_pattern(".eslintrc.yml", "package.json"),
+-- }))
+
 -- lsp_config.rome.setup({
 --   on_attach = on_attach,
 -- })
@@ -186,13 +195,7 @@ lsp_config.tsserver.setup(config({
 lsp_config.graphql.setup(config({
   cmd = lsp_servers.graphql,
   on_attach = on_attach,
-  root_dir = lsp_config.util.root_pattern(
-    "gqlgen.yml",
-    ".git",
-    ".graphqlrc*",
-    ".graphql.config.*",
-    "graphql.config.*"
-  ),
+  root_dir = lsp_config.util.root_pattern("gqlgen.yml", ".graphql.config.*", "graphql.config.*"),
 }))
 
 -- sumneko_lua

@@ -9,3 +9,5 @@ love-104-FM https://mirchiplaylive.akamaized.net/hls/live/2036929/PNE/MILOVE96kb
 radio-olive https://25653.live.streamtheworld.com/OLIVE1063.mp3
 humm-fm https://tunein-icecast.mediaworks.nz/humm_128kbps
 desi-world-radio https://stream-25.zeno.fm/4mbfcn4mf24tv?zs=Q0DDh77rQFmxRl21S477hg
+mirchi-insta-pyaar https://playerservices.streamtheworld.com/api/livestream-redirect/MRO_HIN_ISTAAC_HI.m3u8
+kadak-fm-(abu-dhabi) https://admdn7ta.cdn.mangomolo.com/mirchirdo/mirchirdo.stream_aac/index.m3u8

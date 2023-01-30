@@ -1,2 +1,6 @@
 [Radio India](https://www.radioindia.in/)
 [live radio *](https://liveradios.in/)
+```bash
+# get mirchi stations
+curl https://api.mymirchi.com/mirchi-feeds/v2/radio/live-radio/IN | jq
+```

@@ -45,6 +45,12 @@ require("packer").startup(function()
           require("nxtcoder17.plugins.null-ls")
         end,
       },
+      {
+        "stevearc/aerial.nvim",
+        config = function()
+          require("aerial").setup()
+        end,
+      },
     },
   })
 
@@ -57,13 +63,16 @@ require("packer").startup(function()
 
   use({
     "nvim-telescope/telescope.nvim",
+    -- after = "nvim-treesitter",
     requires = {
       "nvim-lua/plenary.nvim",
       { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
       { "gbrlsnchs/telescope-lsp-handlers.nvim" },
+      { "debugloop/telescope-undo.nvim" },
+      { "nvim-telescope/telescope-ui-select.nvim" },
     },
     config = function()
-      pcall(require, "nxtcoder17.plugins.telescope")
+      require("nxtcoder17.plugins.telescope")
     end,
   })
 
@@ -136,8 +145,9 @@ require("packer").startup(function()
           require("nxtcoder17.plugins.luasnip")
         end,
       },
-      { "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" },
-      { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" },
+      { "onsails/lspkind.nvim" },
+      { "saadparwaiz1/cmp_luasnip" },
+      { "hrsh7th/cmp-nvim-lsp-signature-help" },
       { "tzachar/cmp-tabnine", run = "./install.sh", after = "nvim-cmp" },
       {
         "zbirenbaum/copilot.lua",
@@ -156,6 +166,27 @@ require("packer").startup(function()
     "rebelot/kanagawa.nvim",
     config = function()
       require("nxtcoder17.plugins.kanagawa")
+    end,
+  })
+
+  use({
+    "sainnhe/gruvbox-material",
+    config = function()
+      -- require("nxtcoder17.plugins.gruvbox-material")
+    end,
+  })
+
+  use({
+    "folke/tokyonight.nvim",
+    config = function()
+      -- require("nxtcoder17.plugins.tokyonight")
+    end,
+  })
+
+  use({
+    "kvrohit/substrata.nvim",
+    config = function()
+      -- require("nxtcoder17.plugins.colorschemes.substrata")
     end,
   })
 
@@ -226,6 +257,7 @@ require("packer").startup(function()
     },
   })
 
+  -- golang
   use({
     "ray-x/go.nvim",
     config = function()
@@ -235,12 +267,46 @@ require("packer").startup(function()
   })
 
   use({
-    "~/workspace/nxtcoder17/neovim/dap-go",
+    "klen/nvim-test",
     config = function()
-      require("dap-go").setup()
+      require("nvim-test").setup()
     end,
   })
 
+  -- use({
+  --   "~/workspace/nxtcoder17/neovim/dap-go",
+  --   config = function()
+  --     require("dap-go").setup()
+  --   end,
+  -- })
+
   -- git
   use({ "sindrets/diffview.nvim" })
+
+  use({
+    "luukvbaal/statuscol.nvim",
+    config = function()
+      require("statuscol").setup()
+    end,
+  })
+
+  -- folding
+  use({
+    "kevinhwang91/nvim-ufo",
+    requires = "kevinhwang91/promise-async",
+    config = function()
+      require("nxtcoder17.plugins.nvim-ufo")
+    end,
+  })
+
+  -- term
+  use({
+    "chomosuke/term-edit.nvim",
+    tag = "v1.*",
+    config = function()
+      require("term-edit").setup({
+        prompt_end = "😎 ",
+      })
+    end,
+  })
 end)

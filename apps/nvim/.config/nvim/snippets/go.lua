@@ -119,4 +119,24 @@ local t1 = s(
 
 table.insert(snippets, t1)
 
+local func = s(
+  "func",
+  fmta(
+    [[
+  func <name>() {
+    <body>
+  }
+  ]] ,
+    {
+      name = c(1, {
+        t(""),
+        i(0, "name"),
+      }),
+      body = i(2, "//body"),
+    }
+  )
+)
+
+table.insert(snippets, func)
+
 return snippets, autosnippets

@@ -62,4 +62,13 @@ M.save_tabs = function()
 	test:close()
 end
 
+M.close_other_buffers = function()
+  local bufs = vim.api.nvim_list_bufs()
+  for _, bufnr in ipairs(bufs) do
+    print(bufnr)
+    local bufName = vim.api.nvim_buf_get_name(bufnr)
+    local bufLabel = trim(string.sub(vim.api.nvim_buf_get_name(bufnr), vim.fn.getcwd():len() + 2))
+  end
+end
+
 return M

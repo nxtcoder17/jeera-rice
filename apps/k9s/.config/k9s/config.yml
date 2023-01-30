@@ -23,11 +23,9 @@ k9s:
         active: all
         lockFavorites: false
         favorites:
-        - all
-        - kl-core
         - default
       view:
-        active: pods
+        active: apps
       featureGates:
         nodeShell: false
       shellPod:

@@ -2,7 +2,7 @@
 
 -- resets
 vim.keymap.set({ "n", "v" }, ";", ":")
-vim.keymap.set({ "n", "v" }, "f", "<Nop>")
+-- vim.keymap.set({ "n", "v" }, "f", "<Nop>")
 
 vim.keymap.set("n", "j", "gj")
 vim.keymap.set("n", "k", "gk")
@@ -20,11 +20,17 @@ vim.keymap.set("n", "ss", ":w<CR>")
 vim.keymap.set("n", "si", ":vsplit<CR>")
 vim.keymap.set("n", "sm", ":split<CR>")
 
+-- -- clean other buffers
+-- vim.keymap.set("n", "x", function() require("mini.bufremove").wipeout(buf_id, force) end)
+
 -- split navigation
 vim.keymap.set("n", "sh", "<C-w>h<CR>")
 vim.keymap.set("n", "sl", "<C-w>l<CR>")
 vim.keymap.set("n", "sj", "<C-w>j<CR>")
 vim.keymap.set("n", "sk", "<C-w>k<CR>")
+
+-- buffers closing others
+vim.keymap.set("n", "sx", ":BufDelOthers")
 
 -- tabs
 vim.cmd("cnoreabbrev tcd silent! windo tcd")
@@ -52,17 +58,16 @@ vim.keymap.set("n", "tl", require("telescope.builtin").buffers)
 vim.keymap.set("n", "<M-o>", ":RnvimrToggle<CR>")
 vim.keymap.set("t", "<M-o>", "<C-\\><C-n>:RnvimrToggle<CR>")
 
+-- vim.keymap.set("n", "fd", require("nxtcoder17.plugins.telescope").dapActions)
+-- vim.keymap.set("n", "f'", require("nxtcoder17.plugins.telescope").actions)
 
-vim.keymap.set("n", "fd", require("nxtcoder17.plugins.telescope").dapActions)
-vim.keymap.set("n", "f'", require("nxtcoder17.plugins.telescope").actions)
+-- vim.keymap.set("n", "<M-k>", function()
+--   require("nxtcoder17.functions.treesitter-queries").jumps(nil, nil, { up = true })
+-- end)
 
-vim.keymap.set("n", "<M-k>", function()
-  require("nxtcoder17.functions.treesitter-queries").jumps(nil, nil, { up = true })
-end)
-
-vim.keymap.set("n", "<M-j>", function()
-  require("nxtcoder17.functions.treesitter-queries").jumps(nil, nil, { down = true })
-end)
+-- vim.keymap.set("n", "<M-j>", function()
+--   require("nxtcoder17.functions.treesitter-queries").jumps(nil, nil, { down = true })
+-- end)
 
 vim.keymap.set("n", "<M-Left>", require("nvim-tmux-navigation").NvimTmuxNavigateLeft)
 vim.keymap.set("n", "<M-Right>", require("nvim-tmux-navigation").NvimTmuxNavigateRight)
@@ -78,3 +83,15 @@ vim.cmd([[
   imap <silent><expr> <C-p> luasnip#choice_active() ? '<Plug>luasnip-prev-choice' : '<C-p>'
   smap <silent><expr> <C-p> luasnip#choice_active() ? '<Plug>luasnip-prev-choice' : '<C-p>'
 ]])
+
+vim.keymap.set({ "i", "s" }, "<C-l>", function()
+  if require("luasnip").choice_active() then
+    require("luasnip").change_choice(1)
+  end
+end)
+
+vim.keymap.set({ "i", "s" }, "<C-h>", function()
+  if require("luasnip").choice_active() then
+    require("luasnip").change_choice(-1)
+  end
+end)

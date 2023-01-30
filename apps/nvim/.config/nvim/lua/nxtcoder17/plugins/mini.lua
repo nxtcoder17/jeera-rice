@@ -55,7 +55,7 @@ require("mini.align").setup({})
 
 require("mini.tabline").setup({})
 
-vim.cmd([[ hi! link MiniStatuslineModeNormal CmpItemKindFile ]])
+vim.cmd([[ hi! link MiniStatuslineModeNormal Title ]])
 -- vim.cmd([[ hi! link MiniStatuslineDevinfo CmpItemKindFile ]])
 -- vim.cmd([[ hi! link MiniStatuslineFilename CmpItemKindFile ]])
 -- vim.cmd([[ hi! link MiniStatuslineFileinfo CmpItemKindFile ]])

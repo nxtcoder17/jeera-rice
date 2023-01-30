@@ -76,7 +76,7 @@ set -gx GPG_TTY (tty) # to make GPG work
 
 #--------------------------------------------------
 addToPath /usr/local/bin
-addToPath $HOME/.local/bin $HOME/me/jeera-rice/bin
+addToPath $HOME/.local/bin $HOME/me/jeera-rice/bin $HOME/workspace/.local/share/node/.bin
 
 # node js global install packages
 addToPath $XDG_DATA_HOME/node/bin
