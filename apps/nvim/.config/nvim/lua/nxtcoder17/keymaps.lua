@@ -14,7 +14,7 @@ vim.keymap.set({ "n", "v" }, "cc", '"+y')
 
 -- [ the 's' key ]
 vim.keymap.set({ "n", "v" }, "s", "<Nop>", { silent = true, noremap = true })
-vim.keymap.set("n", "ss", ":w<CR>")
+vim.keymap.set({ "n", "v" }, "ss", ":w<CR>")
 
 -- making splits
 vim.keymap.set("n", "si", ":vsplit<CR>")
@@ -41,7 +41,7 @@ vim.keymap.set("n", "<BS>", ":set nohls <CR>|:lua Fn().closeFloating() <CR>")
 
 -- creating scratch files
 vim.api.nvim_create_user_command("Scratch", function()
-  vim.cmd("vne | setlocal buftype=nofile | setlocal bufhidden=hide | setlocal noswapfile")
+	vim.cmd("vne | setlocal buftype=nofile | setlocal bufhidden=hide | setlocal noswapfile")
 end, {})
 
 -- because rnvimr shits wqa
@@ -57,6 +57,8 @@ vim.keymap.set("n", "tl", require("telescope.builtin").buffers)
 
 vim.keymap.set("n", "<M-o>", ":RnvimrToggle<CR>")
 vim.keymap.set("t", "<M-o>", "<C-\\><C-n>:RnvimrToggle<CR>")
+
+vim.keymap.set("n", "<C-;>", require("nxtcoder17.plugins.telescope").dapActions)
 
 -- vim.keymap.set("n", "fd", require("nxtcoder17.plugins.telescope").dapActions)
 -- vim.keymap.set("n", "f'", require("nxtcoder17.plugins.telescope").actions)
@@ -85,13 +87,13 @@ vim.cmd([[
 ]])
 
 vim.keymap.set({ "i", "s" }, "<C-l>", function()
-  if require("luasnip").choice_active() then
-    require("luasnip").change_choice(1)
-  end
+	if require("luasnip").choice_active() then
+		require("luasnip").change_choice(1)
+	end
 end)
 
 vim.keymap.set({ "i", "s" }, "<C-h>", function()
-  if require("luasnip").choice_active() then
-    require("luasnip").change_choice(-1)
-  end
+	if require("luasnip").choice_active() then
+		require("luasnip").change_choice(-1)
+	end
 end)

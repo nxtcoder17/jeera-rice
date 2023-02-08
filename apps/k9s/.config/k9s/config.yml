@@ -8,6 +8,7 @@ k9s:
   readOnly: false
   noExitOnCtrlC: false
   noIcons: false
+  skipLatestRevCheck: false
   logger:
     tail: 100
     buffer: 5000
@@ -15,17 +16,18 @@ k9s:
     fullScreenLogs: false
     textWrap: false
     showTime: false
-  currentContext: kl-prod
-  currentCluster: kl-prod
+  currentContext: dev-azure
+  currentCluster: dev-azure
   clusters:
-    kl-prod:
+    dev-azure:
       namespace:
-        active: all
+        active: kl-init-operators
         lockFavorites: false
         favorites:
+        - kl-init-operators
         - default
       view:
-        active: apps
+        active: pods
       featureGates:
         nodeShell: false
       shellPod:
@@ -36,6 +38,7 @@ k9s:
         limits:
           cpu: 100m
           memory: 100Mi
+        labels: {}
       portForwardAddress: localhost
   thresholds:
     cpu:

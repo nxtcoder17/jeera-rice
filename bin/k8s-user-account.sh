@@ -133,6 +133,14 @@ rules:
       - get
       - list
       - watch
+  # - apiGroups:
+  #     - "*"
+  #   resources:
+  #     - "*"
+  #   verbs:
+  #     - get
+  #     - list
+  #     - watch
 EOF
 kubectl apply -f cluster-role.yml
 

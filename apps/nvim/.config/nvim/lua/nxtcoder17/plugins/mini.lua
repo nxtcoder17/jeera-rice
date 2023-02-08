@@ -1,14 +1,14 @@
 require("mini.comment").setup({
-  mappings = {
-    comment = "s;",
-    comment_line = "s;",
-  },
-  hooks = {
-    pre = function()
-      require("ts_context_commentstring.internal").update_commentstring()
-    end,
-    post = function() end,
-  },
+	mappings = {
+		comment = "s;",
+		comment_line = "s;",
+	},
+	hooks = {
+		pre = function()
+			require("ts_context_commentstring.internal").update_commentstring()
+		end,
+		post = function() end,
+	},
 })
 
 -- require("mini.indentscope").setup({
@@ -39,21 +39,21 @@ require("mini.comment").setup({
 require("mini.pairs").setup({})
 
 require("mini.surround").setup({
-  mappings = {
-    add = "ssa",
-    delete = "ds",
-    replace = "cs",
+	mappings = {
+		add = "ys",
+		delete = "ds",
+		replace = "cs",
 
-    find = "", -- Find surrounding (to the right)
-    find_left = "", -- Find surrounding (to the left)
-    highlight = "", -- Highlight surrounding
-    update_n_lines = "", -- Update `n_lines`
-  },
+		find = "", -- Find surrounding (to the right)
+		find_left = "", -- Find surrounding (to the left)
+		highlight = "", -- Highlight surrounding
+		update_n_lines = "", -- Update `n_lines`
+	},
 })
 
 require("mini.align").setup({})
 
-require("mini.tabline").setup({})
+-- require("mini.tabline").setup({})
 
 vim.cmd([[ hi! link MiniStatuslineModeNormal Title ]])
 -- vim.cmd([[ hi! link MiniStatuslineDevinfo CmpItemKindFile ]])
@@ -61,7 +61,7 @@ vim.cmd([[ hi! link MiniStatuslineModeNormal Title ]])
 -- vim.cmd([[ hi! link MiniStatuslineFileinfo CmpItemKindFile ]])
 
 require("mini.statusline").setup({
-  set_vim_settings = false,
+	set_vim_settings = false,
 })
 
 -- require("mini.sessions").setup({

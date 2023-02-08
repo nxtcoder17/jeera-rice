@@ -85,7 +85,7 @@ local go_implement_interface = {
 	filetypes = { "go" },
 	generator = {
 		fn = function(context)
-			d =vim.lsp.diagnostic.get_line_diagnostics()
+			d = vim.lsp.diagnostic.get_line_diagnostics()
 			for _, v in ipairs(d) do
 				if v.code == "InvalidTypeArg" then
 					op = string.gsub(msg, "(.*(does not implement ))", "")
@@ -101,6 +101,45 @@ local go_implement_interface = {
 		end,
 	},
 }
+
+--
+local addFieldToStruct = {
+	method = null_ls.methods.CODE_ACTION,
+	filetypes = { "go" },
+	generator = {
+		fn = function(context)
+			return {
+				{
+					title = "Add Field to struct",
+					action = function()
+						R("nxtcoder17.functions.dev").AddFieldToStruct("newfield", "int")
+					end,
+				},
+			}
+		end,
+	},
+}
+
+null_ls.register(addFieldToStruct)
+
+local implementInterface = {
+	method = null_ls.methods.CODE_ACTION,
+	filetypes = { "go" },
+	generator = {
+		fn = function(context)
+			return {
+				{
+					title = "Implment interface on a type",
+					action = function()
+						require("telescope").extensions.goimpl.goimpl()
+					end,
+				},
+			}
+		end,
+	},
+}
+
+null_ls.register(implementInterface)
 
 -- null_ls.register(go_implement_interface)
 

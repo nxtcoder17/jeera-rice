@@ -18,8 +18,64 @@ local function findCmd()
 end
 
 telescope.setup({
+	defaults = {
+		-- copied from nvchad/nvim
+		vimgrep_arguments = {
+			"rg",
+			"-L",
+			"--color=never",
+			"--no-heading",
+			"--with-filename",
+			"--line-number",
+			"--column",
+			"--smart-case",
+		},
+		prompt_prefix = "   ",
+		selection_caret = "  ",
+		entry_prefix = "  ",
+		initial_mode = "insert",
+		selection_strategy = "reset",
+		sorting_strategy = "ascending",
+		layout_strategy = "horizontal",
+		layout_config = {
+			horizontal = {
+				prompt_position = "top",
+				preview_width = 0.55,
+				results_width = 0.8,
+			},
+			vertical = {
+				mirror = false,
+			},
+			width = 0.87,
+			height = 0.80,
+			preview_cutoff = 120,
+		},
+		file_sorter = require("telescope.sorters").get_fuzzy_file,
+		file_ignore_patterns = { "node_modules" },
+		generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
+		path_display = { "truncate" },
+		winblend = 0,
+		border = {},
+		borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+		color_devicons = true,
+		set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
+		file_previewer = require("telescope.previewers").vim_buffer_cat.new,
+		grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
+		qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
+		-- Developer configurations: Not meant for general override
+		buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
+		mappings = {
+			n = { ["q"] = require("telescope.actions").close },
+		},
+	},
 	extensions = {
 		["ui-select"] = {
+			themes.get_ivy({}),
+		},
+		["goimpl"] = {
+			themes.get_ivy({}),
+		},
+		possession = {
 			themes.get_ivy({}),
 		},
 	},
@@ -60,6 +116,8 @@ telescope.load_extension("fzf")
 telescope.load_extension("lsp_handlers")
 telescope.load_extension("undo")
 telescope.load_extension("ui-select")
+telescope.load_extension("goimpl")
+telescope.load_extension("possession")
 
 local M = {}
 M.grep = function()
@@ -136,23 +194,77 @@ M.tabs = function()
 		end
 	end
 
-	pickers.new(themes.get_ivy(), {
-		results_title = "Tabs",
-		prompt_title = "Fuzzy Search your tabs, here",
-		finder = finders.new_table({
-			results = windows,
-			entry_maker = function(x)
-				return x
+	pickers
+		.new(themes.get_ivy(), {
+			results_title = "Tabs",
+			prompt_title = "Fuzzy Search your tabs, here",
+			finder = finders.new_table({
+				results = windows,
+				entry_maker = function(x)
+					return x
+				end,
+			}),
+			sorter = sorters.get_fzy_sorter({}),
+			attach_mappings = function(item, map)
+				-- use our custom action to go the window id
+				map("i", "<CR>", goto_window)
+				map("n", "<CR>", goto_window)
+				return true
 			end,
-		}),
-		sorter = sorters.get_fzy_sorter({}),
-		attach_mappings = function(item, map)
-			-- use our custom action to go the window id
-			map("i", "<CR>", goto_window)
-			map("n", "<CR>", goto_window)
-			return true
-		end,
-	}):find()
+		})
+		:find()
+end
+
+M.dapActions = function()
+	local dap, dapui = require("dap"), require("dapui")
+	items = {
+		{ key = "start", value = dap.continue, desc = "start dap server" },
+		{ key = "continue", value = dap.continue },
+		{ key = "end", value = dap.close },
+		{ key = "toggle breakpoint", value = dap.toggle_breakpoint },
+		{
+			key = "conditional breakpoint",
+			value = function()
+				---@diagnostic disable-next-line: param-type-mismatch
+				dap.set_breakpoint(vim.fn.input("[Breakpoint Condition] > "))
+			end,
+		},
+		{ key = "run to cursor", value = dap.run_to_cursor },
+		{ key = "close dap ui", value = dapui.close },
+		{ key = "step over", value = dap.step_over },
+		{ key = "step into", value = dap.step_into },
+		{ key = "step out", value = dap.step_out },
+	}
+
+	m = {}
+	for _, item in ipairs(items) do
+		table.insert(m, {
+			ordinal = item.key,
+			display = item.key,
+			value = item.value,
+		})
+	end
+
+	pickers
+		.new(themes.get_ivy(), {
+			results_title = "DAP Actions",
+			prompt_title = "Hub for dap actions",
+			finder = finders.new_table({
+				results = m,
+				entry_maker = function(x)
+					return x
+				end,
+			}),
+			sorter = sorters.get_fzy_sorter({}),
+			attach_mappings = function(prompt_bufnr, map)
+				return actions.select_default:replace(function()
+					actions.close(prompt_bufnr)
+					local selection = action_state.get_selected_entry()
+					selection.value()
+				end)
+			end,
+		})
+		:find()
 end
 
 return M

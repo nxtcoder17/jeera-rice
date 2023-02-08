@@ -18,8 +18,6 @@ pcall(require, "nxtcoder17.keymaps")
 require('nxtcoder17.commands')
 pcall(require, "nxtcoder17.autocmds")
 
-vim.cmd([[ autocmd! BufEnter *.tpl.yml set ft=helm ]])
-
 -- local timer = vim.loop.new_timer()
 -- timer:start(
 --   1000,

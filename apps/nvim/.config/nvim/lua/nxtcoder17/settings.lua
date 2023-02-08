@@ -81,6 +81,7 @@ vim.cmd([[au! BufEnter * set fo-=c fo-=r fo-=o]])
 
 -- clipboard
 -- opt.clipboard = "unnamedplus"
+opt.ttyfast = true
 opt.lazyredraw = true
 
 -- colors
@@ -94,7 +95,7 @@ vim.o.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,winpos,termin
 
 -- fold text
 vim.cmd(
-  [[ set foldtext=substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').'...'.trim(getline(v:foldend)) ]]
+	[[ set foldtext=substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').'...'.trim(getline(v:foldend)) ]]
 )
 
 -- neovide settings
