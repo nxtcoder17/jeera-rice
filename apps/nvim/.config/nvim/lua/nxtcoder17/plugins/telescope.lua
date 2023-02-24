@@ -17,6 +17,13 @@ local function findCmd()
 	end
 end
 
+telescope.load_extension("fzf")
+telescope.load_extension("undo")
+telescope.load_extension("ui-select")
+telescope.load_extension("goimpl")
+telescope.load_extension("possession")
+telescope.load_extension("lsp_handlers")
+
 telescope.setup({
 	defaults = {
 		-- copied from nvchad/nvim
@@ -78,6 +85,12 @@ telescope.setup({
 		possession = {
 			themes.get_ivy({}),
 		},
+
+		-- lsp_handlers = {
+		--     code_action = {
+		--         telescope = require("telescope.themes").get_cursor({}),
+		--     },
+		-- },
 	},
 	pickers = {
 		find_files = {
@@ -111,13 +124,6 @@ telescope.setup({
 		},
 	},
 })
-
-telescope.load_extension("fzf")
-telescope.load_extension("lsp_handlers")
-telescope.load_extension("undo")
-telescope.load_extension("ui-select")
-telescope.load_extension("goimpl")
-telescope.load_extension("possession")
 
 local M = {}
 M.grep = function()

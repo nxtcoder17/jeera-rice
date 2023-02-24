@@ -12,16 +12,42 @@ local function overrideKHover()
 					table.insert(keymap_restore, keymap)
 					api.nvim_buf_del_keymap(buf, "n", "K")
 				end
+				if keymap.lhs == "sn" then
+					table.insert(keymap_restore, keymap)
+					api.nvim_buf_del_keymap(buf, "n", "sn")
+				end
+				if keymap.lhs == "sx" then
+					table.insert(keymap_restore, keymap)
+					api.nvim_buf_del_keymap(buf, "n", "sx")
+				end
+
+				if keymap.lhs == "sc" then
+					table.insert(keymap_restore, keymap)
+					api.nvim_buf_del_keymap(buf, "n", "sx")
+				end
 			end
 		end
-		api.nvim_set_keymap("n", "K", '<Cmd>lua require("dap.ui.widgets").hover()<CR>', { silent = true })
+		vim.keymap.set("n", "K", '<Cmd>lua require("dap.ui.widgets").hover()<CR>', { silent = true, buffer = buf })
+		vim.keymap.set("n", "sn", dap.step_over, { silent = true })
+		vim.keymap.set("n", "sx", dap.toggle_breakpoint, { silent = true })
+		vim.keymap.set("n", "sc", function()
+			vim.ui.input({
+				prompt = "Breakpoint Condition > ",
+				default = ""
+      },
+				function(input)
+					dap.set_breakpoint(input)
+				end
+			)
+		end, { silent = true })
 	end
 
 	dap.listeners.after["event_terminated"]["me"] = function()
 		for _, keymap in pairs(keymap_restore) do
-			api.nvim_buf_set_keymap(keymap.buffer, keymap.mode, keymap.lhs, keymap.rhs, {
-				silent = keymap.silent == 1,
-			})
+		  vim.keymap.set(keymap.mode, keymap.lhs, keymap.rhs, {silent = keymap.silent == 1, buffer = keymap.buffer})
+			-- api.nvim_buf_set_keymap(keymap.buffer, keymap.mode, keymap.lhs, keymap.rhs, {
+			-- 	silent = keymap.silent == 1,
+			-- })
 		end
 		keymap_restore = {}
 	end

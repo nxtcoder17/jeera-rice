@@ -30,30 +30,30 @@ local api = vim.api
 -- }
 -- -- null_ls.register(no_really)
 
-local frozen_string_actions = {
-	method = null_ls.methods.CODE_ACTION,
-	filetypes = { "go", "lua", "yaml" },
-	generator = {
-		fn = function(context)
-			frozen_string_literal_comment = "# frozen_string_literal: true"
-			first_line = context.content[1]
-
-			if first_line ~= frozen_string_literal_comment then
-				return {
-					{
-						title = "🥶Add frozen string literal comment",
-						action = function()
-							lines = { frozen_string_literal_comment, "", first_line }
-							vim.api.nvim_buf_set_lines(context.bufnr, 0, 1, false, lines)
-						end,
-					},
-				}
-			end
-		end,
-	},
-}
-
-null_ls.register(frozen_string_actions)
+-- local frozen_string_actions = {
+-- 	method = null_ls.methods.CODE_ACTION,
+-- 	filetypes = { "go", "lua", "yaml" },
+-- 	generator = {
+-- 		fn = function(context)
+-- 			frozen_string_literal_comment = "# frozen_string_literal: true"
+-- 			first_line = context.content[1]
+--
+-- 			if first_line ~= frozen_string_literal_comment then
+-- 				return {
+-- 					{
+-- 						title = "🥶Add frozen string literal comment",
+-- 						action = function()
+-- 							lines = { frozen_string_literal_comment, "", first_line }
+-- 							vim.api.nvim_buf_set_lines(context.bufnr, 0, 1, false, lines)
+-- 						end,
+-- 					},
+-- 				}
+-- 			end
+-- 		end,
+-- 	},
+-- }
+--
+-- null_ls.register(frozen_string_actions)
 
 local base64 = {
 	method = null_ls.methods.CODE_ACTION,
@@ -141,20 +141,24 @@ local implementInterface = {
 
 null_ls.register(implementInterface)
 
--- null_ls.register(go_implement_interface)
+local formatBuffer = {
+	method = null_ls.methods.CODE_ACTION,
+	filetypes = { "go" },
+	generator = {
+		fn = function(context)
+			return {
+				{
+					title = "Format Buffer",
+					action = function()
+						vim.lsp.buf.format({ async = true })
+					end,
+				},
+			}
+		end,
+	},
+}
 
--- local go_actions = {
--- 	method = null_ls.methods.CODE_ACTION,
--- 	filetypes = { "go" },
--- 	generator = {
--- 		fn = function(ctx)
--- 			vim.cmd("GoAddTag")
--- 			return {
--- 				{ title = "AddTag" },
--- 			}
--- 		end,
--- 	},
--- }
+null_ls.register(formatBuffer)
 
 -- Configuring null-ls
 null_ls.setup({

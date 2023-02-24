@@ -9,7 +9,7 @@ opt.numberwidth = 4
 opt.showmode = false
 
 -- global statusline
-opt.laststatus = 3
+opt.laststatus = 1
 
 opt.cmdheight = 0
 

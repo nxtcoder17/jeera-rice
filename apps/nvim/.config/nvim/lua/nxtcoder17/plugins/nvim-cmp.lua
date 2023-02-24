@@ -26,7 +26,7 @@ cmp.setup({
 		["<C-f>"] = cmp.mapping.scroll_docs(4),
 		["<C-Space>"] = cmp.mapping.complete({}),
 		["<C-e>"] = cmp.mapping.abort(),
-		["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+		["<CR>"] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
 
 		["<Tab>"] = cmp.mapping(function(fallback)
 			if luasnip.expand_or_jumpable() then
@@ -60,36 +60,37 @@ cmp.setup({
 		end, { "i", "s" }),
 	}),
 	sources = cmp.config.sources({
-		{ name = "codeium" },
-		{ name = "luasnip", label = "[luasnip]", max_item_count = 3 },
+		{ name = "nvim_lsp", label = "[lsp]", max_item_count = 10, group_index = 1, priority = 1 },
+		{ name = "luasnip", label = "[luasnip]", max_item_count = 3, group_index = 2, priority = 2 },
+		{ name = "codeium", group_index = 3, priority = 3 },
 		-- { name = "buffer", option = {
 		-- 	keyword_pattern = [[\w+]],
 		-- } },
 
-		{ name = "nvim_lsp", label = "[lsp]", max_item_count = 5 },
-		-- {
-		-- 	name = "fuzzy_buffer",
-		-- 	max_item_count = 10,
-		-- 	label = "[buffer]",
-		-- 	group_index = 3,
-		-- 	option = {
-		-- 		get_bufnrs = function()
-		-- 			local bufs = {}
-		-- 			for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-		-- 				local buftype = vim.api.nvim_buf_get_option(buf, "buftype")
-		-- 				if buftype ~= "nofile" and buftype ~= "prompt" then
-		-- 					bufs[#bufs + 1] = buf
-		-- 				end
-		-- 			end
-		-- 			return bufs
-		-- 		end,
-		-- 	},
-		-- },
-		{ name = "nvim_lsp_signature_help", label = "[lsp signature]" },
-		{ name = "cmp_tabnine" },
+		{
+			name = "fuzzy_buffer",
+			max_item_count = 7,
+			label = "[buffer]",
+			group_index = 4,
+			priority = 4,
+			option = {
+				get_bufnrs = function()
+					local bufs = {}
+					for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+						local buftype = vim.api.nvim_buf_get_option(buf, "buftype")
+						if buftype ~= "nofile" and buftype ~= "prompt" then
+							bufs[#bufs + 1] = buf
+						end
+					end
+					return bufs
+				end,
+			},
+		},
+		{ name = "nvim_lsp_signature_help", label = "[lsp signature]", group_index = 5 },
+		{ name = "cmp_tabnine", group_index = 6 },
 		-- { name = "copilot", group_index = 2 },
-		{ name = "treesitter", group_index = 2, label = "[treesitter]" },
-		{ name = "path", max_item_count = 10, group_index = 2, label = "[path]" },
+		{ name = "treesitter", group_index = 7, label = "[treesitter]" },
+		{ name = "path", max_item_count = 10, group_index = 8, label = "[path]" },
 		-- {
 		-- 	name = "tmux",
 		-- 	option = {
@@ -100,6 +101,12 @@ cmp.setup({
 		-- 	},
 		-- },
 	}),
+	sorting = {
+		priority_weight = 2,
+		comparators = {
+			cmp.config.compare.order,
+		},
+	},
 	formatting = {
 		fields = { "kind", "abbr", "menu" },
 		format = function(entry, vim_item)
@@ -156,47 +163,3 @@ cmp.setup.cmdline({ ":" }, {
 		{ name = "cmdline" },
 	}),
 })
-
-local hlGroups = {
-	PmenuSel = { bg = "#282C34", fg = "NONE" },
-	-- PmenuSel = { bg = "#87ab9e", fg = "NONE" },
-	-- Pmenu = { fg = "#C5CDD9", bg = "#22252A" },
-	Pmenu = { fg = "#C5CDD9", bg = "#0c1129" },
-	CmpItemAbbrDeprecated = { fg = "#7E8294", bg = "NONE", strikethrough = true },
-	CmpItemAbbrMatch = { fg = "#82AAFF", bg = "NONE", bold = true },
-	CmpItemAbbrMatchFuzzy = { fg = "#82AAFF", bg = "NONE", bold = true },
-	CmpItemMenu = { fg = "#C792EA", bg = "NONE", italic = true },
-	CmpItemKindField = { fg = "#EED8DA", bg = "#B5585F" },
-	CmpItemKindProperty = { fg = "#EED8DA", bg = "#B5585F" },
-	CmpItemKindEvent = { fg = "#EED8DA", bg = "#B5585F" },
-	CmpItemKindText = { fg = "#C3E88D", bg = "#9FBD73" },
-	CmpItemKindEnum = { fg = "#C3E88D", bg = "#9FBD73" },
-	CmpItemKindKeyword = { fg = "#C3E88D", bg = "#9FBD73" },
-	CmpItemKindConstant = { fg = "#FFE082", bg = "#D4BB6C" },
-	CmpItemKindConstructor = { fg = "#FFE082", bg = "#D4BB6C" },
-	CmpItemKindReference = { fg = "#FFE082", bg = "#D4BB6C" },
-	CmpItemKindFunction = { fg = "#EADFF0", bg = "#A377BF" },
-	CmpItemKindStruct = { fg = "#EADFF0", bg = "#A377BF" },
-	CmpItemKindClass = { fg = "#EADFF0", bg = "#A377BF" },
-	CmpItemKindModule = { fg = "#EADFF0", bg = "#A377BF" },
-	CmpItemKindOperator = { fg = "#EADFF0", bg = "#A377BF" },
-	CmpItemKindVariable = { fg = "#C5CDD9", bg = "#7E8294" },
-	CmpItemKindFile = { fg = "#C5CDD9", bg = "#7E8294" },
-	CmpItemKindUnit = { fg = "#F5EBD9", bg = "#D4A959" },
-	CmpItemKindSnippet = { fg = "#F5EBD9", bg = "#D4A959" },
-	CmpItemKindFolder = { fg = "#F5EBD9", bg = "#D4A959" },
-	CmpItemKindMethod = { fg = "#DDE5F5", bg = "#6C8ED4" },
-	CmpItemKindValue = { fg = "#DDE5F5", bg = "#6C8ED4" },
-	CmpItemKindEnumMember = { fg = "#DDE5F5", bg = "#6C8ED4" },
-	CmpItemKindInterface = { fg = "#D8EEEB", bg = "#58B5A8" },
-	CmpItemKindColor = { fg = "#D8EEEB", bg = "#58B5A8" },
-	CmpItemKindTypeParameter = { fg = "#D8EEEB", bg = "#58B5A8" },
-}
-
-function _G.ResetCmpHl()
-	for key, value in pairs(hlGroups) do
-		vim.api.nvim_set_hl(0, key, value)
-	end
-end
-
-ResetCmpHl()

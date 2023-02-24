@@ -15,16 +15,19 @@ pcall(require, "nxtcoder17.settings")
 pcall(require, "nxtcoder17.plugins")
 pcall(require, "nxtcoder17.keymaps")
 -- pcall(require, "nxtcoder17.commands")
-require('nxtcoder17.commands')
+require("nxtcoder17.commands")
 pcall(require, "nxtcoder17.autocmds")
 
--- local timer = vim.loop.new_timer()
--- timer:start(
---   1000,
---   1000,
---   vim.schedule_wrap(function()
---     print("redrawed ...")
---     vim.cmd("redraw")
---     -- vim.api.nvim_command('echomsg "test"')
---   end)
--- )
+local timer = vim.loop.new_timer()
+timer:start(
+    1000,
+    1000,
+    vim.schedule_wrap(function()
+      if vim.bo.filetype ~= "" then
+        -- print("redrawed ...")
+        -- vim.cmd("redraw! | e!")
+        vim.cmd("redraw!")
+        -- vim.api.nvim_command('echomsg "test"')
+      end
+    end)
+)

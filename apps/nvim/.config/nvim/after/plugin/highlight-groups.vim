@@ -9,3 +9,9 @@ hi! GitSignsDelete guifg = #D76363 guibg = none
 
 hi! Statusline guifg=#81A1C1 guibg=none gui=italic
 hi! StatuslineNC guifg=#81A1C1 gui=bold
+
+" hi! TabLineSel guibg=#81a1c1 guifg=#27323d
+" hi! TabLineSel guibg=DarkGray 
+hi! TabLine guifg=#9a7ecc
+hi! TabLineFill guifg=#9a7ecc
+

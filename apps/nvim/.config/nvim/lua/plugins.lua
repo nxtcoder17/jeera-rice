@@ -5,12 +5,12 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
 	vim.cmd([[packadd packer.nvim]])
 end
 
-local packer_grp = vim.api.nvim_create_augroup("Packer", { clear = true })
-vim.api.nvim_create_autocmd("BufWritePost", {
-	command = "source <afile> | PackerCompile",
-	group = packer_grp,
-	pattern = vim.fn.expand("$MYVIMRC"),
-})
+-- local packer_grp = vim.api.nvim_create_augroup("Packer", { clear = true })
+-- vim.api.nvim_create_autocmd("BufWritePost", {
+-- 	command = "source <afile> | PackerCompile",
+-- 	group = packer_grp,
+-- 	pattern = vim.fn.expand("$MYVIMRC"),
+-- })
 
 require("packer").startup(function()
 	use({ "wbthomason/packer.nvim" })
@@ -46,12 +46,6 @@ require("packer").startup(function()
 					require("nxtcoder17.plugins.null-ls")
 				end,
 			},
-			{
-				"stevearc/aerial.nvim",
-				config = function()
-					require("aerial").setup()
-				end,
-			},
 		},
 	})
 
@@ -64,7 +58,6 @@ require("packer").startup(function()
 
 	use({
 		"nvim-telescope/telescope.nvim",
-		-- after = "nvim-treesitter",
 		requires = {
 			"nvim-lua/plenary.nvim",
 			"edolphin-ydf/goimpl.nvim",
@@ -81,18 +74,6 @@ require("packer").startup(function()
 		},
 		config = function()
 			require("nxtcoder17.plugins.telescope")
-		end,
-	})
-
-	use({
-		"ibhagwan/fzf-lua",
-		event = "BufReadPost",
-		requires = {
-			-- "kyazdani42/nvim-web-devicons",
-			{ "junegunn/fzf", run = "./install --bin" },
-		},
-		config = function()
-			require("nxtcoder17.plugins.fzf-lua")
 		end,
 	})
 
@@ -119,14 +100,6 @@ require("packer").startup(function()
 				render = "background",
 				enable_tailwind = "true",
 			})
-		end,
-	})
-
-	use({
-		"catppuccin/nvim",
-		as = "catppuccin",
-		config = function()
-			require("nxtcoder17.plugins.catppuccin")
 		end,
 	})
 
@@ -175,10 +148,11 @@ require("packer").startup(function()
 	})
 
 	use({ "fladson/vim-kitty" })
+
 	use({
 		"rebelot/kanagawa.nvim",
 		config = function()
-			-- require("nxtcoder17.plugins.kanagawa")
+			require("nxtcoder17.plugins.kanagawa")
 		end,
 	})
 
@@ -197,25 +171,14 @@ require("packer").startup(function()
 	})
 
 	use({
-		"kvrohit/substrata.nvim",
+		"catppuccin/nvim",
+		as = "catppuccin",
 		config = function()
-			-- require("nxtcoder17.plugins.colorschemes.substrata")
-		end,
-	})
-
-	-- use({"JoosepAlviste/palenightfall.nvim", config = function()
-	--   require("palenightfall").setup()
-	-- end})
-
-	use({
-		"sam4llis/nvim-tundra",
-		config = function()
-			-- require("nxtcoder17.plugins.colorschemes.tundra")
+			-- require("nxtcoder17.plugins.catppuccin")
 		end,
 	})
 
 	-- treesitter
-
 	use({
 		"nvim-treesitter/nvim-treesitter",
 		config = function()
@@ -232,14 +195,6 @@ require("packer").startup(function()
 			},
 			{ "p00f/nvim-ts-rainbow", event = "BufReadPre", after = "nvim-treesitter" },
 			{ "nvim-treesitter/playground", after = "nvim-treesitter" },
-			-- 	{
-			-- 		"andymass/vim-matchup",
-			-- 		event = "BufEnter",
-			-- 		config = function()
-			-- 			-- vim.g.matchup_matchparen_offscreen = { method = "status" }
-			-- 			-- vim.g.matchup_matchparen_offscreen = nil
-			-- 		end,
-			-- 	},
 		},
 	})
 
@@ -300,13 +255,6 @@ require("packer").startup(function()
 			require("nvim-test").setup()
 		end,
 	})
-
-	-- use({
-	--   "~/workspace/nxtcoder17/neovim/dap-go",
-	--   config = function()
-	--     require("dap-go").setup()
-	--   end,
-	-- })
 
 	-- git
 	use({ "sindrets/diffview.nvim" })
@@ -370,31 +318,15 @@ require("packer").startup(function()
 		"nanozuki/tabby.nvim",
 		config = function()
 			require("tabby").setup()
-			-- require("tabby.tabline").use_preset("active_tab_with_wins", {
-			-- 	theme = {
-			-- 		fill = "TabLineFill", -- tabline background
-			-- 		head = "TabLine", -- head element highlight
-			-- 		current_tab = "TabLineSel", -- current tab label highlight
-			-- 		tab = "TabLine", -- other tab label highlight
-			-- 		win = "TabLine", -- window highlight
-			-- 		tail = "TabLine", -- tail element highlight
-			-- 	},
-			-- 	nerdfont = true, -- whether use nerdfont
-			-- 	tab_name = {
-			-- 		name_fallback = "function({tabid}), return a string",
-			-- 	},
-			-- 	buf_name = {
-			-- 		mode = "'unique'|'relative'|'tail'|'shorten'",
-			-- 	},
-			-- })
 		end,
 	})
 
+	-- session manager
 	use({
 		"jedrzejboczar/possession.nvim",
 		requires = { "nvim-lua/plenary.nvim" },
-		config = function() 
-		  require("nxtcoder17.plugins.possession")
+		config = function()
+			require("nxtcoder17.plugins.possession")
 		end,
 	})
 end)

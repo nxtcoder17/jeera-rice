@@ -30,38 +30,35 @@ table.insert(snippets, envitem)
 
 local rr = postfix(
 	{ trig = ".rr", match_pattern = ".*" },
-	fmt(
-		[[
-if {} := {match}; {} != nil {{
-  return {}
-}}
-{}
-]],
+	fmta(
+		[[if <p1> := <match>; <p2> != nil {{
+        return <p3>
+      }}
+      <p4>
+    ]],
 		{
-			i(1, "err"),
+			p1 = i(1, "err"),
 			match = f(function(_, snip)
 				return snip.env.POSTFIX_MATCH:gsub("%s+", "")
 			end),
-			rep(1),
-			rep(1),
-			i(0),
+			p2 = rep(1),
+			p3 = rep(1),
+			p4 = i(0),
 		}
 	)
 )
 
 local nn = postfix(
 	{ trig = ".nn", match_pattern = ".*" },
-	fmt(
-		[[
-if {} != nil {{
-  {}
-}}
-]],
+	fmta(
+		[[ if <err> != nil {
+              <expr>
+            } ]],
 		{
-			f(function(_, snip)
+			err = f(function(_, snip)
 				return snip.env.POSTFIX_MATCH:gsub("%s+", "")
 			end),
-			i(0, "// body"),
+			expr = i(1, "// body"),
 		}
 	)
 )
