@@ -9,7 +9,7 @@ opt.numberwidth = 4
 opt.showmode = false
 
 -- global statusline
-opt.laststatus = 1
+opt.laststatus = 3
 
 opt.cmdheight = 0
 
@@ -21,7 +21,7 @@ opt.swapfile = false
 -- no awkward shitty horizontal shifting due to Diagnostics, GitSigns, etc.
 opt.signcolumn = "yes:2"
 
-opt.wrap = false
+opt.wrap = true
 
 opt.scrolloff = 10
 

@@ -51,6 +51,7 @@ require("packer").startup(function()
 
 	use({
 		"echasnovski/mini.nvim",
+		branch = "stable",
 		config = function()
 			require("nxtcoder17.plugins.mini")
 		end,
@@ -131,7 +132,7 @@ require("packer").startup(function()
 			{ "hrsh7th/cmp-nvim-lsp-signature-help" },
 			{ "andersevenrud/cmp-tmux" },
 			-- { "tzachar/cmp-tabnine", run = "./install.sh" },
-
+			{ "hrsh7th/cmp-cmdline" },
 			{ "hrsh7th/cmp-buffer" },
 			{ "tzachar/cmp-fuzzy-buffer" },
 			{ "tzachar/fuzzy.nvim" },
@@ -149,6 +150,7 @@ require("packer").startup(function()
 
 	use({ "fladson/vim-kitty" })
 
+	-- colorschemes
 	use({
 		"rebelot/kanagawa.nvim",
 		config = function()
@@ -156,17 +158,42 @@ require("packer").startup(function()
 		end,
 	})
 
+	--   local default_colors = {
+	--     bg = "#282c34",
+	--     fg = "#abb2bf",
+	--     red = "#ef596f",
+	--     orange = "#d19a66",
+	--     yellow = "#e5c07b",
+	--     green = "#89ca78",
+	--     cyan = "#2bbac5",
+	--     blue = "#61afef",
+	--     purple = "#d55fde",
+	--     white = "#abb2bf",
+	--     black = "#282c34",
+	--     gray = "#5c6370",
+	--     highlight = "#e2be7d",
+	--     comment = "#7f848e",
+	--     none = "NONE",
+	-- }
+
+	use({
+		"olimorris/onedarkpro.nvim",
+		config = function()
+			require("nxtcoder17.plugins.colorschemes.onedarkpro")
+		end,
+	})
+
 	use({
 		"sainnhe/gruvbox-material",
 		config = function()
-			-- require("nxtcoder17.plugins.gruvbox-material")
+			require("nxtcoder17.plugins.gruvbox-material")
 		end,
 	})
 
 	use({
 		"folke/tokyonight.nvim",
 		config = function()
-			-- require("nxtcoder17.plugins.tokyonight")
+			require("nxtcoder17.plugins.tokyonight")
 		end,
 	})
 
@@ -174,7 +201,7 @@ require("packer").startup(function()
 		"catppuccin/nvim",
 		as = "catppuccin",
 		config = function()
-			-- require("nxtcoder17.plugins.catppuccin")
+			require("nxtcoder17.plugins.catppuccin")
 		end,
 	})
 
@@ -245,7 +272,6 @@ require("packer").startup(function()
 		requires = {
 			"ray-x/guihua.lua",
 		},
-		commit = "bd9caf8d0e83b1d3d8a323ca08e9ba67a855aa24",
 		ft = "go",
 	})
 
@@ -329,4 +355,19 @@ require("packer").startup(function()
 			require("nxtcoder17.plugins.possession")
 		end,
 	})
+
+	-- chatgpt
+	-- use({
+	-- 	"jackMort/ChatGPT.nvim",
+	-- 	config = function()
+	-- 		require("chatgpt").setup()
+	-- 	end,
+	-- 	requires = {
+	-- 		"MunifTanjim/nui.nvim",
+	-- 		"nvim-lua/plenary.nvim",
+	-- 		"nvim-telescope/telescope.nvim",
+	-- 	},
+	-- })
 end)
+
+vim.cmd("colorscheme kanagawa")

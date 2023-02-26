@@ -24,6 +24,12 @@ telescope.load_extension("goimpl")
 telescope.load_extension("possession")
 telescope.load_extension("lsp_handlers")
 
+local ivyCustomLayoutConfig = {
+	bottom_pane = {
+		height = 17,
+	},
+}
+
 telescope.setup({
 	defaults = {
 		-- copied from nvchad/nvim
@@ -77,13 +83,19 @@ telescope.setup({
 	},
 	extensions = {
 		["ui-select"] = {
-			themes.get_ivy({}),
+			themes.get_ivy({
+				layout_config = ivyCustomLayoutConfig,
+			}),
 		},
 		["goimpl"] = {
-			themes.get_ivy({}),
+			themes.get_ivy({
+				layout_config = ivyCustomLayoutConfig,
+			}),
 		},
 		possession = {
-			themes.get_ivy({}),
+			themes.get_ivy({
+				layout_config = ivyCustomLayoutConfig,
+			}),
 		},
 
 		-- lsp_handlers = {
@@ -95,24 +107,36 @@ telescope.setup({
 	pickers = {
 		find_files = {
 			theme = "ivy",
+			layout_config = ivyCustomLayoutConfig,
 			find_command = findCmd,
 			prompt_title = "  Looking for files",
+			results_title = "",
 		},
 		lsp_references = {
 			theme = "ivy",
+			layout_config = ivyCustomLayoutConfig,
 			prompt_title = "  Looking for references",
+			results_title = "",
 		},
 		lsp_definitions = {
 			theme = "ivy",
+			layout_config = ivyCustomLayoutConfig,
+			results_title = "",
 		},
 		grep_string = {
 			theme = "ivy",
+			layout_config = ivyCustomLayoutConfig,
+			results_title = "",
 		},
 		current_buffer_fuzzy_find = {
 			theme = "ivy",
+			layout_config = ivyCustomLayoutConfig,
+			results_title = "",
 		},
 		buffers = {
 			theme = "ivy",
+			layout_config = ivyCustomLayoutConfig,
+			results_title = "",
 			mappings = {
 				n = {
 					["<C-d>"] = actions.delete_buffer,
@@ -128,8 +152,10 @@ telescope.setup({
 local M = {}
 M.grep = function()
 	telescope_builtin.grep_string({
+		results_title = "",
 		prompt_title = " Grep word",
-		search = vim.fn.input("   Grep for word> ", vim.fn.expand("<cword>")),
+		search = vim.fn.input({ prompt = "   Grep for word > ", default = vim.fn.expand("<cword>") }),
+		-- search = vim.fn.input("   Grep for word> ", vim.fn.expand("<cword>")),
 		use_regex = true,
 	})
 end
@@ -149,60 +175,59 @@ local goto_window = function(prompt_bufnr)
 	vim.api.nvim_set_current_win(entry.value)
 end
 
-local getTabLabel = function(tabnr)
-	-- return "[TAB] " .. tabnr
-	-- return tabnr .. " [TAB] "
-	return ""
-end
-
 M.tabs = function()
 	local windows = {}
 
-	local bufs = vim.api.nvim_list_bufs()
-	for _, bufnr in ipairs(bufs) do
-		local bufName = vim.api.nvim_buf_get_name(bufnr)
-		local bufLabel = trim(string.sub(vim.api.nvim_buf_get_name(bufnr), vim.fn.getcwd():len() + 2))
-
-		if vim.api.nvim_buf_is_loaded(bufnr) and vim.api.nvim_get_current_buf() ~= bufnr and bufName ~= "" then
-			table.insert(windows, {
-				ordinal = bufLabel,
-				display = bufLabel,
-				value = bufnr,
-			})
-		end
-	end
+	-- local bufs = vim.api.nvim_list_bufs()
+	-- for _, bufnr in ipairs(bufs) do
+	-- 	local bufName = vim.api.nvim_buf_get_name(bufnr)
+	-- 	local bufLabel = trim(string.sub(vim.api.nvim_buf_get_name(bufnr), vim.fn.getcwd():len() + 2))
+	--
+	-- 	if vim.api.nvim_buf_is_loaded(bufnr) and vim.api.nvim_get_current_buf() ~= bufnr and bufName ~= "" then
+	-- 		table.insert(windows, {
+	-- 			ordinal = bufLabel,
+	-- 			display = bufLabel,
+	-- 			value = bufnr,
+	-- 		})
+	-- 	end
+	-- end
 
 	local tabs = vim.api.nvim_list_tabpages()
 	for tabidx, tabnr in ipairs(tabs) do
 		local windownrs = vim.api.nvim_tabpage_list_wins(tabnr)
 
+		local tabLabel = tabidx .. "[TAB]"
+		if hasTabby() then
+			tabLabel = tabidx .. " [TAB] ( " .. require("tabby.util").get_tab_name(tabnr) .. " )"
+		end
+
 		for windownr, windowid in ipairs(windownrs) do
 			local bufnr = vim.api.nvim_win_get_buf(windowid)
-			local bufLabel = string.sub(vim.api.nvim_buf_get_name(bufnr), vim.fn.getcwd():len() + 2)
+			local bufLabel = trim(string.sub(vim.api.nvim_buf_get_name(bufnr), vim.fn.getcwd():len() + 2))
 
-			if getTabName == nil then
-				if hasTabby() then
-					local tn = require("tabby.util").get_tab_name
-					getTabLabel = function(tabnr, idx)
-						return idx .. " [TAB] ( " .. tn(tabnr) .. " )"
-					end
-				end
-				getTabName = "from:tabby"
+			if vim.fn.buflisted(bufnr) > 0 then
+				local bufstr = tabLabel .. " " .. bufLabel
+
+				table.insert(windows, {
+					ordinal = bufstr,
+					display = bufstr,
+					value = windowid,
+				})
 			end
-
-			local bufstr = getTabLabel(tabnr, tabidx) .. " " .. bufLabel
-
-			table.insert(windows, {
-				ordinal = bufstr,
-				display = bufstr,
-				value = windowid,
-			})
 		end
 	end
 
-	pickers
-		.new(themes.get_ivy(), {
-			results_title = "Tabs",
+	pickers.new(
+		themes.get_ivy({
+			layout_config = {
+				bottom_pane = {
+					height = 15,
+				},
+				-- results_height = 10,
+			},
+		}),
+		{
+			results_title = "",
 			prompt_title = "Fuzzy Search your tabs, here",
 			finder = finders.new_table({
 				results = windows,
@@ -217,8 +242,8 @@ M.tabs = function()
 				map("n", "<CR>", goto_window)
 				return true
 			end,
-		})
-		:find()
+		}
+	):find()
 end
 
 M.dapActions = function()
@@ -251,26 +276,24 @@ M.dapActions = function()
 		})
 	end
 
-	pickers
-		.new(themes.get_ivy(), {
-			results_title = "DAP Actions",
-			prompt_title = "Hub for dap actions",
-			finder = finders.new_table({
-				results = m,
-				entry_maker = function(x)
-					return x
-				end,
-			}),
-			sorter = sorters.get_fzy_sorter({}),
-			attach_mappings = function(prompt_bufnr, map)
-				return actions.select_default:replace(function()
-					actions.close(prompt_bufnr)
-					local selection = action_state.get_selected_entry()
-					selection.value()
-				end)
+	pickers.new(themes.get_ivy(), {
+		results_title = "DAP Actions",
+		prompt_title = "Hub for dap actions",
+		finder = finders.new_table({
+			results = m,
+			entry_maker = function(x)
+				return x
 			end,
-		})
-		:find()
+		}),
+		sorter = sorters.get_fzy_sorter({}),
+		attach_mappings = function(prompt_bufnr, map)
+			return actions.select_default:replace(function()
+				actions.close(prompt_bufnr)
+				local selection = action_state.get_selected_entry()
+				selection.value()
+			end)
+		end,
+	}):find()
 end
 
 return M

@@ -26,7 +26,7 @@ cmp.setup({
 		["<C-f>"] = cmp.mapping.scroll_docs(4),
 		["<C-Space>"] = cmp.mapping.complete({}),
 		["<C-e>"] = cmp.mapping.abort(),
-		["<CR>"] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+		["<CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
 
 		["<Tab>"] = cmp.mapping(function(fallback)
 			if luasnip.expand_or_jumpable() then
@@ -60,19 +60,16 @@ cmp.setup({
 		end, { "i", "s" }),
 	}),
 	sources = cmp.config.sources({
-		{ name = "nvim_lsp", label = "[lsp]", max_item_count = 10, group_index = 1, priority = 1 },
-		{ name = "luasnip", label = "[luasnip]", max_item_count = 3, group_index = 2, priority = 2 },
-		{ name = "codeium", group_index = 3, priority = 3 },
+		{ name = "nvim_lsp" },
+		{ name = "luasnip" },
+		{ name = "codeium" },
 		-- { name = "buffer", option = {
 		-- 	keyword_pattern = [[\w+]],
 		-- } },
-
 		{
 			name = "fuzzy_buffer",
-			max_item_count = 7,
-			label = "[buffer]",
-			group_index = 4,
-			priority = 4,
+			max_item_count = 5,
+			group = 10,
 			option = {
 				get_bufnrs = function()
 					local bufs = {}
@@ -86,11 +83,10 @@ cmp.setup({
 				end,
 			},
 		},
-		{ name = "nvim_lsp_signature_help", label = "[lsp signature]", group_index = 5 },
-		{ name = "cmp_tabnine", group_index = 6 },
-		-- { name = "copilot", group_index = 2 },
-		{ name = "treesitter", group_index = 7, label = "[treesitter]" },
-		{ name = "path", max_item_count = 10, group_index = 8, label = "[path]" },
+		{ name = "nvim_lsp_signature_help" },
+		{ name = "cmp_tabnine" },
+		{ name = "treesitter" },
+		{ name = "path" },
 		-- {
 		-- 	name = "tmux",
 		-- 	option = {
@@ -101,12 +97,12 @@ cmp.setup({
 		-- 	},
 		-- },
 	}),
-	sorting = {
-		priority_weight = 2,
-		comparators = {
-			cmp.config.compare.order,
-		},
-	},
+	-- sorting = {
+	--   priority_weight = 2,
+	--   comparators = {
+	--     cmp.config.compare.order,
+	--   },
+	-- },
 	formatting = {
 		fields = { "kind", "abbr", "menu" },
 		format = function(entry, vim_item)
@@ -157,6 +153,7 @@ cmp.setup.cmdline({ "/" }, {
 		{ name = "path" },
 	}),
 })
+
 cmp.setup.cmdline({ ":" }, {
 	mapping = cmp.mapping.preset.cmdline(),
 	sources = cmp.config.sources({

@@ -1,3 +1,5 @@
+local b64 = require("base64")
+
 local M = {}
 
 M.closeFloating = function()
@@ -68,45 +70,44 @@ M.impl = function()
 	my_custom_picker(l)
 end
 
--- source: https://github.com/kristijanhusak/neovim-config/blob/6d52b0abd8bbdd810854c0655bc158c536210829/nvim/lua/partials/search.lua#L44
-M.getSelection = function()
-	vim.api.nvim_feedkeys("\027", "xvt", false)
-	return vim.fn.getreg("@*")
-	-- local s_start = vim.fn.getpos("'<")
-	-- local s_end = vim.fn.getpos("'>")
-	--
-	-- vim.fn.setreg("'<", 0)
-	-- vim.fn.setreg("'>", 0)
-	--
-	--
-	-- local n_lines = math.abs(s_end[2] - s_start[2]) + 1
-	-- local lines = vim.api.nvim_buf_get_lines(0, s_start[2] - 1, s_end[2], false)
-	-- lines[1] = string.sub(lines[1], s_start[3], -1)
-	-- if n_lines == 1 then
-	-- 	lines[n_lines] = string.sub(lines[n_lines], 1, s_end[3] - s_start[3] + 1)
-	-- else
-	-- 	lines[n_lines] = string.sub(lines[n_lines], 1, s_end[3])
-	-- end
-	-- return table.concat(lines, "\n")
+M.get_selection = function()
+	local start_pos = vim.fn.getpos("'<")
+	local end_pos = vim.fn.getpos("'>")
+
+	local start_row, start_col = start_pos[2], start_pos[3]
+	local end_row, end_col = end_pos[2], end_pos[3]
+
+	local bufnr = vim.api.nvim_get_current_buf()
+	local lines = vim.api.nvim_buf_get_text(bufnr, start_row - 1, start_col - 1, end_row - 1, end_col, {})
+
+	return table.concat(lines, "\n")
 end
 
-M.b64Decode = function(text)
-	local b64 = require("base64")
-	text = text or M.getSelection()
-	print("decoding text: ", text)
+M.b64Decode = function(text, opts)
+	text = text or M.get_selection()
+	opts = opts or { debug = false }
+	if opts.debug then
+		print("[b64Decode] decoding text: ", text)
+	end
 	local v = b64.decode(text)
-	print(v)
-	os.execute(string.format("echo %s | xclip -sel clip", v))
+	if opts.debug then
+		print("[b64Decode]", v)
+	end
+	os.execute(string.format("echo -n %s | xclip -sel clip", v))
 	return v
 end
 
-M.b64Encode = function()
-	local b64 = require("base64")
-	text = text or M.getSelection()
-	print("encoding text: ", text)
+M.b64Encode = function(text, opts)
+	text = text or M.get_selection()
+	opts = opts or { debug = false }
+	if opts.debug then
+		print("[b64Encode]", "encoding text: ", text)
+	end
 	local v = b64.encode(text)
-	print(v)
-	os.execute(string.format("echo %s | xclip -sel clip", v))
+	if opts.debug then
+		print("[b64Encode]", v)
+	end
+	os.execute(string.format("echo -n %s | xclip -sel clip", v))
 	return v
 end
 

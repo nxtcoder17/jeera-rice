@@ -16,15 +16,14 @@ k9s:
     fullScreenLogs: false
     textWrap: false
     showTime: false
-  currentContext: dev-azure
-  currentCluster: dev-azure
+  currentContext: k3s-default
+  currentCluster: k3s-default
   clusters:
-    dev-azure:
+    k3s-default:
       namespace:
-        active: kl-init-operators
+        active: default
         lockFavorites: false
         favorites:
-        - kl-init-operators
         - default
       view:
         active: pods
