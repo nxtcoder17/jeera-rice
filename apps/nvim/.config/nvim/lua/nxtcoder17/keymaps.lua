@@ -10,7 +10,7 @@ vim.keymap.set("n", "k", "gk")
 vim.keymap.set("t", "<esc>", "<C-\\><C-N>")
 vim.keymap.set({ "n", "v" }, "cc", '"+y')
 
--- vim.g.mapleader = 'f'
+vim.g.mapleader = ","
 
 -- [ the 's' key ]
 vim.keymap.set({ "n", "v" }, "s", "<Nop>", { silent = true, noremap = true })

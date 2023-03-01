@@ -16,14 +16,22 @@ k9s:
     fullScreenLogs: false
     textWrap: false
     showTime: false
-  currentContext: k3s-default
-  currentCluster: k3s-default
+  currentContext: cluster-superzop
+  currentCluster: cluster-superzop
   clusters:
-    k3s-default:
+    cluster-superzop:
       namespace:
-        active: default
+        active: kl-init-operators
         lockFavorites: false
         favorites:
+        - helm-cert-manager
+        - kl-provider-superzop
+        - kl-edge-superzop-mumbai-1
+        - all
+        - kl-init-operators
+        - superzop
+        - helm-gitlab-runner
+        - kl-core
         - default
       view:
         active: pods

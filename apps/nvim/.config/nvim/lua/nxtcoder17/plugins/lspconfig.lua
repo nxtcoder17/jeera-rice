@@ -119,11 +119,11 @@ local lsp_servers = {
     "--stdio",
   },
   docker = {
-    base_dir .. "/dockerfile/node_modules/.bin/docker-langserver",
+    base_dir .. "/docker-langserver",
     "--stdio",
   },
   bashls = {
-    base_dir .. "/bash/node_modules/.bin/bash-language-server",
+    base_dir .. "/bash-language-server",
     "start",
   },
   python = {

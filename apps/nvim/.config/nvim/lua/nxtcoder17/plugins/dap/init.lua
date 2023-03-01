@@ -1,54 +1,56 @@
 require("nvim-dap-virtual-text").setup({
-	commented = true,
+  commented = true,
 })
 
 local dap, dapui = require("dap"), require("dapui")
 dapui.setup({}) -- use default
 
 dap.listeners.after.event_initialized["dapui_config"] = function()
-	dapui.open()
+  -- dapui.open()
 end
 
 dap.listeners.before.event_terminated["dapui_config"] = function()
-	dapui.close()
+  dapui.close()
 end
 
 dap.listeners.before.event_exited["dapui_config"] = function()
-	dapui.close()
+  dapui.close()
 end
 
 vim.fn.sign_define("DapBreakpoint", { text = "🟥", texthl = "", linehl = "", numhl = "" })
 vim.fn.sign_define("DapStopped", { text = "⭐️", texthl = "", linehl = "", numhl = "" })
+vim.api.nvim_set_hl(0, "DapStoppedLinehl", { bg = "#555530" })
+vim.fn.sign_define("DapStopped", { text = "🧱", texthl = "Error", linehl = "DapStoppedLinehl", numhl = "" })
 
 require("nxtcoder17.plugins.dap.keymaps")
 require("nxtcoder17.plugins.dap.go").setup()
 
 local function setupLua()
-	local dap = require("dap")
+  local dap = require("dap")
 
-	dap.configurations.lua = {
-		{
-			type = "nlua",
-			request = "attach",
-			name = "Attach to running Neovim instance",
-			host = function()
-				local value = vim.fn.input("Host [127.0.0.1]: ")
-				if value ~= "" then
-					return value
-				end
-				return "127.0.0.1"
-			end,
-			port = function()
-				local val = tonumber(vim.fn.input("Port: ", "54321"))
-				assert(val, "Please provide a port number")
-				return val
-			end,
-		},
-	}
+  dap.configurations.lua = {
+    {
+      type = "nlua",
+      request = "attach",
+      name = "Attach to running Neovim instance",
+      host = function()
+        local value = vim.fn.input("Host [127.0.0.1]: ")
+        if value ~= "" then
+          return value
+        end
+        return "127.0.0.1"
+      end,
+      port = function()
+        local val = tonumber(vim.fn.input("Port: ", "54321"))
+        assert(val, "Please provide a port number")
+        return val
+      end,
+    },
+  }
 
-	dap.adapters.nlua = function(callback, config)
-		callback({ type = "server", host = config.host, port = config.port })
-	end
+  dap.adapters.nlua = function(callback, config)
+    callback({ type = "server", host = config.host, port = config.port })
+  end
 end
 
 setupLua()

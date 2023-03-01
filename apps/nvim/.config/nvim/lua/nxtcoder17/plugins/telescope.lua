@@ -9,12 +9,12 @@ local conf = require("telescope.config").values
 local action_state = require("telescope.actions.state")
 
 local function findCmd()
-	if vim.fn.executable("fd") then
-		return { "fd", "-t", "f", "-H", "-E", ".git", "--strip-cwd-prefix" }
-	end
-	if vim.fn.executable("rg") then
-		return { "rg", "--files", "--iglob", "!.git", "--hidden" }
-	end
+  if vim.fn.executable("fd") then
+    return { "fd", "-t", "f", "-H", "-E", ".git", "--strip-cwd-prefix" }
+  end
+  if vim.fn.executable("rg") then
+    return { "rg", "--files", "--iglob", "!.git", "--hidden" }
+  end
 end
 
 telescope.load_extension("fzf")
@@ -25,275 +25,275 @@ telescope.load_extension("possession")
 telescope.load_extension("lsp_handlers")
 
 local ivyCustomLayoutConfig = {
-	bottom_pane = {
-		height = 17,
-	},
+  bottom_pane = {
+    height = 17,
+  },
 }
 
 telescope.setup({
-	defaults = {
-		-- copied from nvchad/nvim
-		vimgrep_arguments = {
-			"rg",
-			"-L",
-			"--color=never",
-			"--no-heading",
-			"--with-filename",
-			"--line-number",
-			"--column",
-			"--smart-case",
-		},
-		prompt_prefix = "   ",
-		selection_caret = "  ",
-		entry_prefix = "  ",
-		initial_mode = "insert",
-		selection_strategy = "reset",
-		sorting_strategy = "ascending",
-		layout_strategy = "horizontal",
-		layout_config = {
-			horizontal = {
-				prompt_position = "top",
-				preview_width = 0.55,
-				results_width = 0.8,
-			},
-			vertical = {
-				mirror = false,
-			},
-			width = 0.87,
-			height = 0.80,
-			preview_cutoff = 120,
-		},
-		file_sorter = require("telescope.sorters").get_fuzzy_file,
-		file_ignore_patterns = { "node_modules" },
-		generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
-		path_display = { "truncate" },
-		winblend = 0,
-		border = {},
-		borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
-		color_devicons = true,
-		set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
-		file_previewer = require("telescope.previewers").vim_buffer_cat.new,
-		grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
-		qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
-		-- Developer configurations: Not meant for general override
-		buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
-		mappings = {
-			n = { ["q"] = require("telescope.actions").close },
-		},
-	},
-	extensions = {
-		["ui-select"] = {
-			themes.get_ivy({
-				layout_config = ivyCustomLayoutConfig,
-			}),
-		},
-		["goimpl"] = {
-			themes.get_ivy({
-				layout_config = ivyCustomLayoutConfig,
-			}),
-		},
-		possession = {
-			themes.get_ivy({
-				layout_config = ivyCustomLayoutConfig,
-			}),
-		},
+  defaults = {
+    -- copied from nvchad/nvim
+    vimgrep_arguments = {
+      "rg",
+      "-L",
+      "--color=never",
+      "--no-heading",
+      "--with-filename",
+      "--line-number",
+      "--column",
+      "--smart-case",
+    },
+    prompt_prefix = "   ",
+    selection_caret = "  ",
+    entry_prefix = "  ",
+    initial_mode = "insert",
+    selection_strategy = "reset",
+    sorting_strategy = "ascending",
+    layout_strategy = "horizontal",
+    layout_config = {
+      horizontal = {
+        prompt_position = "top",
+        preview_width = 0.55,
+        results_width = 0.8,
+      },
+      vertical = {
+        mirror = false,
+      },
+      width = 0.87,
+      height = 0.80,
+      preview_cutoff = 120,
+    },
+    file_sorter = require("telescope.sorters").get_fuzzy_file,
+    file_ignore_patterns = { "node_modules" },
+    generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
+    path_display = { "truncate" },
+    winblend = 0,
+    border = {},
+    borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+    color_devicons = true,
+    set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
+    file_previewer = require("telescope.previewers").vim_buffer_cat.new,
+    grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
+    qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
+    -- Developer configurations: Not meant for general override
+    buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
+    mappings = {
+      n = { ["q"] = require("telescope.actions").close },
+    },
+  },
+  extensions = {
+    ["ui-select"] = {
+      themes.get_ivy({
+        layout_config = ivyCustomLayoutConfig,
+      }),
+    },
+    ["goimpl"] = {
+      themes.get_ivy({
+        layout_config = ivyCustomLayoutConfig,
+      }),
+    },
+    possession = {
+      themes.get_ivy({
+        layout_config = ivyCustomLayoutConfig,
+      }),
+    },
 
-		-- lsp_handlers = {
-		--     code_action = {
-		--         telescope = require("telescope.themes").get_cursor({}),
-		--     },
-		-- },
-	},
-	pickers = {
-		find_files = {
-			theme = "ivy",
-			layout_config = ivyCustomLayoutConfig,
-			find_command = findCmd,
-			prompt_title = "  Looking for files",
-			results_title = "",
-		},
-		lsp_references = {
-			theme = "ivy",
-			layout_config = ivyCustomLayoutConfig,
-			prompt_title = "  Looking for references",
-			results_title = "",
-		},
-		lsp_definitions = {
-			theme = "ivy",
-			layout_config = ivyCustomLayoutConfig,
-			results_title = "",
-		},
-		grep_string = {
-			theme = "ivy",
-			layout_config = ivyCustomLayoutConfig,
-			results_title = "",
-		},
-		current_buffer_fuzzy_find = {
-			theme = "ivy",
-			layout_config = ivyCustomLayoutConfig,
-			results_title = "",
-		},
-		buffers = {
-			theme = "ivy",
-			layout_config = ivyCustomLayoutConfig,
-			results_title = "",
-			mappings = {
-				n = {
-					["<C-d>"] = actions.delete_buffer,
-				},
-				i = {
-					["<C-d>"] = actions.delete_buffer,
-				},
-			},
-		},
-	},
+    -- lsp_handlers = {
+    --     code_action = {
+    --         telescope = require("telescope.themes").get_cursor({}),
+    --     },
+    -- },
+  },
+  pickers = {
+    find_files = {
+      theme = "ivy",
+      layout_config = ivyCustomLayoutConfig,
+      find_command = findCmd,
+      prompt_title = "  Looking for files",
+      results_title = "",
+    },
+    lsp_references = {
+      theme = "ivy",
+      layout_config = ivyCustomLayoutConfig,
+      prompt_title = "  Looking for references",
+      results_title = "",
+    },
+    lsp_definitions = {
+      theme = "ivy",
+      layout_config = ivyCustomLayoutConfig,
+      results_title = "",
+    },
+    grep_string = {
+      theme = "ivy",
+      layout_config = ivyCustomLayoutConfig,
+      results_title = "",
+    },
+    current_buffer_fuzzy_find = {
+      theme = "ivy",
+      layout_config = ivyCustomLayoutConfig,
+      results_title = "",
+    },
+    buffers = {
+      theme = "ivy",
+      layout_config = ivyCustomLayoutConfig,
+      results_title = "",
+      mappings = {
+        n = {
+          ["<C-d>"] = actions.delete_buffer,
+        },
+        i = {
+          ["<C-d>"] = actions.delete_buffer,
+        },
+      },
+    },
+  },
 })
 
 local M = {}
 M.grep = function()
-	telescope_builtin.grep_string({
-		results_title = "",
-		prompt_title = " Grep word",
-		search = vim.fn.input({ prompt = "   Grep for word > ", default = vim.fn.expand("<cword>") }),
-		-- search = vim.fn.input("   Grep for word> ", vim.fn.expand("<cword>")),
-		use_regex = true,
-	})
+  telescope_builtin.grep_string({
+    results_title = "",
+    prompt_title = " Grep word",
+    search = vim.fn.input({ prompt = "   Grep for word > ", default = vim.fn.expand("<cword>") }),
+    -- search = vim.fn.input("   Grep for word> ", vim.fn.expand("<cword>")),
+    use_regex = true,
+  })
 end
 
 local function trim(s)
-	return (s:gsub("^%s*(.-)%s*$", "%1"))
+  return (s:gsub("^%s*(.-)%s*$", "%1"))
 end
 
 local hasTabby = function()
-	return packer_plugins["tabby.nvim"] and packer_plugins["tabby.nvim"].loaded
+  return packer_plugins["tabby.nvim"] and packer_plugins["tabby.nvim"].loaded
 end
 
 local goto_window = function(prompt_bufnr)
-	actions.close(prompt_bufnr)
-	local entry = action_state.get_selected_entry()
-	-- make vim show the given window
-	vim.api.nvim_set_current_win(entry.value)
+  actions.close(prompt_bufnr)
+  local entry = action_state.get_selected_entry()
+  -- make vim show the given window
+  vim.api.nvim_set_current_win(entry.value)
 end
 
 M.tabs = function()
-	local windows = {}
+  local windows = {}
 
-	-- local bufs = vim.api.nvim_list_bufs()
-	-- for _, bufnr in ipairs(bufs) do
-	-- 	local bufName = vim.api.nvim_buf_get_name(bufnr)
-	-- 	local bufLabel = trim(string.sub(vim.api.nvim_buf_get_name(bufnr), vim.fn.getcwd():len() + 2))
-	--
-	-- 	if vim.api.nvim_buf_is_loaded(bufnr) and vim.api.nvim_get_current_buf() ~= bufnr and bufName ~= "" then
-	-- 		table.insert(windows, {
-	-- 			ordinal = bufLabel,
-	-- 			display = bufLabel,
-	-- 			value = bufnr,
-	-- 		})
-	-- 	end
-	-- end
+  -- local bufs = vim.api.nvim_list_bufs()
+  -- for _, bufnr in ipairs(bufs) do
+  -- 	local bufName = vim.api.nvim_buf_get_name(bufnr)
+  -- 	local bufLabel = trim(string.sub(vim.api.nvim_buf_get_name(bufnr), vim.fn.getcwd():len() + 2))
+  --
+  -- 	if vim.api.nvim_buf_is_loaded(bufnr) and vim.api.nvim_get_current_buf() ~= bufnr and bufName ~= "" then
+  -- 		table.insert(windows, {
+  -- 			ordinal = bufLabel,
+  -- 			display = bufLabel,
+  -- 			value = bufnr,
+  -- 		})
+  -- 	end
+  -- end
 
-	local tabs = vim.api.nvim_list_tabpages()
-	for tabidx, tabnr in ipairs(tabs) do
-		local windownrs = vim.api.nvim_tabpage_list_wins(tabnr)
+  local tabs = vim.api.nvim_list_tabpages()
+  for tabidx, tabnr in ipairs(tabs) do
+    local windownrs = vim.api.nvim_tabpage_list_wins(tabnr)
 
-		local tabLabel = tabidx .. "[TAB]"
-		if hasTabby() then
-			tabLabel = tabidx .. " [TAB] ( " .. require("tabby.util").get_tab_name(tabnr) .. " )"
-		end
+    local tabLabel = tabidx .. "[TAB]"
+    if hasTabby() then
+      tabLabel = tabidx .. " [TAB] ( " .. require("tabby.util").get_tab_name(tabnr) .. " )"
+    end
 
-		for windownr, windowid in ipairs(windownrs) do
-			local bufnr = vim.api.nvim_win_get_buf(windowid)
-			local bufLabel = trim(string.sub(vim.api.nvim_buf_get_name(bufnr), vim.fn.getcwd():len() + 2))
+    for windownr, windowid in ipairs(windownrs) do
+      local bufnr = vim.api.nvim_win_get_buf(windowid)
+      local bufLabel = trim(string.sub(vim.api.nvim_buf_get_name(bufnr), vim.fn.getcwd():len() + 2))
 
-			if vim.fn.buflisted(bufnr) > 0 then
-				local bufstr = tabLabel .. " " .. bufLabel
+      if vim.fn.buflisted(bufnr) > 0 then
+        local bufstr = tabLabel .. " " .. bufLabel
 
-				table.insert(windows, {
-					ordinal = bufstr,
-					display = bufstr,
-					value = windowid,
-				})
-			end
-		end
-	end
+        table.insert(windows, {
+          ordinal = bufstr,
+          display = bufstr,
+          value = windowid,
+        })
+      end
+    end
+  end
 
-	pickers.new(
-		themes.get_ivy({
-			layout_config = {
-				bottom_pane = {
-					height = 15,
-				},
-				-- results_height = 10,
-			},
-		}),
-		{
-			results_title = "",
-			prompt_title = "Fuzzy Search your tabs, here",
-			finder = finders.new_table({
-				results = windows,
-				entry_maker = function(x)
-					return x
-				end,
-			}),
-			sorter = sorters.get_fzy_sorter({}),
-			attach_mappings = function(item, map)
-				-- use our custom action to go the window id
-				map("i", "<CR>", goto_window)
-				map("n", "<CR>", goto_window)
-				return true
-			end,
-		}
-	):find()
+  pickers.new(
+    themes.get_ivy({
+      layout_config = {
+        bottom_pane = {
+          height = 15,
+        },
+        -- results_height = 10,
+      },
+    }),
+    {
+      results_title = "",
+      prompt_title = "Fuzzy Search your tabs, here",
+      finder = finders.new_table({
+        results = windows,
+        entry_maker = function(x)
+          return x
+        end,
+      }),
+      sorter = sorters.get_fzy_sorter({}),
+      attach_mappings = function(item, map)
+        -- use our custom action to go the window id
+        map("i", "<CR>", goto_window)
+        map("n", "<CR>", goto_window)
+        return true
+      end,
+    }
+  ):find()
 end
 
 M.dapActions = function()
-	local dap, dapui = require("dap"), require("dapui")
-	items = {
-		{ key = "start", value = dap.continue, desc = "start dap server" },
-		{ key = "continue", value = dap.continue },
-		{ key = "end", value = dap.close },
-		{ key = "toggle breakpoint", value = dap.toggle_breakpoint },
-		{
-			key = "conditional breakpoint",
-			value = function()
-				---@diagnostic disable-next-line: param-type-mismatch
-				dap.set_breakpoint(vim.fn.input("[Breakpoint Condition] > "))
-			end,
-		},
-		{ key = "run to cursor", value = dap.run_to_cursor },
-		{ key = "close dap ui", value = dapui.close },
-		{ key = "step over", value = dap.step_over },
-		{ key = "step into", value = dap.step_into },
-		{ key = "step out", value = dap.step_out },
-	}
+  local dap, dapui = require("dap"), require("dapui")
+  items = {
+    { key = "start",             value = dap.continue,         desc = "start dap server" },
+    { key = "continue",          value = dap.continue },
+    { key = "end",               value = dap.close },
+    { key = "toggle breakpoint", value = dap.toggle_breakpoint },
+    {
+      key = "conditional breakpoint",
+      value = function()
+        ---@diagnostic disable-next-line: param-type-mismatch
+        dap.set_breakpoint(vim.fn.input("[Breakpoint Condition] > "))
+      end,
+    },
+    { key = "run to cursor", value = dap.run_to_cursor },
+    { key = "close dap ui",  value = dapui.close },
+    { key = "step over",     value = dap.step_over },
+    { key = "step into",     value = dap.step_into },
+    { key = "step out",      value = dap.step_out },
+  }
 
-	m = {}
-	for _, item in ipairs(items) do
-		table.insert(m, {
-			ordinal = item.key,
-			display = item.key,
-			value = item.value,
-		})
-	end
+  m = {}
+  for _, item in ipairs(items) do
+    table.insert(m, {
+      ordinal = item.key,
+      display = item.key,
+      value = item.value,
+    })
+  end
 
-	pickers.new(themes.get_ivy(), {
-		results_title = "DAP Actions",
-		prompt_title = "Hub for dap actions",
-		finder = finders.new_table({
-			results = m,
-			entry_maker = function(x)
-				return x
-			end,
-		}),
-		sorter = sorters.get_fzy_sorter({}),
-		attach_mappings = function(prompt_bufnr, map)
-			return actions.select_default:replace(function()
-				actions.close(prompt_bufnr)
-				local selection = action_state.get_selected_entry()
-				selection.value()
-			end)
-		end,
-	}):find()
+  pickers.new(themes.get_ivy(), {
+    results_title = "DAP Actions",
+    prompt_title = "Hub for dap actions",
+    finder = finders.new_table({
+      results = m,
+      entry_maker = function(x)
+        return x
+      end,
+    }),
+    sorter = sorters.get_fzy_sorter({}),
+    attach_mappings = function(prompt_bufnr, map)
+      return actions.select_default:replace(function()
+        actions.close(prompt_bufnr)
+        local selection = action_state.get_selected_entry()
+        selection.value()
+      end)
+    end,
+  }):find()
 end
 
 return M

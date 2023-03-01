@@ -158,42 +158,31 @@ require("packer").startup(function()
 		end,
 	})
 
-	--   local default_colors = {
-	--     bg = "#282c34",
-	--     fg = "#abb2bf",
-	--     red = "#ef596f",
-	--     orange = "#d19a66",
-	--     yellow = "#e5c07b",
-	--     green = "#89ca78",
-	--     cyan = "#2bbac5",
-	--     blue = "#61afef",
-	--     purple = "#d55fde",
-	--     white = "#abb2bf",
-	--     black = "#282c34",
-	--     gray = "#5c6370",
-	--     highlight = "#e2be7d",
-	--     comment = "#7f848e",
-	--     none = "NONE",
-	-- }
+	use({
+		"sainnhe/everforest",
+		config = function()
+			-- require("nxtcoder17.plugins.colorschemes.everforest")
+		end,
+	})
 
 	use({
 		"olimorris/onedarkpro.nvim",
 		config = function()
-			require("nxtcoder17.plugins.colorschemes.onedarkpro")
+			-- require("nxtcoder17.plugins.colorschemes.onedarkpro")
 		end,
 	})
 
 	use({
 		"sainnhe/gruvbox-material",
 		config = function()
-			require("nxtcoder17.plugins.gruvbox-material")
+			-- require("nxtcoder17.plugins.gruvbox-material")
 		end,
 	})
 
 	use({
 		"folke/tokyonight.nvim",
 		config = function()
-			require("nxtcoder17.plugins.tokyonight")
+			-- require("nxtcoder17.plugins.tokyonight")
 		end,
 	})
 
@@ -201,7 +190,7 @@ require("packer").startup(function()
 		"catppuccin/nvim",
 		as = "catppuccin",
 		config = function()
-			require("nxtcoder17.plugins.catppuccin")
+			-- require("nxtcoder17.plugins.catppuccin")
 		end,
 	})
 
