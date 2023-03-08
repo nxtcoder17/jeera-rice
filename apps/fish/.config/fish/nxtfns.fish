@@ -12,3 +12,7 @@ function source-env --description "sources an env file"
    set -gx $item[1] $value
  end
 end
+
+function curl-cookie --description "curl sets up cookie"
+  curl -s -L0 (cat ~/.kl-cookies | xargs -I{} echo -n '--cookie {}' | xargs -n1) "$argv"
+end

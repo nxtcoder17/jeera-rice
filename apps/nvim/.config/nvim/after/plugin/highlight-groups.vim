@@ -15,3 +15,5 @@ hi! StatuslineNC guifg=#81A1C1 gui=bold
 hi! TabLine guifg=#9a7ecc
 hi! TabLineFill guifg=#9a7ecc
 
+hi! link MiniStatuslineModeNormal DiffAdd
+hi! link MsgArea DiffAdd

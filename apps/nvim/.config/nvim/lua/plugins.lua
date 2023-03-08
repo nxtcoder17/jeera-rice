@@ -58,6 +58,20 @@ require("packer").startup(function()
 	})
 
 	use({
+		"windwp/nvim-spectre",
+		config = function()
+			require("nxtcoder17.plugins.nvim-spectre")
+		end,
+	})
+
+	use({
+		"ibhagwan/fzf-lua",
+		config = function()
+			require("nxtcoder17.plugins.fzf-lua")
+		end,
+	})
+
+	use({
 		"nvim-telescope/telescope.nvim",
 		requires = {
 			"nvim-lua/plenary.nvim",
@@ -66,6 +80,7 @@ require("packer").startup(function()
 			{ "gbrlsnchs/telescope-lsp-handlers.nvim" },
 			{ "debugloop/telescope-undo.nvim" },
 			{ "nvim-telescope/telescope-ui-select.nvim" },
+			{ "natecraddock/telescope-zf-native.nvim" },
 			-- {
 			-- 	"nvim-telescope/telescope-smart-history.nvim",
 			-- 	requires = {
@@ -81,11 +96,7 @@ require("packer").startup(function()
 	use({
 		"~/workspace/nxtcoder17/github/http-cli",
 		config = function()
-			require("http-cli").setup({
-				envFile = function()
-					return string.format("%s/%s", vim.env.PWD, ".tools/gqlenv.yml")
-				end,
-			})
+			require("http-cli").setup({ envFile = function() return string.format("%s/%s", vim.env.PWD, ".tools/gqlenv.yml") end, })
 		end,
 	})
 
@@ -127,6 +138,7 @@ require("packer").startup(function()
 					require("nxtcoder17.plugins.luasnip")
 				end,
 			},
+			{ "hrsh7th/cmp-nvim-lua" },
 			{ "onsails/lspkind.nvim" },
 			{ "saadparwaiz1/cmp_luasnip" },
 			{ "hrsh7th/cmp-nvim-lsp-signature-help" },
@@ -168,7 +180,7 @@ require("packer").startup(function()
 	use({
 		"olimorris/onedarkpro.nvim",
 		config = function()
-			-- require("nxtcoder17.plugins.colorschemes.onedarkpro")
+			require("nxtcoder17.plugins.colorschemes.onedarkpro")
 		end,
 	})
 
@@ -274,13 +286,13 @@ require("packer").startup(function()
 	-- git
 	use({ "sindrets/diffview.nvim" })
 
-	use({
-		"luukvbaal/statuscol.nvim",
-		config = function()
-			require("statuscol").setup()
-		end,
-	})
-
+	-- use({
+	--   "luukvbaal/statuscol.nvim",
+	--   config = function()
+	--     require("statuscol").setup()
+	--   end,
+	-- })
+	--
 	-- folding
 	use({
 		"kevinhwang91/nvim-ufo",
@@ -342,6 +354,14 @@ require("packer").startup(function()
 		requires = { "nvim-lua/plenary.nvim" },
 		config = function()
 			require("nxtcoder17.plugins.possession")
+		end,
+	})
+
+	-- navigation
+	use({
+		"stevearc/aerial.nvim",
+		config = function()
+			require("aerial").setup()
 		end,
 	})
 

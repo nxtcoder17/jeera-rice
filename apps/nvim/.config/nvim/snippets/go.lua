@@ -116,18 +116,46 @@ table.insert(snippets, t1)
 
 local func = s(
   "func",
-  fmta(
-    [[func <name>() {
-    <body>
-    }]],
-    {
-      name = c(1, {
-        t(""),
-        i(0, "name"),
-      }),
-      body = i(2, "//body"),
+  c(1, {
+    fmta(
+      [[
+    func(<p1>) {
+      <p2>
     }
-  )
+    ]],
+      {
+        p1 = i(1, ""),
+        p2 = i(0, "//body"),
+      }
+    ),
+    fmta(
+      [[
+    func <p1>(<p2>) <p3> {
+      <p4>
+    }
+    ]],
+      {
+        p1 = i(1, "name"),
+        p2 = i(2, ""),
+        p3 = i(3, ""),
+        p4 = i(0),
+      }
+    ),
+    fmta(
+      [[
+    func (<p1>) <p2>(<p3>) <p4> {
+      <p5>
+    }
+    ]],
+      {
+        p1 = i(1, "type"),
+        p2 = i(2, "name"),
+        p3 = i(3, ""),
+        p4 = i(4, ""),
+        p5 = i(5, "//body"),
+      }
+    ),
+  })
 )
 
 table.insert(snippets, func)

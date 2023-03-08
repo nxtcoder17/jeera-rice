@@ -10,6 +10,7 @@ local c = ls.choice_node
 local d = ls.dynamic_node
 local r = ls.restore_node
 local fmt = require("luasnip.extras.fmt").fmt
+local types = require("luasnip.util.types")
 
 require("luasnip.loaders.from_lua").load({
   paths = {
@@ -20,8 +21,22 @@ require("luasnip.loaders.from_lua").load({
 
 ls.setup({
   history = true,
+  enable_autosnippets = true,
   update_events = "TextChanged,TextChangedI",
   delete_check_events = "TextChanged",
+  ext_opts = {
+    [types.choiceNode] = {
+      active = {
+        -- virt_text = { { "●", "GruvboxOrange" } },
+        virt_text = { { "●", "@keyword.operator" } },
+      },
+    },
+    -- [types.insertNode] = {
+    -- 	active = {
+    -- 		virt_text = { { "●", "GruvboxBlue" } },
+    -- 	},
+    -- },
+  },
 })
 
 ls.add_snippets("lua", {

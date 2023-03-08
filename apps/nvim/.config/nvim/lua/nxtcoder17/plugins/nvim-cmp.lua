@@ -90,6 +90,7 @@ cmp.setup({
   }),
   sources = cmp.config.sources({
     { name = "nvim_lsp",                priority = 100 },
+    -- { name = "nvim_lua",                priority = 100 },
     { name = "luasnip",                 priority = 90 },
     { name = "codeium",                 priority = 80 },
     -- { name = "buffer", option = {

@@ -52,31 +52,43 @@ local palette_colors = {
 
 local defaultColors = require("kanagawa.colors").setup()
 local colors = {
-	nxtSelection1 = "#273e5e",
-	MiniIndentscopeSymbol = "red",
-	oniViolet = defaultColors.lightBlue,
+	palette = {
+		nxtSelection1 = "#273e5e",
+		MiniIndentscopeSymbol = "red",
+		oniViolet = defaultColors.palette.lightBlue,
+	},
 }
 
 local overrides = {
 	Visual = {
-		bg = colors.nxtSelection1,
+		bg = colors.palette.nxtSelection1,
 	},
 	TSException = {
-		fg = defaultColors.oniViolet,
+		fg = defaultColors.palette.oniViolet,
 	},
 	TSKeywordReturn = {
-		fg = defaultColors.lightBlue,
+		fg = defaultColors.palette.lightBlue,
 	},
 	javascriptTSVariableBuiltin = {
-		fg = defaultColors.lightBlue,
+		fg = defaultColors.palette.lightBlue,
 	},
 	DiagnosticError = {
-		bg = defaultColors.winterRed,
-		fg = defaultColors.peachRed,
+		bg = defaultColors.palette.winterRed,
+		fg = defaultColors.palette.peachRed,
 	},
 	DiagnosticSignError = {
 		bg = vim.NIL,
-		fg = defaultColors.peachRed,
+		fg = defaultColors.palette.peachRed,
+	},
+	["@keyword.return"] = {
+		fg = defaultColors.palette.dragonGreen2,
+	},
+	SignColumn = {
+		bg = vim.NIL,
+		-- fg = defaultColors.palette.peachRed,
+	},
+	LineNr = {
+		bg = vim.NIL,
 	},
 }
 
@@ -93,9 +105,18 @@ vim.opt.fillchars:append({
 require("kanagawa").setup({
 	globalStatus = true,
 	transparent = true,
-	overrides = overrides,
+	overrides = function()
+		return overrides
+	end,
 	colors = colors,
+	keywordStyle = { italic = true },
 	specialReturn = false, -- special highlight for the return keyword
+	theme = "wave",
+	-- theme = "dragon",
+	background = {
+		-- dark = "dragon",
+		dark = "wave",
+	},
 })
 
 vim.cmd("colorscheme kanagawa")

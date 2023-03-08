@@ -16,9 +16,14 @@ vim.g.mapleader = ","
 vim.keymap.set({ "n", "v" }, "s", "<Nop>", { silent = true, noremap = true })
 vim.keymap.set({ "n", "v" }, "ss", ":w<CR>")
 
+vim.keymap.set({ "n" }, "st", "<Cmd>ToggleTerm direction=float<CR>")
+
 -- making splits
 vim.keymap.set("n", "si", ":vsplit<CR>")
 vim.keymap.set("n", "sm", ":split<CR>")
+
+-- better copy pasting
+vim.keymap.set("n", "sp", '"_dP')
 
 -- -- clean other buffers
 -- vim.keymap.set("n", "x", function() require("mini.bufremove").wipeout(buf_id, force) end)
@@ -50,7 +55,8 @@ vim.keymap.set("c", "wqa", "wa! | qa!")
 -- [Non-core Keymappings]
 
 -- telescope
-vim.keymap.set("n", "sf", ":Telescope find_files<CR>")
+-- vim.keymap.set("n", "sf", ":Telescope find_files<CR>")
+vim.keymap.set("n", "sf", require("nxtcoder17.plugins.telescope").live_files)
 vim.keymap.set("n", "ff", require("nxtcoder17.plugins.telescope").grep)
 -- vim.keymap.set("n", "tl", require("nxtcoder17.plugins.telescope").tabs)
 -- vim.keymap.set("n", "tl", require("telescope.builtin").buffers)
@@ -97,4 +103,8 @@ vim.keymap.set({ "i", "s" }, "<C-h>", function()
 	if require("luasnip").choice_active() then
 		require("luasnip").change_choice(-1)
 	end
+end)
+
+vim.keymap.set("n", "<leader>sr", function()
+	require("spectre").open_visual({ select_word = true })
 end)

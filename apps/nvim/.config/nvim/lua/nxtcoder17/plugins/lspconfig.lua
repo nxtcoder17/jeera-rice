@@ -57,6 +57,7 @@ local function on_attach(client, bufnr)
     require("telescope.builtin").lsp_references({ include_current_line = false, show_line = false })
   end, opts)
   vim.keymap.set("n", "gd", "<Cmd>Telescope lsp_definitions<CR>", opts)
+  vim.keymap.set("n", "gD", "<Cmd>Telescope lsp_type_definitions<CR>", opts)
   vim.keymap.set("n", "sr", vim.lsp.buf.rename, opts)
 end
 

@@ -16,22 +16,20 @@ k9s:
     fullScreenLogs: false
     textWrap: false
     showTime: false
-  currentContext: cluster-superzop
-  currentCluster: cluster-superzop
+  currentContext: boltz-harbor
+  currentCluster: boltz-harbor
   clusters:
-    cluster-superzop:
+    boltz-harbor:
       namespace:
         active: kl-init-operators
         lockFavorites: false
         favorites:
-        - helm-cert-manager
-        - kl-provider-superzop
-        - kl-edge-superzop-mumbai-1
+        - kl-helm-harbor
+        - kl-provider-boltzmann
+        - kl-edge-boltzmann-mumbai-1
+        - kl-core
         - all
         - kl-init-operators
-        - superzop
-        - helm-gitlab-runner
-        - kl-core
         - default
       view:
         active: pods
