@@ -26,7 +26,7 @@ M.impl = function()
 	end
 
 	function my_custom_picker(results)
-		pickers.new(opts, {
+		pickers.new({}, {
 			prompt_title = "Select interface to implement",
 			finder = finders.new_table(results),
 			sorter = sorters.fuzzy_with_index_bias(),
@@ -37,37 +37,37 @@ M.impl = function()
 		}):find()
 	end
 
-	d = vim.lsp.diagnostic.get_all()
 	local bufnr = vim.api.nvim_get_current_buf()
-	l = {}
-	curr_diagnostics = d[bufnr]
+	d = vim.lsp.diagnostic.get_line_diagnostics(bufnr, vim.fn.line(".") - 1, nil, nil)
+	for _, block in ipairs(d) do
+		if block.code == "InvalidTypeArg" then
+			print(block.code)
+			print(block.message)
 
-	for _, w in ipairs(curr_diagnostics) do
-		-- print(vim.inspect(w))
-		msg = w.message
-		match = string.match(msg, "does not implement")
-		if match == nil then
-		else
-			op = string.gsub(msg, "(.*(does not implement ))", "")
-			op = string.gsub(op, "(( .missing method ).*)", "")
-			table.insert(l, op)
+			local _, _, sVar, iName = string.find(block.message, "(.+) does not satisfy (.+) [(].*")
+			print(sVar, iName)
+
+			local params = vim.lsp.util.make_position_params(0, nil)
+			params.context = {
+				includeDeclaration = true,
+			}
+
+			local name = "textDocument/typeDefinition"
+			vim.lsp.buf_request(0, name, params, function(err, result, ctx, config)
+				local client = vim.lsp.get_client_by_id(ctx.client_id)
+				local handler = client.handlers[name] or vim.lsp.handlers[name]
+				print(vim.inspect(result))
+				if result == nil then
+					return nil
+				end
+				pos = { result[1].range.start.line + 1, result[1].range.start.character }
+				print(vim.inspect(pos))
+				vim.api.nvim_win_set_cursor(0, pos)
+				vim.cmd("GoImpl " .. iName)
+				vim.cmd("e!")
+			end)
 		end
 	end
-
-	for _, v in ipairs(d) do
-		for _, w in ipairs(v) do
-			msg = w.message
-			match = string.match(msg, "does not implement")
-
-			if match == nil then
-			else
-				op = string.gsub(msg, "(.*(does not implement ))", "")
-				op = string.gsub(op, "(( .missing method ).*)", "")
-				table.insert(l, op)
-			end
-		end
-	end
-	my_custom_picker(l)
 end
 
 M.get_selection = function()
