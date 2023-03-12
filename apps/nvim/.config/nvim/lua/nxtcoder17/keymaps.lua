@@ -46,7 +46,7 @@ vim.keymap.set("n", "<BS>", ":set nohls <CR>|:lua Fn().closeFloating() <CR>")
 
 -- creating scratch files
 vim.api.nvim_create_user_command("Scratch", function()
-	vim.cmd("vne | setlocal buftype=nofile | setlocal bufhidden=hide | setlocal noswapfile")
+  vim.cmd("vne | setlocal buftype=nofile | setlocal bufhidden=hide | setlocal noswapfile")
 end, {})
 
 -- because rnvimr shits wqa
@@ -96,15 +96,19 @@ vim.cmd([[
 vim.keymap.set({ "i", "s" }, "<C-l>", function()
 	if require("luasnip").choice_active() then
 		require("luasnip").change_choice(1)
-	end
+  end
 end)
 
 vim.keymap.set({ "i", "s" }, "<C-h>", function()
 	if require("luasnip").choice_active() then
 		require("luasnip").change_choice(-1)
-	end
+  end
 end)
 
 vim.keymap.set("n", "<leader>sr", function()
 	require("spectre").open_visual({ select_word = true })
+end)
+
+vim.keymap.set("n", "<leader>r", function()
+  require("replacer").run()
 end)

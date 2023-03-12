@@ -90,6 +90,10 @@ local overrides = {
 	LineNr = {
 		bg = vim.NIL,
 	},
+	-- TabLineSel = {
+	--   bg = "#6687cc",
+	--   fg = "#2b3038"
+	-- },
 }
 
 vim.opt.fillchars:append({

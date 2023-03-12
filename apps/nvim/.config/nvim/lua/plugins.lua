@@ -65,6 +65,12 @@ require("packer").startup(function()
 	})
 
 	use({
+		"gabrielpoca/replacer.nvim",
+	})
+
+	use({ "dyng/ctrlsf.vim" })
+
+	use({
 		"ibhagwan/fzf-lua",
 		config = function()
 			require("nxtcoder17.plugins.fzf-lua")
@@ -96,11 +102,20 @@ require("packer").startup(function()
 	use({
 		"~/workspace/nxtcoder17/github/http-cli",
 		config = function()
-			require("http-cli").setup({ envFile = function() return string.format("%s/%s", vim.env.PWD, ".tools/gqlenv.yml") end, })
+			require("http-cli").setup({
+				envFile = function()
+					return string.format("%s/%s", vim.env.PWD, ".tools/gqlenv.yml")
+				end,
+			})
 		end,
 	})
 
-	use({ "kevinhwang91/rnvimr" })
+	use({
+		"kevinhwang91/rnvimr",
+		config = function()
+			require("nxtcoder17.plugins.rnvimr")
+		end,
+	})
 	use({ "alexghergh/nvim-tmux-navigation" })
 	use({ "mg979/vim-visual-multi" })
 	use({ "kazhala/close-buffers.nvim" })
@@ -362,6 +377,14 @@ require("packer").startup(function()
 		"stevearc/aerial.nvim",
 		config = function()
 			require("aerial").setup()
+		end,
+	})
+
+	-- markdown
+	use({
+		"ellisonleao/glow.nvim",
+		config = function()
+			require("glow").setup()
 		end,
 	})
 

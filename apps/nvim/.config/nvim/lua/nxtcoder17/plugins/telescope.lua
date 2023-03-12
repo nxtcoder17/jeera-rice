@@ -53,9 +53,14 @@ telescope.setup({
 			vertical = {
 				mirror = false,
 			},
+			bottom_pane = {
+				preview_width = 0.40,
+				-- preview_cutoff = 70,
+			},
 			width = 0.87,
 			height = 0.80,
-			preview_cutoff = 120,
+			-- preview_cutoff = 120,
+			-- preview_cutoff = 40,
 		},
 		file_sorter = require("telescope.sorters").get_fuzzy_file,
 		file_ignore_patterns = { "node_modules" },
@@ -143,6 +148,20 @@ telescope.setup({
 				i = {
 					["<C-d>"] = actions.delete_buffer,
 				},
+			},
+		},
+		quickfix = {
+			theme = "dropdown",
+			-- theme = "ivy",
+			-- layout_strategy = "bottom_pane",
+			layout_config = {
+				width = function(_, max_width, _)
+					return max_width - 10
+				end,
+				height = function(_, _, max_lines)
+					return 27
+					-- return max_lines - 15
+				end,
 			},
 		},
 	},
