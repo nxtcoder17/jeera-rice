@@ -16,23 +16,17 @@ k9s:
     fullScreenLogs: false
     textWrap: false
     showTime: false
-  currentContext: boltz-harbor
-  currentCluster: boltz-harbor
+  currentContext: kl-prod
+  currentCluster: kl-prod
   clusters:
-    boltz-harbor:
+    kl-prod:
       namespace:
-        active: kl-init-operators
+        active: all
         lockFavorites: false
         favorites:
-        - kl-helm-harbor
-        - kl-provider-boltzmann
-        - kl-edge-boltzmann-mumbai-1
-        - kl-core
-        - all
-        - kl-init-operators
         - default
       view:
-        active: pods
+        active: secrets
       featureGates:
         nodeShell: false
       shellPod:

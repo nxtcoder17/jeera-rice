@@ -9,6 +9,7 @@ vim.diagnostic.config({
     -- prefix = "☠ ",
     prefix = " ● ",
     severity = vim.diagnostic.severity.ERROR,
+    only_current_line = true,
   },
   -- virtual_text = false,
   signs = {

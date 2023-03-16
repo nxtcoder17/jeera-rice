@@ -158,7 +158,7 @@ require("packer").startup(function()
 			{ "saadparwaiz1/cmp_luasnip" },
 			{ "hrsh7th/cmp-nvim-lsp-signature-help" },
 			{ "andersevenrud/cmp-tmux" },
-			-- { "tzachar/cmp-tabnine", run = "./install.sh" },
+			{ "tzachar/cmp-tabnine", run = "./install.sh" },
 			{ "hrsh7th/cmp-cmdline" },
 			{ "hrsh7th/cmp-buffer" },
 			{ "tzachar/cmp-fuzzy-buffer" },
@@ -336,15 +336,15 @@ require("packer").startup(function()
 		end,
 	})
 
-	use({
-		"jcdickinson/codeium.nvim",
-		requires = {
-			"MunifTanjim/nui.nvim",
-		},
-		config = function()
-			require("codeium").setup({})
-		end,
-	})
+	--  use({
+	-- 	"jcdickinson/codeium.nvim",
+	-- 	requires = {
+	-- 		"MunifTanjim/nui.nvim",
+	-- 	},
+	-- 	config = function()
+	-- 		require("codeium").setup({})
+	-- 	end,
+	-- })
 
 	use({
 		"nvim-neo-tree/neo-tree.nvim",
