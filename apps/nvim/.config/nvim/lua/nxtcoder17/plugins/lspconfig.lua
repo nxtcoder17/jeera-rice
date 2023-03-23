@@ -42,7 +42,6 @@ local function on_attach(client, bufnr)
 
   vim.keymap.set("n", "se", vim.diagnostic.open_float, opts)
 
-  vim.keymap.set("n", "sb", require("telescope.builtin").buffers, opts)
   vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
   vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, opts)
   vim.keymap.set({ "n", "v" }, "<M-CR>", vim.lsp.buf.code_action, opts)

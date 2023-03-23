@@ -10,6 +10,8 @@ vim.keymap.set("n", "k", "gk")
 vim.keymap.set("t", "<esc>", "<C-\\><C-N>")
 vim.keymap.set({ "n", "v" }, "cc", '"+y')
 
+vim.keymap.set({ "n" }, "<leader>f", "<Cmd>Telescope current_buffer_fuzzy_find<CR>")
+
 vim.g.mapleader = ","
 
 -- [ the 's' key ]
@@ -22,8 +24,16 @@ vim.keymap.set({ "n" }, "st", "<Cmd>ToggleTerm direction=float<CR>")
 vim.keymap.set("n", "si", ":vsplit<CR>")
 vim.keymap.set("n", "sm", ":split<CR>")
 
+-- split resize
+vim.keymap.set({ "n" }, "<C-M-Left>", "<Cmd>vertical resize -5<CR>")
+vim.keymap.set({ "n" }, "<C-M-Right>", "<Cmd>vertical resize +5<CR>")
+vim.keymap.set({ "n" }, "<C-M-Up>", "<Cmd>resize -5<CR>")
+vim.keymap.set({ "n" }, "<C-M-Down>", "<Cmd>resize +5<CR>")
+
 -- better copy pasting
 vim.keymap.set("n", "sp", '"_dP')
+
+vim.keymap.set("n", "sb", require("telescope.builtin").buffers, { silent = true, noremap = true })
 
 -- -- clean other buffers
 -- vim.keymap.set("n", "x", function() require("mini.bufremove").wipeout(buf_id, force) end)
@@ -58,9 +68,7 @@ vim.keymap.set("c", "wqa", "wa! | qa!")
 -- vim.keymap.set("n", "sf", ":Telescope find_files<CR>")
 vim.keymap.set("n", "sf", require("nxtcoder17.plugins.telescope").live_files)
 vim.keymap.set("n", "ff", require("nxtcoder17.plugins.telescope").grep)
--- vim.keymap.set("n", "tl", require("nxtcoder17.plugins.telescope").tabs)
--- vim.keymap.set("n", "tl", require("telescope.builtin").buffers)
-vim.keymap.set("n", "tl", require("nxtcoder17.plugins.telescope").tabs, { silent = true, noremap = true })
+vim.keymap.set("n", "tl", require("nxtcoder17.plugins.telescope").only_tabs, { silent = true, noremap = true })
 
 vim.keymap.set("n", "<M-o>", ":RnvimrToggle<CR>")
 vim.keymap.set("t", "<M-o>", "<C-\\><C-n>:RnvimrToggle<CR>")
@@ -94,19 +102,19 @@ vim.cmd([[
 ]])
 
 vim.keymap.set({ "i", "s" }, "<C-l>", function()
-	if require("luasnip").choice_active() then
-		require("luasnip").change_choice(1)
+  if require("luasnip").choice_active() then
+    require("luasnip").change_choice(1)
   end
 end)
 
 vim.keymap.set({ "i", "s" }, "<C-h>", function()
-	if require("luasnip").choice_active() then
-		require("luasnip").change_choice(-1)
+  if require("luasnip").choice_active() then
+    require("luasnip").change_choice(-1)
   end
 end)
 
 vim.keymap.set("n", "<leader>sr", function()
-	require("spectre").open_visual({ select_word = true })
+  require("spectre").open_visual({ select_word = true })
 end)
 
 vim.keymap.set("n", "<leader>r", function()

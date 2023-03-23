@@ -21,12 +21,18 @@ k9s:
   clusters:
     kl-prod:
       namespace:
-        active: all
+        active: kl-init-operators
         lockFavorites: false
         favorites:
+        - kl-init-operators
+        - kl-init-monitoring
+        - kl-init-ingress-nginx
+        - kl-init-harbor
+        - kl-init-cert-manager
+        - kl-core
         - default
       view:
-        active: secrets
+        active: pods
       featureGates:
         nodeShell: false
       shellPod:

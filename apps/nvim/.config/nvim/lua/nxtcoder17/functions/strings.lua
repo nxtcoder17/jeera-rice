@@ -1,5 +1,9 @@
 local M = {}
 
+M.trim = function(s) 
+	return s:gsub("^%s*(.-)%s*$", "%1")
+end
+
 M.camel_case = function(str)
   local camelCased = ""
   local wasSeparator = false
