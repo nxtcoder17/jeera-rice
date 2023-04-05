@@ -42,5 +42,4 @@ return {
 
   enable_scroll_bar = false,
   enable_tab_bar = false,
-
 }

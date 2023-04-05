@@ -13,7 +13,7 @@ local fmt = require("luasnip.extras.fmt").fmt
 local fmta = require("luasnip.extras.fmt").fmta
 local postfix = require("luasnip.extras.postfix").postfix
 
-local stringsFn = require("functions.strings")
+local stringsFn = require("nxtcoder17.functions.strings")
 
 local snippets, autosnippets = {}, {}
 

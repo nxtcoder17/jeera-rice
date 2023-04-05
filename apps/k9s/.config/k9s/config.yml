@@ -16,20 +16,15 @@ k9s:
     fullScreenLogs: false
     textWrap: false
     showTime: false
-  currentContext: kl-prod
-  currentCluster: kl-prod
+  currentContext: k3d-k3s-default
+  currentCluster: k3d-k3s-default
   clusters:
-    kl-prod:
+    k3d-k3s-default:
       namespace:
         active: kl-init-operators
         lockFavorites: false
         favorites:
         - kl-init-operators
-        - kl-init-monitoring
-        - kl-init-ingress-nginx
-        - kl-init-harbor
-        - kl-init-cert-manager
-        - kl-core
         - default
       view:
         active: pods
