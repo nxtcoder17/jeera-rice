@@ -330,6 +330,7 @@ local function search_and_replace()
         require("spectre").setup()
       end,
     },
+    { "mg979/vim-visual-multi", event = events.BufRead },
   }
 end
 
@@ -367,7 +368,7 @@ local function terminals()
       event = events.BufRead,
       version = "*",
       config = function()
-        require("toggleterm").setup()
+        require("plugins.toggleterm")
         require("keymaps-for-plugins").toggleterm_keymaps()
       end,
     },

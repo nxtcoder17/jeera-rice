@@ -217,8 +217,8 @@ M.gen_return2 = function()
 end
 
 vim.api.nvim_create_user_command("XX", function()
-  local m = R("nxtcoder17.functions.go-return")
-  m.gen_return2()
+  -- local m = R("nxtcoder17.functions.go-return")
+  M.gen_return2()
 end, {
   desc = "debug gen_return",
 })

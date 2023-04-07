@@ -11,7 +11,11 @@ M.toggleterm_keymaps = function()
       terminals[dir]()
       return
     end
-    local term = require("toggleterm.terminal").Terminal:new({ dir = vim.fn.getcwd(), direction = "float" })
+    local term = require("toggleterm.terminal").Terminal:new({
+      start_in_insert = true,
+      dir = vim.fn.getcwd(),
+      direction = "float",
+    })
     terminals[dir] = function()
       term:toggle()
     end

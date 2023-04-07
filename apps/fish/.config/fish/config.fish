@@ -164,3 +164,7 @@ set -x LC_TYPE "en_US.UTF-8"
 
 zoxide init fish | source
 # starship init fish | source
+
+# bun
+set --export BUN_INSTALL "$HOME/.bun"
+set --export PATH $BUN_INSTALL/bin $PATH

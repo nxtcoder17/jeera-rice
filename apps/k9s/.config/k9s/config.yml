@@ -16,18 +16,24 @@ k9s:
     fullScreenLogs: false
     textWrap: false
     showTime: false
-  currentContext: k3d-k3s-default
-  currentCluster: k3d-k3s-default
+  currentContext: kl-dev
+  currentCluster: kl-dev
   clusters:
-    k3d-k3s-default:
+    kl-dev:
       namespace:
-        active: kl-init-operators
+        active: all
         lockFavorites: false
         favorites:
+        - kube-system
         - kl-init-operators
+        - kl-provider-dev-sample1
+        - kl-edge-dev-sample1-mumbai-1
+        - all
+        - wg-kl-core
+        - kl-core
         - default
       view:
-        active: pods
+        active: svc
       featureGates:
         nodeShell: false
       shellPod:
