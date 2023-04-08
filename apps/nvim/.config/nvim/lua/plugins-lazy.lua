@@ -101,13 +101,16 @@ local function navigation()
         require("scope").setup()
       end,
     },
-    {
-      "chrisgrieser/nvim-spider",
-      event = events.BufRead,
-      config = function()
-        require("keymaps-for-plugins").spider_keymaps()
-      end,
-    },
+    { "chaoren/vim-wordmotion", event = events.BufRead },
+
+    -- {
+    --   "chrisgrieser/nvim-spider",
+    --   event = events.BufRead,
+    --   config = function()
+    --     require("keymaps-for-plugins").spider_keymaps()
+    --   end,
+    -- },
+
     {
       "stevearc/aerial.nvim",
       event = events.BufRead,

@@ -183,17 +183,16 @@ require("cmp_nvim_lsp").default_capabilities(capabilities)
 -- 	}, _config or {})
 -- end
 
--- tsserver
-
 -- Add bun for Node.js-based servers
 local lspconfig_util = require("lspconfig.util")
 local add_bun_prefix = require("plugins.lsp.bun").add_bun_prefix
 lspconfig_util.on_setup = lspconfig_util.add_hook_before(lspconfig_util.on_setup, add_bun_prefix)
 
+-- tsserver
 lsp_config.tsserver.setup({
-  cmd = lsp_servers.tsserver,
+  -- cmd = lsp_servers.tsserver,
   capabilities = capabilities,
-  root_dir = lsp_config.util.root_pattern("jsconfig.json", "tsconfig.json", ".git"),
+  root_dir = lsp_config.util.root_pattern("jsconfig.json", "tsconfig.json", "package.json", ".git"),
   on_attach = function(client)
     if client.config.flags then
       client.config.flags.allow_incremental_sync = true

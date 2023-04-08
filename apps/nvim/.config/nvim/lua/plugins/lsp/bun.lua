@@ -23,6 +23,7 @@ M.add_bun_prefix = function(config, _)
   if config.cmd and is_bun_available() and is_bun_server(config.name) then
     config.cmd = vim.list_extend({
       "bunx",
+      -- "--bun",
     }, config.cmd)
   end
 end

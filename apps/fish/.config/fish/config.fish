@@ -45,9 +45,10 @@ set -gx PAGER less
 set -gx EMAIL "nxtcoder17@gmail.com"
 set -gx BROWSER "firefox"
 
-set -gx XDG_DATA_HOME "$HOME/.local/share"
-set -gx XDG_CACHE_HOME "$HOME/.cache"
 set -gx XDG_CONFIG_HOME "$HOME/.config"
+set -gx XDG_CACHE_HOME "$HOME/.cache"
+set -gx XDG_DATA_HOME "$HOME/.local/share"
+set -gx XDG_STATE_HOME "$HOME/.local/state"
 
 # set -gx XINITRC "$XDG_CONFIG_HOME/x11/xinitrc"
 set -gx INPUTRC "$XDG_CONFIG_HOME/inputrc"

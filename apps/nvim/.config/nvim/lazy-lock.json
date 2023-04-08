@@ -33,7 +33,6 @@
   "nvim-dap-virtual-text": { "branch": "master", "commit": "9dc45a6eb33871f4c5cb2ba08fa307467657471e" },
   "nvim-lspconfig": { "branch": "master", "commit": "7d5af779acbc8a6ff9dfd7f2d39ae898fb67480f" },
   "nvim-spectre": { "branch": "master", "commit": "6e5ce371f93625c7dc43f5e2647d3647f2ea15e2" },
-  "nvim-spider": { "branch": "main", "commit": "1dc4c33d3e395de51d78efed575ef785d2f06388" },
   "nvim-tmux-navigation": { "branch": "main", "commit": "543f090a45cef28156162883d2412fffecb6b750" },
   "nvim-treesitter": { "branch": "master", "commit": "411e771d511442ab81670701f5c830f6c74aadd7" },
   "nvim-treesitter-context": { "branch": "master", "commit": "68eaeb86738c660f7f31afb2cbfb2bdec50bbd92" },
@@ -62,5 +61,6 @@
   "term-edit.nvim": { "branch": "master", "commit": "9efbb3298ce63807750a415a091d7d535ff0a7e8" },
   "toggleterm.nvim": { "branch": "main", "commit": "b86982429325112d2b20c6d0cc7a5c4b182ab705" },
   "trouble.nvim": { "branch": "main", "commit": "2ae7237c2917d661f458443c9a88680f8ca2d7b2" },
-  "vim-visual-multi": { "branch": "master", "commit": "724bd53adfbaf32e129b001658b45d4c5c29ca1a" }
+  "vim-visual-multi": { "branch": "master", "commit": "724bd53adfbaf32e129b001658b45d4c5c29ca1a" },
+  "vim-wordmotion": { "branch": "master", "commit": "81d9bd298376ab0dc465c85d55afa4cb8d5f47a1" }
 }

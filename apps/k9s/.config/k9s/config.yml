@@ -33,7 +33,7 @@ k9s:
         - kl-core
         - default
       view:
-        active: svc
+        active: apps
       featureGates:
         nodeShell: false
       shellPod:

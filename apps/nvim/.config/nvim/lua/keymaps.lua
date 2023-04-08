@@ -1,6 +1,6 @@
 ------ Nvim Core KeyMappings ------
 
-local opts = { silent = true, noremap = true}
+local opts = { silent = true, noremap = true }
 
 -- resets
 vim.keymap.set({ "n", "v" }, ";", ":", opts)
@@ -19,7 +19,6 @@ vim.g.mapleader = ","
 -- [ the 's' key ]
 vim.keymap.set({ "n", "v" }, "s", "<Nop>", opts)
 vim.keymap.set({ "n", "v" }, "ss", ":w<CR>", opts)
-
 
 -- making splits
 vim.keymap.set("n", "si", ":vsplit<CR>", opts)
@@ -52,12 +51,12 @@ vim.keymap.set("n", "tn", "<cmd>tabnew<CR>|:windo tcd " .. vim.g.root_dir .. "<C
 vim.keymap.set("n", "te", "<cmd>tabedit % |:windo tcd " .. vim.g.root_dir .. "<CR>", opts)
 
 local function closeFloating()
-  	for _, win in ipairs(vim.api.nvim_list_wins()) do
-		local config = vim.api.nvim_win_get_config(win)
-		if config.relative ~= "" then
-			vim.api.nvim_win_close(win, false)
-		end
-	end
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    local config = vim.api.nvim_win_get_config(win)
+    if config.relative ~= "" then
+      vim.api.nvim_win_close(win, false)
+    end
+  end
 end
 
 --vim.keymap.set("n", "<BS>", ":set nohls <CR>|:lua closeFloating() <CR>", opts)
@@ -69,6 +68,12 @@ end, opts)
 -- creating scratch files
 vim.api.nvim_create_user_command("Scratch", function()
   vim.cmd("vne | setlocal buftype=nofile | setlocal bufhidden=hide | setlocal noswapfile")
+end, {})
+
+vim.api.nvim_create_user_command("LspClearLog", function()
+  -- /home/nxtcoder17/.local/state/nvim/lsp.log
+  os.execute(string.format("rm -rf %s/lsp.log", os.getenv("XDG_STATE_HOME") or os.getenv("HOME") .. "/.local/state"))
+  -- print(string.format("rm -rf %s/lsp.log", os.getenv("XDG_STATE_HOME") or os.getenv("HOME") .. "/.local/state"))
 end, {})
 
 -- because rnvimr shits wqa
