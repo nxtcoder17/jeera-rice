@@ -330,7 +330,6 @@ M.dapActions = function()
     {
       key = "conditional breakpoint",
       value = function()
-        ---@diagnostic disable-next-line: param-type-mismatch
         dap.set_breakpoint(vim.fn.input("[Breakpoint Condition] > "))
       end,
     },

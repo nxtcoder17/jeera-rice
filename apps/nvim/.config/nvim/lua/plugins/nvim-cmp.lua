@@ -7,6 +7,8 @@ end
 
 local luasnip = require("luasnip")
 
+cmp.register_source("goimports", require("plugins.cmp-sources.go-imports"))
+
 cmp.setup({
   preselect = cmp.PreselectMode.None,
   snippet = {
@@ -75,7 +77,7 @@ cmp.setup({
   }),
   sources = cmp.config.sources({
     -- { name = "nvim_lua",                priority = 100 },
-    { name = "nvim_lsp",                max_item_count = 10, priority = 1000 },
+    { name = "nvim_lsp",                max_item_count = 50, priority = 1000 },
     { name = "emmet_vim",               priority = 1000 },
     { name = "nvim_lsp_signature_help", priority = 1000 },
     { name = "luasnip",                 priority = 750 },
@@ -142,6 +144,7 @@ cmp.setup({
             nvim_lsp_signature_help = "lsp signature",
             path = "path",
             tmux = "tmux",
+            goimports = "🥅",
           })[entry.source.name]
 
       local kind = require("lspkind").cmp_format({ mode = "symbol", maxwidth = 50 })(entry, vim_item)
@@ -172,6 +175,12 @@ cmp.setup({
   -- experimental = {
   --   ghost_text = true,
   -- },
+})
+
+cmp.setup.filetype("go", {
+  sources = {
+    { name = "goimports" },
+  },
 })
 
 -- Set configuration for specific filetype.
