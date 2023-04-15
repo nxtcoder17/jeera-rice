@@ -82,6 +82,7 @@ cmp.setup({
     { name = "nvim_lsp_signature_help", priority = 1000 },
     { name = "luasnip",                 priority = 750 },
     { name = "path",                    max_item_count = 5,  priority = 500 },
+    { name = "goimports",               filetype = "go" },
   }, {
     -- { name = "cmp_tabnine" },
     { name = "codeium", priority = 100 },
@@ -177,11 +178,11 @@ cmp.setup({
   -- },
 })
 
-cmp.setup.filetype("go", {
-  sources = {
-    { name = "goimports" },
-  },
-})
+-- cmp.setup.filetype("go", {
+--   sources = {
+--     { name = "goimports" },
+--   },
+-- })
 
 -- Set configuration for specific filetype.
 cmp.setup.filetype("gitcommit", {

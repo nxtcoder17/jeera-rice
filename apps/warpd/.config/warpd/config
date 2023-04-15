@@ -2,8 +2,14 @@ exit: C-e
 cursor_color: #27f2db
 cursor_size: 11
 speed: 700
+
+# scrolling up and down
 scroll_speed: 500
+scroll_down: J
+scroll_up: K
 
 # hint_bgcolor: #8aa7ab
 hint_fgcolor: #38e8ff
 hint_font: "Comic Code Ligatures Medium"
+
+

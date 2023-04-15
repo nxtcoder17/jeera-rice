@@ -445,6 +445,15 @@ local function http_clients()
   }
 end
 
+local function git_clients()
+  return {
+    {
+      "sindrets/diffview.nvim",
+      event = events.BufEnter,
+    },
+  }
+end
+
 local plugins = {}
 vim.list_extend(plugins, colorschemes())
 vim.list_extend(plugins, fuzzy_finders())
@@ -460,5 +469,6 @@ vim.list_extend(plugins, terminals())
 vim.list_extend(plugins, status_and_tab_bars())
 vim.list_extend(plugins, misc())
 vim.list_extend(plugins, http_clients())
+vim.list_extend(plugins, git_clients())
 
 require("lazy").setup(plugins)

@@ -17,9 +17,11 @@ vim.keymap.set("n", "sdk", function()
   require("dapui").eval(vim.fn.expand("<cexpr>"), { enter = true })
   -- require("dapui").float_element("watches", { enter = true })
 end)
+
 vim.keymap.set("v", "sdk", function()
   require("dapui").float_element("watches", { enter = true })
 end, { silent = true })
+
 -- vim.keymap.set("n", "<leader>dk", require("dap.ui.widgets").hover, { silent = true })
 vim.keymap.set("n", "sdb", dap.toggle_breakpoint, { silent = true })
 -- vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { silent = true })
@@ -41,9 +43,17 @@ vim.keymap.set("n", "sdl", function()
   end)
 end)
 
+-- dap repl split
+
+-- (without dapui)
+-- vim.keymap.set("n", "sdr", function()
+--   require("dap").repl.toggle({}, "80vsplit")
+--   vim.cmd("wincmd l")
+-- end)
+
+-- (with dapui)
 vim.keymap.set("n", "sdr", function()
-  require("dap").repl.toggle({}, "80vsplit")
-  vim.cmd("wincmd l")
+  require("dapui").toggle({ reset = true })
 end)
 
 vim.keymap.set("n", "sdR", function()
