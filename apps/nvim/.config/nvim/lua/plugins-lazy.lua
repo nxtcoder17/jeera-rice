@@ -425,6 +425,15 @@ local function misc()
         require("neo-zoom").setup({})
       end,
     },
+    { "ellisonleao/glow.nvim", ft = "markdown", config = true, cmd = "Glow" },
+    {
+      "toppair/peek.nvim",
+      ft = "markdown",
+      build = "deno task --quiet build:fast",
+      config = function()
+        require("plugins.peek-nvim")
+      end,
+    },
   }
 end
 

@@ -36,9 +36,24 @@ local common_go_imports = {
 local items = {}
 for i in ipairs(common_go_imports) do
   table.insert(items, i, { label = common_go_imports[i] })
+  -- table.insert(items, i, { label = "im-" .. common_go_imports[i] })
 end
 
-source.complete = function(self, _, callback)
+source.new = function()
+  local self = setmetatable({}, { _index = source })
+  self.items = items
+  return self
+end
+
+-- source.get_keyword_pattern = function()
+--   return "im-"
+-- end
+
+source.is_available = function()
+  return vim.bo.filetype == "go"
+end
+
+source.complete = function(self, _params, callback)
   callback({ items = items, isIncomplete = false })
 end
 

@@ -145,7 +145,7 @@ cmp.setup({
             nvim_lsp_signature_help = "lsp signature",
             path = "path",
             tmux = "tmux",
-            goimports = "🥅",
+            goimports = "🖅  Go-Imports",
           })[entry.source.name]
 
       local kind = require("lspkind").cmp_format({ mode = "symbol", maxwidth = 50 })(entry, vim_item)
