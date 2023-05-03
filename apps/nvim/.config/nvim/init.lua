@@ -11,10 +11,13 @@ if timer ~= nil then
     1000,
     500,
     vim.schedule_wrap(function()
+      local currMode = vim.fn.mode()
       if vim.bo.filetype ~= "" then
         vim.cmd("redraw!")
+      end
+      if currMode == "i" then
+        vim.cmd("startinsert")
       end
     end)
   )
 end
-

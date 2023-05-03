@@ -299,6 +299,7 @@ local function completions()
         -- },
         { "hrsh7th/cmp-cmdline" },
         { "hrsh7th/cmp-buffer" },
+        { "lukas-reineke/cmp-rg" },
         -- {
         --   "zbirenbaum/copilot.lua",
         --   event = "VimEnter",
@@ -432,6 +433,21 @@ local function misc()
       build = "deno task --quiet build:fast",
       config = function()
         require("plugins.peek-nvim")
+      end,
+    },
+    {
+      "subnut/nvim-ghost.nvim",
+      -- ft = "markdown",
+      event = events.BufEnter,
+      config = function()
+        vim.g.nvim_ghost_server_port = 4001
+        vim.cmd([[
+          augroup nvim_ghost_user_autocommands
+            " au User www.reddit.com,www.stackoverflow.com setfiletype markdown
+            " au User www.reddit.com,www.github.com setfiletype markdown
+            au User *.github.com setfiletype markdown
+          augroup END
+        ]])
       end,
     },
   }

@@ -82,38 +82,42 @@ cmp.setup({
     { name = "nvim_lsp_signature_help", priority = 1000 },
     { name = "luasnip",                 priority = 750 },
     { name = "path",                    max_item_count = 5,  priority = 500 },
-    { name = "goimports",               filetype = "go" },
+    { name = "goimports" },
+    { name = "rg",                      max_item_count = 7,  keyword_length = 3 },
   }, {
     -- { name = "cmp_tabnine" },
     { name = "codeium", priority = 100 },
     -- { name = "buffer", option = {
     -- 	keyword_pattern = [[\w+]],
     -- } },
+
     -- { name = "cmp_tabnine", priority = 10 },
+
+    -- {
+    --   name = "fuzzy_buffer",
+    --   max_item_count = 5,
+    --   option = {
+    --     get_bufnrs = function()
+    --       local bufs = {}
+    --       for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    --         local buftype = vim.api.nvim_buf_get_option(buf, "buftype")
+    --         if buftype ~= "nofile" and buftype ~= "prompt" then
+    --           bufs[#bufs + 1] = buf
+    --         end
+    --       end
+    --       return bufs
+    --     end,
+    --   },
+    -- },
+
     {
-      name = "fuzzy_buffer",
-      max_item_count = 5,
+      name = "tmux",
       option = {
-        get_bufnrs = function()
-          local bufs = {}
-          for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-            local buftype = vim.api.nvim_buf_get_option(buf, "buftype")
-            if buftype ~= "nofile" and buftype ~= "prompt" then
-              bufs[#bufs + 1] = buf
-            end
-          end
-          return bufs
-        end,
+        all_panes = true,
+        max_item_count = 10,
+        label = "[tmux]",
       },
     },
-    -- {
-    -- 	name = "tmux",
-    -- 	option = {
-    -- 		all_panes = true,
-    -- 		max_item_count = 10,
-    -- 		label = "[tmux]",
-    -- 	},
-    -- },
   }),
   sorting = {
     priority_weight = 2,
@@ -173,16 +177,7 @@ cmp.setup({
       return kind
     end,
   },
-  -- experimental = {
-  --   ghost_text = true,
-  -- },
 })
-
--- cmp.setup.filetype("go", {
---   sources = {
---     { name = "goimports" },
---   },
--- })
 
 -- Set configuration for specific filetype.
 cmp.setup.filetype("gitcommit", {

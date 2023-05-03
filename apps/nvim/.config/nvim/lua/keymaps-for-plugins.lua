@@ -38,6 +38,7 @@ M.telescope_keymaps = function()
   vim.keymap.set("n", "sf", require("plugins.telescope").live_files)
   vim.keymap.set("n", "ff", require("plugins.telescope").grep)
   vim.keymap.set("n", "tl", require("plugins.telescope").only_tabs, { silent = true, noremap = true })
+  vim.keymap.set("n", "s/", ":Telescope current_buffer_fuzzy_find<CR>", { silent = true, noremap = true })
 end
 
 M.nvim_tmux_navigator_keymaps = function()
