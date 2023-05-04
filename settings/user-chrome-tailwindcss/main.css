@@ -1,0 +1,8 @@
+sample { 
+  @apply bg-red-200;
+}
+
+#home-button {
+  @apply hidden;
+}
+

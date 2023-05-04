@@ -1,0 +1,15 @@
+{
+  "name": "user-chrome-tailwindcss",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "compile": "tailwindcss -i global.css -o ../user-chrome/userChrome.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "tailwindcss": "^3.3.1"
+  }
+}

@@ -4,3 +4,4 @@ __pycache__
 .idea
 *.tmp.*
 apps/k9s/.config
+node_modules

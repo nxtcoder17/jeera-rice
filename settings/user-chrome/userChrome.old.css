@@ -1,0 +1,7 @@
+/* @import "./from-firefox-css-hacks/autohide_bookmarks_and_main_toolbars.css"; */
+/**/
+/* @import "./my-patches/init.css"; */
+/* @import "./my-patches/url-bar.css"; */
+/* @import "./my-patches/tabs.css"; */
+
+@import "./crambaud/waterfall/userChrome.css";

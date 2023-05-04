@@ -46,15 +46,15 @@ end)
 -- dap repl split
 
 -- (without dapui)
--- vim.keymap.set("n", "sdr", function()
---   require("dap").repl.toggle({}, "80vsplit")
---   vim.cmd("wincmd l")
--- end)
+vim.keymap.set("n", "sdr", function()
+  require("dap").repl.toggle({}, "80vsplit")
+  vim.cmd("wincmd l")
+end)
 
 -- (with dapui)
-vim.keymap.set("n", "sdr", function()
-  require("dapui").toggle({ reset = true })
-end)
+-- vim.keymap.set("n", "sdr", function()
+--   require("dapui").toggle({ reset = true })
+-- end)
 
 vim.keymap.set("n", "sdR", function()
   dap.run_last()
