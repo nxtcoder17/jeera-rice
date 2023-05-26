@@ -67,32 +67,51 @@ local colors = {
     oniViolet = kanagawa_colors.lightBlue,
   },
 }
-
-local overrides = {
-  Visual = {
-    bg = colors.palette.nxtSelection1,
-  },
-  TSException = {
-    fg = kanagawa_colors.palette.oniViolet,
-  },
-  TSKeywordReturn = {
-    fg = kanagawa_colors.palette.lightBlue,
-  },
-  javascriptTSVariableBuiltin = {
-    fg = kanagawa_colors.palette.lightBlue,
-  },
-  DiagnosticError = {
-    bg = kanagawa_colors.palette.winterRed,
-    fg = kanagawa_colors.palette.peachRed,
-  },
-  DiagnosticSignError = {
-    bg = vim.NIL,
-    fg = kanagawa_colors.palette.peachRed,
-  },
-      ["@keyword.return"] = {
-    fg = kanagawa_colors.palette.dragonGreen2,
-  },
-}
+local overrides = function(themeColors)
+  local theme = themeColors.theme
+  return {
+    Visual = {
+      bg = colors.palette.nxtSelection1,
+    },
+    TSException = {
+      fg = kanagawa_colors.palette.oniViolet,
+    },
+    TSKeywordReturn = {
+      fg = kanagawa_colors.palette.lightBlue,
+    },
+    javascriptTSVariableBuiltin = {
+      fg = kanagawa_colors.palette.lightBlue,
+    },
+    DiagnosticError = {
+      bg = kanagawa_colors.palette.winterRed,
+      fg = kanagawa_colors.palette.peachRed,
+    },
+    DiagnosticSignError = {
+      bg = vim.NIL,
+      fg = kanagawa_colors.palette.peachRed,
+    },
+        ["@keyword.return"] = {
+      fg = kanagawa_colors.palette.dragonGreen2,
+    },
+        ["@method"] = {
+      -- fg = themeColors.palette.roninYellow,
+      fg = "#dce09b",
+      -- bold = true,
+      -- italic = true,
+    },
+        ["@function"] = {
+      fg = "#dce09b",
+    },
+        ["@method.call"] = {
+      -- fg = themeColors.palette.roninYellow,
+      fg = themeColors.palette.crystalBlue,
+    },
+    Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1 },
+    PmenuSel = { fg = "NONE", bg = theme.ui.bg_p2 },
+    PmenuSbar = { bg = theme.ui.bg_m1 },
+    PmenuThumb = { bg = theme.ui.bg_p2 },
+  }
+end
 
 vim.opt.fillchars:append({
   horiz = "━",
@@ -109,12 +128,10 @@ require("kanagawa").setup({
   uncercurl = true,
   globalStatus = true,
   transparent = true,
-  overrides = function()
-    return overrides
-  end,
+  overrides = overrides,
   colors = colors,
   keywordStyle = { italic = true },
-  specialReturn = false, -- special highlight for the return keyword
+  specialReturn = true, -- special highlight for the return keyword
   theme = kanagawa_theme,
   background = {
     dark = kanagawa_theme,

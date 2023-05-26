@@ -6,6 +6,10 @@ local has_words_before = function()
 end
 
 local luasnip = require("luasnip")
+luasnip.config.set_config({
+  region_check_events = "InsertEnter",
+  delete_check_events = "InsertLeave",
+})
 
 cmp.register_source("goimports", require("plugins.cmp-sources.go-imports"))
 
@@ -24,11 +28,11 @@ cmp.setup({
     },
   },
   mapping = cmp.mapping.preset.insert({
-        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<C-Space>"] = cmp.mapping.complete({}),
-        ["<C-e>"] = cmp.mapping.abort(),
-        ["<CR>"] = cmp.mapping({
+    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ["<C-Space>"] = cmp.mapping.complete({}),
+    ["<C-e>"] = cmp.mapping.abort(),
+    ["<CR>"] = cmp.mapping({
       i = function(fallback)
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
         local lineText = table.concat(vim.api.nvim_buf_get_text(0, line - 1, col - 1, line - 1, col, {}), ",")
@@ -44,10 +48,17 @@ cmp.setup({
         end
         fallback()
       end,
-    }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-        ["<Tab>"] = cmp.mapping(function(fallback)
+    }),
+    -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    ["<Tab>"] = cmp.mapping(function(fallback)
       if luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
+        return
+      end
+
+      if require("copilot.suggestion").is_visible() then
+        require("copilot.suggestion").accept()
+        -- vim.cmd("normal o")
         return
       end
 
@@ -62,7 +73,7 @@ cmp.setup({
 
       fallback()
     end, { "i", "s" }),
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
       if luasnip.jumpable(-1) then
         luasnip.jump(-1)
         return
@@ -76,17 +87,19 @@ cmp.setup({
     end, { "i", "s" }),
   }),
   sources = cmp.config.sources({
+    -- Copilot Source
+    { name = "copilot",                 group_index = 2 },
     -- { name = "nvim_lua",                priority = 100 },
     { name = "nvim_lsp",                max_item_count = 50, priority = 1000 },
     { name = "emmet_vim",               priority = 1000 },
     { name = "nvim_lsp_signature_help", priority = 1000 },
     { name = "luasnip",                 priority = 750 },
     { name = "path",                    max_item_count = 5,  priority = 500 },
-    { name = "goimports" },
+    { name = "goimports",               max_item_count = 5,  keyword_length = 3 },
     { name = "rg",                      max_item_count = 7,  keyword_length = 3 },
   }, {
     -- { name = "cmp_tabnine" },
-    { name = "codeium", priority = 100 },
+    -- { name = "codeium", priority = 100 },
     -- { name = "buffer", option = {
     -- 	keyword_pattern = [[\w+]],
     -- } },
@@ -134,23 +147,24 @@ cmp.setup({
     fields = { "kind", "abbr", "menu" },
     format = function(entry, vim_item)
       local menu = ({
-            buffer = "buffer",
-            nvim_lsp = "lsp",
-            luasnip = "luaSnip",
-            nvim_lua = "lua",
-            latex_symbols = "laTeX",
+        buffer = "buffer",
+        nvim_lsp = "lsp",
+        luasnip = "luaSnip",
+        nvim_lua = "lua",
+        latex_symbols = "laTeX",
 
-            codeium = "⚡",
-            -- cmdline = "❭⚊",
+        codeium = "⚡",
+        -- cmdline = "❭⚊",
 
-            fuzzy_buffer = "fzf",
-            cmp_tabnine = "⚡",
-            treesitter = "treesitter",
-            nvim_lsp_signature_help = "lsp signature",
-            path = "path",
-            tmux = "tmux",
-            goimports = "🖅  Go-Imports",
-          })[entry.source.name]
+        fuzzy_buffer = "fzf",
+        cmp_tabnine = "⚡",
+        treesitter = "treesitter",
+        nvim_lsp_signature_help = "lsp signature",
+        path = "path",
+        tmux = "tmux",
+        goimports = "🖅  Go-Imports",
+        copilot = "CoPilot",
+      })[entry.source.name]
 
       local kind = require("lspkind").cmp_format({ mode = "symbol", maxwidth = 50 })(entry, vim_item)
       local strings = vim.split(kind.kind, "%s", { trimempty = true })

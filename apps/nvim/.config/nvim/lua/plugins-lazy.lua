@@ -40,6 +40,10 @@ local function colorschemes()
         -- vim.cmd("colorscheme catppuccin")
       end,
     },
+    {
+      "towolf/vim-helm",
+      ft = { "gotmpl", "gotexttmpl", "yaml" },
+    },
   }
 end
 
@@ -207,6 +211,20 @@ local function lsp()
     {
       "williamboman/mason.nvim",
       event = events.UIEnter,
+      opts = {
+        ensure_installed = {
+          "gopls",
+          "bash-language-server",
+          "eslint_d",
+          "lua-language-server",
+          "tailwindcss-language-server",
+          "typescript-language-server",
+          "stylua",
+          "gofumpt",
+          "goimports_reviser",
+          "golines",
+        },
+      },
       config = function()
         require("mason").setup()
       end,
@@ -300,28 +318,60 @@ local function completions()
         { "hrsh7th/cmp-cmdline" },
         { "hrsh7th/cmp-buffer" },
         { "lukas-reineke/cmp-rg" },
+        {
+          "zbirenbaum/copilot.lua",
+          event = events.BufRead,
+          config = function()
+            vim.defer_fn(function()
+              require("copilot").setup({
+                panel = { enabled = false },
+                suggestion = {
+                  enabled = true,
+                  auto_trigger = true,
+                  keymap = {
+                    accept = "<M-l>",
+                    accept_word = false,
+                    accept_line = false,
+                    -- next = "<M-]>",
+                    -- prev = "<M-[>",
+                    -- dismiss = "<C-]>",
+                    next = "<C-n>",
+                    prev = "<C-p>",
+                    dismiss = "<C-c>",
+                  },
+                },
+              })
+            end, 100)
+          end,
+        },
         -- {
-        --   "zbirenbaum/copilot.lua",
-        --   event = "VimEnter",
+        --   "zbirenbaum/copilot-cmp",
+        --   after = { "copilot.lua" },
         --   config = function()
-        --     vim.defer_fn(function()
-        --       require("copilot").setup()
-        --     end, 100)
+        --     require("copilot_cmp").setup()
         --   end,
         -- },
       },
     },
-    {
-      "jcdickinson/codeium.nvim",
-      event = events.BufRead,
-      dependencies = {
-        "nvim-cmp",
-        "MunifTanjim/nui.nvim",
-      },
-      config = function()
-        require("codeium").setup({})
-      end,
-    },
+    -- {
+    --   "jcdickinson/codeium.nvim",
+    --   event = events.BufRead,
+    --   dependencies = {
+    --     "nvim-cmp",
+    --     "MunifTanjim/nui.nvim",
+    --   },
+    --   commit = "bb3ede8de30efe01b976eda8342ae4d40a5ee91f",
+    --   config = function()
+    --     require("codeium").setup({})
+    --   end,
+    -- },
+    -- {
+    --   "github/copilot.vim",
+    --   event = events.BufRead,
+    --   config = function()
+    --     require("keymaps-for-plugins").copilot_mappings()
+    --   end,
+    -- },
   }
 end
 
@@ -435,21 +485,21 @@ local function misc()
         require("plugins.peek-nvim")
       end,
     },
-    {
-      "subnut/nvim-ghost.nvim",
-      -- ft = "markdown",
-      event = events.BufEnter,
-      config = function()
-        vim.g.nvim_ghost_server_port = 4001
-        vim.cmd([[
-          augroup nvim_ghost_user_autocommands
-            " au User www.reddit.com,www.stackoverflow.com setfiletype markdown
-            " au User www.reddit.com,www.github.com setfiletype markdown
-            au User *.github.com setfiletype markdown
-          augroup END
-        ]])
-      end,
-    },
+    -- {
+    --   "subnut/nvim-ghost.nvim",
+    --   -- ft = "markdown",
+    --   event = events.BufEnter,
+    --   config = function()
+    --     vim.g.nvim_ghost_server_port = 4001
+    --     vim.cmd([[
+    --       augroup nvim_ghost_user_autocommands
+    --         " au User www.reddit.com,www.stackoverflow.com setfiletype markdown
+    --         " au User www.reddit.com,www.github.com setfiletype markdown
+    --         au User *.github.com setfiletype markdown
+    --       augroup END
+    --     ]])
+    --   end,
+    -- },
   }
 end
 

@@ -86,4 +86,11 @@ M.spider_keymaps = function()
   end, { desc = "Spider-ge" })
 end
 
+M.copilot_mappings = function()
+  vim.g.copilot_no_tab_map = true
+  vim.keymap.set({ "n", "i" }, "<C-CR>", function()
+    vim.cmd("call copilot#Accept('<CR/>')")
+  end)
+end
+
 return M

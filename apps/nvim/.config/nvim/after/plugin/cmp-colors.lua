@@ -1,8 +1,6 @@
 local hlGroups = {
-  PmenuSel = { bg = "#282C34", fg = "NONE" },
-  -- PmenuSel = { bg = "#87ab9e", fg = "NONE" },
-  -- Pmenu = { fg = "#C5CDD9", bg = "#22252A" },
-  Pmenu = { fg = "#C5CDD9", bg = "#0c1129" },
+  -- PmenuSel = { bg = "#282C34", fg = "NONE" },
+  -- Pmenu = { fg = "#C5CDD9", bg = "#0c1129" },
   CmpItemAbbrDeprecated = { fg = "#7E8294", bg = "NONE", strikethrough = true },
   CmpItemAbbrMatch = { fg = "#82AAFF", bg = "NONE", bold = true },
   CmpItemAbbrMatchFuzzy = { fg = "#82AAFF", bg = "NONE", bold = true },
