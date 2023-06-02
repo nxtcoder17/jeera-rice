@@ -74,6 +74,19 @@ local function fuzzy_finders()
         require("keymaps-for-plugins").telescope_keymaps()
       end,
     },
+
+    {
+      {
+        "ibhagwan/fzf-lua",
+        -- optional for icon support
+        dependencies = {
+          "nvim-tree/nvim-web-devicons",
+        },
+        config = function()
+          require("plugins.fzf-lua")
+        end,
+      },
+    },
   }
 end
 
@@ -203,6 +216,7 @@ local function syntax()
         end, opts)
       end,
     },
+    { "fladson/vim-kitty", ft = "kitty" },
   }
 end
 
@@ -293,6 +307,7 @@ local function completions()
           "L3MON4D3/LuaSnip",
           config = function()
             require("plugins.luasnip")
+            require("keymaps-for-plugins").luasnip_keymaps()
           end,
         },
         {
@@ -322,23 +337,28 @@ local function completions()
           "zbirenbaum/copilot.lua",
           event = events.BufRead,
           config = function()
+            require("keymaps-for-plugins").copilot_mappings()
             vim.defer_fn(function()
               require("copilot").setup({
                 panel = { enabled = false },
+                filetypes = {
+                  ["*"] = true,
+                },
                 suggestion = {
                   enabled = true,
                   auto_trigger = true,
-                  keymap = {
-                    accept = "<M-l>",
-                    accept_word = false,
-                    accept_line = false,
-                    -- next = "<M-]>",
-                    -- prev = "<M-[>",
-                    -- dismiss = "<C-]>",
-                    next = "<C-n>",
-                    prev = "<C-p>",
-                    dismiss = "<C-c>",
-                  },
+                  keymap = nil,
+                  -- keymap = {
+                  --   accept = "<C-CR>",
+                  --   accept_word = false,
+                  --   accept_line = false,
+                  --   -- next = "<M-]>",
+                  --   -- prev = "<M-[>",
+                  --   -- dismiss = "<C-]>",
+                  --   next = "<C-n>",
+                  --   prev = "<C-p>",
+                  --   dismiss = "<C-c>",
+                  -- },
                 },
               })
             end, 100)

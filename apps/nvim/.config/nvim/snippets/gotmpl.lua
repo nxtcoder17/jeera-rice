@@ -17,17 +17,50 @@ local stringsFn = require("functions.strings")
 
 local snippets, autosnippets = {}, {}
 
-local var = s(
-	"var",
-	fmta([[ {{ <p1> := get . "<p2>"}} ]], {
-		p1 = f(function(...)
-			local args = ...
-			return "$" .. stringsFn.camel_case(args[1][1])
-		end, 1),
-		p2 = i(1, "item"),
-	})
+local var_stmt = s(
+  "var",
+  c(1, {
+    fmta([[ {{- <p1> := <p2> }} ]], {
+      p1 = f(function(...)
+        local args = ...
+        return "$" .. stringsFn.camel_case(args[1][1])
+      end, 1),
+      p2 = i(1, "var"),
+    }),
+    fmta([[ {{- <p1> := get . <p2> }} ]], {
+      p1 = f(function(...)
+        local args = ...
+        return "$" .. stringsFn.camel_case(args[1][1])
+      end, 1),
+      p2 = i(1, "var"),
+    }),
+  })
 )
 
-table.insert(snippets, var)
+-- local var_stmt = s(
+--   "var",
+--   c(1, {
+--     fmta([[ {{- <p1> := <p2> }} ]], {
+--       p1 = f(function(...)
+--         local args = ...
+--         return "$" .. stringsFn.camel_case(args[1][1])
+--       end, 1),
+--       -- choice nodes for position p2
+--       p2 = i(1, "var"),
+--     }),
+--     {
+--       fmta([[ {{- <p1> := get . <p2> }} ]], {
+--         p1 = f(function(...)
+--           local args = ...
+--           return "$" .. stringsFn.camel_case(args[1][1])
+--         end, 1),
+--         -- choice nodes for position p2
+--         p2 = i(1, "var"),
+--       }),
+--     },
+--   })
+-- )
+
+table.insert(snippets, var_stmt)
 
 return snippets, autosnippets

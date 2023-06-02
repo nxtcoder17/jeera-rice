@@ -2,27 +2,37 @@
 
 USERNAME=$1
 shift 1;
-NAMESPACES=( "$@" )
-
-primaryNamespace=${NAMESPACES[0]}
 
 username=$USERNAME
 contextName=kl-context
 
 KUBECTL=${KUBECTL:-kubectl}
 
+dir="$PWD/$username"
+manifestsDir="$dir/manifests"
+
+mkdir -p "$manifestsDir"
+pushd "$dir" || (echo "pushd failed, exiting ..." && exit 1)
+
+primaryNamespace="k8s-user-$USERNAME"
+echo "$primaryNamespace" > PRIMARY_NAMESPACE
+
+cat > namespace.yml <<EOF
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: $primaryNamespace
+EOF
+
+$KUBECTL apply -f  namespace.yml
+
 # current-context
 currentCtx=$($KUBECTL config view -o jsonpath='{.current-context}')
 clusterName=$($KUBECTL config view -o json | jq -r ".contexts[] | select(.name == \"$currentCtx\")| .context.cluster")
-clusterUrl=$($KUBECTL config view -o json | jq -r ".clusters[] | select(.name == \"$currentCtx\") | .cluster.server")
+clusterUrl=$($KUBECTL config view -o json | jq -r ".clusters[] | select(.name == \"$clusterName\") | .cluster.server")
 
 contextName="$currentCtx-user"
 
-dir="$PWD/$username"
-manifestsDir="$dir/manifests"
-[ -d "$manifestsDir" ] || mkdir -p "$manifestsDir"
-pushd "$dir" || (echo "pushd failed, exiting ..." && exit 1)
-echo "$primaryNamespace" > PRIMARY_NAMESPACE
 pushd "$manifestsDir" || (echo "pushd failed, exiting ..." && exit 1)
 
 # kubectl config current-context set namespace $NAMESPACE
@@ -50,21 +60,6 @@ type: kubernetes.io/service-account-token
 EOF
 
 $KUBECTL apply -f svc-account-secret.yml
-# exit 0
-popd
-
-# secret=$($KUBECTL get sa "$username" -n "$primaryNamespace" -o json | jq -r .secrets[].name)
-secret="$username-svc-acc-secret"
-
-echo "secret found: $secret"
-
-# Get ca.crt from secret
-$KUBECTL get secret "$secret" -n "$primaryNamespace" -o json | jq -r '.data["ca.crt"]' | base64 -d > ./ca.crt
-
-# Get service account token from secret
-user_token=$($KUBECTL get secret "$secret" -n "$primaryNamespace" -o json | jq -r '.data["token"]' | base64 -d)
-
-pushd $manifestsDir
 
 cat > cluster-rb.yml <<EOF
 apiVersion: rbac.authorization.k8s.io/v1
@@ -85,6 +80,21 @@ $KUBECTL apply -f cluster-rb.yml
 
 popd
 
+mkdir -p "$dir/certs"
+pushd $dir/certs
+
+# secret=$($KUBECTL get sa "$username" -n "$primaryNamespace" -o json | jq -r .secrets[].name)
+secret="$username-svc-acc-secret"
+
+echo "secret found: $secret"
+
+# Get ca.crt from secret
+$KUBECTL get secret "$secret" -n "$primaryNamespace" -o json | jq -r '.data["ca.crt"]' | base64 -d > ./ca.crt
+
+# Get service account token from secret
+user_token=$($KUBECTL get secret "$secret" -n "$primaryNamespace" -o json | jq -r '.data["token"]' | base64 -d)
+
+
 # ############ using
 kubectl config set-cluster "$clusterName"  --embed-certs=true --server="$clusterUrl" --certificate-authority=./ca.crt
 
@@ -95,6 +105,10 @@ kubectl config set-credentials "$username" --token="$user_token"
 kubectl config set-context $contextName --cluster="$clusterName" --user="$username" --namespace="$primaryNamespace"
 kubectl config use-context $contextName
 
+popd
+
+pushd $dir
+
 #kubectl config view --raw --minify=true
 echo "saving account kubeconfig to $username-kubeconfig.yml"
 kubectl config view --raw --minify=true > kubeconfig.yml
@@ -104,3 +118,4 @@ echo "cleaning up existing kubeconfig for sanity reasons ..."
 kubectl config delete-context $contextName > /dev/null
 
 echo "DONE 🚀"
+popd

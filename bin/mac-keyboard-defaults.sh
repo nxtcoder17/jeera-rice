@@ -18,6 +18,9 @@ xmodmap -e "clear Mod4"
 xmodmap -e "add    Mod1    = Alt_L 0x007D"
 xmodmap -e "add    Mod4    = Super_L Super_R"
 
+# fixing the delete key to work as normal backspace key
+# keycode 22 = Delete
+
 pkill -9 xcape
 
 # make space toggle b/w space and Shift_L

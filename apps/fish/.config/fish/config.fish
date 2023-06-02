@@ -70,6 +70,8 @@ set -gx NPM_CONFIG_STORE_DIR "$XDG_DATA_HOME/node/bin"
 set -gx XAUTHORITY "$HOME/.Xauthority"
 set -gx _JAVA_AWT_WM_NONREPARENTING "1"
 
+### zoxide exclude DIRS
+set -gx _ZO_EXCLUDE_DIRS "$HOME:$HOME/workspace/kloudlite/archived/.*"
 
 # set -gx FZF_DEFAULT_COMMAND "rg --files --hidden --follow --smart-case"
 

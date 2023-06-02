@@ -6,12 +6,14 @@ set incsearch
 
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-surround'
-Plug 'bkad/CamelCaseMotion'
+"Plug 'bkad/CamelCaseMotion'
 Plug 'dbakker/vim-paragraph-motion'
 Plug 'machakann/vim-highlightedyank'
 Plug 'vim-scripts/argtextobj.vim'
 Plug 'kana/vim-textobj-entire'
 Plug 'michaeljsmith/vim-indent-object'
+
+Plug "chaoren/vim-wordmotion"
 
 let g:argtextobj_pairs="[:],(:),<:>"
 
@@ -48,6 +50,7 @@ sethandler <S-Tab> n:vim
 nnoremap s <nop>
 nnoremap cc <nop>
 nnoremap ss :w<CR>
+nnoremap ;q :action CloseContent<CR>
 nnoremap ; :
 
 set scrolloff=7 sidescrolloff=10
@@ -58,15 +61,16 @@ set scrolloff=7 sidescrolloff=10
 "-- motions
 
 "-- camelcase motions
-"map w [w
-"map e ]w
-"map b [b
+map w [w
+map e ]w
+map b [b
+map ciw [bv]ws
 
 let mapleader = "'"
 nnoremap <leader>= :action EditorIncreaseFontSize<CR>
 nnoremap <leader>- :action EditorDecreaseFontSize<CR>
 
-nnoremap <leader>x :action CloseAllEditorsButActive<CR>
+nnoremap <leader>x :action CloseAllButActive<CR>
 
 map <C-n> <Plug>NextWholeOccurrence
 
@@ -131,7 +135,8 @@ nmap se :action ShowErrorDescription<CR>
 nnoremap <C-CR> :action EditorCompleteStatement<CR>
 
 " -- copy and pasting stuffs
-nmap Y v$y
+nnoremap Y y$
+xnoremap Y y$
 nmap cc "+y
 vmap cc "+y
 "don't overwrite register when pasting over selection
@@ -152,5 +157,12 @@ nnoremap N Nzzzv
 nnoremap * *zz
 
 nnoremap J mzJ`z
+
+" debugger
+nnoremap sdr :action ActivateDebugToolWindow<CR>
+nnoremap sdl :action HideActiveWindow<CR>
+nnoremap sdb :action ToggleLineBreakpoint<CR>
+nnoremap sds :action Resume<CR>
+nnoremap s, :action StepOver<CR>
 
 set ideastrictmode

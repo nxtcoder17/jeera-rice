@@ -190,13 +190,14 @@ c.url.searchengines = {
 
 
 # colors
-from themes.dracula import blood
-blood(c,{
-    'spacing': {
-        'vertical': 6,
-        'horizontal': 8,
-    },
-})
-
-from themes.nxtcoder17 import useTheme
+# from themes.dracula import blood
+# blood(c,{
+#     'spacing': {
+#         'vertical': 6,
+#         'horizontal': 8,
+#     },
+# })
+#
+# from themes.nxtcoder17 import useTheme
+from themes.kanagawa import useTheme
 useTheme(c)

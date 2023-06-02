@@ -31,11 +31,11 @@ ls.setup({
         virt_text = { { "●", "@keyword.operator" } },
       },
     },
-    -- [types.insertNode] = {
-    -- 	active = {
-    -- 		virt_text = { { "●", "GruvboxBlue" } },
-    -- 	},
-    -- },
+    [types.insertNode] = {
+      active = {
+        virt_text = { { "●", "@method.call" } },
+      },
+    },
   },
 })
 

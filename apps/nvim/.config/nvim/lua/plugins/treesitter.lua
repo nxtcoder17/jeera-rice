@@ -1,5 +1,6 @@
 require("nvim-treesitter.configs").setup({
-  ensure_installed = "all",
+  -- ensure_installed = "all",
+  ensure_installed = {"go", "yaml", "json", "jsonc", "json5", "markdown", "markdown_inline"},
   ignore_install = { "ocamllex", "swift", "phpdoc" },
   query_linter = {
     enable = true,
@@ -139,4 +140,3 @@ parser_config.gotmpl = {
 -- vim.opt.foldmethod = "expr"
 -- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 -- vim.cmd("autocmd BufReadPost,FileReadPost * normal zR")
-

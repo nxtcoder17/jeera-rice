@@ -2,13 +2,13 @@ local wezterm = require("wezterm")
 
 return {
   font = wezterm.font_with_fallback({
-    "Comic Code Ligatures",
+    -- "Comic Code Ligatures",
+    "ComicCodeLigatures",
     "Operator Mono Medium",
-    "Iosevka NF",
   }),
   line_height = 1.2,
   font_size = 12,
-  color_scheme = "Batman",
+  color_scheme = "Kanagawa (Gogh)",
   exit_behavior = "Close",
 
   -- leader = { key="a", mods="CTRL" },
