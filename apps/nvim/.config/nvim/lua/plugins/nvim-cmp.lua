@@ -86,62 +86,24 @@ cmp.setup({
     end, { "i", "s" }),
   }),
   sources = cmp.config.sources({
-    -- Copilot Source
-    { name = "copilot",                 group_index = 2 },
-    -- { name = "nvim_lua",                priority = 100 },
-    { name = "nvim_lsp",                max_item_count = 50, priority = 1000 },
-    { name = "emmet_vim",               priority = 1000 },
-    { name = "nvim_lsp_signature_help", priority = 1000 },
-    { name = "luasnip",                 priority = 750 },
-    { name = "path",                    max_item_count = 5,  priority = 500 },
-    { name = "goimports",               max_item_count = 5,  keyword_length = 3 },
-    { name = "rg",                      max_item_count = 7,  keyword_length = 3 },
+    { name = "nvim_lua" },
+    { name = "nvim_lsp" },
+    { name = "luasnip" },
   }, {
-    -- { name = "cmp_tabnine" },
-    -- { name = "codeium", priority = 100 },
-    -- { name = "buffer", option = {
-    -- 	keyword_pattern = [[\w+]],
-    -- } },
-
-    -- { name = "cmp_tabnine", priority = 10 },
-
-    -- {
-    --   name = "fuzzy_buffer",
-    --   max_item_count = 5,
-    --   option = {
-    --     get_bufnrs = function()
-    --       local bufs = {}
-    --       for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-    --         local buftype = vim.api.nvim_buf_get_option(buf, "buftype")
-    --         if buftype ~= "nofile" and buftype ~= "prompt" then
-    --           bufs[#bufs + 1] = buf
-    --         end
-    --       end
-    --       return bufs
-    --     end,
-    --   },
-    -- },
-
-    {
-      name = "tmux",
-      option = {
-        all_panes = true,
-        max_item_count = 10,
-        label = "[tmux]",
-      },
-    },
+    { name = "goimports", max_item_count = 5, keyword_length = 3 },
+    { name = "buffer" },
   }),
-  sorting = {
-    priority_weight = 2,
-    comparators = {
-      cmp.config.compare.order,
-      cmp.config.compare.locality,
-      cmp.config.compare.recently_used,
-      cmp.config.compare.score, -- based on :  score = score + ((#sources - (source_index - 1)) * sorting.priority_weight)
-      cmp.config.compare.offset,
-      -- require("cmp_tabnine.compare"),
-    },
-  },
+  -- sorting = {
+  -- 	priority_weight = 2,
+  -- 	comparators = {
+  -- 		cmp.config.compare.order,
+  -- 		cmp.config.compare.locality,
+  -- 		cmp.config.compare.recently_used,
+  -- 		cmp.config.compare.score, -- based on :  score = score + ((#sources - (source_index - 1)) * sorting.priority_weight)
+  -- 		cmp.config.compare.offset,
+  -- 		-- require("cmp_tabnine.compare"),
+  -- 	},
+  -- },
   formatting = {
     fields = { "kind", "abbr", "menu" },
     format = function(entry, vim_item)
@@ -153,7 +115,6 @@ cmp.setup({
         latex_symbols = "laTeX",
 
         codeium = "⚡",
-        -- cmdline = "❭⚊",
 
         fuzzy_buffer = "fzf",
         cmp_tabnine = "⚡",
@@ -175,18 +136,6 @@ cmp.setup({
 
       -- kind.menu = "    (" .. (strings[2] or "") .. ")"
       kind.menu = "    (" .. (menu or "Ω") .. ")"
-
-      if entry.source.name == "cmp_tabnine" then
-        local detail = (entry.completion_item.data or {}).detail
-        if detail and detail:find(".*%%.*") then
-          kind = kind .. " " .. detail
-        end
-
-        if (entry.completion_item.data or {}).multiline then
-          kind = kind .. " " .. "[ML]"
-        end
-      end
-
       return kind
     end,
   },

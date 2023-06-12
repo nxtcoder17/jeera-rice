@@ -90,6 +90,12 @@ opt.switchbuf = "useopen,usetab,newtab"
 
 vim.o.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
 
+-- augroup highlight_yank
+--     autocmd!
+--     autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank("IncSearch", 200)
+-- augroup END
+
+
 -- fold text
 vim.cmd(
   [[ set foldtext=substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').'...'.trim(getline(v:foldend)) ]]

@@ -35,17 +35,17 @@ M.telescope_keymaps = function()
 
   -- telescope
   -- vim.keymap.set("n", "sf", ":Telescope find_files<CR>")
-  vim.keymap.set("n", "sf", require("plugins.telescope").live_files)
+  vim.keymap.set("n", "sf", require("plugins.telescope").list_files)
   vim.keymap.set("n", "ff", require("plugins.telescope").grep)
   vim.keymap.set("n", "tl", require("plugins.telescope").only_tabs, { silent = true, noremap = true })
   vim.keymap.set("n", "s/", ":Telescope current_buffer_fuzzy_find<CR>", { silent = true, noremap = true })
 end
 
 M.nvim_tmux_navigator_keymaps = function()
-  vim.keymap.set("n", "<M-Left>", require("nvim-tmux-navigation").NvimTmuxNavigateLeft)
-  vim.keymap.set("n", "<M-Right>", require("nvim-tmux-navigation").NvimTmuxNavigateRight)
-  vim.keymap.set("n", "<M-Down>", require("nvim-tmux-navigation").NvimTmuxNavigateDown)
-  vim.keymap.set("n", "<M-Up>", require("nvim-tmux-navigation").NvimTmuxNavigateUp)
+  vim.keymap.set("n", "<M-h>", require("nvim-tmux-navigation").NvimTmuxNavigateLeft)
+  vim.keymap.set("n", "<M-l>", require("nvim-tmux-navigation").NvimTmuxNavigateRight)
+  vim.keymap.set("n", "<M-j>", require("nvim-tmux-navigation").NvimTmuxNavigateDown)
+  vim.keymap.set("n", "<M-k>", require("nvim-tmux-navigation").NvimTmuxNavigateUp)
 end
 
 M.luasnip_keymaps = function()

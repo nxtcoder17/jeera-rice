@@ -64,9 +64,7 @@ telescope.setup({
       -- preview_cutoff = 120,
       -- preview_cutoff = 40,
     },
-    file_sorter = require("telescope.sorters").get_fuzzy_file,
     file_ignore_patterns = { "node_modules" },
-    generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
     path_display = { "truncate" },
     winblend = 0,
     border = {},
@@ -84,17 +82,17 @@ telescope.setup({
   },
   extensions = {
     fzf = {
-      fuzzy = false,
+      fuzzy = true,
       override_generic_sorter = true, -- override the generic sorter
       override_file_sorter = true, -- override the file sorter
       case_mode = "smart_case",    -- or "ignore_case" or "respect_case"
     },
-        ["ui-select"] = {
+    ["ui-select"] = {
       themes.get_ivy({
         layout_config = ivyCustomLayoutConfig,
       }),
     },
-        ["goimpl"] = {
+    ["goimpl"] = {
       themes.get_ivy({
         layout_config = ivyCustomLayoutConfig,
       }),
@@ -145,10 +143,10 @@ telescope.setup({
       results_title = "",
       mappings = {
         n = {
-              ["<C-d>"] = actions.delete_buffer,
+          ["<C-d>"] = actions.delete_buffer,
         },
         i = {
-              ["<C-d>"] = actions.delete_buffer,
+          ["<C-d>"] = actions.delete_buffer,
         },
       },
     },
@@ -169,8 +167,7 @@ telescope.setup({
   },
 })
 
--- telescope.load_extension("fzf")
-telescope.load_extension("zf-native")
+telescope.load_extension("fzf")
 telescope.load_extension("undo")
 telescope.load_extension("ui-select")
 -- telescope.load_extension("goimpl")
@@ -369,27 +366,12 @@ M.dapActions = function()
   }):find()
 end
 
-M.live_files = function()
-  local cwd = vim.loop.cwd()
+M.list_files = function(dir)
+  local cwd = dir or vim.loop.cwd()
 
   local finder = finders.new_job(function(prompt)
-    local execCmd = { "rg", "--threads", "3", "--files", "--iglob", "!.git", "--hidden", "--sort", "path" }
-
-    local searchQuery = prompt
-
-    if prompt:sub(1, 2) == "^p" then
-      searchQuery = prompt:sub(3)
-      table.insert(execCmd, vim.g.root_dir)
-    end
-
-    local cmd = string.format('%s | fzf -f "%s"', table.concat(execCmd, " "), searchQuery or "")
-
-    -- print(cmd)
-
-    return { "sh", "-c", cmd }
-    -- return { "sh", "-c", table.concat(execCmd, " ") }
+    return { "rg", "--threads", "3", "--files", "--iglob", "!.git", "--hidden", "--sort", "path" }
   end, function(item)
-    -- print("item: ", item)
     return {
       ordinal = item,
       display = function(entry)
@@ -403,30 +385,39 @@ M.live_files = function()
           display = entry.value:sub(#vim.g.root_dir + 2)
         end
 
-        -- display = display:gsub(vim.g.root_dir, "")
-        -- print("display:", display, vim.g.root_dir)
-
         if hl_group then
           return display, { { { 1, 3 }, hl_group } }
         else
           return display
         end
       end,
+
       value = item,
     }
   end, nil, cwd)
 
   local conf = require("telescope.config").values
   pickers.new(themes.get_ivy({ layout_config = ivyCustomLayoutConfig }), {
-    prompt_title = "Live Files",
+    prompt_title = "Search for Files (<Ctrl-p> to search from project root))",
     results_title = "",
     finder = finder,
-    previewer = conf.grep_previewer({}),
-    sorter = sorters.get_generic_fuzzy_sorter(),
-    -- sorter = conf.file_sorter({}),
+    -- previewer = conf.grep_previewer({}),
+    -- sorter = sorters.get_generic_fuzzy_sorter(),
     -- sorter = sorters.get_fzy_sorter(),
-    attach_mappings = function(_, map)
+    -- local conf = require("telescope.config").values
+    sorter = conf.file_sorter({}),
+    -- sorter = sorters.get_fzy_sorter(),
+    attach_mappings = function(prompt_bufnr, map)
       map("i", "<c-space>", actions.to_fuzzy_refine)
+      map("i", "<C-p>", function()
+        actions.close(prompt_bufnr)
+
+        if dir == vim.g.root_dir then
+          M.live_files()
+        else
+          M.live_files(vim.g.root_dir)
+        end
+      end)
       return true
     end,
   }):find()

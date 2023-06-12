@@ -23,3 +23,4 @@ Radio-Bakwas-FM http://stream.zeno.fm/9htu0k0vsuquv
 Arijit-Singh https://drive.uber.radio/uber/bollywoodaruitsingh/icecast.audio
 Neha-Kakkar https://drive.uber.radio/uber/bollywoodneharkakkar/icecast.audio
 Atif-Aslam https://drive.uber.radio/uber/bollywoodatifaslam/icecast.audio
+BollyWood-Love https://drive.uber.radio/uber-app/bollywoodlove/icecast.audio

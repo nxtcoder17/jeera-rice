@@ -61,7 +61,6 @@ local function fuzzy_finders()
         { "gbrlsnchs/telescope-lsp-handlers.nvim" },
         { "debugloop/telescope-undo.nvim" },
         { "nvim-telescope/telescope-ui-select.nvim" },
-        { "natecraddock/telescope-zf-native.nvim" },
         -- {
         -- 	"nvim-telescope/telescope-smart-history.nvim",
         -- 	requires = {
@@ -259,7 +258,6 @@ local function lsp()
           end,
         },
         "b0o/schemastore.nvim",
-        "folke/lsp-colors.nvim",
         {
           "jose-elias-alvarez/null-ls.nvim",
           config = function()
@@ -480,9 +478,10 @@ local function misc()
     },
     {
       "nvchad/nvim-colorizer.lua",
-      event = events.UIEnter,
+      event = events.BufRead,
       config = function()
         require("colorizer").setup({
+          filetypes = { "javascriptreact", "css" },
           user_default_options = {
             tailwind = true,
           },
@@ -505,21 +504,6 @@ local function misc()
         require("plugins.peek-nvim")
       end,
     },
-    -- {
-    --   "subnut/nvim-ghost.nvim",
-    --   -- ft = "markdown",
-    --   event = events.BufEnter,
-    --   config = function()
-    --     vim.g.nvim_ghost_server_port = 4001
-    --     vim.cmd([[
-    --       augroup nvim_ghost_user_autocommands
-    --         " au User www.reddit.com,www.stackoverflow.com setfiletype markdown
-    --         " au User www.reddit.com,www.github.com setfiletype markdown
-    --         au User *.github.com setfiletype markdown
-    --       augroup END
-    --     ]])
-    --   end,
-    -- },
   }
 end
 

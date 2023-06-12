@@ -241,17 +241,31 @@ require("neodev").setup({
   library = { plugins = { "nvim-dap-ui" }, types = true },
 })
 
+local runtime_path = vim.split(package.path, ";")
+table.insert(runtime_path, "lua/?.lua")
+table.insert(runtime_path, "lua/?/init.lua")
+
 lsp_config.lua_ls.setup({
   cmd = lsp_servers.lua,
   capabilities = capabilities,
   on_attach = on_attach,
   settings = {
     Lua = {
+      runtime = {
+        path = runtime_path,
+      },
       completion = {
         callSnippet = "Replace",
       },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file("", true),
+        checkThirdParty = false,
+      },
       diagnostics = {
-        globals = { "vim", "use" },
+        globals = { "vim" },
+      },
+      telemetry = {
+        enable = false,
       },
     },
   },
@@ -368,15 +382,19 @@ lsp_config.gopls.setup({
       completeUnimported = true,
       experimentalPostfixCompletions = true,
       analyses = {
+        unreachable = true,
         unusedparams = true,
         shadow = false,
       },
-      staticcheck = true,
+      semanticTokens = false,
+      staticcheck = false,
+      gofumpt = false,
     },
   },
   init_options = {
     directoryFilters = { "-.task", "-node_modules" },
     memoryMode = "DegradeClosed",
+    -- memoryMode = "Normal",
   },
   root_dir = lsp_config.util.root_pattern("go.mod"),
 })

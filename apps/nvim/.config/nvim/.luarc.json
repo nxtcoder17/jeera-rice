@@ -1,8 +1,9 @@
 {
     "workspace.library": [
-        "/home/nxtcoder17/.local/share/nvim/lazy/neodev.nvim/types/nightly",
-        "/home/nxtcoder17/.local/tars.uz/nvim-linux64/share/nvim/runtime/lua",
-        "/home/nxtcoder17/me/jeera-rice/apps/nvim/.config/nvim/lua",
+        "~/.local/share/nvim/lazy/neodev.nvim/types/nightly",
+        "~/.local/tars.uz/nvim-linux64/share/nvim/runtime/lua",
+        "~/.config/nvim/lua",
+        "~/.local/share/nvim",
         "${3rd}/luv/library",
     ]
 }

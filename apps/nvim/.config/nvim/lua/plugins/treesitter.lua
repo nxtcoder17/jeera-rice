@@ -1,6 +1,19 @@
 require("nvim-treesitter.configs").setup({
   -- ensure_installed = "all",
-  ensure_installed = {"go", "yaml", "json", "jsonc", "json5", "markdown", "markdown_inline"},
+  ensure_installed = {
+    "go",
+    "yaml",
+    "json",
+    "jsonc",
+    "json5",
+    "markdown",
+    "markdown_inline",
+    "lua",
+    "graphql",
+    "html",
+    "python",
+    "bash",
+  },
   ignore_install = { "ocamllex", "swift", "phpdoc" },
   query_linter = {
     enable = true,
@@ -72,9 +85,11 @@ require("nvim-treesitter.configs").setup({
   textobjects = {
     lsp_interop = {
       enable = true,
-      border = "none",
+      -- border = "none",
+      border = "single",
       peek_definition_code = {
         ["<leader>df"] = "@function.outer",
+        ["sK"] = "@function.outer",
         ["<leader>dF"] = "@class.outer",
       },
     },
