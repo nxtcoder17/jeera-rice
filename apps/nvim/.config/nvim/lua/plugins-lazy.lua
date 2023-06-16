@@ -266,17 +266,18 @@ local function lsp()
         },
       },
     },
-    {
-      "ray-x/go.nvim",
-      event = events.BufRead,
-      config = function()
-        require("go").setup()
-      end,
-      dependencies = {
-        "ray-x/guihua.lua",
-      },
-      ft = "go",
-    },
+    -- {
+    --   "ray-x/go.nvim",
+    --   enabled = true,
+    --   event = events.BufRead,
+    --   config = function()
+    --     require("go").setup()
+    --   end,
+    --   dependencies = {
+    --     "ray-x/guihua.lua",
+    --   },
+    --   ft = "go",
+    -- },
     {
       "folke/trouble.nvim",
       event = events.BufRead,
@@ -420,6 +421,65 @@ local function dap()
         { "jbyuki/one-small-step-for-vimkind", module = "osv" },
       },
     },
+    {
+      "nvim-neotest/neotest",
+      wants = {
+        "plenary.nvim",
+        "nvim-treesitter",
+        "FixCursorHold.nvim",
+        "neotest-python",
+        "neotest-plenary",
+        "neotest-go",
+        "neotest-jest",
+        "neotest-vim-test",
+        "neotest-rust",
+        "vim-test",
+        "overseer.nvim",
+      },
+      dependencies = {
+        "nvim-lua/plenary.nvim",
+        "nvim-treesitter/nvim-treesitter",
+        "antoinemadec/FixCursorHold.nvim",
+        -- "nvim-neotest/neotest-python",
+        "nvim-neotest/neotest-plenary",
+        "nvim-neotest/neotest-go",
+        "haydenmeade/neotest-jest",
+        -- "nvim-neotest/neotest-vim-test",
+        -- "rouge8/neotest-rust",
+      },
+      -- cmd = {
+      --   "TestNearest",
+      --   "TestFile",
+      --   "TestSuite",
+      --   "TestLast",
+      --   "TestVisit",
+      -- },
+      config = function()
+        require("plugins.neotest").setup()
+      end,
+      disable = false,
+    },
+    {
+      "stevearc/overseer.nvim",
+      cmd = {
+        "OverseerToggle",
+        "OverseerOpen",
+        "OverseerRun",
+        "OverseerBuild",
+        "OverseerClose",
+        "OverseerLoadBundle",
+        "OverseerSaveBundle",
+        "OverseerDeleteBundle",
+        "OverseerRunCmd",
+        "OverseerQuickAction",
+        "OverseerTaskAction",
+      },
+      config = function()
+        require("overseer").setup({
+          strategy = "toggleterm",
+        })
+      end,
+    },
   }
 end
 
@@ -442,6 +502,13 @@ local function terminals()
       config = function()
         require("plugins.toggleterm")
         require("keymaps-for-plugins").toggleterm_keymaps()
+      end,
+    },
+    {
+      "samjwill/nvim-unception",
+      init = function()
+        -- Optional settings go here!
+        -- e.g.) vim.g.unception_open_buffer_in_new_tab = true
       end,
     },
   }
@@ -502,6 +569,15 @@ local function misc()
       build = "deno task --quiet build:fast",
       config = function()
         require("plugins.peek-nvim")
+      end,
+    },
+    {
+      "AckslD/messages.nvim",
+      config = function()
+        require("messages").setup()
+        _G.Msg = function(...)
+          require("messages.api").capture_thing(...)
+        end
       end,
     },
   }

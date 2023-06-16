@@ -95,7 +95,6 @@ vim.o.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,winpos,termin
 --     autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank("IncSearch", 200)
 -- augroup END
 
-
 -- fold text
 vim.cmd(
   [[ set foldtext=substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').'...'.trim(getline(v:foldend)) ]]
@@ -105,3 +104,17 @@ vim.cmd(
 opt.guifont = "ComicCodeLigatures-Medium:h11"
 vim.g.neovide_cursor_animation_length = 0
 vim.g.neovide_cursor_trail_size = 0
+
+-- local settings_grp = vim.api.nvim_create_augroup("settings", {
+--   clear = true,
+-- })
+--
+-- vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+--   pattern = "*",
+--   callback = function()
+--     if vim.fn.mode() ~= "n" then
+--       vim.cmd("stopinsert")
+--     end
+--   end,
+--   group = settings_grp,
+-- })

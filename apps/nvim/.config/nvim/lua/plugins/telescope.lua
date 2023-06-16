@@ -366,10 +366,13 @@ M.dapActions = function()
   }):find()
 end
 
-M.list_files = function(dir)
+M.list_files = function(query, dir)
   local cwd = dir or vim.loop.cwd()
 
+  local search_query = query or ""
+
   local finder = finders.new_job(function(prompt)
+    search_query = prompt
     return { "rg", "--threads", "3", "--files", "--iglob", "!.git", "--hidden", "--sort", "path" }
   end, function(item)
     return {
@@ -392,30 +395,28 @@ M.list_files = function(dir)
         end
       end,
 
-      value = item,
+      value = cwd .. "/" .. item,
     }
   end, nil, cwd)
 
   local conf = require("telescope.config").values
   pickers.new(themes.get_ivy({ layout_config = ivyCustomLayoutConfig }), {
-    prompt_title = "Search for Files (<Ctrl-p> to search from project root))",
+    prompt_title = "Search for Files (<Ctrl-p> to search from project root)",
+    default_text = search_query,
     results_title = "",
+    cwd = cwd,
     finder = finder,
-    -- previewer = conf.grep_previewer({}),
-    -- sorter = sorters.get_generic_fuzzy_sorter(),
-    -- sorter = sorters.get_fzy_sorter(),
-    -- local conf = require("telescope.config").values
+    previewer = conf.grep_previewer({}),
     sorter = conf.file_sorter({}),
-    -- sorter = sorters.get_fzy_sorter(),
     attach_mappings = function(prompt_bufnr, map)
       map("i", "<c-space>", actions.to_fuzzy_refine)
       map("i", "<C-p>", function()
         actions.close(prompt_bufnr)
 
         if dir == vim.g.root_dir then
-          M.live_files()
+          M.list_files(search_query)
         else
-          M.live_files(vim.g.root_dir)
+          M.list_files(search_query, vim.g.root_dir)
         end
       end)
       return true

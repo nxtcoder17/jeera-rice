@@ -238,7 +238,13 @@ lsp_config.graphql.setup({
 
 require("neodev").setup({
   capabilities = capabilities,
-  library = { plugins = { "nvim-dap-ui" }, types = true },
+  library = {
+    plugins = {
+      "nvim-dap-ui",
+      "neotest",
+    },
+    types = true,
+  },
 })
 
 local runtime_path = vim.split(package.path, ";")

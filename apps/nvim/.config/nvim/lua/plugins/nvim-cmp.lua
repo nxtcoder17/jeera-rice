@@ -11,10 +11,18 @@ luasnip.config.set_config({
   delete_check_events = "InsertLeave",
 })
 
+local log = require("plenary.log").new({ plugin = "cmp", level = "debug" })
+
 cmp.register_source("goimports", require("plugins.cmp-sources.go-imports"))
 
 cmp.setup({
+  performance = {
+    debounce = 50,
+    throttle = 10,
+  },
+
   preselect = cmp.PreselectMode.None,
+
   snippet = {
     expand = function(args)
       require("luasnip").lsp_expand(args.body)
@@ -85,13 +93,33 @@ cmp.setup({
       fallback()
     end, { "i", "s" }),
   }),
+
   sources = cmp.config.sources({
-    { name = "nvim_lua" },
-    { name = "nvim_lsp" },
+    { name = "nvim_lsp", priority = 80, group_index = 1 },
+    { name = "nvim_lua", priority = 80, group_index = 1 },
+    { name = "path",     priority = 40, group_index = 5 },
     { name = "luasnip" },
-  }, {
+    {
+      name = "buffer",
+      priority = 5,
+      keyword_length = 3,
+      group_index = 5,
+      option = {
+        get_bufnrs = function()
+          return vim.api.nvim_list_bufs()
+        end,
+      },
+    },
+    {
+      name = "rg",
+      keyword_length = 3,
+      priority = 5,
+      group_index = 5,
+      option = {
+        additional_arguments = "--max-depth 6 --one-file-system --ignore-file ~/.config/nvim/scripts/rgignore",
+      },
+    },
     { name = "goimports", max_item_count = 5, keyword_length = 3 },
-    { name = "buffer" },
   }),
   -- sorting = {
   -- 	priority_weight = 2,
@@ -115,6 +143,7 @@ cmp.setup({
         latex_symbols = "laTeX",
 
         codeium = "⚡",
+        rg = "rg",
 
         fuzzy_buffer = "fzf",
         cmp_tabnine = "⚡",
@@ -136,6 +165,12 @@ cmp.setup({
 
       -- kind.menu = "    (" .. (strings[2] or "") .. ")"
       kind.menu = "    (" .. (menu or "Ω") .. ")"
+
+      local item = entry:get_completion_item()
+      if item.detail then
+        kind.menu = kind.menu .. " 👉 " .. item.detail
+      end
+
       return kind
     end,
   },

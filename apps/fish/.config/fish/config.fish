@@ -40,6 +40,34 @@ function addToPath --description "add item to system path"
     end
 end
 
+# echo "snippet inspired from kubie"
+function ck --description "choose-kubeconfig"
+  set dir $HOME/.kube/configs
+  set -gx TMP_KUBECONFIG_FILE (command ls $dir | fzf)
+  # echo $dir/$item
+  set -gx KUBECONFIG $dir/$TMP_KUBECONFIG_FILE
+  # echo "set successfull"
+
+  if ! functions -q fish_prompt_original
+    functions -c fish_prompt fish_prompt_original
+  end
+  # functions --copy fish_prompt fish_prompt_original
+  function fish_prompt
+    set -l original (fish_prompt_original)
+
+    # printf '%s ' (string unescape {prompt})
+    printf '%s󱃾 %s%s ' (set_color "#5582a1") $TMP_KUBECONFIG_FILE $hydro_color_normal
+
+    # Due to idiosyncrasies with the way fish is managing newlines in
+    # process substitions, each line needs to be printed separately
+    # to mirror the existing output. For more details,
+    # see https://github.com/fish-shell/fish-shell/issues/159.
+    for line in $original
+        echo -e $line
+    end
+  end
+end
+
 set -gx EDITOR nvim
 set -gx PAGER less
 set -gx EMAIL "nxtcoder17@gmail.com"
@@ -134,6 +162,7 @@ set --global hydro_multiline true
 set --global hydro_color_git "#71bd80"
 set --global hydro_color_prompt "#3a73d6"
 set --global hydro_color_pwd "#2fbaf5"
+
 set --global hydro_symbol_git_dirty	$__fish_git_prompt_char_dirtystate
 set --global hydro_symbol_git_ahead $__fish_git_prompt_char_upstream_ahead
 set --global hydro_symbol_git_behind $__fish_git_prompt_char_upstream_behind
