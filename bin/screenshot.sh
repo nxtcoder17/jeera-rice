@@ -11,4 +11,4 @@ else
 fi
 
 scrot -s $name
-[ -f "$name" ] && dragon-drag-and-drop $name --and-exit 2>&1 > /dev/null
+[ -f "$name" ] && dragon-drop "$name" --and-exit > /dev/null 2>&1

@@ -13,7 +13,9 @@ export SSH_AUTH_SOCK
 xrdb -merge ~/.Xresources
 xrdb -load ~/.Xresources
 
-# keyboard-defaults.sh
+# export PATH="$HOME/.cargo/bin:$PATH"
+
+keyboard-defaults.sh
 
 redshift -O 3000
 

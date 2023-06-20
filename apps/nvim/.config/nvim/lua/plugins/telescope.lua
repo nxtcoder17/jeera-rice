@@ -11,6 +11,8 @@ local utils = require("telescope.utils")
 
 local strings = require("functions.strings")
 
+local log = require("plenary.log").new({ plugin = "telescope", level = "debug" })
+
 local function findCmd()
   if vim.fn.executable("fd") then
     return { "fd", "-t", "f", "-H", "-E", ".git", "--strip-cwd-prefix" }
@@ -203,46 +205,48 @@ M.only_tabs = function()
     table.insert(results, { tabidx, tabnr })
   end
 
-  pickers.new(
-    themes.get_ivy({
-      layout_config = ivyCustomLayoutConfig,
-    }),
-    {
-      results_title = false,
-      prompt_title = "Fuzzy Search your tabs, here",
-      finder = finders.new_table({
-        results = results,
-        entry_maker = function(item)
-          local tabidx, tabnr = item[1], item[2]
+  pickers
+      .new(
+        themes.get_ivy({
+          layout_config = ivyCustomLayoutConfig,
+        }),
+        {
+          results_title = false,
+          prompt_title = "Fuzzy Search your tabs, here",
+          finder = finders.new_table({
+            results = results,
+            entry_maker = function(item)
+              local tabidx, tabnr = item[1], item[2]
 
-          local value = { tabidx, vim.api.nvim_tabpage_get_win(tabnr) }
-          return {
-            ordinal = tabidx .. require("tabby.util").get_tab_name(tabnr),
-            display = tabidx .. " [TAB] " .. require("tabby.util").get_tab_name(tabnr),
-            -- value = " [TAB] " .. require("tabby.util").get_tab_name(tabnr),
-            value = value,
-          }
-        end,
-      }),
-      sorter = sorters.get_fzy_sorter(),
-      -- sorter = sorters.get_generic_fuzzy_sorter(),
-      attach_mappings = function(item, map)
-        -- use our custom action to go the window id
-        map({ "i", "n" }, "<CR>", function(prompt_bufnr)
-          actions.close(prompt_bufnr)
-          local entry = action_state.get_selected_entry()
-          vim.api.nvim_set_current_win(entry.value[2])
-        end)
+              local value = { tabidx, vim.api.nvim_tabpage_get_win(tabnr) }
+              return {
+                ordinal = tabidx .. require("tabby.util").get_tab_name(tabnr),
+                display = tabidx .. " [TAB] " .. require("tabby.util").get_tab_name(tabnr),
+                -- value = " [TAB] " .. require("tabby.util").get_tab_name(tabnr),
+                value = value,
+              }
+            end,
+          }),
+          sorter = sorters.get_fzy_sorter(),
+          -- sorter = sorters.get_generic_fuzzy_sorter(),
+          attach_mappings = function(item, map)
+            -- use our custom action to go the window id
+            map({ "i", "n" }, "<CR>", function(prompt_bufnr)
+              actions.close(prompt_bufnr)
+              local entry = action_state.get_selected_entry()
+              vim.api.nvim_set_current_win(entry.value[2])
+            end)
 
-        map({ "n", "i" }, "<C-d>", function(prompt_bufnr)
-          actions.close(prompt_bufnr)
-          local entry = action_state.get_selected_entry()
-          vim.cmd("tabclose " .. entry.value[1])
-        end)
-        return true
-      end,
-    }
-  ):find()
+            map({ "n", "i" }, "<C-d>", function(prompt_bufnr)
+              actions.close(prompt_bufnr)
+              local entry = action_state.get_selected_entry()
+              vim.cmd("tabclose " .. entry.value[1])
+            end)
+            return true
+          end,
+        }
+      )
+      :find()
 end
 
 M.tabs = function()
@@ -288,33 +292,35 @@ M.tabs = function()
     end
   end
 
-  pickers.new(
-    themes.get_ivy({
-      layout_config = {
-        bottom_pane = {
-          height = 15,
-        },
-        -- results_height = 10,
-      },
-    }),
-    {
-      results_title = "",
-      prompt_title = "Fuzzy Search your tabs, here",
-      finder = finders.new_table({
-        results = windows,
-        entry_maker = function(x)
-          return x
-        end,
-      }),
-      sorter = sorters.get_fzy_sorter({}),
-      attach_mappings = function(item, map)
-        -- use our custom action to go the window id
-        map("i", "<CR>", goto_window)
-        map("n", "<CR>", goto_window)
-        return true
-      end,
-    }
-  ):find()
+  pickers
+      .new(
+        themes.get_ivy({
+          layout_config = {
+            bottom_pane = {
+              height = 15,
+            },
+            -- results_height = 10,
+          },
+        }),
+        {
+          results_title = "",
+          prompt_title = "Fuzzy Search your tabs, here",
+          finder = finders.new_table({
+            results = windows,
+            entry_maker = function(x)
+              return x
+            end,
+          }),
+          sorter = sorters.get_fzy_sorter({}),
+          attach_mappings = function(item, map)
+            -- use our custom action to go the window id
+            map("i", "<CR>", goto_window)
+            map("n", "<CR>", goto_window)
+            return true
+          end,
+        }
+      )
+      :find()
 end
 
 M.dapActions = function()
@@ -346,30 +352,32 @@ M.dapActions = function()
     })
   end
 
-  pickers.new(themes.get_ivy(), {
-    results_title = "DAP Actions",
-    prompt_title = "Hub for dap actions",
-    finder = finders.new_table({
-      results = m,
-      entry_maker = function(x)
-        return x
-      end,
-    }),
-    sorter = sorters.get_fzy_sorter({}),
-    attach_mappings = function(prompt_bufnr, map)
-      return actions.select_default:replace(function()
-        actions.close(prompt_bufnr)
-        local selection = action_state.get_selected_entry()
-        selection.value()
-      end)
-    end,
-  }):find()
+  pickers
+      .new(themes.get_ivy(), {
+        results_title = "DAP Actions",
+        prompt_title = "Hub for dap actions",
+        finder = finders.new_table({
+          results = m,
+          entry_maker = function(x)
+            return x
+          end,
+        }),
+        sorter = sorters.get_fzy_sorter({}),
+        attach_mappings = function(prompt_bufnr, map)
+          return actions.select_default:replace(function()
+            actions.close(prompt_bufnr)
+            local selection = action_state.get_selected_entry()
+            selection.value()
+          end)
+        end,
+      })
+      :find()
 end
 
-M.list_files = function(query, dir)
+M.list_files = function(query, dir, opts)
   local cwd = dir or vim.loop.cwd()
-
   local search_query = query or ""
+  local opts = opts or { disable_devicons = false }
 
   local finder = finders.new_job(function(prompt)
     search_query = prompt
@@ -380,19 +388,19 @@ M.list_files = function(query, dir)
       display = function(entry)
         local hl_group
         local display = utils.transform_path({}, entry.value)
-
-        display = vim.fn.substitute(display, vim.g.root_dir, "", "g")
-
-        display, hl_group = utils.transform_devicons(entry.value, display, false)
         if entry.value:find(vim.g.root_dir) then
           display = entry.value:sub(#vim.g.root_dir + 2)
         end
 
+        -- source (start): telescope.nvim/lua/telescope/make_entry.lua
+        display, hl_group, icon = utils.transform_devicons(entry.value, display, opts.disable_devicons)
+
         if hl_group then
-          return display, { { { 1, 3 }, hl_group } }
+          return display, { { { 0, #icon }, hl_group } }
         else
           return display
         end
+        -- source (end): telescope.nvim/lua/telescope/make_entry.lua
       end,
 
       value = cwd .. "/" .. item,
@@ -400,28 +408,90 @@ M.list_files = function(query, dir)
   end, nil, cwd)
 
   local conf = require("telescope.config").values
-  pickers.new(themes.get_ivy({ layout_config = ivyCustomLayoutConfig }), {
-    prompt_title = "Search for Files (<Ctrl-p> to search from project root)",
-    default_text = search_query,
-    results_title = "",
-    cwd = cwd,
-    finder = finder,
-    previewer = conf.grep_previewer({}),
-    sorter = conf.file_sorter({}),
-    attach_mappings = function(prompt_bufnr, map)
-      map("i", "<c-space>", actions.to_fuzzy_refine)
-      map("i", "<C-p>", function()
-        actions.close(prompt_bufnr)
+  pickers
+      .new(themes.get_ivy({ layout_config = ivyCustomLayoutConfig }), {
+        prompt_title = "Search for Files (<Ctrl-p> to search from project root)",
+        default_text = search_query,
+        results_title = "",
+        cwd = cwd,
+        finder = finder,
+        previewer = conf.grep_previewer({}),
+        sorter = conf.file_sorter({}),
+        attach_mappings = function(prompt_bufnr, map)
+          map("i", "<c-space>", actions.to_fuzzy_refine)
+          map("i", "<C-p>", function()
+            actions.close(prompt_bufnr)
 
-        if dir == vim.g.root_dir then
-          M.list_files(search_query)
-        else
-          M.list_files(search_query, vim.g.root_dir)
+            if dir == vim.g.root_dir then
+              M.list_files(search_query)
+            else
+              M.list_files(search_query, vim.g.root_dir)
+            end
+          end)
+          return true
+        end,
+      })
+      :find()
+end
+
+M.find_in_files = function(query, dir, opts)
+  local cwd = dir or vim.loop.cwd()
+  local search_query = query or ""
+  local opts = opts or { disable_devicons = false }
+
+  local finder = finders.new_job(function(prompt)
+    search_query = prompt
+    return { "rg", "--threads", "3", "--iglob", "!.git", "--hidden", "--sort", "path" }
+  end, function(item)
+    return {
+      ordinal = item,
+      display = function(entry)
+        local hl_group
+        local display = utils.transform_path({}, entry.value)
+        if entry.value:find(vim.g.root_dir) then
+          display = entry.value:sub(#vim.g.root_dir + 2)
         end
-      end)
-      return true
-    end,
-  }):find()
+
+        -- source (start): telescope.nvim/lua/telescope/make_entry.lua
+        display, hl_group, icon = utils.transform_devicons(entry.value, display, opts.disable_devicons)
+
+        if hl_group then
+          return display, { { { 0, #icon }, hl_group } }
+        else
+          return display
+        end
+        -- source (end): telescope.nvim/lua/telescope/make_entry.lua
+      end,
+
+      value = cwd .. "/" .. item,
+    }
+  end, nil, cwd)
+
+  local conf = require("telescope.config").values
+  pickers
+      .new(themes.get_ivy({ layout_config = ivyCustomLayoutConfig }), {
+        prompt_title = "Search for Files (<Ctrl-p> to search from project root)",
+        default_text = search_query,
+        results_title = "",
+        cwd = cwd,
+        finder = finder,
+        previewer = conf.grep_previewer({}),
+        sorter = conf.file_sorter({}),
+        attach_mappings = function(prompt_bufnr, map)
+          map("i", "<c-space>", actions.to_fuzzy_refine)
+          map("i", "<C-p>", function()
+            actions.close(prompt_bufnr)
+
+            if dir == vim.g.root_dir then
+              M.list_files(search_query)
+            else
+              M.list_files(search_query, vim.g.root_dir)
+            end
+          end)
+          return true
+        end,
+      })
+      :find()
 end
 
 return M

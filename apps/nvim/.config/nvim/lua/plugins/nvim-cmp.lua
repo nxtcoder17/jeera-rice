@@ -99,6 +99,7 @@ cmp.setup({
     { name = "nvim_lua", priority = 80, group_index = 1 },
     { name = "path",     priority = 40, group_index = 5 },
     { name = "luasnip" },
+
     {
       name = "buffer",
       priority = 5,
@@ -110,6 +111,7 @@ cmp.setup({
         end,
       },
     },
+    { name = "goimports", max_item_count = 5, keyword_length = 3 },
     {
       name = "rg",
       keyword_length = 3,
@@ -119,7 +121,6 @@ cmp.setup({
         additional_arguments = "--max-depth 6 --one-file-system --ignore-file ~/.config/nvim/scripts/rgignore",
       },
     },
-    { name = "goimports", max_item_count = 5, keyword_length = 3 },
   }),
   -- sorting = {
   -- 	priority_weight = 2,
@@ -132,6 +133,36 @@ cmp.setup({
   -- 		-- require("cmp_tabnine.compare"),
   -- 	},
   -- },
+
+  -- copied from TJ Devries (https://github.com/tjdevries/config_manager/blob/83b6897e83525efdfdc24001453137c40373aa00/xdg_config/nvim/after/plugin/completion.lua#L129-L155)
+  sorting = {
+    -- TODO: Would be cool to add stuff like "See variable names before method names" in rust, or something like that.
+    comparators = {
+      cmp.config.compare.offset,
+      cmp.config.compare.exact,
+      cmp.config.compare.score,
+
+      -- copied from cmp-under, but I don't think I need the plugin for this.
+      -- I might add some more of my own.
+      function(entry1, entry2)
+        local _, entry1_under = entry1.completion_item.label:find("^_+")
+        local _, entry2_under = entry2.completion_item.label:find("^_+")
+        entry1_under = entry1_under or 0
+        entry2_under = entry2_under or 0
+        if entry1_under > entry2_under then
+          return false
+        elseif entry1_under < entry2_under then
+          return true
+        end
+      end,
+
+      cmp.config.compare.kind,
+      cmp.config.compare.sort_text,
+      cmp.config.compare.length,
+      cmp.config.compare.order,
+    },
+  },
+
   formatting = {
     fields = { "kind", "abbr", "menu" },
     format = function(entry, vim_item)

@@ -1,25 +1,28 @@
 #! /usr/bin/env bash
 
-laptop=eDP-1-1
-monitor=HDMI-1-2
-monitorMode="2560x1440"
+# laptop=eDP-1-1
+# monitor=HDMI-1-2
+# monitorMode="2560x1440"
 
+laptop=$(xrandr -q | grep -iE 'DP-.*\bconnected\b' | awk '{print $1}')
+monitor=$(xrandr -q | grep -iE 'HDMI-.*\bconnected\b' | awk '{print $1}')
+monitorMode="3840x2160"
 
 cmd=$1
 shift 1;
 case $cmd in 
   only-monitor)
     xrandr --output $monitor --mode $monitorMode --auto && xrandr --output $laptop --off
-    [ -f ~/.fehbg ] && source ~/.fehbg
+    [ -f $HOME/.fehbg ] && source $HOME/.fehbg
     ;;
   only-laptop)
     xrandr --output $laptop --auto && xrandr --output $monitor --off
-    [ -f ~/.fehbg ] && source ~/.fehbg
+    [ -f $HOME/.fehbg ] && source $HOME/.fehbg
     ;;
   left-right)
     xrandr --output $laptop --auto
-    xrandr --output $monitor --right-of $laptop --mode $monitorMode --auto
-    [ -f ~/.fehbg ] && source ~/.fehbg
+    xrandr --output $monitor --left-of $laptop --mode $monitorMode --auto
+    [ -f $HOME/.fehbg ] && source $HOME/.fehbg
     ;;
   *)
     item=$(echo -e "only-monitor\nonly-laptop\nleft-right" | dmenu)

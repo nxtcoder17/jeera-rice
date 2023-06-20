@@ -243,6 +243,12 @@ local function lsp()
       end,
     },
     {
+      "WhoIsSethDaniel/mason-tool-installer.nvim",
+      config = function()
+        require("plugins.mason-tool-installer")
+      end,
+    },
+    {
       "neovim/nvim-lspconfig",
       event = events.BufRead,
       config = function()
@@ -253,6 +259,7 @@ local function lsp()
         "williamboman/mason-lspconfig.nvim",
         {
           "j-hui/fidget.nvim",
+          tag = "legacy",
           config = function()
             require("fidget").setup({ window = { blend = 0 } })
           end,
@@ -278,6 +285,17 @@ local function lsp()
     --   },
     --   ft = "go",
     -- },
+    {
+      "olexsmir/gopher.nvim",
+      ft = "go",
+      dependencies = { -- dependencies
+        "nvim-lua/plenary.nvim",
+        "nvim-treesitter/nvim-treesitter",
+      },
+      config = function()
+        require("gopher").setup()
+      end,
+    },
     {
       "folke/trouble.nvim",
       event = events.BufRead,
@@ -417,7 +435,7 @@ local function dap()
       end,
       dependencies = {
         "rcarriga/nvim-dap-ui",
-        "theHamsta/nvim-dap-virtual-text",
+        -- "theHamsta/nvim-dap-virtual-text",
         { "jbyuki/one-small-step-for-vimkind", module = "osv" },
       },
     },
@@ -586,7 +604,9 @@ end
 local function http_clients()
   return {
     {
-      dir = "~/workspace/nxtcoder17/github/http-cli",
+      "nxtcoder17/http-cli",
+      -- dir = "~/workspace/nxtcoder17/github/http-cli",
+      build = "task build",
       event = events.BufRead,
       ft = "yaml",
       config = function()
@@ -605,6 +625,13 @@ local function git_clients()
     {
       "sindrets/diffview.nvim",
       event = events.BufEnter,
+    },
+    {
+      "lewis6991/gitsigns.nvim",
+      event = events.BufRead,
+      config = function()
+        require("plugins.git-signs")
+      end,
     },
   }
 end
