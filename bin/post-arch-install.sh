@@ -14,7 +14,7 @@ case $cmd in
     xwindow_stuffs="xclip xcape network-manager-applet"
     wm_tools="i3-wm i3blocks sysstat i3lock scrot dmenu rofi dunst feh sxiv xdotool wmctrl redshift lxappearance light"
     languages="nodejs npm go python python-pip"
-    browsers="firefox-developer-edition"
+    browsers="firefox-developer-edition qutebrowser"
     messaging="telegram-desktop"
     fonts="noto-fonts-emoji"
     audio="pulseaudio pulseaudio-alsa alsa-utils alsa-firmware alsa-plugins pamixer pavucontrol"
@@ -122,6 +122,20 @@ case $cmd in
         tar xf mongosh.tar.gz && \
         mv mongosh-1.10.0-linux-x64/bin/mongosh $bin_dir && \
         echo "✅"
+      popd > /dev/null 2>&1 || exit 
+      rm -rf "$dir"
+    fi
+
+    if command -v rpk &> /dev/null; then
+      echo  "[#] rpk already installed ✅"
+    else
+      dir=$(mktemp -d)
+      pushd $dir > /dev/null 2>&1 || exit 
+      printf "[#] installing rpk ... "
+    curl -L0 --silent https://github.com/redpanda-data/redpanda/releases/latest/download/rpk-linux-amd64.zip > rpk.zip && \
+      unzip rpk.zip && \
+      mv rpk $bin_dir && \
+      echo "✅"
       popd > /dev/null 2>&1 || exit 
       rm -rf "$dir"
     fi

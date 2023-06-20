@@ -87,7 +87,7 @@ set -gx GOPATH "$XDG_DATA_HOME/go"
 set -gx K9SCONFIG "$XDG_CONFIG_HOME/k9s"
 set -gx DOCKER_CONFIG "$XDG_CONFIG_HOME/docker"
 set -gx GTK2_RC_FILES "$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
-set -gx _JAVA_OPTIONS "-DJava.util.prefs.userRoot=$XDG_CONFIG_HOME/java"
+set -gx _JAVA_OPTIONS "-DJava.util.prefs.userRoot=$XDG_CONFIG_HOME/java -Dsun.java2d.opengl=true -Dawt.useSystemAAFontSettings=on"
 
 set -gx NODE_REPL_HISTORY "$XDG_DATA_HOME/node_repl_history"
 set -gx NPM_CONFIG_USERCONFIG "$XDG_CONFIG_HOME/npm/npmrc"

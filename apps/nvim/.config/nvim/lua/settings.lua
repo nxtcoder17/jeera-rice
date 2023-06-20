@@ -105,16 +105,32 @@ opt.guifont = "ComicCodeLigatures-Medium:h11"
 vim.g.neovide_cursor_animation_length = 0
 vim.g.neovide_cursor_trail_size = 0
 
--- local settings_grp = vim.api.nvim_create_augroup("settings", {
---   clear = true,
--- })
+local settings_grp = vim.api.nvim_create_augroup("settings", {
+  clear = true,
+})
 --
--- vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
---   pattern = "*",
---   callback = function()
---     if vim.fn.mode() ~= "n" then
---       vim.cmd("stopinsert")
---     end
---   end,
---   group = settings_grp,
--- })
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+  pattern = "*",
+  callback = function()
+    skip_types = {
+      "help",
+      "TelescopePrompt",
+      "TelescopeResult",
+      "query",
+      "Terminal",
+      "toggleterm",
+      "",
+    }
+
+    for _, v in ipairs(skip_types) do
+      if vim.bo.filetype == v then
+        return
+      end
+    end
+
+    if vim.fn.mode() ~= "n" then
+      vim.cmd("stopinsert")
+    end
+  end,
+  group = settings_grp,
+})
