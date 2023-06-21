@@ -160,7 +160,8 @@ case $cmd in
       ntpsec \
       dragon-drop \
       google-chrome \
-      mongodb-tools-bin
+      mongodb-tools-bin \
+      warpd
 
     # after_install
     ;;

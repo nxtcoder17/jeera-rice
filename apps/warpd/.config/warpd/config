@@ -1,4 +1,6 @@
 exit: C-e
+history_activation_key: M-;
+
 cursor_color: #27f2db
 cursor_size: 11
 speed: 700

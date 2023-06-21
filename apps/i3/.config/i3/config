@@ -319,4 +319,4 @@ for_window [title="nxthelper"] border pixel 3
 exec "$startNxtTerm"
 # exec_always $noid i3-auto-layout
 
-bindsym $alt+x exec warpd --hint
+bindsym $alt+x exec warpd --normal
