@@ -16,7 +16,7 @@ case $cmd in
     languages="nodejs npm go python python-pip"
     browsers="firefox-developer-edition qutebrowser"
     messaging="telegram-desktop"
-    fonts="noto-fonts-emoji"
+    fonts="noto-fonts-emoji ttf-croscore"
     audio="pulseaudio pulseaudio-alsa alsa-utils alsa-firmware alsa-plugins pamixer pavucontrol"
     codecs="ffmpeg faac faad2 libdca libmpeg2 opus x264 x265 gst-libav libtheora"
     video="mpv"
@@ -135,6 +135,20 @@ case $cmd in
     curl -L0 --silent https://github.com/redpanda-data/redpanda/releases/latest/download/rpk-linux-amd64.zip > rpk.zip && \
       unzip rpk.zip && \
       mv rpk $bin_dir && \
+      echo "✅"
+      popd > /dev/null 2>&1 || exit 
+      rm -rf "$dir"
+    fi
+
+    if command -v delta &> /dev/null; then
+      echo  "[#] delta already installed ✅"
+    else
+      dir=$(mktemp -d)
+      pushd $dir > /dev/null 2>&1 || exit 
+      printf "[#] installing delta ... "
+    curl -L0 --silent https://github.com/dandavison/delta/releases/download/0.16.5/delta-0.16.5-x86_64-unknown-linux-gnu.tar.gz > delta.tar.gz && \
+      tar xf delta.tar.gz && \
+      mv delta-0.16.5-x86_64-unknown-linux-gnu/delta $bin_dir && \
       echo "✅"
       popd > /dev/null 2>&1 || exit 
       rm -rf "$dir"

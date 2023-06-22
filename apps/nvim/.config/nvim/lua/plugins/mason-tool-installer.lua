@@ -4,8 +4,10 @@ require("mason-tool-installer").setup({
     "stylua",
 
     "typescript-language-server",
-    "bash-language-server",
     "tailwindcss-language-server",
+    "eslint_d",
+
+    "bash-language-server",
     "dockerfile-language-server",
     "shellcheck",
     "shfmt",

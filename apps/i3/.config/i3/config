@@ -30,7 +30,7 @@ gaps outer -15
 
 # font pango: mononoki Nerd Font Regular 10
 # font pango: OperatorMono Nerd Font Regular 10
-font pango: Comic Code Ligatures Medium 10
+font pango: Comic Code Ligatures Medium 11
 
 focus_follows_mouse false
 hide_edge_borders vertical
