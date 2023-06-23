@@ -37,17 +37,17 @@ def hints():
 hints()
 
 def fonts():
-    myFont = "Comic Code Ligatures Medium"
+    myFont = "ComicCodeLigatures Nerd Font Medium"
 
     c.fonts.hints = f"15px '{myFont}'"
-    c.fonts.default_size = '16px'
+    c.fonts.default_size = '20px'
     c.fonts.default_family = f'"{myFont}"'
     c.fonts.statusbar = f'11pt "{myFont}"'
     c.fonts.prompts = f"default_size {myFont}"
     c.fonts.completion.entry = f"default_size '{myFont}'"
     c.fonts.completion.entry = f"default_size '{myFont}'"
     c.fonts.tabs.selected = f"default_size '{myFont}'"
-    c.fonts.tabs.unselected = f"15px '{myFont}'"
+    c.fonts.tabs.unselected = f"default_size '{myFont}'"
     c.fonts.contextmenu = c.fonts.hints
 
 fonts()
@@ -131,8 +131,8 @@ def options():
     # c.colors.webpage.darkmode.grayscale.images = 0.35
 
     # webpage, content, headers
-    c.scrolling.smooth = False
-    c.content.dns_prefetch = False
+    c.scrolling.smooth = True
+    c.content.dns_prefetch = True
     c.content.autoplay = False
     c.content.geolocation = False
     c.content.javascript.enabled = True

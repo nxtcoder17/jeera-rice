@@ -626,13 +626,14 @@ local function git_clients()
       "sindrets/diffview.nvim",
       event = events.BufEnter,
     },
-    {
-      "lewis6991/gitsigns.nvim",
-      event = events.BufRead,
-      config = function()
-        require("plugins.git-signs")
-      end,
-    },
+    -- {
+    --   "lewis6991/gitsigns.nvim",
+    --   -- event = events.BufRead,
+    --   event = "VeryLazy",
+    --   config = function()
+    --     require("plugins.git-signs")
+    --   end,
+    -- },
   }
 end
 

@@ -22,5 +22,7 @@ require("mason-tool-installer").setup({
 
     "graphql-language-service-cli",
     "dockerfile-language-server",
+
+    "pyright",
   },
 })

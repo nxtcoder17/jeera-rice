@@ -273,8 +273,6 @@ M.tabs = function()
       tabLabel = tabidx .. " [TAB] ( " .. require("tabby.util").get_tab_name(tabnr) .. " )"
     end
 
-    vim.pretty_print(tabLabel)
-
     local windownrs = vim.api.nvim_tabpage_list_wins(tabnr)
     for windownr, windowid in ipairs(windownrs) do
       local bufnr = vim.api.nvim_win_get_buf(windowid)
@@ -388,8 +386,8 @@ M.list_files = function(query, dir, opts)
       display = function(entry)
         local hl_group
         local display = utils.transform_path({}, entry.value)
-        if entry.value:find(vim.g.root_dir) then
-          display = entry.value:sub(#vim.g.root_dir + 2)
+        if entry.value:find(cwd) then
+          display = entry.value:sub(#cwd + 2)
         end
 
         -- source (start): telescope.nvim/lua/telescope/make_entry.lua
