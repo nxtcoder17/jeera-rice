@@ -28,6 +28,8 @@ vim.diagnostic.config({
 local function on_attach(client, bufnr)
   local opts = { silent = true, buffer = bufnr, remap = false }
 
+  client.server_capabilities.semanticTokensProvider = nil
+
   vim.keymap.set("n", "sn", function()
     vim.diagnostic.goto_next({
       severity = { min = vim.diagnostic.severity.WARN, max = vim.diagnostic.severity.ERROR },
@@ -46,7 +48,7 @@ local function on_attach(client, bufnr)
   vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, opts)
   vim.keymap.set({ "n", "v" }, "<M-CR>", vim.lsp.buf.code_action, opts)
   vim.keymap.set("n", "f;", function()
-    vim.lsp.buf.format({ async = true })
+    vim.lsp.buf.format({ async = false })
   end, opts)
 
   -- vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)

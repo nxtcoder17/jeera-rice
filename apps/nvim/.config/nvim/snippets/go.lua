@@ -16,19 +16,6 @@ local strings = require("functions.strings")
 
 local snippets, autosnippets = {}, {}
 
-local envitem = s(
-  "envitem",
-  fmt('{} {} `env:"{}" required:"{}"`', {
-    i(1, "var"),
-    i(2, "string"),
-    d(3, function(args)
-      return sn(nil, i(1, strings.snake_case_all_uppercase(args[1][1])))
-    end, { 1 }),
-    i(4, "true"),
-  })
-)
-table.insert(snippets, envitem)
-
 local rr = postfix(
   { trig = ".rr", match_pattern = ".*" },
   fmta(
@@ -161,6 +148,18 @@ local func = s(
 
 table.insert(snippets, func)
 
+local env_item = s("env.item",
+  fmt('{} {} `env:"{}" required:"{}"`', {
+    i(1, "var"),
+    i(2, "string"),
+    d(3, function(args)
+      return sn(nil, i(1, strings.snake_case_all_uppercase(args[1][1])))
+    end, { 1 }),
+    i(4, "true"),
+  })
+)
+table.insert(snippets, env_item)
+
 local env_template = s(
   "env.template",
   fmta(
@@ -181,10 +180,19 @@ func LoadEnv() (*Env, error) {
 	return &ev, nil
 }
 ]],
-    { p1 = i(1, "// use envitem snippet to fill it") }
+    { p1 = i(1, "// use env.item snippet to fill it") }
   )
 )
 
 table.insert(snippets, env_template)
+
+-- table.insert(snippets, s("kubebuilder.marker.enum",
+--   fmta("// +kubebuilder:validation:Enum=<p1>", { p1 = i(1, "item1;item2;item3") })
+-- ))
+--
+-- table.insert(snippets, s("kubebuilder.marker.maximum",
+--   fmta("// +kubebuilder:validation:Maximum=<p1>", { p1 = i(1, "17") })
+-- ))
+
 
 return snippets, autosnippets

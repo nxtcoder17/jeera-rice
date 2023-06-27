@@ -59,13 +59,13 @@ cmp.setup({
     }),
     -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     ["<Tab>"] = cmp.mapping(function(fallback)
-      if luasnip.expand_or_locally_jumpable() then
-        luasnip.expand_or_jump()
+      if require("copilot.suggestion").is_visible() then
+        require("copilot.suggestion").accept()
         return
       end
 
-      if require("copilot.suggestion").is_visible() then
-        require("copilot.suggestion").accept()
+      if luasnip.expand_or_locally_jumpable() then
+        luasnip.expand_or_jump()
         return
       end
 
@@ -95,14 +95,14 @@ cmp.setup({
   }),
 
   sources = cmp.config.sources({
-    { name = "nvim_lsp", priority = 80, group_index = 1 },
-    { name = "nvim_lua", priority = 80, group_index = 1 },
-    { name = "path",     priority = 40, group_index = 5 },
-    { name = "luasnip" },
-
+    { name = "nvim_lsp",   priority = 80 },
+    { name = "nvim_lua",   priority = 80 },
+    { name = "luasnip",    priority = 70 },
+    { name = "goimports",  priority = 60, max_item_count = 5, keyword_length = 3 },
+    { name = "async_path", priority = 50 },
     {
       name = "buffer",
-      priority = 5,
+      priority = 40,
       keyword_length = 3,
       group_index = 5,
       option = {
@@ -111,11 +111,10 @@ cmp.setup({
         end,
       },
     },
-    { name = "goimports", max_item_count = 5, keyword_length = 3 },
     {
       name = "rg",
+      priority = 40,
       keyword_length = 3,
-      priority = 5,
       group_index = 5,
       option = {
         additional_arguments = "--max-depth 6 --one-file-system --ignore-file ~/.config/nvim/scripts/rgignore",
@@ -135,33 +134,33 @@ cmp.setup({
   -- },
 
   -- copied from TJ Devries (https://github.com/tjdevries/config_manager/blob/83b6897e83525efdfdc24001453137c40373aa00/xdg_config/nvim/after/plugin/completion.lua#L129-L155)
-  sorting = {
-    -- TODO: Would be cool to add stuff like "See variable names before method names" in rust, or something like that.
-    comparators = {
-      cmp.config.compare.offset,
-      cmp.config.compare.exact,
-      cmp.config.compare.score,
-
-      -- copied from cmp-under, but I don't think I need the plugin for this.
-      -- I might add some more of my own.
-      function(entry1, entry2)
-        local _, entry1_under = entry1.completion_item.label:find("^_+")
-        local _, entry2_under = entry2.completion_item.label:find("^_+")
-        entry1_under = entry1_under or 0
-        entry2_under = entry2_under or 0
-        if entry1_under > entry2_under then
-          return false
-        elseif entry1_under < entry2_under then
-          return true
-        end
-      end,
-
-      cmp.config.compare.kind,
-      cmp.config.compare.sort_text,
-      cmp.config.compare.length,
-      cmp.config.compare.order,
-    },
-  },
+  -- sorting = {
+  --   -- TODO: Would be cool to add stuff like "See variable names before method names" in rust, or something like that.
+  --   comparators = {
+  --     cmp.config.compare.offset,
+  --     cmp.config.compare.exact,
+  --     cmp.config.compare.score,
+  --
+  --     -- copied from cmp-under, but I don't think I need the plugin for this.
+  --     -- I might add some more of my own.
+  --     function(entry1, entry2)
+  --       local _, entry1_under = entry1.completion_item.label:find("^_+")
+  --       local _, entry2_under = entry2.completion_item.label:find("^_+")
+  --       entry1_under = entry1_under or 0
+  --       entry2_under = entry2_under or 0
+  --       if entry1_under > entry2_under then
+  --         return false
+  --       elseif entry1_under < entry2_under then
+  --         return true
+  --       end
+  --     end,
+  --
+  --     cmp.config.compare.kind,
+  --     cmp.config.compare.sort_text,
+  --     cmp.config.compare.length,
+  --     cmp.config.compare.order,
+  --   },
+  -- },
 
   formatting = {
     fields = { "kind", "abbr", "menu" },
@@ -182,7 +181,7 @@ cmp.setup({
         nvim_lsp_signature_help = "lsp signature",
         path = "path",
         tmux = "tmux",
-        goimports = "🖅  Go-Imports",
+        goimports = "🥅 Go-Imports",
         copilot = "CoPilot",
       })[entry.source.name]
 

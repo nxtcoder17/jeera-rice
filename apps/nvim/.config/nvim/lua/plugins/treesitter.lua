@@ -13,10 +13,11 @@ require("nvim-treesitter.configs").setup({
     "lua",
     "graphql",
     "html",
+    "css",
     "python",
     "bash",
   },
-  ignore_install = { "ocamllex", "swift", "phpdoc" },
+  -- ignore_install = { "ocamllex", "swift", "phpdoc" },
   query_linter = {
     enable = true,
     use_virtual_text = true,
@@ -24,7 +25,7 @@ require("nvim-treesitter.configs").setup({
   },
   highlight = {
     enable = true,
-    additional_vim_regex_highlighting = true,
+    -- additional_vim_regex_highlighting = true,
   },
   incremental_selection = {
     enable = true,
@@ -35,7 +36,7 @@ require("nvim-treesitter.configs").setup({
       node_decremental = "<C-r>",
     },
   },
-  indent = { enable = false },
+  indent = { enable = true },
   matchup = {
     enable = true,
   },
@@ -96,34 +97,34 @@ require("nvim-treesitter.configs").setup({
       },
     },
 
-    move = {
-      enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
-      goto_next_start = {
-        ["<C-j>"] = { query = "@function.outer", desc = "Next Function Start" },
-        ["<M-j>"] = { query = "@block.outer", desc = "Next Block Start" },
-        -- ["<M-j>"] = { query = "@statement.outer", desc = "Next Statement Start" },
-        -- ["]m"] = "@function.outer",
-        -- ["]]"] = "@class.outer",
-      },
-      goto_next_end = {
-        ["<C-S-j>"] = "@function.outer",
-        -- ["]M"] = "@function.outer",
-        -- ["]["] = "@class.outer",
-      },
-      goto_previous_start = {
-        ["<C-k>"] = "@function.outer",
-        ["<M-k>"] = { query = "@block.outer", desc = "Previous Block Start" },
-        -- ["<M-k>"] = { query = "@statement.outer", desc = "Previous Statement Start" },
-        -- ["[m"] = "@function.outer",
-        -- ["[["] = "@class.outer",
-      },
-      goto_previous_end = {
-        ["<C-S-k>"] = "@function.outer",
-        -- ["[M"] = "@function.outer",
-        -- ["[]"] = "@class.outer",
-      },
-    },
+    -- move = {
+    --   enable = true,
+    --   set_jumps = true, -- whether to set jumps in the jumplist
+    --   goto_next_start = {
+    --     ["<C-j>"] = { query = "@function.outer", desc = "Next Function Start" },
+    --     ["<M-j>"] = { query = "@block.outer", desc = "Next Block Start" },
+    --     -- ["<M-j>"] = { query = "@statement.outer", desc = "Next Statement Start" },
+    --     -- ["]m"] = "@function.outer",
+    --     -- ["]]"] = "@class.outer",
+    --   },
+    --   goto_next_end = {
+    --     ["<C-S-j>"] = "@function.outer",
+    --     -- ["]M"] = "@function.outer",
+    --     -- ["]["] = "@class.outer",
+    --   },
+    --   goto_previous_start = {
+    --     ["<C-k>"] = "@function.outer",
+    --     ["<M-k>"] = { query = "@block.outer", desc = "Previous Block Start" },
+    --     -- ["<M-k>"] = { query = "@statement.outer", desc = "Previous Statement Start" },
+    --     -- ["[m"] = "@function.outer",
+    --     -- ["[["] = "@class.outer",
+    --   },
+    --   goto_previous_end = {
+    --     ["<C-S-k>"] = "@function.outer",
+    --     -- ["[M"] = "@function.outer",
+    --     -- ["[]"] = "@class.outer",
+    --   },
+    -- },
 
     select = {
       enable = true,
@@ -149,11 +150,3 @@ parser_config.gotmpl = {
   filetype = "gotmpl",
   used_by = { "gohtmltmpl", "gotexttmpl", "gotmpl" },
 }
-
--- vim.opt.foldcolumn = "0"
--- vim.opt.foldlevel = 10
--- vim.opt.foldminlines = 10
--- vim.opt.fillchars = "fold: "
--- vim.opt.foldmethod = "expr"
--- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
--- vim.cmd("autocmd BufReadPost,FileReadPost * normal zR")

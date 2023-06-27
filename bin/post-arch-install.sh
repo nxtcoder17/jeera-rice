@@ -10,9 +10,9 @@ shift;
 case $cmd in 
   "pacman")
     shells="bash fish"
-    cli_tools="ripgrep fzf fd zoxide exa dust ncdu xclip tmux stow kitty btop make imagemagick xdg-user-dirs jq ranger picom"
+    cli_tools="ripgrep fzf fd zoxide exa dust ncdu xclip tmux stow kitty btop make imagemagick xdg-user-dirs jq ranger picom tree"
     xwindow_stuffs="xclip xcape network-manager-applet"
-    wm_tools="i3-wm i3blocks sysstat i3lock scrot dmenu rofi dunst feh sxiv xdotool wmctrl redshift lxappearance light"
+    wm_tools="i3-wm i3blocks sysstat i3lock scrot dmenu rofi dunst feh sxiv xdotool wmctrl redshift lxappearance light screenkey"
     languages="nodejs npm go python python-pip"
     browsers="firefox-developer-edition qutebrowser"
     messaging="telegram-desktop"
@@ -186,7 +186,7 @@ case $cmd in
     # systemctl enable --now supergfxd
     ;;
   *)
-    echo "supported commands: pacman|yay"
+    echo "supported commands: pacman|yay|rog|install-from-github-releases"
     ;;
 esac
 

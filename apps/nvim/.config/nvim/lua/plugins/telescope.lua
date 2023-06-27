@@ -86,8 +86,8 @@ telescope.setup({
     fzf = {
       fuzzy = true,
       override_generic_sorter = true, -- override the generic sorter
-      override_file_sorter = true, -- override the file sorter
-      case_mode = "smart_case",    -- or "ignore_case" or "respect_case"
+      override_file_sorter = true,    -- override the file sorter
+      case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
     },
     ["ui-select"] = {
       themes.get_ivy({
@@ -168,13 +168,6 @@ telescope.setup({
     },
   },
 })
-
-telescope.load_extension("fzf")
-telescope.load_extension("undo")
-telescope.load_extension("ui-select")
--- telescope.load_extension("goimpl")
--- telescope.load_extension("possession")
-telescope.load_extension("lsp_handlers")
 
 local M = {}
 M.grep = function()

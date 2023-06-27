@@ -56,130 +56,130 @@ local api = vim.api
 -- null_ls.register(frozen_string_actions)
 
 local base64 = {
-  method = null_ls.methods.CODE_ACTION,
-  filetypes = { "" },
-  generator = {
-    fn = function(context)
-      return {
-        {
-          title = "Base64 Encode",
-          action = function()
-            F().b64Encode()
-          end,
-        },
-        -- {
-        -- 	title = "Base64 Decode",
-        -- 	action = function()
-        -- 		F().b64Encode()
-        -- 	end,
-        -- },
-      }
-    end,
-  },
+	method = null_ls.methods.CODE_ACTION,
+	filetypes = { "" },
+	generator = {
+		fn = function(context)
+			return {
+				{
+					title = "Base64 Encode",
+					action = function()
+						F().b64Encode()
+					end,
+				},
+				-- {
+				-- 	title = "Base64 Decode",
+				-- 	action = function()
+				-- 		F().b64Encode()
+				-- 	end,
+				-- },
+			}
+		end,
+	},
 }
 
 null_ls.register(base64)
 
 local go_implement_interface = {
-  method = null_ls.methods.CODE_ACTION,
-  filetypes = { "go" },
-  generator = {
-    fn = function(context)
-      local d = vim.lsp.diagnostic.get_line_diagnostics()
-      for _, v in ipairs(d) do
-        if v.code == "InvalidTypeArg" then
-          local op = string.gsub(v.message, "(.*(does not implement ))", "")
-          op = string.gsub(op, "(( .missing method ).*)", "")
-        end
-      end
-      return {
-        {
-          title = "Go Implement Interface",
-        },
-      }
-    end,
-  },
+	method = null_ls.methods.CODE_ACTION,
+	filetypes = { "go" },
+	generator = {
+		fn = function(context)
+			local d = vim.lsp.diagnostic.get_line_diagnostics()
+			for _, v in ipairs(d) do
+				if v.code == "InvalidTypeArg" then
+					local op = string.gsub(v.message, "(.*(does not implement ))", "")
+					op = string.gsub(op, "(( .missing method ).*)", "")
+				end
+			end
+			return {
+				{
+					title = "Go Implement Interface",
+				},
+			}
+		end,
+	},
 }
 
 --
 local addFieldToStruct = {
-  method = null_ls.methods.CODE_ACTION,
-  filetypes = { "go" },
-  generator = {
-    fn = function(context)
-      return {
-        {
-          title = "Add Field to struct",
-          action = function()
-            R("nxtcoder17.functions.dev").AddFieldToStruct("newfield", "int")
-          end,
-        },
-      }
-    end,
-  },
+	method = null_ls.methods.CODE_ACTION,
+	filetypes = { "go" },
+	generator = {
+		fn = function(context)
+			return {
+				{
+					title = "Add Field to struct",
+					action = function()
+						R("nxtcoder17.functions.dev").AddFieldToStruct("newfield", "int")
+					end,
+				},
+			}
+		end,
+	},
 }
 
 null_ls.register(addFieldToStruct)
 
 local implementInterface = {
-  method = null_ls.methods.CODE_ACTION,
-  filetypes = { "go" },
-  generator = {
-    fn = function(context)
-      return {
-        {
-          title = "Implment interface on a type",
-          action = function()
-            require("telescope").extensions.goimpl.goimpl()
-          end,
-        },
-      }
-    end,
-  },
+	method = null_ls.methods.CODE_ACTION,
+	filetypes = { "go" },
+	generator = {
+		fn = function(context)
+			return {
+				{
+					title = "Implment interface on a type",
+					action = function()
+						require("telescope").extensions.goimpl.goimpl()
+					end,
+				},
+			}
+		end,
+	},
 }
 
 null_ls.register(implementInterface)
 
 local formatBuffer = {
-  method = null_ls.methods.CODE_ACTION,
-  filetypes = { "go" },
-  generator = {
-    fn = function(context)
-      return {
-        {
-          title = "Format Buffer",
-          action = function()
-            vim.lsp.buf.format({ async = true })
-          end,
-        },
-      }
-    end,
-  },
+	method = null_ls.methods.CODE_ACTION,
+	filetypes = { "*" },
+	generator = {
+		fn = function(context)
+			return {
+				{
+					title = "Format Buffer",
+					action = function()
+						vim.lsp.buf.format({ async = true })
+					end,
+				},
+			}
+		end,
+	},
 }
 
 null_ls.register(formatBuffer)
 
 -- Configuring null-ls
 null_ls.setup({
-  sources = {
-    null_ls.builtins.diagnostics.eslint_d,
-    null_ls.builtins.code_actions.eslint_d,
-    null_ls.builtins.formatting.eslint_d,
+	sources = {
+		null_ls.builtins.diagnostics.eslint_d,
+		null_ls.builtins.code_actions.eslint_d,
+		null_ls.builtins.formatting.eslint_d,
 
-    -- lua
-    null_ls.builtins.formatting.stylua,
+		-- lua
+		null_ls.builtins.formatting.stylua,
 
-    -- null_ls.builtins.completion.spell,
-    -- null_ls.builtins.code_actions.refactoring,
-    -- null_ls.builtins.diagnostics.golangci_lint,
+		-- null_ls.builtins.completion.spell,
+		-- null_ls.builtins.code_actions.refactoring,
+		-- null_ls.builtins.diagnostics.golangci_lint,
 
-    null_ls.builtins.formatting.terraform_fmt,
+		-- null_ls.builtins.formatting.terraform_fmt,
 
-    -- golang
+		-- golang
 
-    -- null_ls.builtins.formatting.gofumpt,
-    -- null_ls.builtins.formatting.goimports_reviser,
-  },
+		-- null_ls.builtins.formatting.gofumpt,
+		-- null_ls.builtins.formatting.goimports_reviser,
+	},
 })
 
 --[[ golangci-lint: (AUR) `yay golangci-lint` ]]

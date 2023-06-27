@@ -67,6 +67,7 @@ local colors = {
     oniViolet = kanagawa_colors.lightBlue,
   },
 }
+
 local overrides = function(themeColors)
   local theme = themeColors.theme
   return {
@@ -90,19 +91,19 @@ local overrides = function(themeColors)
       bg = vim.NIL,
       fg = kanagawa_colors.palette.peachRed,
     },
-        ["@keyword.return"] = {
+    ["@keyword.return"] = {
       fg = kanagawa_colors.palette.dragonGreen2,
     },
-        ["@method"] = {
+    ["@method"] = {
       -- fg = themeColors.palette.roninYellow,
       fg = "#dce09b",
       -- bold = true,
       -- italic = true,
     },
-        ["@function"] = {
+    ["@function"] = {
       fg = "#dce09b",
     },
-        ["@method.call"] = {
+    ["@method.call"] = {
       -- fg = themeColors.palette.roninYellow,
       fg = themeColors.palette.crystalBlue,
     },
