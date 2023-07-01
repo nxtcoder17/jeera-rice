@@ -16,6 +16,7 @@ require("luasnip.loaders.from_lua").load({
   paths = {
     vim.g.nvim_dir .. "/snippets",
     vim.g.root_dir .. "/.tools/snippets",
+    vim.g.root_dir .. "/.nvim/snippets",
   },
 })
 
@@ -39,8 +40,10 @@ ls.setup({
   },
 })
 
-ls.add_snippets("lua", {
-  s("hi", fmt("hi hello", {})),
+require("luasnip.loaders.from_snipmate").lazy_load({
+  paths = {
+    vim.g.nvim_dir .. "/snippets",
+    vim.g.root_dir .. "/.tools/snippets",
+    vim.g.root_dir .. "/.nvim/snippets",
+  }
 })
-
-require("luasnip.loaders.from_snipmate").lazy_load({ paths = { vim.g.nvim_dir .. "/snippets" } })

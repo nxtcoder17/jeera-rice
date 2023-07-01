@@ -10,10 +10,10 @@ shift;
 case $cmd in 
   "pacman")
     shells="bash fish"
-    cli_tools="ripgrep fzf fd zoxide exa dust ncdu xclip tmux stow kitty btop make imagemagick xdg-user-dirs jq ranger picom tree"
+    cli_tools="ripgrep fzf fd zoxide exa dust ncdu xclip tmux stow kitty btop make imagemagick xdg-user-dirs jq ranger picom tree github-cli"
     xwindow_stuffs="xclip xcape network-manager-applet"
     wm_tools="i3-wm i3blocks sysstat i3lock scrot dmenu rofi dunst feh sxiv xdotool wmctrl redshift lxappearance light screenkey"
-    languages="nodejs npm go python python-pip"
+    languages="nodejs npm go python python-pip python-pipx"
     browsers="firefox-developer-edition qutebrowser"
     messaging="telegram-desktop"
     fonts="noto-fonts-emoji ttf-croscore"
@@ -29,11 +29,11 @@ case $cmd in
     android="android-tools mtpfs gvfs-mtp"
 
     keyring="gnome-keyring libgnome-keyring"
-    network="net-tools tcpdump wireless_tools wireguard-tools openresolv"
+    network="net-tools tcpdump wireless_tools wireguard-tools openresolv dog sshuttle"
 
     bluetooth="bluez bluez-utils pulseaudio-bluetooth blueman"
     gpu="nvtop"
-    containers="kubectl docker docker-buildx docker-compose helm"
+    containers="nerdctl kubectl docker docker-buildx docker-compose helm"
 
     sudo pacman -S --needed \
       $shells \
@@ -63,10 +63,33 @@ case $cmd in
     # sudo systemctl enable bluetooth.service
     # sudo systemctl restart bluetooth.service
     # after_install
+
+    ;;
+  "pipx")
+    if command -v yq &> /dev/null; then 
+      echo  "[#] yq, xq, tomlq already installed ✅"
+    else
+      pipx install yq
+    fi
+
+    if command -v ggshield &> /dev/null; then
+      echo  "[#] ggshield already installed ✅"
+    else
+      pipx install ggshield
+    fi
+
+    if command -v pre-commit &> /dev/null; then
+      echo  "[#] pre-commit already installed ✅"
+    else
+      pipx install pre-commit
+    fi
+
     ;;
   "install-from-github-releases")
     bin_dir=$HOME/.local/bin
     mkdir -p $bin_dir
+
+    pushd-
 
     # check if command exists
     if command -v upx &> /dev/null; then

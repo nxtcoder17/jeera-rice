@@ -30,7 +30,7 @@ gaps outer -15
 
 # font pango: mononoki Nerd Font Regular 10
 # font pango: OperatorMono Nerd Font Regular 10
-font pango: Comic Code Ligatures Medium 11
+font pango: Comic Code Ligatures Medium 10
 
 focus_follows_mouse false
 hide_edge_borders vertical
@@ -319,4 +319,5 @@ for_window [title="nxthelper"] border pixel 3
 exec "$startNxtTerm"
 # exec_always $noid i3-auto-layout
 
-bindsym $alt+x exec warpd --normal
+bindsym $alt+x exec warpd --hint
+bindsym $alt+$shift+x exec warpd --history

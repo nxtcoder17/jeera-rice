@@ -200,3 +200,8 @@ zoxide init fish | source
 # bun
 set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
+
+if [ -f "$__fish_config_dir/themes/tokyo-night-moon.fish" ]
+    source "$__fish_config_dir/themes/tokyo-night-moon.fish"
+end
+

@@ -23,7 +23,7 @@ dapui.setup({
   },
   floating = {
     max_height = nil, -- Either absolute integer or float
-    max_width = nil, -- between 0 and 1 (size relative to screen size)
+    max_width = nil,  -- between 0 and 1 (size relative to screen size)
   },
 })
 

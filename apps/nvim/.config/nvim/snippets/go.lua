@@ -22,7 +22,7 @@ local rr = postfix(
     [[if <p1> := <match>; <p2> != nil {
         return <p3>
       }
-      <p4>
+     <p4>
     ]],
     {
       p1 = i(1, "err"),

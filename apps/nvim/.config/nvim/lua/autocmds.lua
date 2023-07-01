@@ -43,3 +43,11 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
     end
   end,
 })
+
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+  group = group,
+  pattern = { os.getenv("HOME") .. "/.Xresources" },
+  callback = function()
+    os.execute(string.format("xrdb -merge %s", os.getenv("HOME") .. "/.Xresources"))
+  end,
+})

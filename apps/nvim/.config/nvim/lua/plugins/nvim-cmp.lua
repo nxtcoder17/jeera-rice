@@ -59,15 +59,16 @@ cmp.setup({
     }),
     -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     ["<Tab>"] = cmp.mapping(function(fallback)
+      if luasnip.expand_or_locally_jumpable() then
+        luasnip.expand_or_jump()
+        return
+      end
+
       if require("copilot.suggestion").is_visible() then
         require("copilot.suggestion").accept()
         return
       end
 
-      if luasnip.expand_or_locally_jumpable() then
-        luasnip.expand_or_jump()
-        return
-      end
 
       if cmp.visible() then
         return

@@ -103,4 +103,11 @@ M.copilot_mappings = function()
   end)
 end
 
+M.vim_wordmotion_mappings = function()
+  vim.cmd([[
+    nmap cw ce
+    nmap cW cE
+  ]])
+end
+
 return M

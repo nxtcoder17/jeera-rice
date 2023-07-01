@@ -45,8 +45,6 @@ opt.listchars = {
   ["conceal"] = "┊",
   ["nbsp"] = "☠",
 }
--- call cyclist#add_listchar_option_set('busy', {
---         \ })
 
 -- Tab, Spaces and Indentations
 opt.tabstop = 2

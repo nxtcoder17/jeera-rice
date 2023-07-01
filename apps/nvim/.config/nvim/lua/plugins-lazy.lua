@@ -24,21 +24,21 @@ local function colorschemes()
   return {
     {
       "rebelot/kanagawa.nvim",
-      lazy = false,
+      lazy = true,
       -- event = events.VeryLazy,
-      init = function()
-        require("plugins.kanagawa")
-        vim.cmd("colorscheme kanagawa")
-      end,
+      -- init = function()
+      --   require("plugins.kanagawa")
+      --   vim.cmd("colorscheme kanagawa")
+      -- end,
     },
     {
       "folke/tokyonight.nvim",
       -- event = events.UIEnter,
       event = events.VeryLazy,
-      -- init = function()
-      --   require("plugins.tokyonight")
-      --   vim.cmd("colorscheme tokyonight")
-      -- end,
+      init = function()
+        require("plugins.tokyonight")
+        vim.cmd("colorscheme tokyonight")
+      end,
     },
     -- {
     --   "savq/melange-nvim",
@@ -123,6 +123,7 @@ local function fuzzy_finders()
 
           { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
           { "gbrlsnchs/telescope-lsp-handlers.nvim" },
+          { "nvim-telescope/telescope-ui-select.nvim" },
           -- {
           --   "nvim-telescope/telescope-smart-history.nvim",
           --   requires = {
@@ -134,6 +135,7 @@ local function fuzzy_finders()
           require("plugins.telescope")
           require("telescope").load_extension("fzf")
           require("telescope").load_extension("lsp_handlers")
+          require("telescope").load_extension("ui-select")
           require("keymaps-for-plugins").telescope_keymaps()
         end,
       },
@@ -197,6 +199,26 @@ local function navigation()
           require("keymaps-for-plugins").nvim_tmux_navigator_keymaps()
         end,
       },
+      {
+        "haoren/vim-wordmotion",
+        config = function()
+          require("keymaps-for-plugins").vim_wordmotion_mappings()
+        end
+      },
+      -- {
+      --   "chrisgrieser/nvim-spider",
+      --   lazy = true,
+      --   config = function()
+      --     require("nvim-spider").setup({
+      --       skipInsignificantPunctuation = true
+      --     })
+      --     require("keymaps-for-plugins").spider_keymaps()
+      --   end
+      -- },
+      -- {
+      --   "chrisgrieser/nvim-various-textobjs",
+      --   opts = { useDefaultKeymaps = true },
+      -- },
       {
         "tiagovla/scope.nvim",
         event = events.UIEnter,
@@ -290,6 +312,16 @@ local function syntax()
           { "JoosepAlviste/nvim-ts-context-commentstring" },
           { "nvim-treesitter/playground" },
         },
+      },
+      {
+        "ziontee113/syntax-tree-surfer",
+        dependencies = {
+          "nvim-treesitter",
+        },
+        event = events.VeryLazy,
+        config = function()
+          require("plugins.syntax-tree-surfer")
+        end,
       },
     },
   }
@@ -509,6 +541,26 @@ local function completions()
         },
         config = function()
           require("plugins.nvim-cmp")
+        end,
+      },
+      {
+        "zbirenbaum/copilot.lua",
+        event = events.BufRead,
+        config = function()
+          require("keymaps-for-plugins").copilot_mappings()
+          vim.defer_fn(function()
+            require("copilot").setup({
+              panel = { enabled = false },
+              filetypes = {
+                ["*"] = true,
+              },
+              suggestion = {
+                enabled = true,
+                auto_trigger = true,
+                keymap = nil,
+              },
+            })
+          end, 100)
         end,
       },
     },
