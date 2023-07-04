@@ -25,7 +25,7 @@ cmp.setup({
 
   snippet = {
     expand = function(args)
-      require("luasnip").lsp_expand(args.body)
+      luasnip.lsp_expand(args.body)
     end,
   },
   window = {
@@ -59,8 +59,8 @@ cmp.setup({
     }),
     -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     ["<Tab>"] = cmp.mapping(function(fallback)
-      if luasnip.expand_or_locally_jumpable() then
-        luasnip.expand_or_jump()
+      if luasnip.expand() then
+        luasnip.expand()
         return
       end
 
@@ -69,6 +69,10 @@ cmp.setup({
         return
       end
 
+      if luasnip.expand_or_locally_jumpable() then
+        luasnip.expand_or_jump()
+        return
+      end
 
       if cmp.visible() then
         return
@@ -98,8 +102,8 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = "nvim_lsp",   priority = 80 },
     { name = "nvim_lua",   priority = 80 },
-    { name = "luasnip",    priority = 70 },
-    { name = "goimports",  priority = 60, max_item_count = 5, keyword_length = 3 },
+    { name = "luasnip",    options = { show_autosnippets = true }, priority = 70 },
+    { name = "goimports",  priority = 60,                          keyword_length = 3 },
     { name = "async_path", priority = 50 },
     {
       name = "buffer",
@@ -169,7 +173,7 @@ cmp.setup({
       local menu = ({
         buffer = "buffer",
         nvim_lsp = "lsp",
-        luasnip = "luaSnip",
+        luasnip = "✄ luaSnip",
         nvim_lua = "lua",
         latex_symbols = "laTeX",
 

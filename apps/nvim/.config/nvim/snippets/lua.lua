@@ -23,7 +23,7 @@ local fn = s(
     local function {}({})
     {}
     end
-  ]] ,
+  ]],
     {
       i(1, "myFn"),
       i(2, "args"),
@@ -44,7 +44,7 @@ local fn2 = s(
 local function {}({})
   {}
 end
-]]   ,
+]],
     {
       i(1, "myFn"),
       i(2, "args"),

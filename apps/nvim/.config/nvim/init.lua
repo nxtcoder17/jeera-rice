@@ -22,12 +22,20 @@ vim.g.loaded_node_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
 
-require("globals")
-require("settings")
-require("autocmds")
-require("keymaps")
-require("plugins-lazy").minimal()
-require("functions")
+-- sourced from `https://nanotipsforvim.prose.sh/using-pcall-to-make-your-config-more-stable`
+local function safeRequire(module)
+  local success, loadedModule = pcall(require, module)
+  if success then return loadedModule end
+  vim.cmd.echo("Error loading " .. module)
+end
+
+safeRequire("globals")
+safeRequire("settings")
+safeRequire("autocmds")
+safeRequire("keymaps")
+safeRequire("plugins-lazy").minimal()
+safeRequire("functions")
+safeRequire("commands")
 
 -- infinite redrawing fixes `neovim + tmux + kitty` as they run into some serious rendering issues
 -- it might also be having some serious performance issues

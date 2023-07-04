@@ -72,6 +72,7 @@ vim.keymap.set("n", "<BS>", function()
   closeFloating()
   vim.cmd("nohls")
 end, opts)
+vim.keymap.set("n", "<Esc>", ":nohls<CR>")
 
 -- creating scratch files
 vim.api.nvim_create_user_command("Scratch", function()

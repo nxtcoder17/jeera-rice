@@ -100,17 +100,15 @@ local function fuzzy_finders()
       },
 
       {
-        {
-          "ibhagwan/fzf-lua",
-          event = events.VeryLazy,
-          -- optional for icon support
-          dependencies = {
-            "nvim-tree/nvim-web-devicons",
-          },
-          config = function()
-            require("plugins.fzf-lua")
-          end,
+        "ibhagwan/fzf-lua",
+        event = events.VeryLazy,
+        -- optional for icon support
+        dependencies = {
+          "nvim-tree/nvim-web-devicons",
         },
+        config = function()
+          require("plugins.fzf-lua")
+        end,
       },
     },
     ["minimal"] = {
@@ -137,6 +135,18 @@ local function fuzzy_finders()
           require("telescope").load_extension("lsp_handlers")
           require("telescope").load_extension("ui-select")
           require("keymaps-for-plugins").telescope_keymaps()
+        end,
+      },
+
+      {
+        "ibhagwan/fzf-lua",
+        event = events.VeryLazy,
+        -- optional for icon support
+        dependencies = {
+          "nvim-tree/nvim-web-devicons",
+        },
+        config = function()
+          require("plugins.fzf-lua")
         end,
       },
     },
@@ -200,7 +210,8 @@ local function navigation()
         end,
       },
       {
-        "haoren/vim-wordmotion",
+        "chaoren/vim-wordmotion",
+        event = events.BufRead,
         config = function()
           require("keymaps-for-plugins").vim_wordmotion_mappings()
         end
@@ -323,6 +334,13 @@ local function syntax()
           require("plugins.syntax-tree-surfer")
         end,
       },
+      {
+        "utilyre/sentiment.nvim",
+        event = "VeryLazy", -- keep for lazy loading
+        config = function()
+          require("sentiment").setup({})
+        end,
+      },
     },
   }
 end
@@ -367,13 +385,13 @@ local function lsp()
       dependencies = {
         { "folke/neodev.nvim", ft = "lua" },
         "williamboman/mason-lspconfig.nvim",
-        {
-          "j-hui/fidget.nvim",
-          tag = "legacy",
-          config = function()
-            require("fidget").setup({ window = { blend = 0 } })
-          end,
-        },
+        -- {
+        --   "j-hui/fidget.nvim",
+        --   tag = "legacy",
+        --   config = function()
+        --     require("fidget").setup({ window = { blend = 0 } })
+        --   end,
+        -- },
         "b0o/schemastore.nvim",
         -- {
         --   "jose-elias-alvarez/null-ls.nvim",
@@ -476,18 +494,17 @@ local function completions()
                   suggestion = {
                     enabled = true,
                     auto_trigger = true,
-                    keymap = nil,
-                    -- keymap = {
-                    --   accept = "<C-CR>",
-                    --   accept_word = false,
-                    --   accept_line = false,
-                    --   -- next = "<M-]>",
-                    --   -- prev = "<M-[>",
-                    --   -- dismiss = "<C-]>",
-                    --   next = "<C-n>",
-                    --   prev = "<C-p>",
-                    --   dismiss = "<C-c>",
-                    -- },
+                    keymap = {
+                      accept = "<C-CR>",
+                      accept_word = false,
+                      accept_line = false,
+                      -- next = "<M-]>",
+                      -- prev = "<M-[>",
+                      -- dismiss = "<C-]>",
+                      next = "<C-j>",
+                      prev = "<C-k>",
+                      dismiss = "<C-c>",
+                    },
                   },
                 })
               end, 100)
@@ -530,6 +547,7 @@ local function completions()
           { "hrsh7th/cmp-nvim-lsp" },
           { "lukas-reineke/cmp-rg" },
           { "hrsh7th/cmp-cmdline" },
+          { "saadparwaiz1/cmp_luasnip" },
           {
             "L3MON4D3/LuaSnip",
             config = function()
@@ -580,6 +598,13 @@ local function search_and_replace()
       "mg979/vim-visual-multi",
       -- event = events.BufRead,
       keys = { "<C-n>" },
+    },
+    {
+      'kevinhwang91/nvim-hlslens',
+      event = events.VeryLazy,
+      config = function()
+        require("plugins.nvim-hlslens")
+      end,
     },
   }
 end
@@ -664,7 +689,7 @@ local function dap()
     ["minimal"] = {
       {
         "mfussenegger/nvim-dap",
-        cmd = { "DapContinue" },
+        event = events.VeryLazy,
         config = function()
           require("plugins.dap")
         end,
@@ -786,19 +811,49 @@ local function misc()
         require("plugins.peek-nvim")
       end,
     },
+
+    -- -- don't need it when noice is enabled
+    -- {
+    --   "AckslD/messages.nvim",
+    --   cmd = {
+    --     "Messages",
+    --   },
+    --   event = events.VeryLazy,
+    --   config = function()
+    --     require("messages").setup()
+    --     _G.Msg = function(...)
+    --       require("messages.api").capture_thing(...)
+    --     end
+    --   end,
+    -- },
     {
-      "AckslD/messages.nvim",
-      cmd = {
-        "Messages",
+      "folke/noice.nvim",
+      event = "VeryLazy",
+      opts = {
+        -- add any options here
       },
-      event = events.VeryLazy,
+      dependencies = {
+        -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+        "MunifTanjim/nui.nvim",
+        -- OPTIONAL:
+        --   `nvim-notify` is only needed, if you want to use the notification view.
+        --   If not available, we use `mini` as the fallback
+        {
+          "rcarriga/nvim-notify",
+          config = function()
+            require("notify").setup({
+              render = "compact",
+              stages = "static",
+              timeout = 1000,
+              background_colour = "#120000",
+            })
+          end
+        }
+      },
       config = function()
-        require("messages").setup()
-        _G.Msg = function(...)
-          require("messages.api").capture_thing(...)
-        end
+        require("plugins.noice")
       end,
-    },
+    }
   }
 end
 
@@ -829,9 +884,9 @@ local function git_clients()
     {
       "sindrets/diffview.nvim",
       cmd = {
-        "DiffViewOpen",
-        "DiffViewClose",
-        "DiffViewRefresh",
+        "DiffviewOpen",
+        "DiffviewClose",
+        "DiffviewRefresh",
       },
       -- event = events.BufEnter,
     },
@@ -887,7 +942,7 @@ M.minimal = function()
   vim.list_extend(plugins, status_and_tab_bars())
   vim.list_extend(plugins, misc())
   vim.list_extend(plugins, http_clients())
-  -- vim.list_extend(plugins, git_clients())
+  vim.list_extend(plugins, git_clients())
 
   require("lazy").setup(plugins)
 end

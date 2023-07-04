@@ -76,7 +76,7 @@ opt.ttimeoutlen = 10
 opt.timeoutlen = 500
 opt.ttyfast = true
 opt.updatetime = 50
-opt.lazyredraw = false
+-- opt.lazyredraw = false
 
 -- search
 opt.incsearch = true
@@ -93,7 +93,7 @@ vim.cmd([[au! BufEnter * set fo-=c fo-=r fo-=o]])
 -- clipboard
 -- opt.clipboard = "unnamedplus"
 opt.ttyfast = true
-opt.lazyredraw = true
+-- opt.lazyredraw = true
 
 -- colors
 opt.termguicolors = true

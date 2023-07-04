@@ -89,8 +89,6 @@ case $cmd in
     bin_dir=$HOME/.local/bin
     mkdir -p $bin_dir
 
-    pushd-
-
     # check if command exists
     if command -v upx &> /dev/null; then
       echo  "[#] upx already installed ✅"
@@ -173,6 +171,23 @@ case $cmd in
       tar xf delta.tar.gz && \
       mv delta-0.16.5-x86_64-unknown-linux-gnu/delta $bin_dir && \
       echo "✅"
+      popd > /dev/null 2>&1 || exit 
+      rm -rf "$dir"
+    fi
+
+
+    if command -v operator-sdk &> /dev/null; then
+      echo "[#] command operator-sdk already exists"
+    else
+      dir=$(mktemp -d)
+      pushd $dir > /dev/null 2>&1 || exit 
+
+      printf "[#] installing operator-sdk ... "
+      curl -L0 --silent https://github.com/operator-framework/operator-sdk/releases/download/v1.30.0/operator-sdk_linux_amd64 > operator-sdk && \
+      chmod +x operator-sdk && \
+      mv operator-sdk $bin_dir && \
+      echo "✅"
+
       popd > /dev/null 2>&1 || exit 
       rm -rf "$dir"
     fi

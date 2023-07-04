@@ -28,7 +28,9 @@ vim.diagnostic.config({
 local function on_attach(client, bufnr)
   local opts = { silent = true, buffer = bufnr, remap = false }
 
-  client.server_capabilities.semanticTokensProvider = nil
+  if client.server_capabilities then
+    client.server_capabilities.semanticTokensProvider = nil
+  end
 
   vim.keymap.set("n", "sn", function()
     vim.diagnostic.goto_next({
@@ -383,7 +385,7 @@ lsp_config.gopls.setup({
   cmd = lsp_servers.go,
   capabilities = capabilities,
   on_attach = on_attach,
-  filetypes = { "go", "gomod", "gotmpl" },
+  filetypes = { "go", "gomod", "gotmpl", "gowork" },
   settings = {
     gopls = {
       usePlaceholders = true,
@@ -393,6 +395,7 @@ lsp_config.gopls.setup({
         unreachable = true,
         unusedparams = true,
         shadow = false,
+        unusedwrite = true,
       },
       semanticTokens = false,
       staticcheck = false,
@@ -401,9 +404,10 @@ lsp_config.gopls.setup({
   },
   init_options = {
     directoryFilters = { "-.task", "-node_modules" },
-    memoryMode = "DegradeClosed",
+    -- memoryMode = "DegradeClosed",
     -- memoryMode = "Normal",
   },
+  single_file_support = true,
   root_dir = lsp_config.util.root_pattern("go.mod"),
 })
 

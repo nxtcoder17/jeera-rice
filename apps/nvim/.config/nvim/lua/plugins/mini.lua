@@ -66,6 +66,43 @@ require("mini.surround").setup({
 
 require("mini.align").setup({})
 
-require("mini.statusline").setup({
+local MiniStatusline = require("mini.statusline")
+
+function active_status_line()
+  -- stylua: ignore start
+  local mode, mode_hl     = MiniStatusline.section_mode({ trunc_width = 120 })
+  local git               = MiniStatusline.section_git({ trunc_width = 75 })
+  local diagnostics       = MiniStatusline.section_diagnostics({ trunc_width = 75 })
+  local filename          = MiniStatusline.section_filename({ trunc_width = 140 })
+  local fileinfo          = MiniStatusline.section_fileinfo({ trunc_width = 120 })
+  local location          = MiniStatusline.section_location({ trunc_width = 120 })
+
+  local from_project_root = vim.fn.getcwd():sub(#vim.g.root_dir + 2)
+  if from_project_root ~= "" then
+    from_project_root = "📂 " .. from_project_root
+  end
+
+  --local relative_path_to_cwd =
+
+  -- Usage of `MiniStatusline.combine_groups()` ensures highlighting and
+  -- correct padding with spaces between groups (accounts for 'missing'
+  -- sections, etc.)
+  return MiniStatusline.combine_groups({
+    { hl = mode_hl,                 strings = { mode } },
+    { hl = 'MiniStatuslineDevinfo', strings = { git, diagnostics } },
+    '%<', -- Mark general truncate point
+    { hl = 'MiniStatuslineFilename', strings = { filename } },
+    '%=', -- End left alignment
+    { hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
+    { hl = 'MiniStatuslineFileinfo', strings = { from_project_root } },
+    { hl = mode_hl,                  strings = { location } },
+  })
+  -- stylua: ignore end
+end
+
+MiniStatusline.setup({
   set_vim_settings = false,
+  content = {
+    active = active_status_line,
+  },
 })

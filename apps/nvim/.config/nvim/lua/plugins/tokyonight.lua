@@ -1,3 +1,14 @@
+vim.opt.fillchars:append({
+  horiz = "━",
+  horizup = "┻",
+  horizdown = "┳",
+  vert = "┃",
+  vertleft = "┨",
+  vertright = "┣",
+  verthoriz = "╋",
+})
+
+
 require("tokyonight").setup({
   -- your configuration comes here
   -- or leave it empty to use the default settings
@@ -8,7 +19,7 @@ require("tokyonight").setup({
   styles = {
     -- Style to be applied to different syntax groups
     -- Value is any valid attr-list value for `:help nvim_set_hl`
-    comments = { italic = true, fg = "#6f7bbd" },
+    comments = { italic = true },
     keywords = { italic = true },
     functions = {},
     variables = {},
@@ -25,7 +36,9 @@ require("tokyonight").setup({
   --- You can override specific color groups to use other groups or a hex color
   --- function will be called with a ColorScheme table
   ---@param colors ColorScheme
-  on_colors = function(colors) end,
+  on_colors = function(colors)
+    colors.border = "#222b40"
+  end,
 
   --- You can override specific highlights to use other groups or a hex color
   --- function will be called with a Highlights and ColorScheme table
@@ -33,5 +46,13 @@ require("tokyonight").setup({
   ---@param colors ColorScheme
   on_highlights = function(highlights, colors)
     highlights.LineNr = { fg = "#6f7bbd" }
+    highlights.Comment = { fg = "#6f7bbd" }
+    highlights["@lsp.type.comment"] = { fg = "#6f7bbd" }
+    highlights["@lsp.type.variable"] = { fg = "#6f7bbd" }
+    highlights["@lsp.type.constant"] = { fg = "#6f7bbd" }
+    highlights.MiniStatuslineDevinfo = { bg = "#222b40", fg = "#6f7bbd" }
+    -- highlights.MiniStatuslineFilename = { bg = "#222b40", fg = "#6f7bbd" }
+    highlights.MiniStatuslineFileinfo = { bg = "#222b40", fg = "#6f7bbd" }
+    highlights.MiniStatuslineFilename = { bg = "#22315c", fg = "#6f7bbd" }
   end,
 })

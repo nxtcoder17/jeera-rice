@@ -1,3 +1,6 @@
+-- vim.keymap.set({ "n", "v" }, "<C-w>", "<Nop>", {})
+-- vim.keymap.set({ "n", "v" }, "<C-S-w>", "<Nop>", {})
+
 require("nvim-treesitter.configs").setup({
   -- ensure_installed = "all",
   ensure_installed = {
@@ -30,10 +33,15 @@ require("nvim-treesitter.configs").setup({
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = "<C-w>",
-      node_incremental = "<C-w>",
-      scope_incremental = false,
+      init_selection = "<C-e>",
+      node_incremental = "<C-e>",
+      -- scope_incremental = false,
       node_decremental = "<C-W>",
+
+      -- init_selection = "<M-w>",
+      -- node_incremental = "<M-w>",
+      -- -- scope_incremental = false,
+      -- node_decremental = "<M-W>",
     },
   },
   indent = { enable = true },
