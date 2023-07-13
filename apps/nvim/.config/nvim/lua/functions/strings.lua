@@ -1,7 +1,13 @@
+local b64 = pcall(require, "base64")
+
+local neovim_utils = require("functions.neovim")
+
+local logger = neovim_utils.new_logger("functions.strings")
+
 local M = {}
 
-M.trim = function(s) 
-	return s:gsub("^%s*(.-)%s*$", "%1")
+M.trim = function(s)
+  return s:gsub("^%s*(.-)%s*$", "%1")
 end
 
 M.camel_case = function(str)
@@ -48,6 +54,29 @@ end
 
 M.snake_case_all_uppercase = function(str)
   return M.snake_case(str, { all_uppercase = true })
+end
+
+M.base64_decode = function(text)
+  text = text or neovim_utils.get_selection()
+  logger.debug("[base64_decode] decoding input: ", text)
+  local v = b64.decode(text)
+  logger.debug("[base64_decode] decoded output:", v)
+
+  if os.execute("command -v xclip") == 0 then
+    os.execute(string.format("echo -n %s | xclip -sel clip", v))
+  end
+  return v
+end
+
+M.base64_encode = function(text)
+  text = text or neovim_utils.get_selection()
+  logger.debug("[base64_encode] encoding input: ", text)
+  local v = b64.encode(text)
+  logger.debug("[base64_encode] encoded output: ", v)
+  if os.execute("command -v xclip") == 0 then
+    os.execute(string.format("echo -n %s | xclip -sel clip", v))
+  end
+  return v
 end
 
 return M

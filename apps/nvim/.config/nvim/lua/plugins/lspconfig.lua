@@ -28,7 +28,7 @@ vim.diagnostic.config({
 local function on_attach(client, bufnr)
   local opts = { silent = true, buffer = bufnr, remap = false }
 
-  if client.server_capabilities then
+  if client.server_capabilities ~= nil then
     client.server_capabilities.semanticTokensProvider = nil
   end
 

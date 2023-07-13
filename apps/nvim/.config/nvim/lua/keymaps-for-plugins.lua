@@ -110,4 +110,8 @@ M.vim_wordmotion_mappings = function()
   ]])
 end
 
+M.neozoom_mapping = function()
+  vim.keymap.set("n", "sz", ":NeoZoomToggle<CR>", { silent = true, noremap = true })
+end
+
 return M

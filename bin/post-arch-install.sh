@@ -10,7 +10,7 @@ shift;
 case $cmd in 
   "pacman")
     shells="bash fish"
-    cli_tools="ripgrep fzf fd zoxide exa dust ncdu xclip tmux stow kitty btop make imagemagick xdg-user-dirs jq ranger picom tree github-cli"
+    cli_tools="ripgrep fzf fd zoxide exa dust ncdu xclip tmux stow kitty btop make imagemagick xdg-user-dirs jq ranger picom tree github-cli lsof"
     xwindow_stuffs="xclip xcape network-manager-applet"
     wm_tools="i3-wm i3blocks sysstat i3lock scrot dmenu rofi dunst feh sxiv xdotool wmctrl redshift lxappearance light screenkey"
     languages="nodejs npm go python python-pip python-pipx"

@@ -214,7 +214,7 @@ local function navigation()
         event = events.BufRead,
         config = function()
           require("keymaps-for-plugins").vim_wordmotion_mappings()
-        end
+        end,
       },
       -- {
       --   "chrisgrieser/nvim-spider",
@@ -393,12 +393,12 @@ local function lsp()
         --   end,
         -- },
         "b0o/schemastore.nvim",
-        -- {
-        --   "jose-elias-alvarez/null-ls.nvim",
-        --   config = function()
-        --     require("plugins.null-ls")
-        --   end,
-        -- },
+        {
+          "jose-elias-alvarez/null-ls.nvim",
+          config = function()
+            require("plugins.null-ls")
+          end,
+        },
       },
     },
     -- {
@@ -600,7 +600,7 @@ local function search_and_replace()
       keys = { "<C-n>" },
     },
     {
-      'kevinhwang91/nvim-hlslens',
+      "kevinhwang91/nvim-hlslens",
       event = events.VeryLazy,
       config = function()
         require("plugins.nvim-hlslens")
@@ -698,7 +698,7 @@ local function dap()
           -- "theHamsta/nvim-dap-virtual-text",
           -- { "jbyuki/one-small-step-for-vimkind", module = "osv" },
         },
-      }
+      },
     },
   }
 end
@@ -800,6 +800,7 @@ local function misc()
       },
       config = function()
         require("neo-zoom").setup({})
+        require("keymaps-for-plugins").neozoom_mappings()
       end,
     },
     { "ellisonleao/glow.nvim", ft = "markdown", config = true, cmd = "Glow" },
@@ -847,13 +848,13 @@ local function misc()
               timeout = 1000,
               background_colour = "#120000",
             })
-          end
-        }
+          end,
+        },
       },
       config = function()
         require("plugins.noice")
       end,
-    }
+    },
   }
 end
 
@@ -903,6 +904,27 @@ local function git_clients()
   }
 end
 
+local function lua_rocks()
+  return {
+    {
+      "theHamsta/nvim_rocks",
+      event = "VeryLazy",
+      build = "pipx install hererocks && hererocks . -j2.1.0-beta3 -r3.0.0 && cp nvim_rocks.lua lua",
+      config = function()
+        -- require("plugins.nvim_rocks").list_installed()
+        vim.schedule(function()
+          print("syncing luarocks")
+          require("plugins.nvim_rocks").install("base64")
+        end)
+        -- os.execute("luarocks install base64")
+        -- ---- Add here the packages you want to make sure that they are installed
+        -- local nvim_rocks = require("nvim_rocks")
+        -- nvim_rocks.ensure_installed("base64")
+      end,
+    },
+  }
+end
+
 local M = {}
 
 M.all = function()
@@ -921,7 +943,8 @@ M.all = function()
   vim.list_extend(plugins, status_and_tab_bars())
   vim.list_extend(plugins, misc())
   vim.list_extend(plugins, http_clients())
-  -- vim.list_extend(plugins, git_clients())
+  vim.list_extend(plugins, git_clients())
+  vim.list_extend(plugins, lua_rocks())
 
   require("lazy").setup(plugins)
 end
@@ -943,6 +966,7 @@ M.minimal = function()
   vim.list_extend(plugins, misc())
   vim.list_extend(plugins, http_clients())
   vim.list_extend(plugins, git_clients())
+  vim.list_extend(plugins, lua_rocks())
 
   require("lazy").setup(plugins)
 end

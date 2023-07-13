@@ -16,3 +16,10 @@ end
 function curl-cookie --description "curl sets up cookie"
   curl -s -L0 (cat ~/.kl-cookies | xargs -I{} echo -n '--cookie {}' | xargs -n1) "$argv"
 end
+
+# function go-test-cover --description "go test with coverprofile and opening that profile in browser"
+#   set -l coverprofile (mktemp)
+#   go test -coverprofile=$coverprofile $argv
+#   go tool cover -html=$coverprofile
+#   [ ! -z $coverprofile ] && rm -rf "$coverprofile"
+# end
