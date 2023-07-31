@@ -3,7 +3,7 @@ local conf = require("telescope.config").values
 
 -- TODO: make this prompt use fzf filters
 vim.api.nvim_create_user_command("Todo", function(opts)
-  require('fzf-lua').grep({ search = 'TODO|HACK|NOTE|FIXME' })
+  require("fzf-lua").grep({ search = "TODO|HACK|NOTE|FIXME" })
 
   -- local query = "TODO|HACK|NOTE|FIXME"
   --
@@ -28,3 +28,10 @@ end, {
 vim.api.nvim_create_user_command("X", function(opts)
   vim.print(vim.fn.luaeval(opts.args))
 end, { nargs = 1 })
+
+vim.api.nvim_create_user_command("InlayHintsToggle", function()
+  vim.g.inlay_hints_enabled = not vim.g.inlay_hints_enabled
+  print("Inlay hints " .. (vim.g.inlay_hints_enabled and "enabled" or "disabled"))
+  vim.cmd("LspRestart gopls")
+  vim.cmd("e!")
+end, { nargs = 0 })

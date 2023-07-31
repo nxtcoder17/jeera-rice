@@ -1,0 +1,5 @@
+# source: https://github.com/go-delve/delve/blob/master/pkg/config/config.go.Config
+
+max-string-len: 2000
+
+max-array-values: 2000

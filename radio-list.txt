@@ -24,3 +24,8 @@ Arijit-Singh https://drive.uber.radio/uber/bollywoodaruitsingh/icecast.audio
 Neha-Kakkar https://drive.uber.radio/uber/bollywoodneharkakkar/icecast.audio
 Atif-Aslam https://drive.uber.radio/uber/bollywoodatifaslam/icecast.audio
 BollyWood-Love https://drive.uber.radio/uber-app/bollywoodlove/icecast.audio
+Radio-Hungama-Bollywood-Dil-se https://radioindia.net/radio/hungamadilse/icecast.audio
+(mirchi)Mirchi-90s-radio https://sp14.instainternet.com/8112/stream
+(retro)Retro-Bollywood https://stream-141.zeno.fm/g372rxef798uv?zs=B4FHX65nQd2YxLLn4JkAUg
+(retro)Kishore-Kumar-Radio https://stream-148.zeno.fm/0ghtfp8ztm0uv?zs=JztLkJ9ISVqF29zPPjARrA
+(retro)Hits-Of-Bollywood https://stream-142.zeno.fm/a2gyqzwpwfeuv?zs=UEr5hgEKSxef0HukBa6Jzw

@@ -19,6 +19,7 @@ require("nvim-treesitter.configs").setup({
     "css",
     "python",
     "bash",
+    "regex",
   },
   -- ignore_install = { "ocamllex", "swift", "phpdoc" },
   query_linter = {
@@ -30,6 +31,7 @@ require("nvim-treesitter.configs").setup({
     enable = true,
     -- additional_vim_regex_highlighting = true,
   },
+
   incremental_selection = {
     enable = true,
     keymaps = {
@@ -44,7 +46,7 @@ require("nvim-treesitter.configs").setup({
       -- node_decremental = "<M-W>",
     },
   },
-  indent = { enable = true },
+  indent = { enable = false },
   matchup = {
     enable = true,
   },
@@ -70,7 +72,7 @@ require("nvim-treesitter.configs").setup({
     enable = true,
     enable_autocmd = true,
     config = {
-      gotmpl = "{{/* %s */}}",
+      gotmpl = "{{- /* %s */}}",
     },
   },
   -- refactor = {

@@ -29,7 +29,7 @@ case $cmd in
     android="android-tools mtpfs gvfs-mtp"
 
     keyring="gnome-keyring libgnome-keyring"
-    network="net-tools tcpdump wireless_tools wireguard-tools openresolv dog sshuttle"
+    network="net-tools inetutils tcpdump wireless_tools wireguard-tools openresolv dog sshuttle"
 
     bluetooth="bluez bluez-utils pulseaudio-bluetooth blueman"
     gpu="nvtop"
@@ -188,6 +188,20 @@ case $cmd in
       mv operator-sdk $bin_dir && \
       echo "✅"
 
+      popd > /dev/null 2>&1 || exit 
+      rm -rf "$dir"
+    fi
+
+    if command -v logcli &> /dev/null; then
+      echo "[#] command logcli already exists"
+    else
+      dir=$(mktemp -d)
+      pushd $dir > /dev/null 2>&1 || exit 
+      printf "[#] installing logcli ... "
+      curl -L0 --silent https://github.com/grafana/loki/releases/download/v2.8.3/logcli-linux-amd64.zip > logcli.zip && \
+        unzip logcli.zip && \
+        mv logcli-linux-amd64 $bin_dir/logcli && \
+        echo "✅"
       popd > /dev/null 2>&1 || exit 
       rm -rf "$dir"
     fi

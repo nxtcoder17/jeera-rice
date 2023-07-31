@@ -15,6 +15,8 @@ vim.opt.rtp:prepend(lazypath)
 local events = {
   BufEnter = "BufEnter",
   BufRead = "BufRead",
+  BufReadPost = "BufReadPost",
+  BufWinEnter = "BufWinEnter",
   UIEnter = "UIEnter",
   InsertEnter = "InsertEnter",
   VeryLazy = "VeryLazy",
@@ -40,12 +42,6 @@ local function colorschemes()
         vim.cmd("colorscheme tokyonight")
       end,
     },
-    -- {
-    --   "savq/melange-nvim",
-    --   init = function()
-    --     vim.cmd("colorscheme melange")
-    --   end,
-    -- },
     {
       "catppuccin/nvim",
       as = "catppuccin",
@@ -114,7 +110,8 @@ local function fuzzy_finders()
     ["minimal"] = {
       {
         "nvim-telescope/telescope.nvim",
-        event = events.UIEnter,
+        -- event = events.UIEnter,
+        event = events.BufWinEnter,
         dependencies = {
           "nvim-lua/plenary.nvim",
           "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
@@ -122,6 +119,7 @@ local function fuzzy_finders()
           { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
           { "gbrlsnchs/telescope-lsp-handlers.nvim" },
           { "nvim-telescope/telescope-ui-select.nvim" },
+          { "nvim-telescope/telescope-dap.nvim" },
           -- {
           --   "nvim-telescope/telescope-smart-history.nvim",
           --   requires = {
@@ -134,13 +132,14 @@ local function fuzzy_finders()
           require("telescope").load_extension("fzf")
           require("telescope").load_extension("lsp_handlers")
           require("telescope").load_extension("ui-select")
+          require("telescope").load_extension("dap")
           require("keymaps-for-plugins").telescope_keymaps()
         end,
       },
 
       {
         "ibhagwan/fzf-lua",
-        event = events.VeryLazy,
+        event = events.BufWinEnter,
         -- optional for icon support
         dependencies = {
           "nvim-tree/nvim-web-devicons",
@@ -157,7 +156,7 @@ local function file_managers()
   return {
     {
       "kevinhwang91/rnvimr",
-      event = events.UIEnter,
+      event = events.BufWinEnter,
       init = function()
         require("keymaps-for-plugins").rnvimr_keymaps()
       end,
@@ -182,15 +181,13 @@ local function navigation()
           require("scope").setup()
         end,
       },
-      { "chaoren/vim-wordmotion", event = events.BufRead },
-
-      -- {
-      --   "chrisgrieser/nvim-spider",
-      --   event = events.BufRead,
-      --   config = function()
-      --     require("keymaps-for-plugins").spider_keymaps()
-      --   end,
-      -- },
+      {
+        "chaoren/vim-wordmotion",
+        event = events.BufRead,
+        config = function()
+          require("keymaps-for-plugins").vim_wordmotion_mappings()
+        end,
+      },
 
       {
         "stevearc/aerial.nvim",
@@ -216,16 +213,6 @@ local function navigation()
           require("keymaps-for-plugins").vim_wordmotion_mappings()
         end,
       },
-      -- {
-      --   "chrisgrieser/nvim-spider",
-      --   lazy = true,
-      --   config = function()
-      --     require("nvim-spider").setup({
-      --       skipInsignificantPunctuation = true
-      --     })
-      --     require("keymaps-for-plugins").spider_keymaps()
-      --   end
-      -- },
       -- {
       --   "chrisgrieser/nvim-various-textobjs",
       --   opts = { useDefaultKeymaps = true },
@@ -259,7 +246,7 @@ local function syntax()
     ["all"] = {
       {
         "nvim-treesitter/nvim-treesitter",
-        event = events.BufRead,
+        event = events.BufReadPost,
         config = function()
           require("plugins.treesitter")
         end,
@@ -275,7 +262,7 @@ local function syntax()
       },
       {
         "utilyre/sentiment.nvim",
-        event = "VeryLazy", -- keep for lazy loading
+        event = events.VeryLazy,
         config = function()
           require("sentiment").setup({})
         end,
@@ -314,7 +301,7 @@ local function syntax()
     ["minimal"] = {
       {
         "nvim-treesitter/nvim-treesitter",
-        event = events.BufRead,
+        event = events.BufReadPost,
         config = function()
           require("plugins.treesitter")
         end,
@@ -325,18 +312,26 @@ local function syntax()
         },
       },
       {
+        "nvim-treesitter/nvim-treesitter-context",
+        event = events.BufReadPost,
+        dependencies = { "nvim-treesitter" },
+        config = function()
+          require("treesitter-context").setup()
+        end,
+      },
+      {
         "ziontee113/syntax-tree-surfer",
         dependencies = {
           "nvim-treesitter",
         },
-        event = events.VeryLazy,
+        event = events.BufReadPost,
         config = function()
           require("plugins.syntax-tree-surfer")
         end,
       },
       {
         "utilyre/sentiment.nvim",
-        event = "VeryLazy", -- keep for lazy loading
+        event = events.BufReadPost,
         config = function()
           require("sentiment").setup({})
         end,
@@ -349,7 +344,7 @@ local function lsp()
   return {
     {
       "williamboman/mason.nvim",
-      -- event = events.UIEnter,
+      event = events.UIEnter,
       opts = {
         ensure_installed = {
           "gopls",
@@ -378,7 +373,7 @@ local function lsp()
     },
     {
       "neovim/nvim-lspconfig",
-      event = events.BufRead,
+      event = events.BufReadPost,
       config = function()
         require("plugins.lspconfig")
       end,
@@ -416,7 +411,7 @@ local function lsp()
     {
       "olexsmir/gopher.nvim",
       ft = "go",
-      dependencies = { -- dependencies
+      dependencies = {
         "nvim-lua/plenary.nvim",
         "nvim-treesitter/nvim-treesitter",
       },
@@ -426,6 +421,10 @@ local function lsp()
     },
     {
       "folke/trouble.nvim",
+      event = events.BufReadPost,
+      dependencies = {
+        "neovim/nvim-lspconfig",
+      },
       cmd = {
         "Trouble",
         "TroubleToggle",
@@ -563,7 +562,7 @@ local function completions()
       },
       {
         "zbirenbaum/copilot.lua",
-        event = events.BufRead,
+        event = events.BufReadPost,
         config = function()
           require("keymaps-for-plugins").copilot_mappings()
           vim.defer_fn(function()
@@ -596,16 +595,17 @@ local function search_and_replace()
     },
     {
       "mg979/vim-visual-multi",
-      -- event = events.BufRead,
+      event = events.BufRead,
       keys = { "<C-n>" },
     },
-    {
-      "kevinhwang91/nvim-hlslens",
-      event = events.VeryLazy,
-      config = function()
-        require("plugins.nvim-hlslens")
-      end,
-    },
+    -- -- noice.nvim already has search counter like feature
+    -- {
+    --   "kevinhwang91/nvim-hlslens",
+    --   event = events.VeryLazy,
+    --   config = function()
+    --     require("plugins.nvim-hlslens")
+    --   end,
+    -- },
   }
 end
 
@@ -615,7 +615,6 @@ local function dap()
       {
         "mfussenegger/nvim-dap",
         cmd = { "DapContinue" },
-        -- event = events.BufRead,
         config = function()
           require("plugins.dap")
         end,
@@ -689,7 +688,7 @@ local function dap()
     ["minimal"] = {
       {
         "mfussenegger/nvim-dap",
-        event = events.VeryLazy,
+        event = events.BufReadPost,
         config = function()
           require("plugins.dap")
         end,
@@ -717,7 +716,7 @@ local function terminals()
     },
     {
       "akinsho/toggleterm.nvim",
-      event = events.BufRead,
+      event = events.VeryLazy,
       version = "*",
       config = function()
         require("plugins.toggleterm")
@@ -726,16 +725,20 @@ local function terminals()
     },
     {
       "samjwill/nvim-unception",
-      ft = { "toggleterm", "terminal" },
+      -- ft = { "toggleterm", "terminal" },
+      -- event = events.VeryLazy,
       init = function()
         vim.g.unception_open_buffer_in_new_tab = true
-        -- vim.api.nvim_create_autocmd("User", {
-        --   pattern = "UnceptionEditRequestReceived",
-        --   callback = function()
-        --     -- Toggle the terminal off.
-        --     require("toggleterm").toggle()
-        --   end,
-        -- })
+        vim.api.nvim_create_autocmd("User", {
+          pattern = "UnceptionEditRequestReceived",
+          callback = function()
+            -- Toggle the terminal off.
+            ok, toggleterm = pcall(require, "toggleterm")
+            if ok then
+              toggleterm.toggle()
+            end
+          end,
+        })
         -- Optional settings go here!
         -- e.g.) vim.g.unception_open_buffer_in_new_tab = true
       end,
@@ -759,7 +762,7 @@ local function misc()
   return {
     {
       "luukvbaal/stabilize.nvim",
-      event = events.BufRead,
+      event = events.BufReadPost,
       config = function()
         require("stabilize").setup()
       end,
@@ -775,6 +778,7 @@ local function misc()
     {
       "nvchad/nvim-colorizer.lua",
       ft = { "javascriptreact", "css", "html", "javascript", "typescript", "typescriptreact", "svelte", "vue" },
+      event = events.BufReadPost,
       config = function()
         require("colorizer").setup({
           filetypes = {
@@ -829,7 +833,7 @@ local function misc()
     -- },
     {
       "folke/noice.nvim",
-      event = "VeryLazy",
+      event = events.VeryLazy,
       opts = {
         -- add any options here
       },
@@ -839,17 +843,17 @@ local function misc()
         -- OPTIONAL:
         --   `nvim-notify` is only needed, if you want to use the notification view.
         --   If not available, we use `mini` as the fallback
-        {
-          "rcarriga/nvim-notify",
-          config = function()
-            require("notify").setup({
-              render = "compact",
-              stages = "static",
-              timeout = 1000,
-              background_colour = "#120000",
-            })
-          end,
-        },
+        -- {
+        --   "rcarriga/nvim-notify",
+        --   config = function()
+        --     require("notify").setup({
+        --       render = "compact",
+        --       stages = "static",
+        --       timeout = 1000,
+        --       background_colour = "#120000",
+        --     })
+        --   end,
+        -- },
       },
       config = function()
         require("plugins.noice")
@@ -861,13 +865,12 @@ end
 local function http_clients()
   return {
     {
-      "nxtcoder17/http-cli",
-      -- dir = "~/workspace/nxtcoder17/github/http-cli",
+      -- "nxtcoder17/http-cli",
+      dir = "~/workspace/nxtcoder17/http-cli",
       build = "task build",
       cmd = {
         "Gql",
       },
-      -- event = events.BufRead,
       ft = "yaml",
       config = function()
         require("http-cli").setup({
@@ -889,14 +892,12 @@ local function git_clients()
         "DiffviewClose",
         "DiffviewRefresh",
       },
-      -- event = events.BufEnter,
     },
     {
       "lewis6991/gitsigns.nvim",
       cmd = {
         "Gitsigns",
       },
-      -- event = events.BufRead,
       config = function()
         require("plugins.git-signs")
       end,
@@ -908,7 +909,7 @@ local function lua_rocks()
   return {
     {
       "theHamsta/nvim_rocks",
-      event = "VeryLazy",
+      event = events.VeryLazy,
       build = "pipx install hererocks && hererocks . -j2.1.0-beta3 -r3.0.0 && cp nvim_rocks.lua lua",
       config = function()
         -- require("plugins.nvim_rocks").list_installed()

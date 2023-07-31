@@ -1,0 +1,45 @@
+local ls = require("luasnip")
+
+-- some shorthands...
+local s = ls.snippet
+local sn = ls.snippet_node
+local t = ls.text_node
+local i = ls.insert_node
+local f = ls.function_node
+local c = ls.choice_node
+local d = ls.dynamic_node
+local r = ls.restore_node
+local fmt = require("luasnip.extras.fmt").fmt
+local fmta = require("luasnip.extras.fmt").fmta
+
+local snippets, autosnippets = {}, {}
+
+local commit_msg = s(
+  "commit-msg",
+  fmta(
+    [[<type>(<scope>): <description>
+
+<optional-body>
+]],
+    {
+      type = c(1, {
+        t("fix"),
+        t("feat"),
+        t("build"),
+        t("chore"),
+        t("ci"),
+        t("docs"),
+        t("style"),
+        t("refactor"),
+        t("test"),
+      }),
+      scope = i(2, "scope"),
+      description = i(3, "short-description"),
+      ["optional-body"] = i(4, "longer description"),
+      -- ["optional-footer"] = i(5, "footer"),
+    }
+  )
+)
+table.insert(snippets, commit_msg)
+
+return snippets, autosnippets

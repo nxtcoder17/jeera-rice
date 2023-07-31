@@ -28,8 +28,11 @@ vim.diagnostic.config({
 local function on_attach(client, bufnr)
   local opts = { silent = true, buffer = bufnr, remap = false }
 
-  if client.server_capabilities ~= nil then
-    client.server_capabilities.semanticTokensProvider = nil
+  -- if client.server_capabilities ~= nil then
+  --   client.server_capabilities.semanticTokensProvider = nil
+  -- end
+  if client.server_capabilities.inlayHintProvider then
+    vim.lsp.inlay_hint(bufnr, vim.g.inlay_hints_enabled or false)
   end
 
   vim.keymap.set("n", "sn", function()
@@ -177,16 +180,6 @@ capabilities.textDocument.foldingRange = {
 
 require("cmp_nvim_lsp").default_capabilities(capabilities)
 
--- local function config(_config)
--- 	local capabilities = vim.lsp.protocol.make_client_capabilities()
--- 	capabilities.textDocument.completion.completionItem.snippetSupport = true
---
--- 	-- return require("coq").lsp_ensure_capabilities(_config or {})
--- 	return vim.tbl_deep_extend("force", {
--- 		capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities),
--- 	}, _config or {})
--- end
-
 -- Add bun for Node.js-based servers
 local lspconfig_util = require("lspconfig.util")
 local add_bun_prefix = require("plugins.lsp.bun").add_bun_prefix
@@ -221,24 +214,6 @@ lsp_config.graphql.setup({
   on_attach = on_attach,
   root_dir = lsp_config.util.root_pattern("gqlgen.yml", ".graphql.config.*", "graphql.config.*"),
 })
-
--- sumneko_lua
--- local luadev = require("neodev").setup({
--- 	lspconfig = {
--- 		cmd = lsp_servers.lua,
--- 		settings = {
--- 			Lua = {
--- 				runtime = {
--- 					version = "LuaJIT",
--- 				},
--- 				completion = { callSnippet = "Both" },
--- 				diagnostics = {
--- 					globals = { "vim", "use" },
--- 				},
--- 			},
--- 		},
--- 	},
--- })
 
 require("neodev").setup({
   capabilities = capabilities,
@@ -400,6 +375,17 @@ lsp_config.gopls.setup({
       semanticTokens = false,
       staticcheck = false,
       gofumpt = false,
+
+      -- for inlay hints
+      hints = {
+        assignVariableTypes = true,
+        compositeLiteralFields = true,
+        compositeLiteralTypes = true,
+        constantValues = true,
+        functionTypeParameters = true,
+        parameterNames = true,
+        rangeVariableTypes = true,
+      },
     },
   },
   init_options = {

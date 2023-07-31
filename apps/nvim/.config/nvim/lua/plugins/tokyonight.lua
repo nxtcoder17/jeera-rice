@@ -50,9 +50,10 @@ require("tokyonight").setup({
     -- highlights["@lsp.type.variable"] = { fg = "#6f7bbd" }
     -- highlights["@lsp.type.constant"] = { fg = "#6f7bbd" }
     highlights.DiagnosticUnnecessary = { fg = "#6f7bbd" }
-    highlights.MiniStatuslineDevinfo = { bg = "#222b40", fg = "#6f7bbd" }
+    -- highlights.MiniStatuslineDevinfo = { bg = "#222b40", fg = "#6f7bbd" }
     -- highlights.MiniStatuslineFilename = { bg = "#222b40", fg = "#6f7bbd" }
-    highlights.MiniStatuslineFileinfo = { bg = "#222b40", fg = "#6f7bbd" }
-    highlights.MiniStatuslineFilename = { bg = "#22315c", fg = "#6f7bbd" }
+    --   highlights.MiniStatuslineFileinfo = { bg = "#222b40", fg = "#6f7bbd" }
+    --   -- highlights.MiniStatuslineFilename = { bg = "#22315c", fg = "#6f7bbd" }
+    --   highlights.MiniStatuslineFilename = { bg = "#2e4d69", fg = "#6f7bbd" }
   end,
 })

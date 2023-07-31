@@ -1,6 +1,7 @@
 local opt = vim.opt
 
-vim.cmd("filetype indent off")
+-- to disable filetype based indentation, uncomment the following line
+-- vim.cmd("filetype indent off")
 
 opt.startofline = true
 

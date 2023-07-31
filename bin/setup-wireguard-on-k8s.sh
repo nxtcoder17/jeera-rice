@@ -3,6 +3,8 @@
 namespace="wireguard"
 deployment_name="wireguard"
 
+
+function install() {
 kubectl apply -f - <<EOF
 apiVersion: v1
 kind: Namespace
@@ -18,7 +20,38 @@ metadata:
   namespace: $namespace
 type: Opaque
 stringData:
-  privatekey: 4N9FtwbtC9iY9P1C85l1QmM0OxlGRT0cHVjEuRbLuVA=
+  privatekey: SLZfC8qOHNCyhQtLq7tu54vuHR7Ov7/hACDwLnNi+W0=
+  wg0.conf.bkp: |
+    [Interface]
+    Address = 10.13.13.1
+    ListenPort = 51820
+    PrivateKey = %PRIVATE_KEY%
+    PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth+ -j MASQUERADE
+    PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth+ -j MASQUERADE
+
+  wg0.conf: |+
+    [Interface]
+    Address = 10.13.0.1/24
+    ListenPort = 51820
+    PrivateKey = %PRIVATE_KEY%
+    PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth+ -j MASQUERADE
+    PostUp = sysctl -w net.ipv4.ip_forward=1
+    PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth+ -j MASQUERADE
+
+  peers.conf: |+
+
+    [Peer]
+    PublicKey = zePlcPxlLH+vib3B9LUuxZUNOYHwJ1D6RlBMcnXhMWo=
+    AllowedIPs = 10.13.0.2/32
+
+    [Peer]
+    PublicKey = mG6Lv90tonjxeA8LmpavJMXHqE30ipa2s9mLFXQ8Rkc=
+    AllowedIPs = 10.13.0.3/32
+
+    [Peer]
+    PublicKey = +oTFkAeP55BAIKN5aFn51pC9Ie1UwtaUZiqZhqJGFx0=
+    AllowedIPs = 10.13.0.4/32
+
   wg0.conf.template: |
     [Interface]
     Address = 10.13.13.1
@@ -60,29 +93,29 @@ spec:
       labels:
         name: $deployment_name
     spec:
-      initContainers:
-        # The exact name of the network interface needs to be stored in the
-        # wg0.conf WireGuard configuration file, so that the routes can be
-        # created correctly.
-        # The template file only contains the "ENI" placeholder, so when
-        # bootstrapping the application we'll need to replace the placeholder
-        # and create the actual wg0.conf configuration file.
-        - name: "wireguard-template-replacement"
-          image: "busybox"
-          command: 
-            - "sh"
-            - "-c"
-            - |+
-              ENI=\$(ip route get 8.8.8.8 | grep 8.8.8.8 | awk '{print \$5}')
-              echo "ENI: \$ENI"
-              sed s/ENI/\$ENI/g /etc/wireguard-secret/wg0.conf.template > /etc/wireguard/wg0.conf
-              chmod 400 /etc/wireguard/wg0.conf
-              # cp /etc/wireguard-secret/wg0.key /etc/wireguard/wg0.key
-          volumeMounts:
-            - name: wireguard-config
-              mountPath: /etc/wireguard/
-            - name: wireguard-secret
-              mountPath: /etc/wireguard-secret/
+      # initContainers:
+      #   # The exact name of the network interface needs to be stored in the
+      #   # wg0.conf WireGuard configuration file, so that the routes can be
+      #   # created correctly.
+      #   # The template file only contains the "ENI" placeholder, so when
+      #   # bootstrapping the application we'll need to replace the placeholder
+      #   # and create the actual wg0.conf configuration file.
+      #   - name: "wireguard-template-replacement"
+      #     image: "busybox"
+      #     command: 
+      #       - "sh"
+      #       - "-c"
+      #       - |+
+      #         ENI=\$(ip route get 8.8.8.8 | grep 8.8.8.8 | awk '{print \$5}')
+      #         echo "ENI: \$ENI"
+      #         sed s/ENI/\$ENI/g /etc/wireguard-secret/wg0.conf.template > /etc/wireguard/wg0.conf
+      #         chmod 400 /etc/wireguard/wg0.conf
+      #         # cp /etc/wireguard-secret/wg0.key /etc/wireguard/wg0.key
+      #     volumeMounts:
+      #       - name: wireguard-config
+      #         mountPath: /etc/wireguard/
+      #       - name: wireguard-secret
+      #         mountPath: /etc/wireguard-secret/
 
       # containers:
       #   - name: wireguard
@@ -122,9 +155,11 @@ spec:
             - -c
             - |+
               trap 'exit 0' SIGTERM SIGINT
-              echo "Public key '\$(wg pubkey < /tmp/privatekey)'"
+              private_key=\$(cat /tmp/wireguard/privatekey)
+              echo "Public key '\$(wg pubkey < /tmp/wireguard/privatekey)'"
 
-              ln -sf /tmp/wg0.conf /etc/wireguard/wg0.conf
+              cat /tmp/wireguard/wg0.conf /tmp/wireguard/peers.conf | sed "s|%PRIVATE_KEY%|\$private_key|g" > /etc/wireguard/wg0.conf
+              # ln -sf /tmp/wireguard/wg0.conf /etc/wireguard/wg0.conf
               wg-quick down wg0
               wg-quick up wg0
               tail -f /dev/null
@@ -135,14 +170,10 @@ spec:
             - name: "PEERS"
               value: "example"
           volumeMounts:
-            - name: wireguard-config
-              mountPath: /tmp/wg0.conf
-              subPath: wg0.conf
-              readOnly: false
             - name: wireguard-secret
-              mountPath: /tmp/privatekey
-              subPath: privatekey
-              readOnly: true
+              mountPath: /tmp/wireguard
+              # subPath: privatekey
+              # readOnly: true
           securityContext:
             privileged: true
             capabilities:
@@ -174,3 +205,39 @@ spec:
   selector:
     name: $deployment_name
 EOF
+}
+
+cmd=$1
+shift 1;
+
+case $cmd in
+  install)
+    install
+    ;;
+  uninstall)
+    ;;
+  generate-peer)
+    dir=~/me/.wireguard/peer-$1
+    mkdir -p $dir
+    pushd $dir > /dev/null 2>&1 || exit 1
+    wg genkey | tee private.key | wg pubkey > public.key
+
+    cat > peer.conf <<EOF
+[Interface]
+Address = 10.13.13.2
+PrivateKey = $(cat ./private.key)
+ListenPort = 51820
+DNS = 10.13.13.1
+
+[Peer]
+PublicKey = $(cat ./public.key)
+# Endpoint = ENDPOINT_IP:ENDPOINT_PORT
+Endpoint = ENDPOINT_IP:31820
+AllowedIPs = 0.0.0.0/0, ::/0
+EOF
+    popd > /dev/null 2>&1 || exit 1
+    ;;
+  *)
+    echo "Unknown command $cmd, only install|generate-peer supported"
+    ;;
+esac

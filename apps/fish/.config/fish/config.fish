@@ -183,10 +183,18 @@ end
 
 if [ $EUID -eq 0 ]
     # set --global hydro_symbol_prompt ❱
-    set --global hydro_symbol_prompt 🚫
+    # set --global hydro_symbol_prompt 🚫√ √ 
+    # set --global hydro_color_prompt "#ff0203"
+    set --global hydro_color_prompt "#bf4b52"
+    # set --global hydro_symbol_prompt '∖/‾‾‾'
+    set --global hydro_symbol_prompt ' √π'
 else
     # set --global hydro_symbol_prompt ❱
     set --global hydro_symbol_prompt 😎
+    # check if fish is in private mode 
+    if [ ! -z "$fish_private_mode" ]
+      set --global hydro_symbol_prompt 🕵️
+    end
 end
 
 set -x LANGUAGE "en_US.UTF-8"

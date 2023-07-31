@@ -10,12 +10,14 @@ hi! GitSignsDelete guifg = #D76363 guibg = none
 hi! Statusline guifg=#81A1C1 guibg=none gui=italic
 hi! StatuslineNC guifg=#81A1C1 gui=bold
 
-" hi! TabLineSel guibg=#81a1c1 guifg=#27323d
-" hi! TabLineSel guibg=DarkGray 
-hi! TabLine guifg=#9a7ecc
-hi! TabLineFill guifg=#9a7ecc
-" hi! TabLineSel guifg=#2b3038 guibg=#6687cc
-hi! TabLineSel guifg=#2b3038 guibg=#81A1C1
+" hi! TabLineSel guifg=#2b3038 guibg=#81A1C1
+hi! TabLine guifg=#81A1C1 guibg=#272e3b gui=italic
 
-hi! link MiniStatuslineModeNormal DiffAdd
 hi! link MsgArea DiffAdd
+
+
+" for mini statusline
+hi! link MiniStatuslineModeNormal DiffAdd
+hi! MiniStatuslineFilename guifg=#81A1C1 guibg=transparent gui=bold
+hi! MiniStatuslineFileinfo  guifg=#81A1C1 guibg=#272e3b gui=bold
+hi! MiniStatuslineDevinfo  guifg=#81A1C1 guibg=#273b36 gui=italic

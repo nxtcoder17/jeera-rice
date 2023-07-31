@@ -12,7 +12,9 @@ dap.listeners.after["event_terminated"]["me"] = function()
 end
 
 vim.keymap.set("n", "sd", "<nop>")
+
 -- vim.keymap.set("n", "sdk", require("dap.ui.widgets").hover, { silent = true })
+
 vim.keymap.set("n", "sdk", function()
   require("dapui").eval(vim.fn.expand("<cexpr>"), { enter = true })
   -- require("dapui").float_element("watches", { enter = true })
@@ -21,6 +23,10 @@ end)
 vim.keymap.set("v", "sdk", function()
   require("dapui").float_element("watches", { enter = true })
 end, { silent = true })
+
+-- vim.keymap.set("v", "sde", function()
+--   require("dapui").float_element("watches", { enter = true })
+-- end, { silent = true })
 
 -- vim.keymap.set("n", "<leader>dk", require("dap.ui.widgets").hover, { silent = true })
 vim.keymap.set("n", "sdb", dap.toggle_breakpoint, { silent = true })
@@ -41,6 +47,13 @@ vim.keymap.set("n", "sdl", function()
   }, function(input)
     dap.set_breakpoint(nil, nil, input)
   end)
+end)
+
+vim.keymap.set("n", "sdd", function()
+  vim.cmd("80vsplit")
+  vim.cmd("wincmd l")
+  vim.cmd("e /tmp/debug.stdout")
+  vim.cmd("wincmd G")
 end)
 
 -- dap repl split

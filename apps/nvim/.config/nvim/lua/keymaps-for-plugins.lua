@@ -1,3 +1,5 @@
+local nvim_util_fns = require("functions.neovim-utils")
+
 local M = {}
 
 local opts = { silent = true, noremap = true }
@@ -31,14 +33,22 @@ end
 
 M.telescope_keymaps = function()
   vim.keymap.set("n", "sb", require("telescope.builtin").buffers, opts)
-  vim.keymap.set("n", "<C-;>", require("plugins.telescope").dapActions)
+  -- vim.keymap.set("n", "<C-;>", require("plugins.telescope").dapActions)
 
   -- telescope
   -- vim.keymap.set("n", "sf", ":Telescope find_files<CR>")
   vim.keymap.set("n", "sf", require("plugins.telescope").list_files)
   vim.keymap.set("n", "ff", require("plugins.telescope").grep)
+  vim.keymap.set("n", "<C-f>", require("plugins.telescope").grep)
+  vim.keymap.set("v", "<C-f>", function()
+    require("plugins.telescope").grep(nvim_util_fns.get_selection())
+  end)
   vim.keymap.set("n", "tl", require("plugins.telescope").only_tabs, { silent = true, noremap = true })
   vim.keymap.set("n", "s/", ":Telescope current_buffer_fuzzy_find<CR>", { silent = true, noremap = true })
+  vim.keymap.set({ "n", "v" }, "<M-;>", function()
+    print("hi i have been called")
+    require("plugins.custom-pickers.utility-pickers").pick()
+  end, { silent = true, noremap = true })
 end
 
 M.nvim_tmux_navigator_keymaps = function()
@@ -70,22 +80,6 @@ M.luasnip_keymaps = function()
   -- end)
 end
 
-M.spider_keymaps = function()
-  -- Keymaps
-  vim.keymap.set({ "n", "o", "x" }, "w", function()
-    require("spider").motion("w")
-  end, { desc = "Spider-w" })
-  vim.keymap.set({ "n", "o", "x" }, "e", function()
-    require("spider").motion("e")
-  end, { desc = "Spider-e" })
-  vim.keymap.set({ "n", "o", "x" }, "b", function()
-    require("spider").motion("b")
-  end, { desc = "Spider-b" })
-  vim.keymap.set({ "n", "o", "x" }, "ge", function()
-    require("spider").motion("ge")
-  end, { desc = "Spider-ge" })
-end
-
 M.copilot_mappings = function()
   vim.g.copilot_no_tab_map = true
   vim.keymap.set({ "n", "i" }, "<C-CR>", function()
@@ -110,7 +104,7 @@ M.vim_wordmotion_mappings = function()
   ]])
 end
 
-M.neozoom_mapping = function()
+M.neozoom_mappings = function()
   vim.keymap.set("n", "sz", ":NeoZoomToggle<CR>", { silent = true, noremap = true })
 end
 

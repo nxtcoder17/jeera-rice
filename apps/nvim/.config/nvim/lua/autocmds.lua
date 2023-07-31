@@ -14,7 +14,8 @@ vim.api.nvim_create_autocmd("BufRead", {
   pattern = "*",
   callback = function()
     vim.cmd(
-      [[if &ft !~# 'commit\|rebase\|query\|Terminal\|toggleterm\|terminal\|TelescopePrompt\|TelescopeResult' && line("'\"") > 1 && line("'\"") <= line("$") | exe 'normal! g`"' | endif"]])
+      [[if &ft !~# 'commit\|rebase\|query\|Terminal\|toggleterm\|terminal\|TelescopePrompt\|TelescopeResult' && line("'\"") > 1 && line("'\"") <= line("$") | exe 'normal! g`"' | endif"]]
+    )
   end,
 })
 
@@ -49,5 +50,14 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
   pattern = { os.getenv("HOME") .. "/.Xresources" },
   callback = function()
     os.execute(string.format("xrdb -merge %s", os.getenv("HOME") .. "/.Xresources"))
+  end,
+})
+
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  group = group,
+  pattern = { "env", ".env" },
+  callback = function()
+    -- vim.diagnostic.disable(vim.fn.expand("<abuf>"))
+    vim.diagnostic.disable(0)
   end,
 })
