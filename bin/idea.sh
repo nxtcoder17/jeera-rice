@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 
 # CMD="systemd-run --user --slice=idea.slice $IDEA_DIR/bin/idea.sh"
-CMD="/home/nxtcoder17/.local/tars.uz/idea-IU-231.9011.34/bin/idea.sh"
+CMD="/home/nxtcoder17/.local/tars.uz/idea-IU-232.8660.185/bin/idea.sh"
 
 [ -f $CMD ] || (echo "executable CMD ($CMD) does not exist" && exit 1)
 

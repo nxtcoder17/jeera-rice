@@ -1,1 +1,16 @@
 # :set ft=conf:
+
+[global]
+  monitor = 0
+  font = Comic Code Ligatures 10
+  frame_width = 2
+  corner_radius = 7
+  max_icon_size = 56
+
+[urgency_normal]
+  timeout = 5
+
+[radio]
+   appname = radio
+   # iconname = "~/.config/dunst/radio-icon.png"
+   history_ignore = yes

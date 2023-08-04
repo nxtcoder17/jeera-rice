@@ -28,9 +28,14 @@ vim.diagnostic.config({
 local function on_attach(client, bufnr)
   local opts = { silent = true, buffer = bufnr, remap = false }
 
-  -- if client.server_capabilities ~= nil then
-  --   client.server_capabilities.semanticTokensProvider = nil
-  -- end
+  -- testing for gopls speed: START
+  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+    underline = true,
+    virtual_text = false,
+    update_in_insert = false,
+  })
+  -- testing for gopls speed: END
+
   if client.server_capabilities.inlayHintProvider then
     vim.lsp.inlay_hint(bufnr, vim.g.inlay_hints_enabled or false)
   end

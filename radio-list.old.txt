@@ -1,6 +1,4 @@
-# vim:set ft=conf:
-# Kishore Kumar Radio; https://stream-148.zeno.fm/0ghtfp8ztm0uv?zs=JztLkJ9ISVqF29zPPjARrA; source=https://onlineradiofm.in/stations/city-kishore-kumar; group=artists
-mirchi-toota-dil;  https://mirchiplaylive.akamaized.net/hls/live/2036929/MUM/TOODIL64kbps.m3u8
+mirchi-toota-dil  https://mirchiplaylive.akamaized.net/hls/live/2036929/MUM/TOODIL64kbps.m3u8
 mirchi-98.3FM http://peridot.streamguys.com:7150/Mirchi
 vividh-bharti https://air.pc.cdn.bitgravity.com/air/live/pbaudio001/chunklist.m3u8
 radio-namkeen http://node-35.zeno.fm/yg1qhsbaqv5tv?rj-ttl=5&rj-tok=AAABgh7D5MQAXFWkLdNqD-koug

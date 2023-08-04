@@ -26,21 +26,22 @@ local function colorschemes()
   return {
     {
       "rebelot/kanagawa.nvim",
-      lazy = true,
+      -- lazy = true,
       -- event = events.VeryLazy,
-      -- init = function()
-      --   require("plugins.kanagawa")
-      --   vim.cmd("colorscheme kanagawa")
-      -- end,
+      init = function()
+        require("plugins.kanagawa")
+        vim.cmd("colorscheme kanagawa")
+      end,
     },
     {
       "folke/tokyonight.nvim",
+      lazy = true,
       -- event = events.UIEnter,
-      event = events.VeryLazy,
-      init = function()
-        require("plugins.tokyonight")
-        vim.cmd("colorscheme tokyonight")
-      end,
+      -- event = events.VeryLazy,
+      -- init = function()
+      --   require("plugins.tokyonight")
+      --   vim.cmd("colorscheme tokyonight")
+      -- end,
     },
     {
       "catppuccin/nvim",

@@ -43,10 +43,28 @@ end
 # echo "snippet inspired from kubie"
 function ck --description "choose-kubeconfig"
   set dir $HOME/.kube/configs
-  set -gx TMP_KUBECONFIG_FILE (command ls $dir | fzf)
-  # echo $dir/$item
-  set -gx KUBECONFIG $dir/$TMP_KUBECONFIG_FILE
-  # echo "set successfull"
+
+  # need to do command grouping for chaining 2 separate commands into one redirection
+  # read here https://unix.stackexchange.com/questions/223835/capturing-output-redirection-of-commands-chained-by
+  set filter_cmd 'begin; echo "no-selection" && command ls ~/.kube/configs ; end | fzf'
+
+  set -gx TMP_KUBECONFIG_FILE (eval $filter_cmd)
+
+
+  set -gx is_valid_kubeconfig "true"
+
+  if [ -z "$TMP_KUBECONFIG_FILE" -o "$TMP_KUBECONFIG_FILE" = "no-selection" ]
+    set -gx is_valid_kubeconfig ""
+  end
+
+  # [ -z "$TMP_KUBECONFIG_FILE" ] && set -gx is_valid_kubeconfig ""
+  # [ "$TMP_KUBECONFIG_FILE" = "no-selection" ] && set -gx is_valid_kubeconfig ""
+
+  if [ -n "$is_valid_kubeconfig" ]
+    set -gx KUBECONFIG "$dir/$TMP_KUBECONFIG_FILE"
+  else
+    set -e KUBECONFIG
+  end
 
   if ! functions -q fish_prompt_original
     functions -c fish_prompt fish_prompt_original
@@ -56,7 +74,9 @@ function ck --description "choose-kubeconfig"
     set -l original (fish_prompt_original)
 
     # printf '%s ' (string unescape {prompt})
-    printf '%s󱃾 %s%s ' (set_color "#5582a1") $TMP_KUBECONFIG_FILE $hydro_color_normal
+    if [ -n "$is_valid_kubeconfig" ]
+      printf '%s󱃾 %s%s ' (set_color "#5582a1") $TMP_KUBECONFIG_FILE $hydro_color_normal
+    end
 
     # Due to idiosyncrasies with the way fish is managing newlines in
     # process substitions, each line needs to be printed separately

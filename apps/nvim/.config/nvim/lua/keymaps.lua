@@ -60,10 +60,11 @@ vim.keymap.set("n", "g#", "g#zz", opts)
 
 local function closeFloating()
   for _, win in ipairs(vim.api.nvim_list_wins()) do
-    local winnr = vim.api.nvim_win_get_number(win)
-    vim.print(string.format("winnr: %d", winnr))
+    if not vim.api.nvim_win_is_valid(win) then
+      return
+    end
     local config = vim.api.nvim_win_get_config(win)
-    if winnr >= 0 and config and config.relative ~= "" then
+    if config and config.relative ~= "" then
       local _result, _err = pcall(function()
         vim.api.nvim_win_close(win, true)
       end)

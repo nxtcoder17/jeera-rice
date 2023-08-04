@@ -4,3 +4,7 @@
 # get mirchi stations
 curl https://api.mymirchi.com/mirchi-feeds/v2/radio/live-radio/IN | jq
 ```
+
+there are many radio stations on these URL
+-  `https://radiosindia.com/shreyaghosal.html`
+- `https://radiosindia.com/shreyaghosal.html`

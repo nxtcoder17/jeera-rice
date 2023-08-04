@@ -1,0 +1,5 @@
+#! /usr/bin/env bash
+
+item="$(cat -)"
+notify-send.sh "$item"
+echo "$item"
