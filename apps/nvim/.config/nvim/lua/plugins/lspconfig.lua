@@ -29,11 +29,11 @@ local function on_attach(client, bufnr)
   local opts = { silent = true, buffer = bufnr, remap = false }
 
   -- testing for gopls speed: START
-  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-    underline = true,
-    virtual_text = false,
-    update_in_insert = false,
-  })
+  -- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+  --   underline = true,
+  --   virtual_text = false,
+  --   update_in_insert = true,
+  -- })
   -- testing for gopls speed: END
 
   if client.server_capabilities.inlayHintProvider then
@@ -236,23 +236,29 @@ table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
 lsp_config.lua_ls.setup({
-  cmd = lsp_servers.lua,
+  -- cmd = lsp_servers.lua,
   capabilities = capabilities,
   on_attach = on_attach,
   settings = {
     Lua = {
-      runtime = {
-        path = runtime_path,
-      },
-      completion = {
-        callSnippet = "Replace",
-      },
-      workspace = {
-        library = vim.api.nvim_get_runtime_file("", true),
-        checkThirdParty = false,
-      },
       diagnostics = {
         globals = { "vim" },
+      },
+      -- runtime = {
+      --   path = runtime_path,
+      -- },
+      -- completion = {
+      --   callSnippet = "Replace",
+      -- },
+      workspace = {
+        -- library = vim.api.nvim_get_runtime_file("", true),
+        library = {
+          [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+          [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+        },
+        maxPreload = 100000,
+        preloadFileSize = 10000,
+        checkThirdParty = false,
       },
       telemetry = {
         enable = false,
@@ -340,7 +346,7 @@ lsp_config.bashls.setup({
   cmd = lsp_servers.bashls,
   capabilities = capabilities,
   on_attach = on_attach,
-  filetypes = { "sh" },
+  filetypes = { "sh", "bash" },
 })
 
 -- Dockerfile
@@ -362,10 +368,14 @@ lsp_config.pyright.setup({
 })
 
 lsp_config.gopls.setup({
-  cmd = lsp_servers.go,
+  -- cmd = lsp_servers.go,
+  -- cmd = { "gopls", "serve" },
   capabilities = capabilities,
   on_attach = on_attach,
   filetypes = { "go", "gomod", "gotmpl", "gowork" },
+  flags = {
+    debounce_text_changes = 300,
+  },
   settings = {
     gopls = {
       usePlaceholders = true,
@@ -377,20 +387,22 @@ lsp_config.gopls.setup({
         shadow = false,
         unusedwrite = true,
       },
-      semanticTokens = false,
+      semanticTokens = true,
       staticcheck = false,
       gofumpt = false,
+      vulncheck = "Imports",
+      diagnosticsDelay = "100ms"
 
       -- for inlay hints
-      hints = {
-        assignVariableTypes = true,
-        compositeLiteralFields = true,
-        compositeLiteralTypes = true,
-        constantValues = true,
-        functionTypeParameters = true,
-        parameterNames = true,
-        rangeVariableTypes = true,
-      },
+      -- hints = {
+      --   assignVariableTypes = true,
+      --   compositeLiteralFields = true,
+      --   compositeLiteralTypes = true,
+      --   constantValues = true,
+      --   functionTypeParameters = true,
+      --   parameterNames = true,
+      --   rangeVariableTypes = true,
+      -- },
     },
   },
   init_options = {
@@ -408,3 +420,45 @@ lsp_config.terraformls.setup({
   on_attach = on_attach,
   root_dir = lsp_config.util.root_pattern(".git", ".terraform"),
 })
+
+lsp_config.efm.setup {
+  init_options = { documentFormatting = true },
+  settings = {
+    -- rootMarkers = { ".git/" },
+    languages = {
+      lua = {
+        require('efmls-configs.linters.luacheck'),
+        require('efmls-configs.formatters.stylua'),
+      },
+      typescript = {
+        require('efmls-configs.linters.eslint_d'),
+        require('efmls-configs.formatters.eslint_d'),
+      },
+      javascript = {
+        require('efmls-configs.linters.eslint_d'),
+        require('efmls-configs.formatters.eslint_d'),
+      },
+      typescriptreact = {
+        require('efmls-configs.linters.eslint_d'),
+        require('efmls-configs.formatters.eslint_d'),
+      },
+      javascriptreact = {
+        require('efmls-configs.linters.eslint_d'),
+        require('efmls-configs.formatters.eslint_d'),
+      },
+      go = {
+        require('efmls-configs.linters.go_revive'),
+        require('efmls-configs.formatters.gofmt'),
+        require('efmls-configs.formatters.goimports'),
+      },
+      bash = {
+        require('efmls-configs.linters.bashate'),
+        require('efmls-configs.formatters.shfmt'),
+      },
+      sh = {
+        require('efmls-configs.linters.bashate'),
+        require('efmls-configs.formatters.shfmt'),
+      },
+    }
+  }
+}

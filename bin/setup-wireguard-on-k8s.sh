@@ -3,7 +3,6 @@
 namespace="wireguard"
 deployment_name="wireguard"
 
-
 function install() {
 kubectl apply -f - <<EOF
 apiVersion: v1
@@ -20,62 +19,66 @@ metadata:
   namespace: $namespace
 type: Opaque
 stringData:
-  privatekey: SLZfC8qOHNCyhQtLq7tu54vuHR7Ov7/hACDwLnNi+W0=
-  wg0.conf.bkp: |
+  server.privatekey: oDwnb4yjua5org92qlHu/tENnA0oDL2rFNOlqz7eKUY=
+  server.publckey: OtV3mVnNaGQNLlUfZwH1j6EhsIWcuO5IWICU0LgsW1I=
+  server.conf: |+
     [Interface]
-    Address = 10.13.13.1
+    Address = 10.0.0.1/24
     ListenPort = 51820
-    PrivateKey = %PRIVATE_KEY%
-    PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth+ -j MASQUERADE
-    PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth+ -j MASQUERADE
+    PrivateKey = oDwnb4yjua5org92qlHu/tENnA0oDL2rFNOlqz7eKUY=
+    PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+    PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
 
-  wg0.conf: |+
+    [Peer]
+    PublicKey = 4/j7pTZlVcjnDlHTdZVwo1O8uTEuyJmo+nc3/+XQRik=
+    AllowedIPs = 10.0.0.2/32
+
+    [Peer]
+    PublicKey = D/3sx7t4JNI33nJ4taOOza3gLtgr/r3VUaL/NlGzLgI=
+    AllowedIPs = 10.0.0.3/32
+
+    [Peer]
+    PublicKey = N6dJwMa1rxFvoLaPqbOpVtSiBqPg5L1vHCTg7DRYGyY=
+    AllowedIPs = 10.0.0.4/32
+
+  client-1.privatekey: uIPH3Ij/9OdnPNLf8qLtK2qo1ZYsKuRfUX+GgXBGqVQ=
+  client-1.publickey: 4/j7pTZlVcjnDlHTdZVwo1O8uTEuyJmo+nc3/+XQRik=
+  client-1.conf: |+
     [Interface]
-    Address = 10.13.0.1/24
+    Address = 10.0.0.2/24
     ListenPort = 51820
-    PrivateKey = %PRIVATE_KEY%
-    PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth+ -j MASQUERADE
-    PostUp = sysctl -w net.ipv4.ip_forward=1
-    PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth+ -j MASQUERADE
-
-  peers.conf: |+
+    PrivateKey = uIPH3Ij/9OdnPNLf8qLtK2qo1ZYsKuRfUX+GgXBGqVQ=
 
     [Peer]
-    PublicKey = zePlcPxlLH+vib3B9LUuxZUNOYHwJ1D6RlBMcnXhMWo=
-    AllowedIPs = 10.13.0.2/32
+    PublicKey = OtV3mVnNaGQNLlUfZwH1j6EhsIWcuO5IWICU0LgsW1I=
+    AllowedIPs = 0.0.0.0/0, ::/0
+    Endpoint = 152.67.10.237:31820
 
-    [Peer]
-    PublicKey = mG6Lv90tonjxeA8LmpavJMXHqE30ipa2s9mLFXQ8Rkc=
-    AllowedIPs = 10.13.0.3/32
-
-    [Peer]
-    PublicKey = +oTFkAeP55BAIKN5aFn51pC9Ie1UwtaUZiqZhqJGFx0=
-    AllowedIPs = 10.13.0.4/32
-
-  wg0.conf.template: |
+  client-2.privatekey: 6FleMSBpj9Ebh3m7OR2X3hNDvo9EEEM78KIBsAFag0Q=
+  client-2.publickey: D/3sx7t4JNI33nJ4taOOza3gLtgr/r3VUaL/NlGzLgI=
+  client-2.conf: |+
     [Interface]
-    Address = 10.13.13.1
+    Address = 10.0.0.3/24
     ListenPort = 51820
-    # PrivateKey = COpReLCsOrklOpSlE+n1f/qGENMo07lmssH9LMH4Vks=
-    PrivateKey = 4N9FtwbtC9iY9P1C85l1QmM0OxlGRT0cHVjEuRbLuVA=
-    PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth+ -j MASQUERADE
-    PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth+ -j MASQUERADE
-
-    # [Interface]
-    # Address = 172.16.16.0/20
-    # ListenPort = 51820
-    # PrivateKey = OIviMX9BPHk1w/bvsXW0Qc2/mY3+HS3iS31aEtsn+Uc=
-    # PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o ENI -j MASQUERADE
-    # PostUp = sysctl -w -q net.ipv4.ip_forward=1
-    # PostUp = sysctl -w -q net.ipv4.conf.all.forwarding=1
-    # PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o ENI -j MASQUERADE
-    # PostDown = sysctl -w -q net.ipv4.ip_forward=0
-    # PostDown = sysctl -w -q net.ipv4.conf.all.forwarding=0
+    PrivateKey = 6FleMSBpj9Ebh3m7OR2X3hNDvo9EEEM78KIBsAFag0Q=
 
     [Peer]
-    # Example Peer 1
-    PublicKey = 6LaKVAr7GSrKfUZ2LQTN4H3SiAtGcBEf88GmxMQnn2I=
-    AllowedIPs = 0.0.0.0/0
+    PublicKey = OtV3mVnNaGQNLlUfZwH1j6EhsIWcuO5IWICU0LgsW1I=
+    AllowedIPs = 0.0.0.0/0, ::/0
+    Endpoint = 152.67.10.237:31820
+
+  client-3.privatekey: oO4wgbjTR0KqUUkzoOcgEJotYMPqMTsENyj3BJ0yiXM=
+  client-3.publickey: N6dJwMa1rxFvoLaPqbOpVtSiBqPg5L1vHCTg7DRYGyY=
+  client-3.conf: |+
+    [Interface]
+    Address = 10.0.0.4/24
+    ListenPort = 51820
+    PrivateKey = oO4wgbjTR0KqUUkzoOcgEJotYMPqMTsENyj3BJ0yiXM=
+
+    [Peer]
+    PublicKey = OtV3mVnNaGQNLlUfZwH1j6EhsIWcuO5IWICU0LgsW1I=
+    AllowedIPs = 0.0.0.0/0, ::/0
+    Endpoint = 152.67.10.237:31820
 EOF
 
 kubectl apply -f - <<EOF
@@ -155,11 +158,13 @@ spec:
             - -c
             - |+
               trap 'exit 0' SIGTERM SIGINT
-              private_key=\$(cat /tmp/wireguard/privatekey)
-              echo "Public key '\$(wg pubkey < /tmp/wireguard/privatekey)'"
+              # private_key=\$(cat /tmp/wireguard/privatekey)
+              # echo "Public key '\$(wg pubkey < /tmp/wireguard/privatekey)'"
+              #
+              # # cat /tmp/wireguard/wg0.conf /tmp/wireguard/peers.conf | sed "s|%PRIVATE_KEY%|\$private_key|g" > /etc/wireguard/wg0.conf
+              # # ln -sf /tmp/wireguard/wg0.conf /etc/wireguard/wg0.conf
 
-              cat /tmp/wireguard/wg0.conf /tmp/wireguard/peers.conf | sed "s|%PRIVATE_KEY%|\$private_key|g" > /etc/wireguard/wg0.conf
-              # ln -sf /tmp/wireguard/wg0.conf /etc/wireguard/wg0.conf
+              cp /tmp/wireguard/server.conf /etc/wireguard/wg0.conf
               wg-quick down wg0
               wg-quick up wg0
               tail -f /dev/null
@@ -172,8 +177,6 @@ spec:
           volumeMounts:
             - name: wireguard-secret
               mountPath: /tmp/wireguard
-              # subPath: privatekey
-              # readOnly: true
           securityContext:
             privileged: true
             capabilities:
@@ -215,6 +218,9 @@ case $cmd in
     install
     ;;
   uninstall)
+    kubectl delete deploy/$deployment_name -n $namespace
+    kubectl delete secret/wireguard -n $namespace
+    kubectl delete ns/wireguard
     ;;
   generate-peer)
     dir=~/me/.wireguard/peer-$1

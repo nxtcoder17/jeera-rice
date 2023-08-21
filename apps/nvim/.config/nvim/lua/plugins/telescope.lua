@@ -86,8 +86,8 @@ telescope.setup({
     fzf = {
       fuzzy = true,
       override_generic_sorter = true, -- override the generic sorter
-      override_file_sorter = true, -- override the file sorter
-      case_mode = "smart_case",    -- or "ignore_case" or "respect_case"
+      override_file_sorter = true,    -- override the file sorter
+      case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
     },
     ["ui-select"] = {
       themes.get_ivy({
@@ -134,6 +134,11 @@ telescope.setup({
       layout_config = ivyCustomLayoutConfig,
       results_title = "",
     },
+    live_grep = {
+      theme = "ivy",
+      layout_config = ivyCustomLayoutConfig,
+      results_title = "",
+    },
     current_buffer_fuzzy_find = {
       theme = "ivy",
       layout_config = ivyCustomLayoutConfig,
@@ -170,14 +175,40 @@ telescope.setup({
 })
 
 local M = {}
-M.grep = function(query)
-  telescope_builtin.grep_string({
+
+M.grep = function(query, dir)
+  dir = dir or vim.loop.cwd()
+
+  -- local sq = query or vim.fn.input({ prompt = "   Grep for word > ", default = vim.fn.expand("<cword>") })
+  local sq = query or vim.fn.expand("<cword>")
+
+  telescope_builtin.live_grep({
     results_title = "",
-    default_text = query,
+    default_text = sq,
     prompt_title = " Grep word",
-    search = query or vim.fn.input({ prompt = "   Grep for word > ", default = vim.fn.expand("<cword>") }),
+    search = sq,
     -- search = vim.fn.input("   Grep for word> ", vim.fn.expand("<cword>")),
     use_regex = true,
+    cwd = dir,
+    attach_mappings = function(prompt_bufnr, map)
+      map("i", "<C-p>", function()
+        local picker = action_state.get_current_picker(prompt_bufnr)
+        local line = vim.fn.getline(".", prompt_bufnr)
+        local q = table.concat(line, "\n"):sub(#picker.prompt_prefix + 1)
+        actions.close(prompt_bufnr)
+
+        -- local input = line:sub(#picker.prompt_prefix)
+        -- print(input)
+
+        -- vim.print(vim.inspect(q))
+        if dir == vim.loop.cwd() then
+          M.grep(q, vim.g.root_dir)
+        else
+          M.grep(q, vim.loop.cwd())
+        end
+      end)
+      return true
+    end,
   })
 end
 
@@ -383,66 +414,6 @@ M.list_files = function(query, dir, opts)
         local display = utils.transform_path({}, entry.value)
         if entry.value:find(cwd) then
           display = entry.value:sub(#cwd + 2)
-        end
-
-        -- source (start): telescope.nvim/lua/telescope/make_entry.lua
-        display, hl_group, icon = utils.transform_devicons(entry.value, display, opts.disable_devicons)
-
-        if hl_group then
-          return display, { { { 0, #icon }, hl_group } }
-        else
-          return display
-        end
-        -- source (end): telescope.nvim/lua/telescope/make_entry.lua
-      end,
-
-      value = cwd .. "/" .. item,
-    }
-  end, nil, cwd)
-
-  local conf = require("telescope.config").values
-  pickers
-      .new(themes.get_ivy({ layout_config = ivyCustomLayoutConfig }), {
-        prompt_title = "Search for Files (<Ctrl-p> to search from project root)",
-        default_text = search_query,
-        results_title = "",
-        cwd = cwd,
-        finder = finder,
-        previewer = conf.grep_previewer({}),
-        sorter = conf.file_sorter({}),
-        attach_mappings = function(prompt_bufnr, map)
-          map("i", "<c-space>", actions.to_fuzzy_refine)
-          map("i", "<C-p>", function()
-            actions.close(prompt_bufnr)
-
-            if dir == vim.g.root_dir then
-              M.list_files(search_query)
-            else
-              M.list_files(search_query, vim.g.root_dir)
-            end
-          end)
-          return true
-        end,
-      })
-      :find()
-end
-
-M.find_in_files = function(query, dir, opts)
-  local cwd = dir or vim.loop.cwd()
-  local search_query = query or ""
-  local opts = opts or { disable_devicons = false }
-
-  local finder = finders.new_job(function(prompt)
-    search_query = prompt
-    return { "rg", "--threads", "3", "--iglob", "!.git", "--hidden", "--sort", "path" }
-  end, function(item)
-    return {
-      ordinal = item,
-      display = function(entry)
-        local hl_group
-        local display = utils.transform_path({}, entry.value)
-        if entry.value:find(vim.g.root_dir) then
-          display = entry.value:sub(#vim.g.root_dir + 2)
         end
 
         -- source (start): telescope.nvim/lua/telescope/make_entry.lua

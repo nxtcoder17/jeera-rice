@@ -64,6 +64,13 @@ function M.read_env_file(file, opts)
   end
 
   for line in io.lines(file) do
+    local l = vim.trim(line)
+    if vim.startswith(l, "#") then
+      if opts.debug then
+        print(debugMsg .. "skipping line " .. l)
+      end
+      goto continue
+    end
     local key, value = line:match("([^=]+)=(.+)")
     if key and value then
       -- env[key] = value
@@ -72,6 +79,7 @@ function M.read_env_file(file, opts)
       -- print(v)
       env[key] = v
     end
+    ::continue::
   end
 
   if opts.debug then
@@ -82,14 +90,25 @@ end
 
 M.adapter_inject_env = function(config, on_config)
   local final_config = vim.deepcopy(config)
-  local env = config.env or {}
+  local env = config.env or { ["ENV_SET_BY_DAP"] = "true" } -- default env, as empty {} throws error
 
   if config.envFile then
     for _, fPath in ipairs(config.envFile) do
       env = vim.tbl_deep_extend("force", env, M.read_env_file(fPath))
     end
   end
+
+  -- vim.print("env", vim.inspect(env))
+  -- vim.print("length", vim.inspect(#ipairs(env)))
+  --
+  -- local hasItems = false
+  -- for _ in ipairs(config.envFile or {}) do
+  --   hasItems = true
+  --   break
+  -- end
+
   final_config.env = env
+
   final_config.envFile = nil
   on_config(final_config)
 end

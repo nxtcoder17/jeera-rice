@@ -227,7 +227,8 @@ case $cmd in
       dragon-drop \
       google-chrome \
       mongodb-tools-bin \
-      warpd
+      warpd \
+      redli
 
     # after_install
     ;;

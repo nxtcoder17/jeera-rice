@@ -14,6 +14,16 @@ M.toggleterm_keymaps = function()
       return
     end
     local term = require("toggleterm.terminal").Terminal:new({
+      cmd = string.format(
+        [[
+      set -x _dir "$PWD"
+      set -x PARENT_DIR "%s"
+      pushd $PARENT_DIR > /dev/null 2>&1
+      pushd $_dir > /dev/null 2>&1
+      $SHELL
+      ]],
+        vim.g.root_dir
+      ),
       start_in_insert = true,
       dir = vim.fn.getcwd(),
       direction = "float",

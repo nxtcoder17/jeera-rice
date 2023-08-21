@@ -24,6 +24,16 @@ vim.keymap.set({ "n", "v" }, "ss", ":w<CR>", opts)
 vim.keymap.set("n", "si", ":vsplit<CR>", opts)
 vim.keymap.set("n", "sm", ":split<CR>", opts)
 
+-- making splits
+vim.keymap.set("n", "scc", function()
+  local f = vim.fn.expand("%:p")
+  local from_project_root = f:sub(#vim.g.root_dir + 2)
+
+  local lineNr = vim.fn.line(".")
+
+  vim.fn.setreg("+", from_project_root .. ":" .. lineNr)
+end, { noremap = true, silent = true, desc = "Copy file path, including line number to system clipboard" })
+
 -- split resize
 vim.keymap.set({ "n" }, "<C-M-Left>", "<Cmd>vertical resize -5<CR>", opts)
 vim.keymap.set({ "n" }, "<C-M-Right>", "<Cmd>vertical resize +5<CR>", opts)

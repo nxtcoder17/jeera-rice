@@ -82,6 +82,19 @@ local function default_go_configurations()
         end,
       },
     },
+
+    {
+      type = "go",
+      name = "Test File",
+      request = "launch",
+      mode = "test",
+      program = "${file}",
+      -- env = {
+      --   project_root = function()
+      --     utils.choose_dir("env:project_root = ", vim.g.root_dir)
+      --   end,
+      -- },
+    },
   }
 end
 

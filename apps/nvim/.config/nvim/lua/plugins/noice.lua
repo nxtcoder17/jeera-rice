@@ -16,6 +16,10 @@ require("noice").setup({
       },
       opts = { skip = true },
     },
+    {
+      view = "notify",
+      filter = { event = "msg_showmode" },
+    },
   },
   cmdline = {
     view = "cmdline",
@@ -26,24 +30,13 @@ require("noice").setup({
       merge = true,
     },
   },
-  -- views = {
-  --   cmdline_popup = {
-  --     border = {
-  --       style = "none",
-  --       padding = { 2, 3 },
-  --     },
-  --     filter_options = {},
-  --     win_options = {
-  --       winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
-  --     },
-  --   },
-  -- },
+
   -- you can enable a preset for easier configuration
   presets = {
-    bottom_search = true,       -- use a classic bottom cmdline for search
-    command_palette = true,     -- position the cmdline and popupmenu together
-    long_message_to_split = true, -- long messages will be sent to a split
-    inc_rename = true,          -- enables an input dialog for inc-rename.nvim
-    lsp_doc_border = true,      -- add a border to hover docs and signature help
+    bottom_search = true,          -- use a classic bottom cmdline for search
+    command_palette = false,       -- position the cmdline and popupmenu together
+    long_message_to_split = false, -- long messages will be sent to a split
+    inc_rename = true,             -- enables an input dialog for inc-rename.nvim
+    lsp_doc_border = true,         -- add a border to hover docs and signature help
   },
 })

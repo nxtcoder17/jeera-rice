@@ -49,6 +49,7 @@ function choose_station() {
 # fzf --with-nth=1 --delimiter='\t' --preview="$previewer {2} {3}" --preview-window=right:70%:wrap --bind='enter:execute(mpv {2})' || exit 0
 
 station="$(choose_station)"
+[ -z "$station" ] && exit 0
 
 function trim() {
   if [ -n "$1" ]; then

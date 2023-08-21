@@ -50,7 +50,7 @@
 --   katanaGray = "#717C7C",
 -- }
 
-local kanagawa_theme = "wave"
+local kanagawa_theme = "dragon" -- "wave" or "dragon" or "lotus"
 local kanagawa_colors = require("kanagawa.colors").setup({ theme = kanagawa_theme })
 
 local colors = {
@@ -88,7 +88,7 @@ local overrides = function(themeColors)
       fg = kanagawa_colors.palette.peachRed,
     },
     DiagnosticSignError = {
-      bg = vim.NIL,
+      -- bg = vim.NIL,
       fg = kanagawa_colors.palette.peachRed,
     },
     ["@keyword.return"] = {

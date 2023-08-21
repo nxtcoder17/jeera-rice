@@ -25,7 +25,9 @@ vim.g.loaded_ruby_provider = 0
 -- sourced from `https://nanotipsforvim.prose.sh/using-pcall-to-make-your-config-more-stable`
 local function safeRequire(module)
   local success, loadedModule = pcall(require, module)
-  if success then return loadedModule end
+  if success then
+    return loadedModule
+  end
   vim.cmd.echo("Error loading " .. module)
 end
 
@@ -33,7 +35,7 @@ safeRequire("globals")
 safeRequire("settings")
 safeRequire("autocmds")
 safeRequire("keymaps")
-safeRequire("plugins-lazy").minimal()
+safeRequire("plugins-lazy")
 safeRequire("functions")
 safeRequire("commands")
 
