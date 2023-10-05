@@ -1,20 +1,22 @@
+-- local min_severity = vim.diagnostic.severity.WARN
+local min_severity = vim.diagnostic.severity.HINT
 vim.diagnostic.config({
   underline = {
     severity = {
-      min = vim.diagnostic.severity.WARN,
+      min = min_severity,
       max = vim.diagnostic.severity.ERROR,
     },
   },
-  virtual_text = {
-    -- prefix = "☠ ",
-    prefix = " ● ",
-    severity = vim.diagnostic.severity.ERROR,
-    only_current_line = true,
-  },
-  -- virtual_text = false,
+  -- virtual_text = {
+  --   -- prefix = "☠ ",
+  --   prefix = " ● ",
+  --   severity = vim.diagnostic.severity.ERROR,
+  --   only_current_line = true,
+  -- },
+  virtual_text = false,
   signs = {
     severity = {
-      min = vim.diagnostic.severity.WARN,
+      min = min_severity,
       max = vim.diagnostic.severity.ERROR,
     },
   },
@@ -28,28 +30,46 @@ vim.diagnostic.config({
 local function on_attach(client, bufnr)
   local opts = { silent = true, buffer = bufnr, remap = false }
 
-  -- testing for gopls speed: START
-  -- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-  --   underline = true,
-  --   virtual_text = false,
-  --   update_in_insert = true,
-  -- })
-  -- testing for gopls speed: END
+  -- somehow it is crashing on tsserver
+  -- if client.server_capabilities ~= nil and client.server_capabilities.inlayHintProvider then
+  --   vim.lsp.inlay_hint(bufnr, vim.g.inlay_hints_enabled or false)
+  -- end
 
-  if client.server_capabilities.inlayHintProvider then
-    vim.lsp.inlay_hint(bufnr, vim.g.inlay_hints_enabled or false)
+  if client ~= nil and client.server_capabilities ~= nil then
+    client.server_capabilities.semanticTokensProvider = nil
   end
 
+  -- vim.api.nvim_create_autocmd("CursorHold", {
+  --   buffer = bufnr,
+  --   callback = function()
+  --     local float_opts = {
+  --       focusable = false,
+  --       close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+  --       border = "rounded",
+  --       source = "always",
+  --       prefix = " ",
+  --       scope = "cursor",
+  --     }
+  --     vim.diagnostic.open_float(nil, float_opts)
+  --   end,
+  -- })
+
   vim.keymap.set("n", "sn", function()
-    vim.diagnostic.goto_next({
-      severity = { min = vim.diagnostic.severity.WARN, max = vim.diagnostic.severity.ERROR },
-    })
+    local severity = { min = vim.diagnostic.severity.WARN, max = vim.diagnostic.severity.ERROR }
+    local ft = vim.bo.filetype
+    if ft == "typescript" or ft == "typescript.tsx" or ft == "typescriptreact" then
+      severity.min = vim.diagnostic.severity.HINT
+    end
+    vim.diagnostic.goto_next({ severity = severity })
   end, opts)
 
   vim.keymap.set("n", "sp", function()
-    vim.diagnostic.goto_prev({
-      severity = { min = vim.diagnostic.severity.WARN, max = vim.diagnostic.severity.ERROR },
-    })
+    local severity = { min = vim.diagnostic.severity.WARN, max = vim.diagnostic.severity.ERROR }
+    local ft = vim.bo.filetype
+    if ft == "typescript" or ft == "typescript.tsx" or ft == "typescriptreact" then
+      severity.min = vim.diagnostic.severity.HINT
+    end
+    vim.diagnostic.goto_prev({ severity = severity })
   end, opts)
 
   vim.keymap.set("n", "se", vim.diagnostic.open_float, opts)
@@ -89,6 +109,9 @@ end
 -- setting up lsp servers
 
 local lsp_config = require("lspconfig")
+
+-- table.insert(vim.opt.runtimepath, vim.fn.stdpath("data") .. "/mason/bin")
+vim.env.PATH = vim.env.PATH .. ":" .. vim.fn.stdpath("data") .. "/mason/bin"
 
 local base_dir = vim.fn.stdpath("data") .. "/mason/bin"
 local lsp_servers = {
@@ -161,17 +184,15 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.codeAction = {
   dynamicRegistration = false,
   codeActionLiteralSupport = {
-    codeActionKind = {
-      valueSet = {
-        "",
-        "quickfix",
-        "refactor",
-        "refactor.extract",
-        "refactor.inline",
-        "refactor.rewrite",
-        "source",
-        "source.organizeImports",
-      },
+    valueSet = {
+      "",
+      "quickfix",
+      "refactor",
+      "refactor.extract",
+      "refactor.inline",
+      "refactor.rewrite",
+      "source",
+      "source.organizeImports",
     },
   },
 }
@@ -182,13 +203,36 @@ capabilities.textDocument.foldingRange = {
   dynamicRegistration = false,
   lineFoldingOnly = true,
 }
+capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
 
-require("cmp_nvim_lsp").default_capabilities(capabilities)
+-- has_cmp, cmp = pcall(require, "cmp")
+-- if has_cmp then
+--   require("cmp_nvim_lsp").default_capabilities(capabilities)
+-- end
 
 -- Add bun for Node.js-based servers
 local lspconfig_util = require("lspconfig.util")
 local add_bun_prefix = require("plugins.lsp.bun").add_bun_prefix
 lspconfig_util.on_setup = lspconfig_util.add_hook_before(lspconfig_util.on_setup, add_bun_prefix)
+
+local function wrapper(...)
+  local has_coq, coq = pcall(require, "coq")
+  if has_coq then
+    return coq.lsp_ensure_capabilities(...)
+  end
+
+  local has_cmp, cmp = pcall(require, "cmp")
+  if has_cmp then
+    return vim.tbl_deep_extend(
+      "force",
+      ...,
+      -- { capabilities = cmp.update_capabilities(vim.lsp.protocol.make_client_capabilities()) }
+      { capabilities = require("cmp_nvim_lsp").default_capabilities() }
+    )
+  end
+
+  return ...
+end
 
 -- tsserver
 lsp_config.tsserver.setup({
@@ -215,7 +259,7 @@ lsp_config.tsserver.setup({
 -- })
 --
 lsp_config.graphql.setup({
-  cmd = lsp_servers.graphql,
+  -- cmd = lsp_servers.graphql,
   on_attach = on_attach,
   root_dir = lsp_config.util.root_pattern("gqlgen.yml", ".graphql.config.*", "graphql.config.*"),
 })
@@ -235,7 +279,7 @@ local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
-lsp_config.lua_ls.setup({
+lsp_config.lua_ls.setup(wrapper({
   -- cmd = lsp_servers.lua,
   capabilities = capabilities,
   on_attach = on_attach,
@@ -265,7 +309,7 @@ lsp_config.lua_ls.setup({
       },
     },
   },
-})
+}))
 
 -- -- yamlls
 -- lsp_config.yamlls.setup({
@@ -286,16 +330,16 @@ lsp_config.lua_ls.setup({
 -- Css
 lsp_config.cssls.setup({
   capabilities = capabilities,
-  cmd = lsp_servers.css,
+  -- cmd = lsp_servers.css,
   on_attach = on_attach,
 })
 
 -- Tailwind CSS
 lsp_config.tailwindcss.setup({
-  cmd = lsp_servers.tailwindcss,
+  -- cmd = lsp_servers.tailwindcss,
   capabilities = capabilities,
   on_attach = on_attach,
-  filetypes = { "javascriptreact", "typescriptreact", "html", "css" },
+  filetypes = { "javascriptreact", "typescriptreact", "html", "css", "typescript.tsx", "javascript.jsx" },
   root_dir = lsp_config.util.root_pattern("tailwind.config.js"),
   log_level = vim.lsp.protocol.MessageType.Warning,
   settings = {},
@@ -343,7 +387,7 @@ lsp_config.tailwindcss.setup({
 
 -- Bash
 lsp_config.bashls.setup({
-  cmd = lsp_servers.bashls,
+  -- cmd = lsp_servers.bashls,
   capabilities = capabilities,
   on_attach = on_attach,
   filetypes = { "sh", "bash" },
@@ -351,7 +395,7 @@ lsp_config.bashls.setup({
 
 -- Dockerfile
 lsp_config.dockerls.setup({
-  cmd = lsp_servers.docker,
+  -- cmd = lsp_servers.docker,
   capabilities = capabilities,
   on_attach = on_attach,
   filetypes = { "Dockerfile", "dockerfile" },
@@ -364,45 +408,24 @@ lsp_config.dockerls.setup({
 lsp_config.pyright.setup({
   capabilities = capabilities,
   on_attach = on_attach,
-  cmd = lsp_servers.python,
+  -- cmd = lsp_servers.python,
 })
 
-lsp_config.gopls.setup({
+lsp_config.gopls.setup(wrapper({
   -- cmd = lsp_servers.go,
-  -- cmd = { "gopls", "serve" },
-  capabilities = capabilities,
+  -- capabilities = capabilities,
   on_attach = on_attach,
-  filetypes = { "go", "gomod", "gotmpl", "gowork" },
-  flags = {
-    debounce_text_changes = 300,
-  },
+  filetypes = { "go", "gomod", "gowork" },
   settings = {
     gopls = {
       usePlaceholders = true,
-      completeUnimported = true,
-      experimentalPostfixCompletions = true,
+      -- completeUnimported = true,
+      -- experimentalPostfixCompletions = true,
       analyses = {
         unreachable = true,
         unusedparams = true,
         shadow = false,
-        unusedwrite = true,
       },
-      semanticTokens = true,
-      staticcheck = false,
-      gofumpt = false,
-      vulncheck = "Imports",
-      diagnosticsDelay = "100ms"
-
-      -- for inlay hints
-      -- hints = {
-      --   assignVariableTypes = true,
-      --   compositeLiteralFields = true,
-      --   compositeLiteralTypes = true,
-      --   constantValues = true,
-      --   functionTypeParameters = true,
-      --   parameterNames = true,
-      --   rangeVariableTypes = true,
-      -- },
     },
   },
   init_options = {
@@ -412,53 +435,53 @@ lsp_config.gopls.setup({
   },
   single_file_support = true,
   root_dir = lsp_config.util.root_pattern("go.mod"),
-})
+}))
 
-lsp_config.terraformls.setup({
+lsp_config.terraformls.setup(wrapper({
   cmd = lsp_servers.terraform,
   filetypes = { "terraform" },
   on_attach = on_attach,
   root_dir = lsp_config.util.root_pattern(".git", ".terraform"),
-})
+}))
 
-lsp_config.efm.setup {
+lsp_config.efm.setup({
   init_options = { documentFormatting = true },
   settings = {
     -- rootMarkers = { ".git/" },
     languages = {
       lua = {
-        require('efmls-configs.linters.luacheck'),
-        require('efmls-configs.formatters.stylua'),
+        require("efmls-configs.linters.luacheck"),
+        require("efmls-configs.formatters.stylua"),
       },
       typescript = {
-        require('efmls-configs.linters.eslint_d'),
-        require('efmls-configs.formatters.eslint_d'),
+        require("efmls-configs.linters.eslint_d"),
+        require("efmls-configs.formatters.eslint_d"),
       },
       javascript = {
-        require('efmls-configs.linters.eslint_d'),
-        require('efmls-configs.formatters.eslint_d'),
+        require("efmls-configs.linters.eslint_d"),
+        require("efmls-configs.formatters.eslint_d"),
       },
       typescriptreact = {
-        require('efmls-configs.linters.eslint_d'),
-        require('efmls-configs.formatters.eslint_d'),
+        require("efmls-configs.linters.eslint_d"),
+        require("efmls-configs.formatters.eslint_d"),
       },
       javascriptreact = {
-        require('efmls-configs.linters.eslint_d'),
-        require('efmls-configs.formatters.eslint_d'),
+        require("efmls-configs.linters.eslint_d"),
+        require("efmls-configs.formatters.eslint_d"),
       },
       go = {
-        require('efmls-configs.linters.go_revive'),
-        require('efmls-configs.formatters.gofmt'),
-        require('efmls-configs.formatters.goimports'),
+        require("efmls-configs.linters.go_revive"),
+        require("efmls-configs.formatters.gofmt"),
+        require("efmls-configs.formatters.goimports"),
       },
       bash = {
-        require('efmls-configs.linters.bashate'),
-        require('efmls-configs.formatters.shfmt'),
+        require("efmls-configs.linters.bashate"),
+        require("efmls-configs.formatters.shfmt"),
       },
       sh = {
-        require('efmls-configs.linters.bashate'),
-        require('efmls-configs.formatters.shfmt'),
+        require("efmls-configs.linters.bashate"),
+        require("efmls-configs.formatters.shfmt"),
       },
-    }
-  }
-}
+    },
+  },
+})

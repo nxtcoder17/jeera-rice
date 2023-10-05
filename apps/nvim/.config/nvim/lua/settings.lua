@@ -36,21 +36,21 @@ opt.undodir = { vim.fn.stdpath("cache") .. "undodir" }
 opt.undofile = true
 
 opt.listchars = {
-  ["eol"] = "↲",
-  ["tab"] = "»·",
-  ["space"] = "␣",
-  ["trail"] = "-",
-  ["extends"] = "☛",
-  ["precedes"] = "☚",
+	["eol"] = "↲",
+	["tab"] = "»·",
+	["space"] = "␣",
+	["trail"] = "-",
+	["extends"] = "☛",
+	["precedes"] = "☚",
 
-  ["conceal"] = "┊",
-  ["nbsp"] = "☠",
+	["conceal"] = "┊",
+	["nbsp"] = "☠",
 }
 
 -- Tab, Spaces and Indentations
 opt.tabstop = 2
 opt.softtabstop = 2
-opt.shiftwidth = 2   -- spaces per tab when using >> or <<
+opt.shiftwidth = 2 -- spaces per tab when using >> or <<
 opt.expandtab = true -- expand tabs into spaces
 opt.autoindent = true
 opt.smarttab = true
@@ -112,7 +112,7 @@ vim.o.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,winpos,termin
 
 -- fold text
 vim.cmd(
-  [[ set foldtext=substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').'...'.trim(getline(v:foldend)) ]]
+	[[ set foldtext=substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').'...'.trim(getline(v:foldend)) ]]
 )
 
 -- neovide settings

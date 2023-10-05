@@ -12,5 +12,5 @@
 " echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')  
 " endfunction
 
-"hi! Normal guibg=#252626
+" hi! Normal guibg=#252626
 

@@ -3,8 +3,13 @@
 local opts = { silent = true, noremap = true }
 
 -- resets
-vim.keymap.set({ "n", "v" }, ";", ":", opts)
+vim.keymap.set({ "n", "v" }, "s", "<Nop>", opts)
+vim.keymap.set({ "n" }, "<C-t>", "<Nop>", opts)
 -- vim.keymap.set({ "n", "v" }, "f", "<Nop>")
+
+-- vim.keymap.del("n", "<C-w>")
+
+vim.keymap.set({ "n", "v" }, ";", ":", opts)
 
 vim.keymap.set("n", "j", "gj", opts)
 vim.keymap.set("n", "k", "gk", opts)
@@ -12,26 +17,30 @@ vim.keymap.set("n", "k", "gk", opts)
 vim.keymap.set("t", "<esc>", "<C-\\><C-N>", opts)
 vim.keymap.set({ "n", "v" }, "cc", '"+y', opts)
 
---vim.keymap.set({ "n" }, "<leader>f", "<Cmd>Telescope current_buffer_fuzzy_find<CR>")
+--- black hole registers
+vim.keymap.set({ "v" }, "p", '"0p', opts)
+vim.keymap.set({ "v" }, "x", '"0x', opts)
+vim.keymap.set({ "v" }, "d", '"0d', opts)
 
 vim.g.mapleader = ","
 
--- [ the 's' key ]
-vim.keymap.set({ "n", "v" }, "s", "<Nop>", opts)
 vim.keymap.set({ "n", "v" }, "ss", ":w<CR>", opts)
 
 -- making splits
 vim.keymap.set("n", "si", ":vsplit<CR>", opts)
 vim.keymap.set("n", "sm", ":split<CR>", opts)
 
+-- only split
+vim.keymap.set("n", "sx", ":only<CR>", opts)
+
 -- making splits
 vim.keymap.set("n", "scc", function()
-  local f = vim.fn.expand("%:p")
-  local from_project_root = f:sub(#vim.g.root_dir + 2)
+	local f = vim.fn.expand("%:p")
+	local from_project_root = f:sub(#vim.g.root_dir + 2)
 
-  local lineNr = vim.fn.line(".")
+	local lineNr = vim.fn.line(".")
 
-  vim.fn.setreg("+", from_project_root .. ":" .. lineNr)
+	vim.fn.setreg("+", from_project_root .. ":" .. lineNr)
 end, { noremap = true, silent = true, desc = "Copy file path, including line number to system clipboard" })
 
 -- split resize
@@ -52,9 +61,6 @@ vim.keymap.set("n", "sl", "<C-w>l<CR>", opts)
 vim.keymap.set("n", "sj", "<C-w>j<CR>", opts)
 vim.keymap.set("n", "sk", "<C-w>k<CR>", opts)
 
--- buffers closing others
-vim.keymap.set("n", "sx", ":BufDelOthers")
-
 -- tabs
 vim.cmd("cnoreabbrev tcd silent! windo tcd")
 vim.keymap.set("n", "tn", "<cmd>tabnew<CR>|:windo tcd " .. vim.g.root_dir .. "<CR>", opts)
@@ -69,35 +75,34 @@ vim.keymap.set("n", "g*", "g*zz", opts)
 vim.keymap.set("n", "g#", "g#zz", opts)
 
 local function closeFloating()
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    if not vim.api.nvim_win_is_valid(win) then
-      return
-    end
-    local config = vim.api.nvim_win_get_config(win)
-    if config and config.relative ~= "" then
-      local _result, _err = pcall(function()
-        vim.api.nvim_win_close(win, true)
-      end)
-    end
-  end
+	for _, win in ipairs(vim.api.nvim_list_wins()) do
+		if not vim.api.nvim_win_is_valid(win) then
+			return
+		end
+		local config = vim.api.nvim_win_get_config(win)
+		if config and config.relative ~= "" then
+			local _result, _err = pcall(function()
+				vim.api.nvim_win_close(win, true)
+			end)
+		end
+	end
 end
 
 --vim.keymap.set("n", "<BS>", ":set nohls <CR>|:lua closeFloating() <CR>", opts)
 vim.keymap.set("n", "<BS>", function()
-  closeFloating()
-  vim.cmd("nohls")
+	closeFloating()
+	vim.cmd("nohls")
 end, opts)
 vim.keymap.set("n", "<Esc>", ":nohls<CR>")
 
 -- creating scratch files
 vim.api.nvim_create_user_command("Scratch", function()
-  vim.cmd("vne | setlocal buftype=nofile | setlocal bufhidden=hide | setlocal noswapfile")
+	vim.cmd("vne | setlocal buftype=nofile | setlocal bufhidden=hide | setlocal noswapfile")
 end, {})
 
 vim.api.nvim_create_user_command("LspClearLog", function()
-  -- /home/nxtcoder17/.local/state/nvim/lsp.log
-  os.execute(string.format("rm -rf %s/lsp.log", os.getenv("XDG_STATE_HOME") or os.getenv("HOME") .. "/.local/state"))
-  -- print(string.format("rm -rf %s/lsp.log", os.getenv("XDG_STATE_HOME") or os.getenv("HOME") .. "/.local/state"))
+	-- /home/nxtcoder17/.local/state/nvim/lsp.log
+	os.execute(string.format("rm -rf %s/lsp.log", os.getenv("XDG_STATE_HOME") or os.getenv("HOME") .. "/.local/state"))
 end, {})
 
 -- because rnvimr shits wqa

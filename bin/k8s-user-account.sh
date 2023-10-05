@@ -1,206 +1,125 @@
 #! /usr/bin/env bash
 
-USERNAME=$1
-shift 1;
-NAMESPACES=( "$@" )
+# this script is meant to be used in remote cluster's master, to get a k8s kubeconfig.yaml,
+# that, can be de-commissioned in case it has been leaked.
 
-primaryNamespace=${NAMESPACES[0]}
+# the generated kubeconfig, can be used to generate other kubeconfigs, and de-commissioning it would be as simple as:
+# - deleting the service account
+# - deleting the secret associated with that service account
 
-username=$USERNAME
-contextName=kl-context
+username="$1"
+namespace="default"
 
-KUBECTL=${KUBECTL:-kubectl}
+output_file="$username-kubeconfig.yml"
+[ -z "$output_file" ] && echo "output_file must be defined as 1st argument to script, exiting ..." && exit 1
 
-# current-context
-currentCtx=$($KUBECTL config view -o jsonpath='{.current-context}')
-clusterName=$($KUBECTL config view -o json | jq -r ".contexts[] | select(.name == \"$currentCtx\")| .context.cluster")
-clusterUrl=$($KUBECTL config view -o json | jq -r ".clusters[] | select(.name == \"$currentCtx\") | .cluster.server")
+echo "env-var KUBECTL is set to: $KUBECTL"
 
-contextName="$currentCtx-user"
+# if env var KUBECTL is defined, use it, else use kubectl executable from PATH
+KUBECTL="${KUBECTL:-kubectl}"
 
-dir="$PWD/$username"
-manifestsDir="$dir/manifests"
+echo "KUBECTL is set to: $KUBECTL"
+
+curr_context_name=$($KUBECTL config view -o jsonpath='{.current-context}')
+cluster_name=$($KUBECTL config view -o jsonpath="{.contexts[?(@.name=='${curr_context_name}')].context.cluster}")
+
+new_context_name="${username}-ctx"
+
+manifestsDir="$PWD/${username}/manifests"
 [ -d "$manifestsDir" ] || mkdir -p "$manifestsDir"
-pushd "$dir" || (echo "pushd failed, exiting ..." && exit 1)
-echo "$primaryNamespace" > PRIMARY_NAMESPACE
+
 pushd "$manifestsDir" || (echo "pushd failed, exiting ..." && exit 1)
 
-# kubectl config current-context set namespace $NAMESPACE
-cat > svc-account.yaml <<EOF
+svc_account_name="${username}"
+
+# creating a new service account
+cat >svc-account.yaml <<EOF
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: $username
-  namespace: $primaryNamespace
-# secrets:
-#   - name: $username-svc-acc-secret
+  name: ${svc_account_name}
+  namespace: ${namespace}
 EOF
 
 $KUBECTL apply -f svc-account.yaml
 
-cat > svc-account-secret.yml <<EOF
+svc_account_secret_name="${svc_account_name}-token-secret"
+
+# creating a new service account secret
+cat >svc-account-secret.yml <<EOF
 apiVersion: v1
 kind: Secret
 metadata:
-  name: $username-svc-acc-secret
-  namespace: $primaryNamespace
+  name: ${svc_account_secret_name}
+  namespace: ${namespace}
   annotations:
-    kubernetes.io/service-account.name: $username
+    kubernetes.io/service-account.name: ${svc_account_name}
 type: kubernetes.io/service-account-token
 EOF
 
 $KUBECTL apply -f svc-account-secret.yml
-# exit 0
-popd
 
-# secret=$($KUBECTL get sa "$username" -n "$primaryNamespace" -o json | jq -r .secrets[].name)
-secret="$username-svc-acc-secret"
-
-echo "secret found: $secret"
-
-# Get ca.crt from secret
-$KUBECTL get secret "$secret" -n "$primaryNamespace" -o json | jq -r '.data["ca.crt"]' | base64 -d > ./ca.crt
-
-# Get service account token from secret
-user_token=$($KUBECTL get secret "$secret" -n "$primaryNamespace" -o json | jq -r '.data["token"]' | base64 -d)
-
-pushd $manifestsDir
-
-## for primary namespace, all actions allowed
-cat > primary-$primaryNamespace-role.yml <<EOF
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  name: $username-role
-  namespace: $primaryNamespace
-rules:
-  - apiGroups:
-      - ""
-      - extensions
-      - apps
-      - batch
-    resources:
-      - "*"
-    verbs:
-      # - "*"
-      - get
-      - watch
-      - list
-
----
-
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: $username-rb
-  namespace: $primaryNamespace
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: $username-role
-subjects:
-  - kind: ServiceAccount
-    name: $username
-    namespace: $primaryNamespace
-EOF
-kubectl apply -f primary-$primaryNamespace-role.yml
-
-# creating role for secondary namespaces
-cat > cluster-role.yml <<EOF
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: $username-cluster-role
-rules:
-  - apiGroups:
-      - ""
-      - apps
-      - batch
-    resources:
-      - jobs
-      - deployments
-      - services
-      - clusterroles
-    verbs:
-      - get
-      - list
-      - watch
-  - apiGroups:
-      - ""
-    resources:
-      - namespaces
-    verbs:
-      - get
-      - list
-      - watch
-  # - apiGroups:
-  #     - "*"
-  #   resources:
-  #     - "*"
-  #   verbs:
-  #     - get
-  #     - list
-  #     - watch
-EOF
-kubectl apply -f cluster-role.yml
-
-cat > cluster-rb.yml <<EOF
+# cluster role binding to this user
+cat >cluster-role-binding.yaml <<EOF
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: $username-cluster-rb
+  name: ${svc_account_name}-cluster-rb
 subjects:
   - kind: ServiceAccount
-    name: $username
-    namespace: $primaryNamespace
+    name: ${svc_account_name}
+    namespace: ${namespace}
 roleRef:
   kind: ClusterRole
-  name: $username-cluster-role
+  name: cluster-admin
   apiGroup: "rbac.authorization.k8s.io"
 EOF
-$KUBECTL apply -f cluster-rb.yml
 
-# for ns in "${NAMESPACES[@]:1}"
-# do
-#   # apply role bindings in secondary namespace
-#   name=cluster-rb-ns-$ns.yml
-# cat > $name <<EOF
-# apiVersion: rbac.authorization.k8s.io/v1
-# kind: RoleBinding
-# metadata:
-#   name: $username-cluster-rb
-#   namespace: $ns
-# roleRef:
-#   apiGroup: rbac.authorization.k8s.io
-#   kind: ClusterRole
-#   name: $username-cluster-role
-# subjects:
-#   - kind: ServiceAccount
-#     name: $username
-#     namespace: $primaryNamespace
-# EOF
+$KUBECTL apply -f cluster-role-binding.yaml
+popd || exit 1
 
-# $KUBECTL apply -f $name
-# done
+### now generating a new kubeconfig from this generated service account token
+function generate_kubeconfig() {
+	token=$1
+	output=$2
 
-popd
+	$KUBECTL config set-credentials "${username}" --token="${token}"
+	$KUBECTL config set-context ${new_context_name} --cluster="${cluster_name}" --user="${username}" --namespace="${namespace}"
+	$KUBECTL config use-context ${new_context_name}
 
-# ############ using
-kubectl config set-cluster "$clusterName"  --embed-certs=true --server="$clusterUrl" --certificate-authority=./ca.crt
+	echo "saving generated kubeconfig to kubeconfig.yml"
+	$KUBECTL config view --raw --minify=true >"${output}"
+	$KUBECTL config use-context "${curr_context_name}"
 
-# Set user credentials
-kubectl config set-credentials "$username" --token="$user_token"
+	echo "cleaning up existing kubeconfig for sanity reasons ..."
+	$KUBECTL config delete-context ${new_context_name}
+	$KUBECTL config delete-user "${username}"
+}
 
-# Define the combination of user1 user with the EKS cluster
-kubectl config set-context $contextName --cluster="$clusterName" --user="$username" --namespace="$primaryNamespace"
-kubectl config use-context $contextName
+# Get service account token from secret
+# user_token=$($KUBECTL get secret "${svc_account_secret_name}" -n "${namespace}" -o json | jq -r '.data["token"]' | base64 -d)
+user_token=$($KUBECTL get secret "${svc_account_secret_name}" -n "${namespace}" -o jsonpath={.data."token"} | base64 -d)
+generate_kubeconfig "${user_token}" "${output_file}"
 
-#kubectl config view --raw --minify=true
-echo "saving account kubeconfig to $username-kubeconfig.yml"
-kubectl config view --raw --minify=true > kubeconfig.yml
-kubectl config use-context "$currentCtx"
+cert=$($KUBECTL get secret "${svc_account_secret_name}" -n "${namespace}" -o jsonpath={.data."ca\.crt"} | base64 -d)
 
-echo "cleaning up existing kubeconfig for sanity reasons ..."
-kubectl config delete-context $contextName > /dev/null
+validity_starts_at=$(echo "${cert}" | openssl x509 -noout -startdate | awk -F= '{print $2}')
+echo "${output_file} will be valid after ${validity_starts_at}"
 
+validity_start_timestamp=$(date -d "${validity_starts_at}" +%s)
+curr_timestamp="$(date +%s)"
+
+echo "validity_start_timestamp: ${validity_start_timestamp}"
+echo "curr_timestamp: ${curr_timestamp}"
+diff=$((validity_start_timestamp - curr_timestamp))
+
+echo "certificate will be valid in ${diff} seconds ..."
+while [ $((diff)) -ge 0 ]; do
+	echo "certificate will be valid in ${diff} seconds ..."
+	sleep 1
+	curr_timestamp="$(date +%s)"
+	diff=$((validity_start_timestamp - curr_timestamp))
+done
+
+echo "certificate is valid now, generated ${output_file} can now be used to communicate with the cluster"
 echo "DONE 🚀"

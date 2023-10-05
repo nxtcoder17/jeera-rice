@@ -54,6 +54,9 @@ if timer ~= nil then
       if currMode == "i" then
         vim.cmd("startinsert")
       end
+
+      -- it is supposed to reload the file immediately if it is changed outside of neovim
+      vim.api.nvim_command("checktime")
     end)
   )
 end

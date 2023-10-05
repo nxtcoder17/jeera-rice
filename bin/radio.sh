@@ -102,5 +102,5 @@ trap '( echo "killing ..."; kill $$ ) > /dev/null 2>&1 ' SIGINT SIGTERM EXIT
 
 logfile=$(mktemp --suffix=.radiolog)
 # mpv "$url" | tee "$logfile" | grep -i 'icy-title:' --line-buffered | sed -u -E 's/icy-title://g' | sed -u -E "s/^\s*/$(date -Is)\t$name\t/g" >> $history_file | tail -f "$logfile"
-mpv "$url" | tee "$logfile" | grep -i 'icy-title:' --line-buffered | sed -u -E 's/icy-title://g' | sed -u -E "s/^\s*/$(date -Is)\t$name\t/g" | notify_send >> $history_file | tail -f "$logfile"
+mpv --cache=no "$url" | tee "$logfile" | grep -i 'icy-title:' --line-buffered | sed -u -E 's/icy-title://g' | sed -u -E "s/^\s*/$(date -Is)\t$name\t/g" | notify_send >> $history_file | tail -f "$logfile"
 # mpv "$url"

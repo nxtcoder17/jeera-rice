@@ -25,13 +25,13 @@ hipatterns.setup({
     note = { pattern = "NOTE:?%s?", group = "MiniHipatternsNote" },
     info = { pattern = "INFO:?%s?", group = "MiniHipatternsHack" },
 
-    -- INFO hello
-    -- INFO: hello
     -- Highlight hex color strings (`#rrggbb`) using that color
     hex_color = hipatterns.gen_highlighter.hex_color(),
   },
 })
-vim.cmd([[ hi! MiniHipatternsTodo guifg=#2e6b99 guibg=#0d1e2b gui=italic ]])
+vim.cmd([[ hi! MiniHipatternsTodo guifg=#759cbd guibg=#1f272e gui=bold ]])
+vim.cmd([[ hi! MiniHipatternsHack guifg=#dea27c guibg=#1f272e gui=bold ]])
+vim.cmd([[ hi! MiniHipatternsNote guifg=#4799a1 guibg=#1f272e gui=bold ]])
 
 -- require("mini.indentscope").setup({
 --   draw = {
@@ -65,9 +65,9 @@ require("mini.surround").setup({
     add = "ys",
     delete = "ds",
     replace = "cs",
-    find = "",         -- Find surrounding (to the right)
-    find_left = "",    -- Find surrounding (to the left)
-    highlight = "",    -- Highlight surrounding
+    find = "",           -- Find surrounding (to the right)
+    find_left = "",      -- Find surrounding (to the left)
+    highlight = "",      -- Highlight surrounding
     update_n_lines = "", -- Update `n_lines`
   },
 })
