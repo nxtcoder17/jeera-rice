@@ -277,6 +277,7 @@ local function lsp()
 
 					-- formatters
 
+
 					--lsp
 					"bash-language-server",
 					"lua-language-server",
@@ -312,10 +313,11 @@ local function lsp()
 				"b0o/schemastore.nvim",
 			},
 		},
-		{
-			"hinell/lsp-timeout.nvim",
-			dependencies = { "neovim/nvim-lspconfig" },
-		},
+
+		-- {
+		-- 	"hinell/lsp-timeout.nvim",
+		-- 	dependencies = { "neovim/nvim-lspconfig" },
+		-- },
 
 		{
 			"creativenull/efmls-configs-nvim",
@@ -432,9 +434,7 @@ local function dap()
 	return {
 		{
 			"mfussenegger/nvim-dap",
-			-- event = events.BufReadPost,
-			-- event = events.VeryLazy,
-			cmd = { "DapContinue" },
+			after = "nvim-lspconfig",
 			config = function()
 				require("plugins.dap")
 			end,

@@ -24,11 +24,11 @@ vim.g.loaded_ruby_provider = 0
 
 -- sourced from `https://nanotipsforvim.prose.sh/using-pcall-to-make-your-config-more-stable`
 local function safeRequire(module)
-  local success, loadedModule = pcall(require, module)
-  if success then
-    return loadedModule
-  end
-  vim.cmd.echo("Error loading " .. module)
+	local success, loadedModule = pcall(require, module)
+	if success then
+		return loadedModule
+	end
+	vim.cmd.echo("Error loading " .. module)
 end
 
 safeRequire("globals")
@@ -43,20 +43,20 @@ safeRequire("commands")
 -- it might also be having some serious performance issues
 local timer = vim.loop.new_timer()
 if timer ~= nil then
-  timer:start(
-    1000,
-    500,
-    vim.schedule_wrap(function()
-      local currMode = vim.fn.mode()
-      if vim.bo.filetype ~= "" then
-        vim.cmd("redraw!")
-      end
-      if currMode == "i" then
-        vim.cmd("startinsert")
-      end
+	timer:start(
+		1000,
+		500,
+		vim.schedule_wrap(function()
+			local currMode = vim.fn.mode()
+			if vim.bo.filetype ~= "" then
+				vim.cmd("redraw!")
+			end
+			if currMode == "i" then
+				vim.cmd("startinsert")
+			end
 
-      -- it is supposed to reload the file immediately if it is changed outside of neovim
-      vim.api.nvim_command("checktime")
-    end)
-  )
+			-- it is supposed to reload the file immediately if it is changed outside of neovim
+			vim.api.nvim_command("checktime")
+		end)
+	)
 end
