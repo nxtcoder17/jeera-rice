@@ -68,7 +68,7 @@ bindsym $mod+$shift+s layout stacking
 bindsym $mod+$shift+e layout toggle split
 
 ## new workspaces
-workspace x1 output eDP-1-1
+workspace x1 output eDP
 
 # Jumping among workspaces
 bindsym $mod+1 workspace 1
@@ -253,9 +253,9 @@ bar {
 	font pango: Comic Code Ligatures Medium 10
 
 	# setting from i3blocks
-	separator_symbol " " 
+	separator_symbol " "
 
-	workspace_buttons yes	
+	workspace_buttons yes
 
 	binding_mode_indicator no
 

@@ -20,6 +20,7 @@ alias k9s 'k9s --logoless --headless -c ns'
 alias cc 'xclip -sel clip'
 alias ls 'exa --icons -FG'
 alias rm 'rm -i'
+alias task 'go-task'
 
 if type -q kubie
     alias kx 'kubie ctx'
@@ -36,7 +37,7 @@ end
 function addToPath --description "add item to system path"
     for item in $argv
         contains $item $PATH 
-        or set -x PATH $PATH $item
+        or set -x PATH $item $PATH 
     end
 end
 
@@ -103,6 +104,7 @@ set -gx INPUTRC "$XDG_CONFIG_HOME/inputrc"
 
 # APPLICATION specifics
 
+set -gx SHELL $(which fish)
 set -gx GOPATH "$XDG_DATA_HOME/go"
 set -gx K9SCONFIG "$XDG_CONFIG_HOME/k9s"
 set -gx DOCKER_CONFIG "$XDG_CONFIG_HOME/docker"
@@ -233,3 +235,4 @@ if [ -f "$__fish_config_dir/themes/tokyo-night-moon.fish" ]
     source "$__fish_config_dir/themes/tokyo-night-moon.fish"
 end
 
+echo "$PATH" > "/tmp/$USER-paths"

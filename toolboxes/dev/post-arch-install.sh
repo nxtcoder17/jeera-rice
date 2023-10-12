@@ -1,0 +1,1 @@
+../../bin/post-arch-install.sh

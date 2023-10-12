@@ -3,12 +3,13 @@
 name=""
 
 if [ -z "$1" ]; then
-  name="/tmp/screenshot-$RANDOM".png
+	name="/tmp/screenshot-$RANDOM".png
 else
-  dir="$HOME/pictures/screenshots"
-  mkdir -p $dir
-  name="$dir/$1"
+	dir="$HOME/pictures/screenshots"
+	mkdir -p $dir
+	name="$dir/$1"
 fi
 
 scrot -s $name
-[ -f "$name" ] && dragon-drop "$name" --and-exit > /dev/null 2>&1
+[ -f "$name" ] && dragon -x "$name" >/dev/null 2>&1
+

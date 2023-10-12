@@ -70,7 +70,7 @@ border_bottom=0
 border_left=0
 
 [volume]
-command=echo -e "<span color='#bd93f9'>$(pamixer --get-volume)</span>"
+command=echo -e "<span color='#bd93f9'>$(pamixer --get-volume) </span>"
 interval=1
 label=<span color="#bd93f9">  </span>
 border=#bd93f9
@@ -78,3 +78,4 @@ border_top=1
 border_right=0
 border_bottom=0
 border_left=0
+

@@ -17,10 +17,10 @@ case $cmd in
 	browsers="firefox-developer-edition qutebrowser"
 	messaging="telegram-desktop"
 	fonts="noto-fonts-emoji ttf-croscore"
-	audio="pulseaudio pulseaudio-alsa alsa-utils alsa-firmware alsa-plugins pamixer pavucontrol"
-	codecs="ffmpeg faac faad2 libdca libmpeg2 opus x264 x265 gst-libav libtheora"
+	#audio="pulseaudio pulseaudio-alsa alsa-utils alsa-firmware alsa-plugins pamixer pavucontrol"
+	#codecs="ffmpeg faac faad2 libdca libmpeg2 opus x264 x265 gst-libav libtheora"
 	video="mpv"
-	touchpad="libinput xf86-input-libinput"
+	#touchpad="libinput xf86-input-libinput"
 	battery="upower acpi"
 	pdf="zathura zathura-pdf-mupdf pandoc"
 	archives="unzip p7zip unrar tar"
@@ -31,7 +31,7 @@ case $cmd in
 	keyring="gnome-keyring libgnome-keyring"
 	network="net-tools inetutils tcpdump wireless_tools wireguard-tools openresolv dog sshuttle"
 
-	bluetooth="bluez bluez-utils pulseaudio-bluetooth blueman"
+	#bluetooth="bluez bluez-utils pulseaudio-bluetooth blueman"
 	gpu="nvtop"
 	containers="nerdctl kubectl docker docker-buildx docker-compose helm"
 
