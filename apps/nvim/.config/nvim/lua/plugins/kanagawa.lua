@@ -52,7 +52,6 @@
 --   katanaGray = "#717C7C",
 -- }
 
--- local kanagawa_theme = "dragon" -- "wave" or "dragon" or "lotus"
 local kanagawa_theme = "wave" -- "wave" or "dragon" or "lotus"
 local kanagawa_colors = require("kanagawa.colors").setup({ theme = kanagawa_theme })
 
@@ -227,8 +226,9 @@ require("kanagawa").setup({
   colors = colors,
   keywordStyle = { italic = true },
   specialReturn = true, -- special highlight for the return keyword
-  theme = kanagawa_theme,
+  theme = "wave",
   background = {
-    dark = kanagawa_theme,
+    dark = "wave",
+    light = "lotus",
   },
 })

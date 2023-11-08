@@ -24,13 +24,9 @@ client.focused						 #6687cc		 #364A82			#c0caf5		#9aa5ce			#6687cc
 client.focused_inactive		 #16161d		 #16161d			#c0caf5		#16161d			#16161d
 client.unfocused					 #16161d		 #16161d			#c0caf5		#16161d			#16161d
 
+gaps inner 4
 # gaps outer so that Single Window consumes full space
-gaps inner 15
-gaps outer -15
-
-# font pango: mononoki Nerd Font Regular 10
-# font pango: OperatorMono Nerd Font Regular 10
-font pango: Comic Code Ligatures Medium 10
+gaps outer -5
 
 focus_follows_mouse false
 hide_edge_borders vertical
@@ -311,8 +307,8 @@ set $toggleHelperTerm [title="nxthelper"] scratchpad show; move position center
 bindsym $ctrl+$period $toggleHelperTerm
 
 for_window [title="nxthelper"] floating enable
-for_window [title="nxthelper"] resize set 1800 1200
-# for_window [title="nxthelper"] move scratchpad, fullscreen enable
+# for_window [title="nxthelper"] resize set 1800 1200
+for_window [title="nxthelper"] resize set 45ppt 45ppt
 for_window [title="nxthelper"] move scratchpad
 for_window [title="nxthelper"] border pixel 3
 

@@ -6,14 +6,14 @@ set incsearch
 
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-surround'
-"Plug 'bkad/CamelCaseMotion'
+Plug 'bkad/CamelCaseMotion'
 Plug 'dbakker/vim-paragraph-motion'
 Plug 'machakann/vim-highlightedyank'
 Plug 'vim-scripts/argtextobj.vim'
 Plug 'kana/vim-textobj-entire'
 Plug 'michaeljsmith/vim-indent-object'
 
-Plug "chaoren/vim-wordmotion"
+"Plug "chaoren/vim-wordmotion"
 
 let g:argtextobj_pairs="[:],(:),<:>"
 
@@ -64,7 +64,7 @@ set scrolloff=7 sidescrolloff=10
 map w [w
 map e ]w
 map b [b
-map ciw [bv]ws
+map ciw l[bv]ws
 
 let mapleader = "'"
 nnoremap <leader>= :action EditorIncreaseFontSize<CR>

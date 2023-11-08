@@ -23,7 +23,8 @@ hipatterns.setup({
     hack = { pattern = "HACK:?%s?", group = "MiniHipatternsHack" },
     todo = { pattern = "TODO:?%s?", group = "MiniHipatternsTodo" },
     note = { pattern = "NOTE:?%s?", group = "MiniHipatternsNote" },
-    info = { pattern = "INFO:?%s?", group = "MiniHipatternsHack" },
+    info = { pattern = "INFO:?%s?", group = "MiniHipatternsInfo" },
+    error = { pattern = "ERROR:?%s?", group = "MiniHipatternsFixme" },
 
     -- Highlight hex color strings (`#rrggbb`) using that color
     hex_color = hipatterns.gen_highlighter.hex_color(),
@@ -32,6 +33,7 @@ hipatterns.setup({
 vim.cmd([[ hi! MiniHipatternsTodo guifg=#759cbd guibg=#1f272e gui=bold ]])
 vim.cmd([[ hi! MiniHipatternsHack guifg=#dea27c guibg=#1f272e gui=bold ]])
 vim.cmd([[ hi! MiniHipatternsNote guifg=#4799a1 guibg=#1f272e gui=bold ]])
+vim.cmd([[ hi! MiniHipatternsInfo guifg=#033580 guibg=#8dcf5f gui=bold ]])
 
 -- require("mini.indentscope").setup({
 --   draw = {
@@ -65,9 +67,9 @@ require("mini.surround").setup({
     add = "ys",
     delete = "ds",
     replace = "cs",
-    find = "",           -- Find surrounding (to the right)
-    find_left = "",      -- Find surrounding (to the left)
-    highlight = "",      -- Highlight surrounding
+    find = "",         -- Find surrounding (to the right)
+    find_left = "",    -- Find surrounding (to the left)
+    highlight = "",    -- Highlight surrounding
     update_n_lines = "", -- Update `n_lines`
   },
 })
@@ -85,7 +87,7 @@ function active_status_line()
   local fileinfo          = MiniStatusline.section_fileinfo({ trunc_width = 120 })
   local location          = MiniStatusline.section_location({ trunc_width = 120 })
 
-  local from_project_root = vim.fn.getcwd():sub(#vim.g.root_dir + 2)
+  local from_project_root = vim.fn.getcwd():sub(#vim.g.nxt.project_root_dir + 2)
   if from_project_root ~= "" then
     from_project_root = "📂 " .. from_project_root
   end

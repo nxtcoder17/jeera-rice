@@ -9,14 +9,14 @@ local conf = require("telescope.config").values
 local action_state = require("telescope.actions.state")
 local utils = require("telescope.utils")
 
-local string_fns = require("functions.strings")
+local Utils = require("functions.utils")
 
 local M = {}
 
 M.pick = function()
   local items = {
-    { key = "base64 encode", value = string_fns.base64_encode, desc = "encode selection to base64" },
-    { key = "base64 decode", value = string_fns.base64_decode, desc = "decode selection to string" },
+    { key = "base64 encode", value = Utils.base64_encode, desc = "encode selection to base64" },
+    { key = "base64 decode", value = Utils.base64_decode, desc = "decode selection to string" },
   }
 
   local ivyCustomLayoutConfig = {

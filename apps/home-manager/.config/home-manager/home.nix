@@ -7,6 +7,7 @@
   home.homeDirectory = "/var/home/nxtcoder17";
 
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowBroken = true;
   nixpkgs.config.allowUnfreePredicate = (_: true);
 
   # This value determines the Home Manager release that your configuration is
@@ -38,12 +39,15 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
 
+bat
+btop
 xorg.xrandr
 xorg.xset
 xcape
 xorg.xmodmap
 xorg.setxkbmap
 xorg.xhost
+xorg.xinput
 # xfce.xfce4-i3-workspaces-plugin
 pamixer
 
@@ -57,16 +61,16 @@ networkmanagerapplet
 light
 feh
 lxappearance
-picom
+# picom
 
 terraform
 # operator-sdk
 
 # build-tools
 gnumake
+gnupatch
 gcc
 
-    neovim
     stow
     git
     pipx
@@ -84,7 +88,8 @@ gcc
 fish
 zoxide
 eza
-# firefox-devedition
+light
+#firefox-devedition
 # distrobox
 # firefox
 #kitty
@@ -107,7 +112,6 @@ dunst
       # drawing
       # elementary-xfce-icon-theme
       # evince
-      # firefox
       # foliate
       # font-manager
       # gimp-with-plugins
@@ -164,13 +168,14 @@ dunst
       k9s
       kubectl
       kubernetes-helm
-      docker
+      # docker
       docker-buildx
-      docker-compose
+      # docker-compose
       go-task
 
 # programming languages
-go
+# go
+go_1_21
 mongosh
 upx
 github-cli
@@ -187,6 +192,16 @@ inetutils
 wireguard-tools
 mpv
 yq
+redpanda
+trivy
+dive
+brotli
+s3rs
+conky
+lua54Packages.lpeg
+awscli2
+ntp
+google-chrome
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -209,7 +224,7 @@ yq
     vimAlias = true;
   };
 
-services.picom.enable = true;
+# services.picom.enable = true;
 
 
   # You can also manage environment variables but you will have to manually
@@ -231,4 +246,5 @@ services.picom.enable = true;
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  # settings.experimental-features = [ "nix-command" "flakes" ];
 }

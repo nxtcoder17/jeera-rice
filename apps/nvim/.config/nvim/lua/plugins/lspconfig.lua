@@ -27,6 +27,11 @@ vim.diagnostic.config({
   },
 })
 
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+  -- delay update diagnostics
+  update_in_insert = false,
+})
+
 local function on_attach(client, bufnr)
   local opts = { silent = true, buffer = bufnr, remap = false }
 
@@ -182,7 +187,7 @@ local lsp_servers = {
 -- Code actions
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.codeAction = {
-  dynamicRegistration = false,
+  dynamicRegistration = true,
   codeActionLiteralSupport = {
     valueSet = {
       "",
@@ -203,7 +208,7 @@ capabilities.textDocument.foldingRange = {
   dynamicRegistration = false,
   lineFoldingOnly = true,
 }
-capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
+capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
 
 -- has_cmp, cmp = pcall(require, "cmp")
 -- if has_cmp then
@@ -220,7 +225,6 @@ local function wrapper(...)
   if has_coq then
     return coq.lsp_ensure_capabilities(...)
   end
-
   local has_cmp, cmp = pcall(require, "cmp")
   if has_cmp then
     return vim.tbl_deep_extend(
@@ -416,25 +420,45 @@ lsp_config.gopls.setup(wrapper({
   -- capabilities = capabilities,
   on_attach = on_attach,
   filetypes = { "go", "gomod", "gowork" },
+  flags = {
+    debounce_text_changes = 150,
+  },
   settings = {
     gopls = {
       usePlaceholders = true,
-      -- completeUnimported = true,
-      -- experimentalPostfixCompletions = true,
+      gofumpt = true,
       analyses = {
-        unreachable = true,
+        nilness = true,
         unusedparams = true,
-        shadow = false,
+        unusedwrite = true,
+        useany = true,
+      },
+      codelenses = {
+        gc_details = false,
+        generate = true,
+        regenerate_cgo = true,
+        run_govulncheck = true,
+        test = true,
+        tidy = true,
+        upgrade_dependency = true,
+        vendor = true,
+      },
+      experimentalPostfixCompletions = true,
+      completeUnimported = true,
+      staticcheck = true,
+      directoryFilters = { "-.git", "-node_modules" },
+      semanticTokens = true,
+      hints = {
+        assignVariableTypes = true,
+        compositeLiteralFields = true,
+        compositeLiteralTypes = true,
+        constantValues = true,
+        functionTypeParameters = true,
+        parameterNames = true,
+        rangeVariableTypes = true,
       },
     },
   },
-  init_options = {
-    directoryFilters = { "-.task", "-node_modules" },
-    -- memoryMode = "DegradeClosed",
-    -- memoryMode = "Normal",
-  },
-  single_file_support = true,
-  root_dir = lsp_config.util.root_pattern("go.mod"),
 }))
 
 lsp_config.terraformls.setup(wrapper({
@@ -443,6 +467,12 @@ lsp_config.terraformls.setup(wrapper({
   on_attach = on_attach,
   root_dir = lsp_config.util.root_pattern(".git", ".terraform"),
 }))
+
+lsp_config.helm_ls.setup({
+  -- cmd = { "helm_ls", "serve" },
+  filetypes = { "helm", "gotmpl" },
+  root_dir = lsp_config.util.root_pattern("Chart.yaml"),
+})
 
 lsp_config.efm.setup({
   init_options = { documentFormatting = true },

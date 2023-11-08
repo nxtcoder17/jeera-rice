@@ -1,9 +1,9 @@
 k9s:
   refreshRate: 2
   maxConnRetry: 5
-  enableMouse: false
-  headless: false
-  logoless: false
+  enableMouse: true
+  headless: true
+  logoless: true
   crumbsless: false
   readOnly: false
   noExitOnCtrlC: false
@@ -13,23 +13,24 @@ k9s:
     tail: 100
     buffer: 5000
     sinceSeconds: 300
-    fullScreenLogs: false
-    textWrap: false
+    fullScreenLogs: true
+    textWrap: true
     showTime: false
   currentContext: kloudlite-admin-ctx
   currentCluster: default
   clusters:
     default:
       namespace:
-        active: all
+        active: kl-core
         lockFavorites: false
         favorites:
+        - sample
         - kl-core
-        - wg-platform
+        - kl-account-check
         - all
         - default
       view:
-        active: clusters
+        active: pods
       featureGates:
         nodeShell: false
       shellPod:

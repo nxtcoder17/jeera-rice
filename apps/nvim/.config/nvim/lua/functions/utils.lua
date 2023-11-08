@@ -49,7 +49,7 @@ M.base64_decode = function(text)
 	logger.debug("[base64_decode] decoded output:", v)
 
 	if os.execute("command -v xclip") == 0 then
-		os.execute(string.format("echo -n %s | xclip -sel clip", v))
+		os.execute(string.format("echo -n '%s' | xclip -sel clip", v))
 	end
 	return v
 end

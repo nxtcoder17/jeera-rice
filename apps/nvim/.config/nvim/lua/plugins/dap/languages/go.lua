@@ -78,7 +78,7 @@ local function default_go_configurations()
       program = utils.choose_program_dir,
       env = {
         project_root = function()
-          utils.choose_dir("env:project_root = ", vim.g.root_dir)
+          utils.choose_dir("env:project_root = ", vim.g.nxt.project_root_dir)
         end,
       },
     },
@@ -91,7 +91,7 @@ local function default_go_configurations()
       program = "${file}",
       -- env = {
       --   project_root = function()
-      --     utils.choose_dir("env:project_root = ", vim.g.root_dir)
+      --     utils.choose_dir("env:project_root = ", vim.g.nxt.project_root_dir)
       --   end,
       -- },
     },
@@ -146,7 +146,7 @@ M.setup = function()
 
   dap.configurations.go = {}
 
-  local projectDapFile = vim.g.root_dir .. "/.tools/nvim/dap/go.lua"
+  local projectDapFile = vim.g.nxt.project_root_dir .. "/.tools/nvim/dap/go.lua"
   if utils.file_exists(projectDapFile) then
     vim.cmd("so " .. projectDapFile)
   end

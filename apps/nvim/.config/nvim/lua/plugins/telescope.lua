@@ -202,7 +202,7 @@ M.grep = function(query, dir)
 
         -- vim.print(vim.inspect(q))
         if dir == vim.loop.cwd() then
-          M.grep(q, vim.g.root_dir)
+          M.grep(q, vim.g.nxt.project_root_dir)
         else
           M.grep(q, vim.loop.cwd())
         end
@@ -446,10 +446,10 @@ M.list_files = function(query, dir, opts)
           map("i", "<C-p>", function()
             actions.close(prompt_bufnr)
 
-            if dir == vim.g.root_dir then
+            if dir == vim.g.nxt.project_root_dir then
               M.list_files(search_query)
             else
-              M.list_files(search_query, vim.g.root_dir)
+              M.list_files(search_query, vim.g.nxt.project_root_dir)
             end
           end)
           return true

@@ -1,0 +1,9 @@
+[Unit]
+Description=battery checker timer
+
+[Timer]
+OnUnitActiveSec=30s
+Persistent=true
+
+[Install]
+WantedBy=timers.target

@@ -22,6 +22,10 @@ alias ls 'exa --icons -FG'
 alias rm 'rm -i'
 alias task 'go-task'
 
+alias hm 'home-manager'
+alias hme 'home-manager edit'
+alias hms 'home-manager switch'
+
 if type -q kubie
     alias kx 'kubie ctx'
 end
@@ -39,6 +43,10 @@ function addToPath --description "add item to system path"
         contains $item $PATH 
         or set -x PATH $item $PATH 
     end
+end
+
+function fish_right_prompt
+ #intentionally left blank
 end
 
 # echo "snippet inspired from kubie"
@@ -224,6 +232,12 @@ set -x LC_ALL "en_US.UTF-8"
 set -x LANG "en_US.UTF-8"
 set -x LC_TYPE "en_US.UTF-8"
 
+
+set -x LUA_PATH "$HOME/.nix-profile/lib/lua/5.4/lpeg.so;;"
+set -x LUA_CPATH "$HOME/.nix-profile/lib/lua/5.4/lpeg.so;;"
+# set -x LUA_PATH "$HOME/.nix-profile/lib/lua/5.4/*;;"
+# set -x LUA_CPATH "$HOME/.nix-profile/lib/lua/5.4/*;;"
+
 zoxide init fish | source
 # starship init fish | source
 
@@ -234,5 +248,9 @@ set --export PATH $BUN_INSTALL/bin $PATH
 if [ -f "$__fish_config_dir/themes/tokyo-night-moon.fish" ]
     source "$__fish_config_dir/themes/tokyo-night-moon.fish"
 end
+
+# if [ -f "$__fish_config_dir/themes/tokyonight-day.fish" ]
+#     source "$__fish_config_dir/themes/tokyonight-day.fish"
+# end
 
 echo "$PATH" > "/tmp/$USER-paths"

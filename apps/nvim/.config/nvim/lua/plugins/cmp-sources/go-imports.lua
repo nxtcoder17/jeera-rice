@@ -41,7 +41,7 @@ local kubebuilder_markers = {
     description = [[
       [Source](https://book.kubebuilder.io/reference/markers.html#markers-for-configcode-generation)
       // +kubebuilder:validation:Enum=Wallace;Gromit;Chicken
-    ]]
+    ]],
   },
   {
     label = "kubebuilder:marker validation maximum",
@@ -49,7 +49,7 @@ local kubebuilder_markers = {
     description = [[
       [Source](https://book.kubebuilder.io/reference/markers.html#markers-for-configcode-generation)
       // +kubebuilder:validation:Maximum=17
-    ]]
+    ]],
   },
   {
     label = "kubebuilder:marker validation minimum",
@@ -57,18 +57,22 @@ local kubebuilder_markers = {
     description = [[ **On Field**
       // +kubebuilder:validation:Mimimum=0
       [Source](https://book.kubebuilder.io/reference/markers.html#markers-for-configcode-generation)
-    ]]
+    ]],
   },
   {
-    label = "kubebuilder:marker validation minlength",
+    label = "",
     insertText = "// +kubebuilder:validation:MinLength=${0:1}",
     description = [[ On Field
     specifies the minimum length for this string.
-    ]]
-
-  }
-  -- "// +kubebuilder:validation:Maximum=${0:17}",
-  -- " ",
+    ]],
+  },
+  {
+    label = "kubebuilder:printcolumn:JSONPath",
+    insertText = '// +kubebuilder:printcolumn:JSONPath="${1:.metadata.name}",name=${2:ColumnName},type=${3:string}',
+    description = [[ On Field
+      specifies the printcolumn for a jsonpath field
+    ]],
+  },
 }
 
 local items = {}
@@ -82,7 +86,7 @@ for i in ipairs(kubebuilder_markers) do
   table.insert(items, i, {
     label = kubebuilder_markers[i].label,
     insertText = kubebuilder_markers[i].insertText,
-    insertTextFormat = require('cmp.types').lsp.InsertTextFormat.Snippet,
+    insertTextFormat = require("cmp.types").lsp.InsertTextFormat.Snippet,
     -- documentation = kubebuilder_markers[i].description,
     detail = kubebuilder_markers[i].description,
   })

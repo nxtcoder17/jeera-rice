@@ -1,0 +1,9 @@
+[Unit]
+Description=battery checker
+
+[Service]
+; ExecStart=bash ./scripts/battery-checker.sh
+ExecStart=notify-send "hi hello"
+
+[Install]
+WantedBy=timers.target

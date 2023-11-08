@@ -35,3 +35,7 @@ vim.api.nvim_create_user_command("InlayHintsToggle", function()
   vim.cmd("LspRestart gopls")
   vim.cmd("e!")
 end, { nargs = 0 })
+
+vim.api.nvim_create_user_command("Dragon", function(opts)
+  vim.cmd(string.format("!dragon %s %%", opts.args))
+end, { nargs = 1 })

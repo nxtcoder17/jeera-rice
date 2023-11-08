@@ -148,7 +148,8 @@ table.insert(snippets, t1)
 --
 -- table.insert(snippets, func)
 --
-local env_item = s("env.item",
+local env_item = s(
+  "env.item",
   fmt('{} {} `env:"{}" required:"{}"`', {
     i(1, "var"),
     i(2, "string"),
@@ -197,22 +198,22 @@ table.insert(snippets, env_template)
 ----------- Stolen from: tj devries ---------------
 local snippet_from_nodes = ls.sn
 
-local ts_locals = require "nvim-treesitter.locals"
-local ts_utils = require "nvim-treesitter.ts_utils"
+local ts_locals = require("nvim-treesitter.locals")
+local ts_utils = require("nvim-treesitter.ts_utils")
 
 local get_node_text = vim.treesitter.get_node_text
 
 local transforms = {
   int = function(_, _)
-    return t "0"
+    return t("0")
   end,
 
   bool = function(_, _)
-    return t "false"
+    return t("false")
   end,
 
   string = function(_, _)
-    return t [[""]]
+    return t([[""]])
   end,
 
   error = function(_, info)
@@ -224,7 +225,7 @@ local transforms = {
         t(string.format('errors.Wrap(%s, "%s")', info.err_name, info.func_name)),
       })
     else
-      return t "err"
+      return t("err")
     end
   end,
 
@@ -232,7 +233,7 @@ local transforms = {
   [function(text)
     return string.find(text, "*", 1, true) ~= nil
   end] = function(_, _)
-    return t "nil"
+    return t("nil")
   end,
 }
 
@@ -264,7 +265,7 @@ local handlers = {
       local type_node = matching_node:field("type")[1]
       table.insert(result, transform(get_node_text(type_node, 0), info))
       if idx ~= count - 1 then
-        table.insert(result, t { ", " })
+        table.insert(result, t({ ", " }))
       end
     end
 
@@ -296,8 +297,8 @@ local function go_result_type(info)
   end
 
   if not function_node then
-    print "Not inside of a function"
-    return t ""
+    print("Not inside of a function")
+    return t("")
   end
 
   local query = vim.treesitter.query.parse(
@@ -320,35 +321,38 @@ end
 local go_ret_vals = function(args)
   return snippet_from_nodes(
     nil,
-    go_result_type {
+    go_result_type({
       index = 0,
       err_name = args[1][1],
       func_name = args[2][1],
-    }
+    })
   )
 end
 
-table.insert(snippets, s(
-  "efi",
-  fmta(
-    [[
+table.insert(
+  snippets,
+  s(
+    "efi",
+    fmta(
+      [[
 <val>, <err> := <f>(<args>)
 if <err_same> != nil {
 	return <result>
 }
 <finish>
 ]],
-    {
-      val = i(1, "v"),
-      err = i(2, "err"),
-      f = i(3, "func"),
-      args = i(4, "args"),
-      err_same = rep(2),
-      result = d(5, go_ret_vals, { 2, 3 }),
-      finish = i(0),
-    }
+      {
+        val = i(1, "v"),
+        err = i(2, "err"),
+        f = i(3, "func"),
+        args = i(4, "args"),
+        err_same = rep(2),
+        result = d(5, go_ret_vals, { 2, 3 }),
+        finish = i(0),
+      }
+    )
   )
-))
+)
 
 local rr = postfix(
   { trig = ".rr", match_pattern = ".*" },
@@ -366,7 +370,23 @@ local rr = postfix(
   )
 )
 
------------------------------------------------
+table.insert(snippets, rr)
 
+local iferr = s(
+  "iferr",
+  fmta(
+    [[
+if <err> != nil {
+  return <result>
+}
+]],
+    {
+      err = i(1, "err"),
+      result = i(2, "err"),
+    }
+  )
+)
+
+table.insert(snippets, iferr)
 
 return snippets, autosnippets

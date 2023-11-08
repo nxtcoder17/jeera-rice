@@ -1,47 +1,58 @@
 local actions = require("fzf-lua.actions")
 
-local fzf_lua = require("fzf-lua")
-fzf_lua.setup({
+vim.api.nvim_set_hl(0, "FzfText", { fg = "#abb2bf", bg = "#282c34", bold = false })
+
+local fzf = require("fzf-lua")
+fzf.setup({
   "telescope",
   fzf_opts = {
     ["--layout"] = "reverse",
+    ["--pointer"] = "👉",
   },
+  file_icon_padding = " ",
   global_resume = true,
   global_resume_query = true,
   global_resume_prompt = "resume: ",
 
   -- global_files_prompt = "Files❯ ",
 
+  hls = {
+    border = "FzfLuaBorder",
+    preview_border = "FzfLuaBorder",
+    scrollborder_e = "FzfLuaBorder",
+    scrollborder_f = "FzfLuaBorder",
+    normal = "FzfText",
+  },
+
   winopts = {
     preview = {
       -- layout = "vertical",
       horizontal = "right:40%",
     },
-    height = 0.4, -- window height
-    width = 1,    -- window width
-    row = 1,      -- window row position (0=top, 1=bottom)
-    col = 0.50,   -- window col position (0=left, 1=right)
+    height = 0.3, -- window height
+    width = 1,  -- window width
+    row = 1,    -- window row position (0=top, 1=bottom)
+    col = 0.50, -- window col position (0=left, 1=right)
+    border = {
+      "╭",
+      "─",
+      "╮",
+      "│",
+      "╯",
+      "─",
+      "╰",
+      "│",
+    },
   },
 
-  -- files = {
-  --   -- providers = { "git_files" },
-  --   prompt = "Files❯ ",
-  --   cmd = "",         -- "fd --type f",
-  --   git_icons = true, -- show git icons?
-  --   file_icons = true, -- show file icons?
-  --   color_icons = true, -- colorize file|git icons
-  --   -- reverse = true,            -- reverse list?
-  --   actions = {
-  --     ["default"] = actions.file_edit,
-  --     ["ctrl-s"] = actions.file_split,
-  --     ["ctrl-v"] = actions.file_vsplit,
-  --     ["ctrl-t"] = actions.file_tabedit,
-  --     ["ctrl-q"] = actions.file_sel_to_qf,
-  --     ["ctrl-y"] = function(selected)
-  --       print(selected[2])
-  --     end,
-  --   },
-  -- },
+  files = {
+    prompt = "Files ❯ ",
+    cwd_prompt = false,
+    fzf_opts = {
+      ["--no-separator"] = "",
+      ["--no-scrollbar"] = "",
+    },
+  },
 
   actions = {
     buffers = {
@@ -56,152 +67,103 @@ fzf_lua.setup({
   },
 })
 
+vim.api.nvim_set_hl(0, "FzfLuaBorder", { fg = "#282d36" })
+
 local M = {}
 
-M.live_files2 = function()
-  local cwd = vim.loop.cwd()
-  fzf_lua.fzf_live(function(q)
-    -- local execCmd = { "rg", "*", "--threads", "3", "--files", "--iglob", "!.git", "--hidden", "--sort", "path" }
-    -- local execCmd = {"rg", "--files"}
-    local execCmd = { "fd", ".", "-t", "f", "-t", "l", "-L" }
+M.files = function(dir)
+  dir = dir or vim.loop.cwd()
 
-    print("query:", q)
+  local fzf_opts = {}
+  if dir ~= vim.g.nxt.project_root_dir then
+    fzf_opts = {
+      ["--header"] = string.format("'%s'", "📂 " .. dir:sub(#vim.g.nxt.project_root_dir + 2)),
+    }
+  end
 
-    local searchQuery = q
-
-    if q:sub(1, 2) == "^p" then
-      searchQuery = q:sub(3)
-      table.insert(execCmd, vim.g.root_dir)
-    else
-      table.insert(execCmd, cwd)
-    end
-
-    -- local cmd = string.format("%s | fzf -f %s", table.concat(execCmd, " ") .. "", vim.fn.shellescape(searchQuery))
-    return table.concat(execCmd, " ") .. ""
-
-    -- local cmd = string.format('%s | fzf -f "%s"', table.concat(execCmd, " "), searchQuery or "")
-    -- print(cmd)
-    --
-    -- return "sh -c " .. cmd
-  end, {
-    exec_empty_query = true,
+  fzf.fzf_exec("rg --threads 3 --files --iglob !.git --hidden --sort path", {
+    prompt = string.format("Files ❯ "),
+    fzf_opts = fzf_opts,
     fn_transform = function(x)
-      return fzf_lua.make_entry.file(x, {
+      return fzf.make_entry.file(x, {
         file_icons = true,
         color_icons = true,
         strip_cwd_prefix = true,
       })
     end,
+    cwd = dir,
+    actions = {
+      ["default"] = actions.file_edit,
+      ["ctrl-s"] = actions.file_split,
+      ["ctrl-v"] = actions.file_vsplit,
+      ["ctrl-t"] = actions.file_tabedit,
+      ["ctrl-q"] = actions.file_sel_to_qf,
+      ["ctrl-f"] = function()
+        if dir ~= vim.g.nxt.project_root_dir then
+          return M.files(vim.g.nxt.project_root_dir)
+        end
+        return M.files()
+      end,
+    },
   })
 end
 
-M.live_files3 = function()
-  local cwd = vim.loop.cwd()
+M.only_tabs = function()
+  local tab_names = {}
+  local tab_name_to_win_id = {}
 
-  fzf_lua.fzf_live(function(q)
-    local rg_args = { "--threads", "3", "--files", "--iglob", "!.git", "--hidden", "--sort", "path", "--" }
+  for tabidx, tabnr in ipairs(vim.api.nvim_list_tabpages()) do
+    local win_id = vim.api.nvim_tabpage_get_win(tabnr)
+    local tab_name = tabidx .. " [TAB] " .. require("tabby.util").get_tab_name(tabnr)
+    table.insert(tab_names, tab_name)
 
-    local searchQuery = q
-
-    local prefixed = false
-
-    if q:sub(1, 2) == "^p" then
-      searchQuery = q:sub(3)
-      prefixed = true
-    end
-
-    table.insert(rg_args, searchQuery)
-
-    return function(fzf_cb)
-      local Job = require("plenary.job")
-      coroutine.wrap(function()
-        local co = coroutine.running()
-        Job
-            :new({
-              command = "rg",
-              args = rg_args,
-              cwd = prefixed and vim.g.root_dir or cwd,
-              -- env = { ["a"] = "b" },
-              on_exit = function(j, return_val)
-                -- print(return_val)
-                for _, v in ipairs(j:result()) do
-                  fzf_cb(v, function()
-                    coroutine.resume(co)
-                  end)
-                end
-              end,
-            })
-            :sync()
-        coroutine.yield()
-      end)()
-    end
-  end)
-end
-
-function M.git_history(opts)
-  local path = require("fzf-lua.path")
-  local core = require("fzf-lua.core")
-  local config = require("fzf-lua.config")
-  local actions = require("fzf-lua.actions")
-  opts = config.normalize_opts(opts, config.globals.git)
-  opts.prompt = opts.prompt or "Git History> "
-  opts.input_prompt = opts.input_prompt or "Search For> "
-
-  opts.cwd = path.git_root(opts.cwd)
-  local cmd = path.git_cwd("git log --pretty --oneline --color", opts.cwd)
-  opts.preview = vim.fn.shellescape(
-    path.git_cwd("git show --pretty='%Cred%H%n%Cblue%an%n%Cgreen%s' --color {1}", opts.cwd)
-  )
-
-  if not opts.query then
-    opts.query = vim.fn.input(opts.input_prompt) or ""
+    tab_name_to_win_id[tab_name] = win_id
   end
 
-  -- this gets called every keystroke, setup for this
-  -- is done inside 'set_fzf_interactive_cmd(opts)'
-  opts._reload_command = function(query)
-    return ("%s %s"):format(cmd, #query > 0 and "-S " .. vim.fn.shellescape(query) or "")
-  end
-
-  -- without this queries won't execute until you start typing
-  -- change to false to ignore empty string queries
-  opts.exec_empty_query = true
-  opts = core.set_fzf_interactive_cmd(opts)
-
-  coroutine.wrap(function()
-    local selected = core.fzf(opts)
-    if not selected then
-      return
-    end
-    actions.act(opts.actions, selected, opts)
-  end)()
-end
-
-M.live_files = function()
-  local cwd = vim.loop.cwd()
-  fzf_lua.fzf_live(function(q)
-    local searchQuery = q
-
-    local dir = cwd
-
-    if q:sub(1, 2) == "^p" then
-      searchQuery = q:sub(3)
-      dir = vim.g.root_dir
-    end
-
-    local cmd = string.format('rg --files %s | fzf -f "%s"', dir, searchQuery)
-    -- print(cmd)
-    return cmd
-  end, {
-    exec_empty_query = true,
-    fn_transform = function(x)
-      return fzf_lua.make_entry.file(x, {
-        file_icons = true,
-        color_icons = true,
-        strip_cwd_prefix = true,
-      })
-    end,
+  fzf.fzf_exec(tab_names, {
+    prompt = "Find Tabs ❯ ",
+    actions = {
+      -- Use fzf-lua builtin actions or your own handler
+      ["default"] = function(selected, opts)
+        local win_id = tab_name_to_win_id[selected[1]]
+        vim.api.nvim_set_current_win(win_id)
+      end,
+      ["ctrl-d"] = function(selected, opts)
+        vim.cmd("tabclose " .. selected[1])
+      end,
+    },
   })
 end
+
+M.dap_actions = function()
+  local tab_names = {}
+  local tab_name_to_win_id = {}
+
+  for tabidx, tabnr in ipairs(vim.api.nvim_list_tabpages()) do
+    local win_id = vim.api.nvim_tabpage_get_win(tabnr)
+    local tab_name = tabidx .. " [TAB] " .. require("tabby.util").get_tab_name(tabnr)
+    table.insert(tab_names, tab_name)
+
+    tab_name_to_win_id[tab_name] = win_id
+  end
+
+  fzf.fzf_exec(tab_names, {
+    prompt = "DAP Actions ❯ ",
+    actions = {
+      -- Use fzf-lua builtin actions or your own handler
+      ["default"] = function(selected, opts)
+        local win_id = tab_name_to_win_id[selected[1]]
+        vim.api.nvim_set_current_win(win_id)
+      end,
+      ["ctrl-d"] = function(selected, opts)
+        vim.cmd("tabclose " .. selected[1])
+      end,
+    },
+  })
+end
+
+vim.api.nvim_create_user_command("ReloadFzfLua", function()
+  R("plugins.fzf-lua")
+end, { nargs = 0 })
 
 return M

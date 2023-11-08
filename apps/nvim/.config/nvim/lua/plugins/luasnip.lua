@@ -14,9 +14,9 @@ local types = require("luasnip.util.types")
 
 require("luasnip.loaders.from_lua").load({
   paths = {
-    vim.g.nvim_dir .. "/snippets",
-    vim.g.root_dir .. "/.tools/snippets",
-    vim.g.root_dir .. "/.nvim/snippets",
+    vim.g.nxt.nvim_dir .. "/snippets",
+    vim.g.nxt.project_root_dir .. "/.tools/snippets",
+    vim.g.nxt.project_root_dir .. "/.nvim/snippets",
   },
 })
 
@@ -42,8 +42,8 @@ ls.setup({
 
 require("luasnip.loaders.from_snipmate").lazy_load({
   paths = {
-    vim.g.nvim_dir .. "/snippets",
-    vim.g.root_dir .. "/.tools/snippets",
-    vim.g.root_dir .. "/.nvim/snippets",
+    vim.g.nxt.nvim_dir .. "/snippets",
+    vim.g.nxt.project_root_dir .. "/.tools/snippets",
+    vim.g.nxt.project_root_dir .. "/.nvim/snippets",
   }
 })
