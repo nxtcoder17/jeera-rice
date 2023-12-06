@@ -31,9 +31,15 @@ local function colorschemes()
       priority = 1000,
       opts = {},
       config = function()
-        vim.opt.background = "dark"
-        require("plugins.tokyonight")
-        vim.cmd("colorscheme tokyonight")
+        -- vim.o.background = "dark"
+        -- vim.o.background = "light"
+        -- require("plugins.tokyonight")
+      end,
+    },
+    {
+      "catppuccin/nvim",
+      config = function()
+        -- require("plugins.colorschemes.catppuccin")
       end,
     },
     -- {
@@ -47,11 +53,11 @@ local function colorschemes()
       "rebelot/kanagawa.nvim",
       lazy = false,
       event = events.VeryLazy,
-      init = function()
-        require("plugins.kanagawa")
-        -- vim.opt.background = "light"
-        -- vim.cmd("colorscheme kanagawa")
-      end,
+      -- init = function()
+      -- 	require("plugins.kanagawa")
+      -- 	vim.o.background = "light"
+      -- 	vim.cmd("colorscheme kanagawa-lotus")
+      -- end,
     },
     --   {
     --     "towolf/vim-helm",
@@ -67,15 +73,29 @@ local function colorschemes()
       end,
     },
     {
-      "pappasam/papercolor-theme-slim",
+      "RRethy/nvim-base16",
       config = function()
-        -- vim.cmd("colorscheme PaperColorSlim")
+        -- require("plugins.colorschemes.base16")
       end,
     },
     {
-      "RRethy/nvim-base16",
+      "neanias/everforest-nvim",
+      version = false,
+      lazy = false,
+      priority = 1000, -- make sure to load this before all the other start plugins
+      -- Optional; default configuration will be used if setup isn't called.
       config = function()
-        require("plugins.colorschemes.base16")
+        -- vim.opt.background = "light"
+        -- require("plugins.tokyonight")
+        -- require("plugins.colorschemes.everforest")
+        -- vim.cmd([[colorscheme everforest]])
+      end,
+    },
+
+    {
+      "EdenEast/nightfox.nvim",
+      config = function()
+        require("plugins.colorschemes.nightfox")
       end,
     },
   }
@@ -193,7 +213,20 @@ local function syntax()
       end,
       dependencies = {
         { "nvim-treesitter/nvim-treesitter-textobjects" },
-        { "JoosepAlviste/nvim-ts-context-commentstring" },
+        {
+          "JoosepAlviste/nvim-ts-context-commentstring",
+          config = function()
+            vim.g.skip_ts_context_commentstring_module = true
+            require("ts_context_commentstring").setup({
+              enable_autocmd = false,
+              config = {
+                gotmpl = "{{- /* %s */}}",
+                terraform = "# %s",
+                proto = "// %s",
+              },
+            })
+          end,
+        },
         { "nvim-treesitter/playground" },
       },
     },
@@ -236,11 +269,14 @@ local function syntax()
         require("femaco").setup()
       end,
     },
+    {
+      "jmbuhr/otter.nvim",
+    },
   }
 end
 
 local function lsp()
-  neovim_native_lsp = {
+  local neovim_native_lsp = {
     {
       "williamboman/mason.nvim",
       cmd = { "Mason" },
@@ -330,9 +366,15 @@ local function lsp()
       },
       config = true,
     },
+    {
+      "j-hui/fidget.nvim",
+      config = function()
+        require("fidget").setup({})
+      end,
+    },
   }
 
-  coc_lsp = {
+  local coc_lsp = {
     {
       "neoclide/coc.nvim",
       branch = "release",
@@ -629,6 +671,7 @@ local function git_clients()
         "DiffviewToggleFiles",
         "DiffviewFocusFiles",
       },
+      keys = {},
       config = function()
         require("plugins.diffview")
       end,
@@ -647,6 +690,9 @@ local function git_clients()
       },
       config = true,
     },
+    {
+      "tpope/vim-fugitive",
+    },
   }
 end
 
@@ -661,6 +707,7 @@ local function lua_rocks()
         vim.schedule(function()
           print("syncing luarocks")
           require("plugins.nvim_rocks").install("base64")
+          require("plugins.nvim_rocks").install("lpeg")
         end)
         -- os.execute("luarocks install base64")
         -- ---- Add here the packages you want to make sure that they are installed

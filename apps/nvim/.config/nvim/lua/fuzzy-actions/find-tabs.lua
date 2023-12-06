@@ -1,8 +1,6 @@
 local fzf = require("fzf-lua")
 
-local M = {}
-
-function M.with_fzf()
+local function find_tabs()
   local tab_names = {}
   local tab_name_to_win_id = {}
 
@@ -30,4 +28,4 @@ function M.with_fzf()
   })
 end
 
-return M
+return find_tabs

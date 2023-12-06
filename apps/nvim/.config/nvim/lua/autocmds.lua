@@ -1,22 +1,22 @@
 local group = vim.api.nvim_create_augroup("autocmds", {
-	clear = true,
+  clear = true,
 })
 
 vim.api.nvim_create_autocmd("TermOpen", {
-	group = group,
-	callback = function()
-		vim.cmd("set ft=terminal")
-	end,
+  group = group,
+  callback = function()
+    vim.cmd("set ft=terminal")
+  end,
 })
 
 vim.api.nvim_create_autocmd("BufRead", {
-	group = group,
-	pattern = "*",
-	callback = function()
-		vim.cmd(
-			[[if &ft !~# 'commit\|rebase\|query\|Terminal\|toggleterm\|terminal\|TelescopePrompt\|TelescopeResult' && line("'\"") > 1 && line("'\"") <= line("$") | exe 'normal! g`"' | endif"]]
-		)
-	end,
+  group = group,
+  pattern = "*",
+  callback = function()
+    vim.cmd(
+      [[if &ft !~# 'commit\|rebase\|query\|Terminal\|toggleterm\|terminal\|TelescopePrompt\|TelescopeResult' && line("'\"") > 1 && line("'\"") <= line("$") | exe 'normal! g`"' | endif"]]
+    )
+  end,
 })
 
 -- vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
@@ -46,18 +46,26 @@ vim.api.nvim_create_autocmd("BufRead", {
 -- })
 
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-	group = group,
-	pattern = { os.getenv("HOME") .. "/.Xresources" },
-	callback = function()
-		os.execute(string.format("xrdb -merge %s", os.getenv("HOME") .. "/.Xresources"))
-	end,
+  group = group,
+  pattern = { os.getenv("HOME") .. "/.Xresources" },
+  callback = function()
+    os.execute(string.format("xrdb -merge %s", os.getenv("HOME") .. "/.Xresources"))
+  end,
 })
 
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-	group = group,
-	pattern = { "env", ".env" },
-	callback = function()
-		-- vim.diagnostic.disable(vim.fn.expand("<abuf>"))
-		vim.diagnostic.disable(0)
-	end,
+  group = group,
+  pattern = { "env", ".env" },
+  callback = function()
+    -- vim.diagnostic.disable(vim.fn.expand("<abuf>"))
+    vim.diagnostic.disable(0)
+  end,
+})
+
+vim.api.nvim_create_autocmd({ "BufNewFile" }, {
+  group = group,
+  pattern = { "flake.nix" },
+  callback = function()
+    vim.cmd(string.format("-1r %s/templates/flake.nix", vim.fn.stdpath("config")))
+  end,
 })

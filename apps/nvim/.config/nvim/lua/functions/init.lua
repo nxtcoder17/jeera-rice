@@ -7,6 +7,24 @@ _G.Fn = function()
   return R("functions")
 end
 
+_G.signature = function(func)
+  local info = debug.getinfo(func, "u")
+  if info and info.nparams > 0 then
+    local signature = funcname .. "("
+    for i = 1, info.nparams do
+      local paramName = debug.getlocal(func, i)
+      signature = signature .. paramName
+      if i < info.nparams then
+        signature = signature .. ", "
+      end
+    end
+    signature = signature .. ")"
+    print(signature)
+  else
+    print("Function has no parameters.")
+  end
+end
+
 -- _G.OffLoad = function(pkg)
 --   if pkg ~= "" then
 --     package.loaded[pkg] = nil

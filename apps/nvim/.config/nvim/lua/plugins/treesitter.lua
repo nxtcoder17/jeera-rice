@@ -50,15 +50,15 @@ require("nvim-treesitter.configs").setup({
     }, -- table of hex strings
   },
   -- Context CommentString
-  context_commentstring = {
-    enable = true,
-    enable_autocmd = true,
-    config = {
-      gotmpl = "{{- /* %s */}}",
-      terraform = "# %s",
-      proto = "// %s",
-    },
-  },
+  -- context_commentstring = {
+    -- enable = true,
+    -- enable_autocmd = true,
+    -- config = {
+      -- gotmpl = "{{- /* %s */}}",
+      -- terraform = "# %s",
+      -- proto = "// %s",
+    -- },
+  -- },
   -- refactor = {
   --   smart_rename = {
   --     enable = true,

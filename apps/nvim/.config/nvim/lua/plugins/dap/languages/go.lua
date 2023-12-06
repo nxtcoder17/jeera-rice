@@ -63,7 +63,6 @@ local function default_go_configurations()
         local x = utils.read_env_file(d .. "/.env")
         local y = utils.read_env_file(d .. "/.secrets/env")
         local z = vim.tbl_deep_extend("force", y, x or {})
-        print(vim.inspect(z))
         return z
       end,
       args = utils.get_arguments,
@@ -106,7 +105,7 @@ local function default_go_adapters()
       command = "bash",
       args = {
         "-c",
-        "dlv dap -l 127.0.0.1:${port} --api-version 2 --check-go-version false --allow-non-terminal-interactive 2>&1 | tee /tmp/debug.stdout",
+        "dlv dap -l 127.0.0.1:${port} --api-version 2  --check-go-version false --allow-non-terminal-interactive 2>&1 | tee /tmp/debug.stdout",
         -- "dlv debug --accept-multiclient --headless -l 127.0.0.1:${port} --api-version 2 --allow-non-terminal-interactive 2>&1 | tee /tmp/debug.stdout",
         -- "dlv debug --continue --accept-multiclient --headless -l 127.0.0.1:${port} --api-version 2 --allow-non-terminal-interactive 2>&1 | tee /tmp/debug.stdout",
       },

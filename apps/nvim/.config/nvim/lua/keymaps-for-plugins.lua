@@ -90,10 +90,13 @@ M.telescope_keymaps = function()
 end
 
 M.fzf_lua_keymaps = function()
-  vim.keymap.set("n", "sf", require("fuzzy-actions.list-files").with_fzf)
+  vim.keymap.set("n", "sf", require("fuzzy-actions.find-files"))
 
-  vim.cmd("cnoreabbrev tcd lua require('fuzzy-actions.tab-dir').with_fzf()<CR>")
-  vim.keymap.set("n", "tl", require("fuzzy-actions.list-only-tabs").with_fzf)
+  vim.cmd("cnoreabbrev cd lua require('fuzzy-actions.choose-tab-dir')()<CR>")
+  vim.keymap.set("n", "tl", require("fuzzy-actions.find-tabs"))
+  vim.keymap.set("n", "ff", require("fuzzy-actions.grep"))
+  vim.keymap.set("n", "s/", "<cmd>FzfLua grep_curbuf<CR>")
+  vim.keymap.set("n", "sb", "<Cmd>FzfLua buffers<CR>")
 end
 
 M.nvim_tmux_navigator_keymaps = function()

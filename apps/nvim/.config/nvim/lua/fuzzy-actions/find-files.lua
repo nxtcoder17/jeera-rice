@@ -1,20 +1,23 @@
 local fzf = require("fzf-lua")
 local actions = require("fzf-lua.actions")
 
-local M = {}
-
--- @param dir string
-function M.with_fzf(dir)
+--- @param dir string
+--- @param query string
+local function find_files(dir, query)
   dir = dir or vim.loop.cwd()
+  query = query or ""
 
   local fzf_opts = {}
   if dir ~= vim.g.nxt.project_root_dir then
-    fzf_opts = {
-      ["--header"] = string.format("'%s'", "📂 " .. dir:sub(#vim.g.nxt.project_root_dir + 2)),
-    }
+    fzf_opts = vim.tbl_extend(
+      "force",
+      fzf_opts,
+      { ["--header"] = string.format("'%s'", "📂 " .. dir:sub(#vim.g.nxt.project_root_dir + 2)) }
+    )
   end
 
   fzf.fzf_exec("rg --threads 3 --files --iglob !.git --hidden --sort path", {
+    query = query,
     prompt = string.format("Files ❯ "),
     fzf_opts = fzf_opts,
     fn_transform = function(x)
@@ -31,14 +34,15 @@ function M.with_fzf(dir)
       ["ctrl-v"] = actions.file_vsplit,
       ["ctrl-t"] = actions.file_tabedit,
       ["ctrl-q"] = actions.file_sel_to_qf,
-      ["ctrl-f"] = function()
+      ["ctrl-f"] = function(_, opts)
+        local q = fzf.get_last_query(opts)
         if dir ~= vim.g.nxt.project_root_dir then
-          return M.with_fzf(vim.g.nxt.project_root_dir)
+          return find_files(vim.g.nxt.project_root_dir, q)
         end
-        return M.with_fzf()
+        return find_files(nil, q)
       end,
     },
   })
 end
 
-return M
+return find_files

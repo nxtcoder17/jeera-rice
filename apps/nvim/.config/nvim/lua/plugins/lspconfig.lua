@@ -35,10 +35,9 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
 local function on_attach(client, bufnr)
   local opts = { silent = true, buffer = bufnr, remap = false }
 
-  -- somehow it is crashing on tsserver
-  -- if client.server_capabilities ~= nil and client.server_capabilities.inlayHintProvider then
-  --   vim.lsp.inlay_hint(bufnr, vim.g.inlay_hints_enabled or false)
-  -- end
+  if client.supports_method("textDocument/inlayHint") then
+    vim.lsp.inlay_hint.enable(bufnr, true)
+  end
 
   if client ~= nil and client.server_capabilities ~= nil then
     client.server_capabilities.semanticTokensProvider = nil
@@ -87,14 +86,14 @@ local function on_attach(client, bufnr)
   end, opts)
 
   -- vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-  -- vim.keymap.set("n", "gd", require("fzf-lua").lsp_definitions, opts)
-  vim.keymap.set("n", "gi", "<Cmd>Telescope lsp_implementations<CR>", opts)
-  -- vim.keymap.set("n", "gr", "<Cmd>Telescope lsp_references<CR>", opts)
+  vim.keymap.set("n", "gd", require("fzf-lua").lsp_definitions, opts)
   vim.keymap.set("n", "gr", function()
     require("telescope.builtin").lsp_references({ include_current_line = false, show_line = false })
   end, opts)
-  vim.keymap.set("n", "gd", "<Cmd>Telescope lsp_definitions<CR>", opts)
-  vim.keymap.set("n", "gD", "<Cmd>Telescope lsp_type_definitions<CR>", opts)
+  -- vim.keymap.set("n", "gd", "<Cmd>Telescope lsp_definitions<CR>", opts)
+  vim.keymap.set("n", "gd", "<Cmd>Fzf lsp_definitions<CR>", opts)
+  -- vim.keymap.set("n", "gD", "<Cmd>Telescope lsp_type_definitions<CR>", opts)
+  vim.keymap.set("n", "gD", "<Cmd>Fzf lsp_typedefs<CR>", opts)
   vim.keymap.set("n", "sr", vim.lsp.buf.rename, opts)
 end
 
@@ -474,6 +473,12 @@ lsp_config.helm_ls.setup({
   root_dir = lsp_config.util.root_pattern("Chart.yaml"),
 })
 
+lsp_config.bufls.setup({
+  root_dir = lsp_config.util.root_pattern("*.proto"),
+})
+
+require("lspconfig").rnix.setup({})
+
 lsp_config.efm.setup({
   init_options = { documentFormatting = true },
   settings = {
@@ -512,6 +517,10 @@ lsp_config.efm.setup({
         require("efmls-configs.linters.bashate"),
         require("efmls-configs.formatters.shfmt"),
       },
+      -- proto = {
+      -- require("efmls-configs.linters.buf"),
+      -- require("efmls-configs.formatters.buf"),
+      -- },
     },
   },
 })

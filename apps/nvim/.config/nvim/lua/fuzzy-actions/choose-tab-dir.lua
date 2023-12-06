@@ -1,9 +1,7 @@
 local fzf = require("fzf-lua")
-local plenary = require("plenary")
 
-local M = {}
-
-function M.with_fzf(dir)
+---@param dir string
+local function choose_tab_dir(dir)
   dir = dir or vim.fn.getcwd()
 
   local cmd = string.format(
@@ -27,14 +25,8 @@ function M.with_fzf(dir)
         vim.t.tab_dir = selected[1]
         vim.cmd(string.format("silent! windo tcd %s", selected[1]))
       end,
-      ["ctrl-f"] = function()
-        if dir ~= vim.g.nxt.project_root_dir then
-          M.with_fzf(vim.g.nxt.project_root_dir)
-        end
-        M.with_fzf()
-      end,
     },
   })
 end
 
-return M
+return choose_tab_dir

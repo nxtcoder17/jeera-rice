@@ -115,96 +115,97 @@ end
 
 local overrides = function(themeColors)
   local theme = themeColors.theme
-  local changes = {
-    Normal = {
-      -- bg = "#252626",
-      -- bg = "#171a1a",
-      bg = nxt_colors().window_background,
-    },
-    Visual = {
-      bg = colors.palette.nxtSelection1,
-    },
-    TSException = {
-      fg = kanagawa_colors.palette.oniViolet,
-    },
-    TSKeywordReturn = {
-      fg = kanagawa_colors.palette.lightBlue,
-    },
-    javascriptTSVariableBuiltin = {
-      fg = kanagawa_colors.palette.lightBlue,
-    },
-    DiagnosticError = {
-      bg = kanagawa_colors.palette.winterRed,
-      fg = kanagawa_colors.palette.peachRed,
-    },
-    DiagnosticSignError = {
-      -- bg = vim.NIL,
-      fg = kanagawa_colors.palette.peachRed,
-    },
-    ["@keyword.return"] = {
-      fg = kanagawa_colors.palette.dragonGreen2,
-    },
-    ["@method"] = {
-      -- fg = themeColors.palette.roninYellow,
-      -- fg = "#dce09b",
-      -- fg = "#b3b58a",
-      fg = nxt_colors().function_name,
-      -- bold = true,
-      -- italic = true,
-    },
-    ["@function"] = {
-      -- fg = "#dce09b",
-      -- fg = "#b3b58a",
-      fg = nxt_colors().function_name,
-    },
-    ["@method.call"] = {
-      -- fg = themeColors.palette.roninYellow,
-      fg = themeColors.palette.crystalBlue,
-    },
+  -- local changes = {
+  --   Normal = {
+  --     -- bg = "#252626",
+  --     -- bg = "#171a1a",
+  --     bg = nxt_colors().window_background,
+  --   },
+  --   Visual = {
+  --     bg = colors.palette.nxtSelection1,
+  --   },
+  --   TSException = {
+  --     fg = kanagawa_colors.palette.oniViolet,
+  --   },
+  --   TSKeywordReturn = {
+  --     fg = kanagawa_colors.palette.lightBlue,
+  --   },
+  --   javascriptTSVariableBuiltin = {
+  --     fg = kanagawa_colors.palette.lightBlue,
+  --   },
+  --   DiagnosticError = {
+  --     bg = kanagawa_colors.palette.winterRed,
+  --     fg = kanagawa_colors.palette.peachRed,
+  --   },
+  --   DiagnosticSignError = {
+  --     -- bg = vim.NIL,
+  --     fg = kanagawa_colors.palette.peachRed,
+  --   },
+  --   ["@keyword.return"] = {
+  --     fg = kanagawa_colors.palette.dragonGreen2,
+  --   },
+  --   ["@method"] = {
+  --     -- fg = themeColors.palette.roninYellow,
+  --     -- fg = "#dce09b",
+  --     -- fg = "#b3b58a",
+  --     fg = nxt_colors().function_name,
+  --     -- bold = true,
+  --     -- italic = true,
+  --   },
+  --   ["@function"] = {
+  --     -- fg = "#dce09b",
+  --     -- fg = "#b3b58a",
+  --     fg = nxt_colors().function_name,
+  --   },
+  --   ["@method.call"] = {
+  --     -- fg = themeColors.palette.roninYellow,
+  --     fg = themeColors.palette.crystalBlue,
+  --   },
+  --
+  --   ["@variable"] = {
+  --     fg = nxt_colors().identifier,
+  --   },
+  --
+  --   ["@variable.builtin"] = {
+  --     fg = nxt_colors().builtin_variable,
+  --   },
+  --
+  --   ["@constant"] = {
+  --     fg = nxt_colors().constants,
+  --   },
+  --
+  --   ["Constant"] = {
+  --     fg = nxt_colors().constants,
+  --   },
+  --
+  --   ["@field"] = {
+  --     fg = nxt_colors().identifier,
+  --   },
+  --   ["@boolean"] = {
+  --     fg = nxt_colors().boolean,
+  --   },
+  --   ["@namespace"] = {
+  --     -- go packages
+  --     fg = nxt_colors().namespace,
+  --   },
+  --
+  --   ["@property"] = {
+  --     -- .<something>
+  --     fg = nxt_colors().property,
+  --   },
+  --   ["@include"] = {
+  --     -- <package> name
+  --     fg = nxt_colors().include,
+  --   },
+  --
+  --   Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1 },
+  --   PmenuSel = { fg = "NONE", bg = theme.ui.bg_p2 },
+  --   PmenuSbar = { bg = theme.ui.bg_m1 },
+  --   PmenuThumb = { bg = theme.ui.bg_p2 },
+  -- }
 
-    ["@variable"] = {
-      fg = nxt_colors().identifier,
-    },
-
-    ["@variable.builtin"] = {
-      fg = nxt_colors().builtin_variable,
-    },
-
-    ["@constant"] = {
-      fg = nxt_colors().constants,
-    },
-
-    ["Constant"] = {
-      fg = nxt_colors().constants,
-    },
-
-    ["@field"] = {
-      fg = nxt_colors().identifier,
-    },
-    ["@boolean"] = {
-      fg = nxt_colors().boolean,
-    },
-    ["@namespace"] = {
-      -- go packages
-      fg = nxt_colors().namespace,
-    },
-
-    ["@property"] = {
-      -- .<something>
-      fg = nxt_colors().property,
-    },
-    ["@include"] = {
-      -- <package> name
-      fg = nxt_colors().include,
-    },
-
-    Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1 },
-    PmenuSel = { fg = "NONE", bg = theme.ui.bg_p2 },
-    PmenuSbar = { bg = theme.ui.bg_m1 },
-    PmenuThumb = { bg = theme.ui.bg_p2 },
-  }
-
-  return vim.tbl_deep_extend("force", changes, recommended_for_floating_windows(themeColors.theme))
+  -- return vim.tbl_deep_extend("force", changes, recommended_for_floating_windows(themeColors.theme))
+  -- return theme
 end
 
 vim.opt.fillchars:append({
@@ -218,15 +219,15 @@ vim.opt.fillchars:append({
 })
 
 require("kanagawa").setup({
-  compile = true,
+  compile = false,
   uncercurl = true,
   globalStatus = true,
-  transparent = true,
-  overrides = overrides,
+  transparent = false,
+  -- overrides = overrides,
   colors = colors,
   keywordStyle = { italic = true },
   specialReturn = true, -- special highlight for the return keyword
-  theme = "wave",
+  theme = "lotus",
   background = {
     dark = "wave",
     light = "lotus",

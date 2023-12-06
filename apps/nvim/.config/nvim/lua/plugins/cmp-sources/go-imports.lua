@@ -9,9 +9,11 @@ local common_go_imports = {
   'storagev1 "k8s.io/api/storage/v1"',
   'networkingv1 "k8s.io/api/networking/v1"',
   'autoscalingv2 "k8s.io/api/autoscaling/v2"',
+  'rbacv1 "k8s.io/api/rbac/v1"',
 
   -- k8s.io utils
   'yamlutil "k8s.io/apimachinery/pkg/util/yaml"',
+  'apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"',
 
   -- apimachinery
   'apiErrors "k8s.io/apimachinery/pkg/api/errors"',

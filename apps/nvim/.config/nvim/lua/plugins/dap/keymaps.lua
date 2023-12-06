@@ -8,7 +8,9 @@ dap.listeners.after["event_initialized"]["me"] = function()
   vim.keymap.set("n", "s<leader>", dap.step_over, { silent = true })
   vim.keymap.set("n", "sds", dap.continue, { silent = true })
   -- vim.t.dap_session = dap.session()
+  -- dap.repl.toggle({}, "80vsplit")
   dap_sessions[vim.fn.getcwd()] = dap.session()
+  vim.t.current_dap_repl_dir = vim.fn.getcwd()
 end
 
 dap.listeners.after["event_terminated"]["me"] = function()
@@ -65,18 +67,18 @@ end)
 --   vim.cmd("wincmd G")
 -- end)
 
-local current_dap_repl_dir = nil
+vim.t.current_dap_repl_dir = nil
 vim.keymap.set("n", "sdr", function()
   local curr_dir = vim.fn.getcwd()
   local dsession = dap_sessions[curr_dir]
   print("pre toggle", curr_dir)
   if dsession ~= nil then
-    if current_dap_repl_dir ~= nil and current_dap_repl_dir ~= curr_dir then
+    if vim.t.current_dap_repl_dir ~= nil and vim.t.current_dap_repl_dir ~= curr_dir then
       dap.repl.close()
     end
     dap.set_session(dsession)
     dap.repl.toggle({}, "80vsplit")
-    current_dap_repl_dir = curr_dir
+    vim.t.current_dap_repl_dir = curr_dir
     print("post toggle")
   end
 end)

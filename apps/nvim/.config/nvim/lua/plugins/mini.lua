@@ -6,34 +6,47 @@ require("mini.comment").setup({
   },
   mappings = {
     comment = "s;",
+    comment_visual = "s;",
     comment_line = "s;",
   },
 })
 
 local hipatterns = require("mini.hipatterns")
+function build_highlight_pattern(keyword)
+  return "%f[%w]()" .. keyword .. "()%f[%s]"
+end
+
 hipatterns.setup({
   highlighters = {
-    -- Highlight standalone 'FIXME', 'HACK', 'TODO', 'NOTE'
-    -- fixme = { pattern = "%f[%w]()FIXME()%f[%W]", group = "MiniHipatternsFixme" },
-    -- hack = { pattern = "%f[%w]()HACK()%f[%W]", group = "MiniHipatternsHack" },
-    -- todo = { pattern = "%f[%w]()TODO()%f[%W]", group = "MiniHipatternsTodo" },
-    -- note = { pattern = "%f[%w]()NOTE()%f[%W]", group = "MiniHipatternsNote" },
-
-    fixme = { pattern = "FIXME:?%s?", group = "MiniHipatternsFixme" },
-    hack = { pattern = "HACK:?%s?", group = "MiniHipatternsHack" },
-    todo = { pattern = "TODO:?%s?", group = "MiniHipatternsTodo" },
-    note = { pattern = "NOTE:?%s?", group = "MiniHipatternsNote" },
-    info = { pattern = "INFO:?%s?", group = "MiniHipatternsInfo" },
-    error = { pattern = "ERROR:?%s?", group = "MiniHipatternsFixme" },
+    fixme = { pattern = build_highlight_pattern("FIXME:"), group = "MiniHipatternsFixme" }, -- FIXME: example
+    hack = { pattern = build_highlight_pattern("HACK:"), group = "MiniHipatternsHack" },  -- HACK: example
+    todo = { pattern = build_highlight_pattern("TODO:"), group = "MiniHipatternsTodo" },  -- TODO: example
+    info = { pattern = build_highlight_pattern("INFO:"), group = "MiniHipatternsInfo" },  -- INFO: example
+    error = { pattern = build_highlight_pattern("ERROR:"), group = "MiniHipatternsFixme" }, -- ERROR: example
 
     -- Highlight hex color strings (`#rrggbb`) using that color
     hex_color = hipatterns.gen_highlighter.hex_color(),
   },
 })
-vim.cmd([[ hi! MiniHipatternsTodo guifg=#759cbd guibg=#1f272e gui=bold ]])
-vim.cmd([[ hi! MiniHipatternsHack guifg=#dea27c guibg=#1f272e gui=bold ]])
-vim.cmd([[ hi! MiniHipatternsNote guifg=#4799a1 guibg=#1f272e gui=bold ]])
-vim.cmd([[ hi! MiniHipatternsInfo guifg=#033580 guibg=#8dcf5f gui=bold ]])
+
+-- INFO: hello world
+-- INFO:hello world
+
+if vim.g.nxt_fns.is_light_theme() then
+  vim.cmd([[ hi! MiniHipatternsTodo guifg=#336699 guibg=#f5f5f5 gui=bold ]])
+  vim.cmd([[ hi! MiniHipatternsHack guifg=#996633 guibg=#f5f5f5 gui=bold ]])
+  vim.cmd([[ hi! MiniHipatternsNote guifg=#009999 guibg=#f5f5f5 gui=bold ]])
+  vim.cmd([[ hi! MiniHipatternsInfo guifg=#0066cc guibg=#f5f5f5 gui=bold ]])
+
+  vim.cmd([[ hi! MiniStatuslineDevinfo guifg=#707059 guibg=#dadbad gui=italic ]])
+  vim.cmd([[ hi! MiniStatuslineFileinfo guifg=#707059 guibg=#dadbad gui=italic ]])
+else
+  vim.cmd([[ hi! MiniHipatternsTodo guifg=#759cbd guibg=#1f272e gui=bold ]])
+  vim.cmd([[ hi! MiniHipatternsHack guifg=#dea27c guibg=#1f272e gui=bold ]])
+  vim.cmd([[ hi! MiniHipatternsNote guifg=#4799a1 guibg=#1f272e gui=bold ]])
+  vim.cmd([[ hi! MiniHipatternsInfo guifg=#033580 guibg=#8dcf5f gui=bold ]])
+  vim.cmd([[ hi! MiniHipatternsFixme guifg=#000000 guibg=#d65e84 gui=bold ]])
+end
 
 -- require("mini.indentscope").setup({
 --   draw = {
@@ -91,8 +104,6 @@ function active_status_line()
   if from_project_root ~= "" then
     from_project_root = "📂 " .. from_project_root
   end
-
-  --local relative_path_to_cwd =
 
   -- Usage of `MiniStatusline.combine_groups()` ensures highlighting and
   -- correct padding with spaces between groups (accounts for 'missing'

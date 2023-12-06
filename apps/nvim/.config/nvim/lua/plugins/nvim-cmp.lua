@@ -71,13 +71,13 @@ local function setup_nvim_cmp()
           return
         end
 
-        if require("copilot.suggestion").is_visible() then
-          require("copilot.suggestion").accept()
+        if luasnip.expand_or_locally_jumpable() then
+          luasnip.expand_or_jump()
           return
         end
 
-        if luasnip.expand_or_locally_jumpable() then
-          luasnip.expand_or_jump()
+        if require("copilot.suggestion").is_visible() then
+          require("copilot.suggestion").accept()
           return
         end
 

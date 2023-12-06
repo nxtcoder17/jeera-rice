@@ -15,9 +15,10 @@ hi! TabLine guifg=#81A1C1 guibg=#272e3b gui=italic
 
 hi! link MsgArea DiffAdd
 
-
 " for mini statusline
 hi! link MiniStatuslineModeNormal DiffAdd
 hi! MiniStatuslineFilename guifg=#81A1C1 guibg=transparent gui=bold
 hi! MiniStatuslineFileinfo  guifg=#81A1C1 guibg=#272e3b gui=bold
 hi! MiniStatuslineDevinfo  guifg=#81A1C1 guibg=#273b36 gui=italic
+
+hi! FzfLuaCursorLine guifg=red
