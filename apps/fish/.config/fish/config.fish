@@ -20,7 +20,7 @@ alias k9s 'k9s --logoless --headless -c ns'
 alias cc 'xclip -sel clip'
 alias ls 'exa --icons -FG'
 alias rm 'rm -i'
-alias task 'go-task'
+# alias task 'go-task'
 
 alias hm 'home-manager'
 alias hme 'home-manager edit'
@@ -34,10 +34,6 @@ if [ -f "$__fish_config_dir/nxtfns.fish" ]
     source "$__fish_config_dir/nxtfns.fish"
 end
 
-# if [ -f "$__fish_config_dir/themes/kanagawa.fish" ]
-#     source "$__fish_config_dir/themes/kanagawa.fish"
-# end
-
 function addToPath --description "add item to system path"
     for item in $argv
         contains $item $PATH 
@@ -49,6 +45,12 @@ function fish_right_prompt
  #intentionally left blank
 end
 
+function handle_nix_shell --description "checks if fish is running in a nix flake/shell"
+  if [ -n "$IN_NIX_SHELL" ]
+    printf "%sNIX%s " (set_color "#49ebc2") $hydro_color_normal
+  end
+end
+
 # echo "snippet inspired from kubie"
 function ck --description "choose-kubeconfig"
   set dir $HOME/.kube/configs
@@ -58,7 +60,6 @@ function ck --description "choose-kubeconfig"
   set filter_cmd 'begin; echo "no-selection" && command ls ~/.kube/configs ; end | fzf'
 
   set -gx TMP_KUBECONFIG_FILE (eval $filter_cmd)
-
 
   set -gx is_valid_kubeconfig "true"
 
@@ -78,9 +79,12 @@ function ck --description "choose-kubeconfig"
   if ! functions -q fish_prompt_original
     functions -c fish_prompt fish_prompt_original
   end
+
   # functions --copy fish_prompt fish_prompt_original
   function fish_prompt
     set -l original (fish_prompt_original)
+
+    handle_nix_shell
 
     # printf '%s ' (string unescape {prompt})
     if [ -n "$is_valid_kubeconfig" ]
@@ -94,6 +98,24 @@ function ck --description "choose-kubeconfig"
     for line in $original
         echo -e $line
     end
+  end
+end
+
+if ! functions -q fish_prompt_original
+  functions -c fish_prompt fish_prompt_original
+end
+
+function fish_prompt
+  set -l original (fish_prompt_original)
+
+  handle_nix_shell
+
+  # Due to idiosyncrasies with the way fish is managing newlines in
+  # process substitions, each line needs to be printed separately
+  # to mirror the existing output. For more details,
+  # see https://github.com/fish-shell/fish-shell/issues/159.
+  for line in $original
+      echo -e $line
   end
 end
 
@@ -111,7 +133,6 @@ set -gx XDG_STATE_HOME "$HOME/.local/state"
 set -gx INPUTRC "$XDG_CONFIG_HOME/inputrc"
 
 # APPLICATION specifics
-
 set -gx SHELL $(which fish)
 set -gx GOPATH "$XDG_DATA_HOME/go"
 set -gx K9SCONFIG "$XDG_CONFIG_HOME/k9s"
@@ -212,18 +233,21 @@ export XAUTHORITY=~/.Xauthority
 end
 
 if [ $EUID -eq 0 ]
-    # set --global hydro_symbol_prompt ❱
-    # set --global hydro_symbol_prompt 🚫√ √ 
-    # set --global hydro_color_prompt "#ff0203"
     set --global hydro_color_prompt "#bf4b52"
-    # set --global hydro_symbol_prompt '∖/‾‾‾'
     set --global hydro_symbol_prompt ' √π'
 else
     # set --global hydro_symbol_prompt ❱
     set --global hydro_symbol_prompt 😎
+
     # check if fish is in private mode 
     if [ ! -z "$fish_private_mode" ]
       set --global hydro_symbol_prompt 🕵️
+    end
+
+    # check if fish is running in nix shell/flake environment
+    if [ -n "$IN_NIX_SHELL" ]
+      set --global hydro_color_prompt "#49ebc2"
+      set --global hydro_symbol_prompt " "
     end
 end
 
@@ -232,11 +256,8 @@ set -x LC_ALL "en_US.UTF-8"
 set -x LANG "en_US.UTF-8"
 set -x LC_TYPE "en_US.UTF-8"
 
-
-set -x LUA_PATH "$HOME/.nix-profile/lib/lua/5.4/lpeg.so;;"
-set -x LUA_CPATH "$HOME/.nix-profile/lib/lua/5.4/lpeg.so;;"
-# set -x LUA_PATH "$HOME/.nix-profile/lib/lua/5.4/*;;"
-# set -x LUA_CPATH "$HOME/.nix-profile/lib/lua/5.4/*;;"
+# set -x LUA_PATH "$HOME/.nix-profile/lib/lua/5.4/lpeg.so;;"
+# set -x LUA_CPATH "$HOME/.nix-profile/lib/lua/5.4/lpeg.so;;"
 
 zoxide init fish | source
 # starship init fish | source
@@ -245,12 +266,11 @@ zoxide init fish | source
 set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
 
-if [ -f "$__fish_config_dir/themes/tokyo-night-moon.fish" ]
-    source "$__fish_config_dir/themes/tokyo-night-moon.fish"
+set fish_theme "./themes/nightfox.fish"
+if [ -f "$__fish_config_dir/$fish_theme" ]
+    source "$__fish_config_dir/$fish_theme"
 end
 
-# if [ -f "$__fish_config_dir/themes/tokyonight-day.fish" ]
-#     source "$__fish_config_dir/themes/tokyonight-day.fish"
-# end
+set -x DIRENV_LOG_FORMAT ""
 
 echo "$PATH" > "/tmp/$USER-paths"
