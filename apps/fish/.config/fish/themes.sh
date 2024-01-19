@@ -18,4 +18,6 @@ download_theme base16-mocha.fish "https://raw.githubusercontent.com/tomyun/base1
 
 download_theme nightfox.fish "https://raw.githubusercontent.com/EdenEast/nightfox.nvim/main/extra/nightfox/nightfox_fish.fish"
 
+download_theme dayfox.fish "https://raw.githubusercontent.com/EdenEast/nightfox.nvim/main/extra/dayfox/nightfox_fish.fish"
+
 download_theme terafox.fish "https://raw.githubusercontent.com/EdenEast/nightfox.nvim/main/extra/terafox/nightfox_fish.fish"

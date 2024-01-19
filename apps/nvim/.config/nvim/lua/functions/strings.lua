@@ -5,8 +5,8 @@ local logger = Utils.new_logger("functions.strings")
 
 local M = {}
 
-local test = Tests.setup_tests(logger).test
-local tests = {}
+-- local test = Tests.setup_tests(logger).test
+-- local tests = {}
 
 M.trim = function(s)
   return s:gsub("^%s*(.-)%s*$", "%1")
@@ -65,12 +65,12 @@ M.snake_case = function(str, opts)
   return string.lower(snakeCased)
 end
 
-tests.snake_case = function()
-  -- test(M.snake_case("sample-word"), "sample_word")
-  test(M.snake_case("AWSAccount"), "awsa_ccount")
-  test(M.snake_case("AWSACCount"), "awsac_count")
-  test(M.snake_case("AWSCloudformationTrustedARN"), "aws_cloudformation_trusted_arn")
-end
+-- tests.snake_case = function()
+--   -- test(M.snake_case("sample-word"), "sample_word")
+--   test(M.snake_case("AWSAccount"), "awsa_ccount")
+--   test(M.snake_case("AWSACCount"), "awsac_count")
+--   test(M.snake_case("AWSCloudformationTrustedARN"), "aws_cloudformation_trusted_arn")
+-- end
 
 M.snake_case_all_lowercase = function(str)
   return M.snake_case(str, { all_lowercase = true })
@@ -80,6 +80,6 @@ M.snake_case_all_uppercase = function(str)
   return M.snake_case(str, { all_uppercase = true })
 end
 
-M.tests = tests
+-- M.tests = tests
 
 return M

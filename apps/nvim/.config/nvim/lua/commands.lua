@@ -37,5 +37,9 @@ vim.api.nvim_create_user_command("InlayHintsToggle", function()
 end, { nargs = 0 })
 
 vim.api.nvim_create_user_command("Dragon", function(opts)
-  vim.cmd(string.format("!dragon %s %%", opts.args))
-end, { nargs = 1 })
+  vim.cmd("!dragon -x %")
+end, { nargs = 0 })
+
+vim.api.nvim_create_user_command("DeleteNameless", function()
+  return require("functions.buffers").delete_nameless()
+end, { nargs = 0 })

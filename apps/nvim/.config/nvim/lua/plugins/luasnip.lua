@@ -12,14 +12,6 @@ local r = ls.restore_node
 local fmt = require("luasnip.extras.fmt").fmt
 local types = require("luasnip.util.types")
 
-require("luasnip.loaders.from_lua").load({
-  paths = {
-    vim.g.nxt.nvim_dir .. "/snippets",
-    vim.g.nxt.project_root_dir .. "/.tools/snippets",
-    vim.g.nxt.project_root_dir .. "/.nvim/snippets",
-  },
-})
-
 ls.setup({
   history = true,
   enable_autosnippets = true,
@@ -40,10 +32,16 @@ ls.setup({
   },
 })
 
+local snippet_paths = {
+  vim.g.nxt.nvim_dir .. "/snippets",
+  vim.g.nxt.project_root_dir .. "/.nvim/snippets",
+  vim.g.nxt.project_root_dir .. "/.tools/nvim/snippets",
+}
+
+require("luasnip.loaders.from_lua").load({
+  paths = snippet_paths,
+})
+
 require("luasnip.loaders.from_snipmate").lazy_load({
-  paths = {
-    vim.g.nxt.nvim_dir .. "/snippets",
-    vim.g.nxt.project_root_dir .. "/.tools/snippets",
-    vim.g.nxt.project_root_dir .. "/.nvim/snippets",
-  }
+  paths = snippet_paths,
 })

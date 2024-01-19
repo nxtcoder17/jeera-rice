@@ -39,6 +39,6 @@ local enabled = true
 
 if enabled then
   for key, value in pairs(hlGroups) do
-    vim.api.nvim_set_hl(0, key, value)
+    -- vim.api.nvim_set_hl(0, key, value)
   end
 end

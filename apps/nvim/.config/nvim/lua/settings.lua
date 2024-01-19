@@ -23,6 +23,14 @@ opt.swapfile = false
 opt.signcolumn = "yes:2"
 
 opt.wrap = true
+
+vim.opt.list = true
+vim.opt.listchars = {
+  eol = "↵",
+  tab = " ",
+}
+
+-- opt.listchars:append({ eol = " 󰌑 ", tab = "" })
 opt.fillchars:append({ diff = "╱" })
 
 opt.scrolloff = 7
@@ -38,7 +46,8 @@ opt.undofile = true
 
 opt.listchars = {
   ["eol"] = "↲",
-  ["tab"] = "»·",
+  -- ["tab"] = "»·",
+  ["tab"] = "·",
   ["space"] = "␣",
   ["trail"] = "-",
   ["extends"] = "☛",
@@ -65,7 +74,7 @@ opt.autoindent = true
 -- opt.wildmenu = true
 -- opt.wildmode = "full"
 opt.wildoptions = "pum"
-opt.pumblend = 9
+opt.pumblend = 1
 opt.pumheight = 20
 --
 vim.list_extend(opt.wildignore, { "node_modules", ".git", ".next", "build", "dist" })

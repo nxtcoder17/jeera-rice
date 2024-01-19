@@ -113,4 +113,15 @@ M.adapter_inject_env = function(config, on_config)
   on_config(final_config)
 end
 
+function M.filtered_pick_process()
+  local opts = {}
+  vim.ui.input(
+    { prompt = "Search by process name (lua pattern), or hit enter to select from the process list: " },
+    function(input)
+      opts["filter"] = input or ""
+    end
+  )
+  return require("dap.utils").pick_process(opts)
+end
+
 return M

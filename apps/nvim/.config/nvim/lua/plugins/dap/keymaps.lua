@@ -3,6 +3,8 @@ local Utils = require("functions.utils")
 
 _G.dap_sessions = {}
 
+vim.t.current_dap_repl_dir = nil
+
 -- current dap session id, will be stored in `vim.t.dap_session`
 dap.listeners.after["event_initialized"]["me"] = function()
   vim.keymap.set("n", "s<leader>", dap.step_over, { silent = true })
@@ -11,6 +13,7 @@ dap.listeners.after["event_initialized"]["me"] = function()
   -- dap.repl.toggle({}, "80vsplit")
   dap_sessions[vim.fn.getcwd()] = dap.session()
   vim.t.current_dap_repl_dir = vim.fn.getcwd()
+  dap.repl.toggle({}, "80vsplit")
 end
 
 dap.listeners.after["event_terminated"]["me"] = function()
@@ -29,7 +32,7 @@ vim.keymap.set("n", "sdk", function()
   require("dapui").eval(vim.fn.expand("<cexpr>"), { enter = true })
 end)
 
-vim.keymap.set("v", "sdk", function()
+vim.keymap.set("n", "sde", function()
   require("dapui").float_element("watches", { enter = true })
 end, { silent = true })
 
@@ -60,14 +63,6 @@ vim.keymap.set("n", "sdl", function()
   end)
 end)
 
--- vim.keymap.set("n", "sdd", function()
---   vim.cmd("80vsplit")
---   vim.cmd("wincmd l")
---   vim.cmd("e /tmp/debug.stdout")
---   vim.cmd("wincmd G")
--- end)
-
-vim.t.current_dap_repl_dir = nil
 vim.keymap.set("n", "sdr", function()
   local curr_dir = vim.fn.getcwd()
   local dsession = dap_sessions[curr_dir]
@@ -89,7 +84,10 @@ vim.keymap.set("n", "sdR", function()
     dap.set_session(session)
     dap.terminate()
     dap.run_last()
+    return
   end
+
+  vim.notify("No previous session found", vim.log.levels.WARN)
 end)
 
 vim.api.nvim_create_user_command("DapKillSession", function()

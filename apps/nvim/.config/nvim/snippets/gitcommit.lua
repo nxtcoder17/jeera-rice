@@ -17,7 +17,7 @@ local snippets, autosnippets = {}, {}
 local commit_msg = s(
   "commit-msg",
   fmta(
-    [[<type>(<scope>): <description>
+    [[<type><scope>: <description>
 
 <optional-body>
 ]],
@@ -32,8 +32,16 @@ local commit_msg = s(
         t("style"),
         t("refactor"),
         t("test"),
+        t("perf"),
       }),
-      scope = i(2, "scope"),
+      scope = c(2, {
+        i(1, ""),
+        {
+          t("("),
+          i(1, "scope"),
+          t(")"),
+        },
+      }),
       description = i(3, "short-description"),
       ["optional-body"] = i(4, "longer description"),
       -- ["optional-footer"] = i(5, "footer"),

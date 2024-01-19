@@ -1,5 +1,3 @@
-local Utils = require("functions.utils")
-
 local M = {}
 
 local opts = { silent = true, noremap = true }

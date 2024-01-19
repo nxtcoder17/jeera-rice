@@ -28,6 +28,10 @@
             # programming tools
             go_1_21
 
+            nodejs-slim
+            nodePackages.npm
+            nodePackages.pnpm
+
             # build tools
             podman
             upx

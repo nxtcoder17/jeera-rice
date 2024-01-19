@@ -21,16 +21,17 @@ k9s:
   clusters:
     default:
       namespace:
-        active: kl-core
+        active: all
         lockFavorites: false
         favorites:
-        - sample
-        - kl-core
-        - kl-account-check
-        - all
+        - kube-system
+        - kloudlite-jobs
+        - kloudlite
+        - device-info
         - default
+        - all
       view:
-        active: pods
+        active: nodepools
       featureGates:
         nodeShell: false
       shellPod:

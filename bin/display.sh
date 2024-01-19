@@ -12,8 +12,8 @@ cmd=$1
 shift 1
 case $cmd in
 only-monitor)
-	# xrandr --output $monitor --mode $monitorMode --auto && xrandr --output $laptop --off
-	xrandr --output $monitor --mode $monitorMode --auto && xrandr --output $monitor --primary --left-of "$laptop"
+	xrandr --output $monitor --mode $monitorMode --auto && xrandr --output $laptop --off
+	# xrandr --output $monitor --mode $monitorMode --auto && xrandr --output $monitor --primary --left-of "$laptop"
 	[ -f $HOME/.fehbg ] && source $HOME/.fehbg
 	;;
 only-laptop)

@@ -5,18 +5,27 @@ M.color_palette = {
   black = "#1E1E1E",
   red = "#d65e84",
   green = "#B3CC57",
-  yellow = "#ECC48D",
+  -- yellow = "#ECC48D",
+  yellow = "#b5ba84",
   blue = "#79a4c9",
   magenta = "#B189C6",
-  cyan = "#6ECFCF",
+  -- cyan = "#6ECFCF",
+  -- cyan = "#86bdbd",
+  cyan = "#7fa5b3",
   -- white = "#e3d8c3",
   white = "#d9cbb2",
   pink = "#FFB6C1",
+  orange = "#ad9679",
 
   -- custom colors
   sky_blue = "#64bbed",
+  cyan_bright = "#65f7e1",
+  -- sky_blue = "#86bdbd",
+  -- sky_blue = "#91c2c2",
   light_green = "#cfe3d3",
   dark_green = "#152d2e",
+
+  non_text = "#3e474d",
 }
 
 -- Default options
@@ -31,7 +40,7 @@ require("nightfox").setup({
     module_default = true,           -- Default enable value for modules
     colorblind = {
       enable = true,                 -- Enable colorblind support
-      simulate_only = false,         -- Only show simulated colorblind colors and not diff shifted
+      simulate_only = true,          -- Only show simulated colorblind colors and not diff shifted
       severity = {
         protan = 0,                  -- Severity [0,1] for protan (red)
         deutan = 0,                  -- Severity [0,1] for deutan (green)
@@ -81,6 +90,7 @@ require("nightfox").setup({
   specs = {
     nightfox = {
       syntax = {
+        -- keyword = "magenta",
         keyword = "magenta",
       },
     },
@@ -90,16 +100,25 @@ require("nightfox").setup({
       MatchParen = {
         fg = "#4d616b",
       },
+
+      Constant = {
+        fg = M.color_palette.orange,
+      },
+
+      ["@parameter"] = {
+        fg = M.color_palette.cyan,
+      },
+
       ["@keyword.return"] = {
         -- italic = "true",
         undercurl = "true",
         link = "Keyword",
       },
 
-      ["FzfLuaCursorLine"] = {
-        bg = M.color_palette.dark_green,
-      },
-
+      -- ["FzfLuaCursorLine"] = {
+      --   bg = M.color_palette.dark_green,
+      -- },
+      --
       ["@function.builtin"] = {
         link = "Keyword",
       },
@@ -117,9 +136,59 @@ require("nightfox").setup({
       ["@variable.builtin"] = {
         fg = M.color_palette.light_green,
       },
+      ["@text.uri"] = {
+        -- fg = M.color_palette.sky_blue,
+        fg = M.color_palette.orange,
+      },
+
+      ["@method"] = {
+        fg = M.color_palette.cyan_bright,
+      },
+
+      ["@method.call"] = {
+        fg = M.color_palette.cyan,
+      },
 
       FzfLuaBorder = {
         link = "LineNr",
+      },
+
+      CursorLine = {
+        bg = "#0c2236",
+      },
+
+      NonText = {
+        fg = M.color_palette.non_text,
+      },
+      SpecialKey = {
+        fg = M.color_palette.non_text,
+      },
+      Whitespace = {
+        fg = M.color_palette.non_text,
+      },
+    },
+    dayfox = {
+      MatchParen = {
+        fg = "#dadee0",
+        bg = "#4d616b",
+      },
+
+      Cursor = {
+        bg = "#aec3cf",
+      },
+
+      Visual = {
+        bg = "#aec3cf",
+      },
+
+      Pmenu = {
+        bg = "#dadee0",
+      },
+      CursorLine = {
+        bg = "#a8cfe3",
+      },
+      LineNr = {
+        fg = "#4d616b",
       },
     },
   },
@@ -127,3 +196,4 @@ require("nightfox").setup({
 
 -- setup must be called before loading
 vim.cmd("colorscheme nightfox")
+-- vim.cmd("colorscheme dayfox")

@@ -9,7 +9,7 @@ local conf = require("telescope.config").values
 local action_state = require("telescope.actions.state")
 local utils = require("telescope.utils")
 
-local strings = require("functions.strings")
+local strings = require("functions/strings")
 
 local log = require("plenary.log").new({ plugin = "telescope", level = "debug" })
 
@@ -86,8 +86,8 @@ telescope.setup({
     fzf = {
       fuzzy = true,
       override_generic_sorter = true, -- override the generic sorter
-      override_file_sorter = true,    -- override the file sorter
-      case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
+      override_file_sorter = true, -- override the file sorter
+      case_mode = "smart_case",    -- or "ignore_case" or "respect_case"
     },
     ["ui-select"] = {
       themes.get_ivy({

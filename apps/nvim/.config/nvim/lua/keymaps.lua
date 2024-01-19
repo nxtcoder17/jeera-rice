@@ -1,5 +1,5 @@
 ------ Nvim Core KeyMappings ------
-
+local keymap = vim.keymap.set
 local opts = { silent = true, noremap = true }
 
 -- resets
@@ -8,7 +8,6 @@ vim.keymap.set({ "n" }, "<C-t>", "<Nop>", opts)
 -- vim.keymap.set({ "n", "v" }, "f", "<Nop>")
 
 -- vim.keymap.del("n", "<C-w>")
-
 vim.keymap.set({ "n", "v" }, ";", ":", opts)
 
 vim.keymap.set("n", "j", "gj", opts)
@@ -17,6 +16,8 @@ vim.keymap.set("n", "k", "gk", opts)
 vim.keymap.set("t", "<esc>", "<C-\\><C-N>", opts)
 vim.keymap.set({ "n", "v" }, "cc", '"+y', opts)
 
+-- resetting paste behavior
+-- keymap("x", "p", [["_dp]], opts)
 --- black hole registers
 -- vim.keymap.set({ "v" }, "p", '"0p', opts)
 -- vim.keymap.set({ "v" }, "x", '"0x', opts)

@@ -76,10 +76,10 @@ local function setup_nvim_cmp()
           return
         end
 
-        if require("copilot.suggestion").is_visible() then
-          require("copilot.suggestion").accept()
-          return
-        end
+        -- if require("copilot.suggestion").is_visible() then
+        -- 	require("copilot.suggestion").accept()
+        -- 	return
+        -- end
 
         if cmp.visible() then
           return
@@ -112,6 +112,7 @@ local function setup_nvim_cmp()
       { name = "async_path", priority = 80 },
       { name = "luasnip",    options = { show_autosnippets = true }, priority = 70 },
       { name = "goimports",  priority = 60,                          keyword_length = 3 },
+      { name = "codeium" },
       {
         name = "buffer",
         priority = 40,
@@ -186,7 +187,8 @@ local function setup_nvim_cmp()
           nvim_lua = "lua",
           latex_symbols = "laTeX",
 
-          codeium = "⚡",
+          codeium = "  ",
+          -- codeium = "⚡",
           rg = "rg",
 
           fuzzy_buffer = "fzf",

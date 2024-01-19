@@ -20,4 +20,6 @@ download_theme catppuccin-latte.conf "https://raw.githubusercontent.com/catppucc
 
 download_theme nightfox.conf "https://raw.githubusercontent.com/EdenEast/nightfox.nvim/main/extra/nightfox/nightfox_kitty.conf"
 
+download_theme dayfox.conf "https://raw.githubusercontent.com/EdenEast/nightfox.nvim/main/extra/dayfox/nightfox_kitty.conf"
+
 download_theme terafox.conf "https://raw.githubusercontent.com/EdenEast/nightfox.nvim/main/extra/terafox/nightfox_kitty.conf"

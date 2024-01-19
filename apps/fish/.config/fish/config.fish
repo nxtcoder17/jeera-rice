@@ -13,6 +13,7 @@ end
 # git abbreviations
 abbr gs 'git status'
 abbr gss 'git status -s'
+abbr gsw 'git pull && git switch'
 abbr nv 'nvim'
 
 alias k 'kubectl'

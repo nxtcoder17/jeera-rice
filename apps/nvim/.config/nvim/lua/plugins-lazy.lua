@@ -255,14 +255,14 @@ local function syntax()
         require("sentiment").setup({})
       end,
     },
-    {
-      "kevinhwang91/nvim-ufo",
-      dependencies = "kevinhwang91/promise-async",
-      event = "BufReadPost", -- needed for folds to load properly
-      config = function()
-        require("plugins.nvim-ufo")
-      end,
-    },
+    -- {
+    --   "kevinhwang91/nvim-ufo",
+    --   dependencies = "kevinhwang91/promise-async",
+    --   event = "BufReadPost", -- needed for folds to load properly
+    --   config = function()
+    --     require("plugins.nvim-ufo")
+    --   end,
+    -- },
     {
       "AckslD/nvim-FeMaco.lua",
       config = function()
@@ -280,41 +280,74 @@ local function lsp()
     {
       "williamboman/mason.nvim",
       cmd = { "Mason" },
-      opts = {
-        ensure_installed = {
-          "eslint_d",
-          "stylua",
-          "gofumpt",
-          "goimports_reviser",
-          "golines",
-          "tree-sitter-cli",
-          "shellcheck",
-          "shfmt",
-          "delve",
-
-          -- formatters
-
-          --lsp
-          "bash-language-server",
+      opts = { max_concurrent_installers = 10 },
+      -- opts = {
+      --   ensure_installed = {
+      --     "eslint_d",
+      --     "stylua",
+      --     "gofumpt",
+      --     "goimports_reviser",
+      --     "golines",
+      --     "tree-sitter-cli",
+      --     "shellcheck",
+      --     "shfmt",
+      --     "delve",
+      --
+      --     -- formatters
+      --
+      --     --lsp
+      --     "bash-language-server",
+      --     "lua-language-server",
+      --     "typescript-language-server",
+      --     "tailwindcss-language-server",
+      --     "gopls",
+      --     "pyright",
+      --     "terraform-ls",
+      --   },
+      -- },
+      build = function()
+        local ensure_installed = {
+          -- lua
           "lua-language-server",
+          "stylua",
+
+          -- javascript
           "typescript-language-server",
           "tailwindcss-language-server",
+          "eslint_d",
+
+          -- bash
+          "bash-language-server",
+          "shellcheck",
+          "shfmt",
+
+          -- golang
           "gopls",
+          "gofumpt",
+          "delve",
+          "gotests",
+          "gomodifytags",
+          "impl",
+          "iferr",
+
+          -- graphql
+          "graphql-language-service-cli",
+
+          -- dockerfile
+          "dockerfile-language-server",
+
+          --python
           "pyright",
-          "terraform-ls",
-        },
-      },
+
+          -- linter
+          "efm",
+        }
+
+        vim.cmd("MasonInstall " .. table.concat(ensure_installed, " "))
+      end,
       config = function()
         require("mason").setup()
       end,
-      dependencies = {
-        {
-          "WhoIsSethDaniel/mason-tool-installer.nvim",
-          config = function()
-            require("plugins.mason-tool-installer")
-          end,
-        },
-      },
     },
     {
       "neovim/nvim-lspconfig",
@@ -414,27 +447,38 @@ local function completions()
         require("plugins.nvim-cmp")
       end,
     },
-
     {
-      "zbirenbaum/copilot.lua",
+      "Exafunction/codeium.nvim",
+      dependencies = {
+        "nvim-lua/plenary.nvim",
+        "hrsh7th/nvim-cmp",
+      },
       event = events.BufReadPost,
       config = function()
-        require("keymaps-for-plugins").copilot_mappings()
-        vim.defer_fn(function()
-          require("copilot").setup({
-            panel = { enabled = false },
-            filetypes = {
-              ["*"] = true,
-            },
-            suggestion = {
-              enabled = true,
-              auto_trigger = true,
-              keymap = nil,
-            },
-          })
-        end, 100)
+        require("codeium").setup({})
       end,
     },
+
+    -- {
+    --   "zbirenbaum/copilot.lua",
+    --   event = events.BufReadPost,
+    --   config = function()
+    --     require("keymaps-for-plugins").copilot_mappings()
+    --     vim.defer_fn(function()
+    --       require("copilot").setup({
+    --         panel = { enabled = false },
+    --         filetypes = {
+    --           ["*"] = true,
+    --         },
+    --         suggestion = {
+    --           enabled = true,
+    --           auto_trigger = true,
+    --           keymap = nil,
+    --         },
+    --       })
+    --     end, 100)
+    --   end,
+    -- },
   }
 
   local coq_nvim = {
@@ -624,6 +668,19 @@ local function ui()
       end,
     },
 
+    {
+      "chrisgrieser/nvim-origami",
+      event = "BufReadPost", -- later or on keypress would prevent saving folds
+      opts = true,        -- needed even when using default config
+      config = function()
+        require("origami").setup({
+          keepFoldsAcrossSessions = true,
+          pauseFoldsOnSearch = true,
+          setupFoldKeymaps = true,
+        })
+      end,
+    },
+
     -- {
     --   "folke/noice.nvim",
     --   event = events.VeryLazy,
@@ -737,4 +794,12 @@ vim.list_extend(plugins, http_clients())
 vim.list_extend(plugins, git_clients())
 vim.list_extend(plugins, lua_rocks())
 
-require("lazy").setup(plugins)
+require("lazy").setup(plugins, {
+  ui = {
+    border = "rounded",
+  },
+  change_detection = {
+    enabled = true,
+    notify = false,
+  },
+})

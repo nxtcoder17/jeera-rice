@@ -1,14 +1,130 @@
-{ config, pkgs, ... }:
+# [Learn NIX](https://nixos.org/manual/nix/stable/language/)
 
+{ config, pkgs, nixGLWrap, ... }:
+
+let 
+  packages.xorg = with pkgs; [
+    xorg.xrandr
+    xorg.xset
+    xcape
+    xorg.xmodmap
+    xorg.setxkbmap
+    xorg.xhost
+    xorg.xinput
+    xclip
+    xdragon
+
+  ]; 
+
+  packages.i3wm = with pkgs; [
+    i3
+    i3blocks
+    scrot
+    dmenu-rs
+    sysstat
+    rofi
+    acpi
+
+    # image viewers
+    feh
+    sxiv
+
+    dunst
+    light
+
+    kitty
+    networkmanagerapplet
+  ];
+
+  packages.audio_video = with pkgs; [
+    blueman
+    pavucontrol
+    pamixer
+
+    mpv
+  ];
+
+  packages.kubernetes = with pkgs; [ 
+    kubernetes-helm 
+    kubectl
+    k9s
+    nerdctl
+  ];
+
+  packages.cli_workflow = with pkgs; [
+    # shells
+    fish
+    bash
+
+    # navigation
+    zoxide
+    eza
+    ripgrep
+    fd
+    fzf
+
+    # commonly used tools
+    du-dust
+    tmux
+    bat
+    btop
+    ranger
+    stow
+    git
+    redshift
+    axel
+    nix-direnv
+    yq
+    jq
+    delta
+    go-task
+    pv # pipe viewer
+
+    # http load testing
+    nghttp2 # for h2load
+
+    # networking
+    inetutils
+    netcat-gnu
+    sshuttle
+    wirelesstools
+
+    # mouse control
+    warpd
+
+    # database cli tools
+    mongosh
+
+    # global programming languages support 
+    nodejs-slim
+    nodePackages.npm
+
+    go_1_21
+    gnumake
+    gcc13
+  ];
+
+  packages.gui_apps = with pkgs; [
+    telegram-desktop
+    google-chrome
+  ];
+
+  # package_groups = {
+  #   kubernetes = {};
+  # };
+in
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "nxtcoder17";
   home.homeDirectory = "/var/home/nxtcoder17";
 
-  nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.allowBroken = true;
-  nixpkgs.config.allowUnfreePredicate = (_: true);
+  nixpkgs =  {
+    config = {
+      allowUnfree = true;
+      allowUnfreePredicate = (_: true);
+    };
+  };
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -17,7 +133,18 @@
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
-  home.stateVersion = "23.05"; # Please read the comment before changing.
+  home.stateVersion = "23.11"; # Please read the comment before changing.
+
+  # home.i3wm = with pkgs; [
+  #   i3
+  #   i3blocks
+  #   scrot
+  #   dmenu-rs
+  # ];
+
+  # home.kubernetes = with pkgs; [
+  #   kubernetes-helm
+  # ];
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -39,170 +166,24 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
 
-bat
-btop
-xorg.xrandr
-xorg.xset
-xcape
-xorg.xmodmap
-xorg.setxkbmap
-xorg.xhost
-xorg.xinput
-# xfce.xfce4-i3-workspaces-plugin
-pamixer
+    wezterm
+    blackbox-terminal
+    cargo
+    glibcLocales
 
-ranger
+  ] 
+    ++ packages.xorg
+    ++ packages.i3wm
+    ++ packages.audio_video
+    ++ packages.cli_workflow
+    ++ packages.kubernetes
+    ++ packages.gui_apps
+  ;
 
-nodejs_20
-nodePackages.pnpm
+  programs.direnv = {
+    enable = true;
+  };
 
-redshift
-networkmanagerapplet
-light
-feh
-lxappearance
-# picom
-
-terraform
-# operator-sdk
-
-# build-tools
-gnumake
-gnupatch
-gcc
-
-    stow
-    git
-    pipx
-    deno
-    # terraform
-    tmux
-
-  ripgrep
-  fd
-  fzf
-  du-dust
-  acpi
-  # upower
-
-fish
-zoxide
-eza
-light
-#firefox-devedition
-# distrobox
-# firefox
-#kitty
-
-# xfce.xfce4-session
-# xfce.xfce4-notify
-# xfce.xfce4-terminal
-# xfce.xfce4-settings
-# xfce.xfce4-appfinder
-# xfce.xfce4-taskmanager
-# xfce.xfce4-power-manager
-# xfce.xfce4-clipman-plugin
-
-# gnome.gnome-keyring
-dunst
-
-     blueman
-      # chromium
-      # deja-dup
-      # drawing
-      # elementary-xfce-icon-theme
-      # evince
-      # foliate
-      # font-manager
-      # gimp-with-plugins
-      # gnome.file-roller
-      # gnome.gnome-disk-utility
-      # inkscape-with-extensions
-      # libqalculate
-      # libreoffice
-      # orca
-      pavucontrol
-      # qalculate-gtk
-      # thunderbird
-      wmctrl
-      xclip
-      xcolor
-      # xcolor
-      xdo
-      xdotool
-
-      # xfce.catfish
-      # xfce.gigolo
-      # xfce.orage
-      # xfce.xfburn
-      # xfce.xfce4-appfinder
-      # xfce.xfce4-clipman-plugin
-      # xfce.xfce4-cpugraph-plugin
-      # xfce.xfce4-dict
-      # xfce.xfce4-fsguard-plugin
-      # xfce.xfce4-genmon-plugin
-      # xfce.xfce4-netload-plugin
-      # xfce.xfce4-panel
-      # xfce.xfce4-pulseaudio-plugin
-      # xfce.xfce4-systemload-plugin
-      # xfce.xfce4-weather-plugin
-      # xfce.xfce4-whiskermenu-plugin
-      # xfce.xfce4-xkb-plugin
-      # xfce.xfce4-session
-      # xfce.xfdashboard
-      # xfce.xfdashboard
-      # xfce.xfconf xorg.xev
-
-      xsel
-      xtitle
-      # xwinmosaic
-      zuki-themes
-
-      i3
-      i3blocks
-      scrot
-      dmenu-rs
-      sysstat
-      rofi
-
-      k9s
-      kubectl
-      kubernetes-helm
-      # docker
-      docker-buildx
-      # docker-compose
-      go-task
-
-# programming languages
-# go
-go_1_21
-mongosh
-upx
-github-cli
-  xdragon
-pre-commit
-
-  (python312.withPackages(ps: with ps; [
-    ggshield
-  ]))
-
-telegram-desktop
-
-inetutils
-wireguard-tools
-mpv
-yq
-redpanda
-trivy
-dive
-brotli
-s3rs
-conky
-lua54Packages.lpeg
-awscli2
-ntp
-google-chrome
-  ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -219,16 +200,10 @@ google-chrome
     # '';
   };
 
-  programs.neovim = {
-    viAlias = true;
-    vimAlias = true;
-  };
-
-# services.picom.enable = true;
-
-
-  # You can also manage environment variables but you will have to manually
-  # source
+  # Home Manager can also manage your environment variables through
+  # 'home.sessionVariables'. If you don't want to manage your shell through Home
+  # Manager then you have to manually source 'hm-session-vars.sh' located at
+  # either
   #
   #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
   #
@@ -236,15 +211,14 @@ google-chrome
   #
   #  /etc/profiles/per-user/nxtcoder17/etc/profile.d/hm-session-vars.sh
   #
-  # if you don't want to manage your shell through Home Manager.
   home.sessionVariables = {
     EDITOR = "nvim"; 
     TMUX_SHELL = "${pkgs.fish}";
-    # LOCALES_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
+    DIRENV_LOG_FORMAT = "";
   };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-
-  # settings.experimental-features = [ "nix-command" "flakes" ];
+  programs.wezterm.package = nixGLWrap pkgs.wezterm;
+  programs.kitty.package = nixGLWrap pkgs.kitty;
 }

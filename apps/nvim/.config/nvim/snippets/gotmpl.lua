@@ -13,7 +13,7 @@ local fmt = require("luasnip.extras.fmt").fmt
 local fmta = require("luasnip.extras.fmt").fmta
 local postfix = require("luasnip.extras.postfix").postfix
 
-local stringsFn = require("functions.strings")
+-- local stringsFn = require("functions.strings")
 
 local snippets, autosnippets = {}, {}
 
@@ -23,14 +23,14 @@ local var_stmt = s(
     fmta([[{{- <p1> := <p2> }}]], {
       p1 = f(function(...)
         local args = ...
-        return "$" .. stringsFn.camel_case(args[1][1])
+        return "$" .. require("functions.strings").camel_case(args[1][1])
       end, 1),
       p2 = i(1, "var"),
     }),
     fmta([[{{- <p1> := get . "<p2>" }}]], {
       p1 = f(function(...)
         local args = ...
-        return "$" .. stringsFn.camel_case(args[1][1])
+        return "$" .. require("functions.strings").camel_case(args[1][1])
       end, 1),
       p2 = i(1, "var"),
     }),

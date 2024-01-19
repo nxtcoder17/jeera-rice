@@ -94,6 +94,14 @@ local function default_go_configurations()
       --   end,
       -- },
     },
+    {
+      type = "go_local",
+      name = "Attach to a local process",
+      mode = "local",
+      request = "attach",
+      processId = utils.filtered_pick_process,
+      buildFlags = "",
+    },
   }
 end
 
@@ -108,6 +116,30 @@ local function default_go_adapters()
         "dlv dap -l 127.0.0.1:${port} --api-version 2  --check-go-version false --allow-non-terminal-interactive 2>&1 | tee /tmp/debug.stdout",
         -- "dlv debug --accept-multiclient --headless -l 127.0.0.1:${port} --api-version 2 --allow-non-terminal-interactive 2>&1 | tee /tmp/debug.stdout",
         -- "dlv debug --continue --accept-multiclient --headless -l 127.0.0.1:${port} --api-version 2 --allow-non-terminal-interactive 2>&1 | tee /tmp/debug.stdout",
+      },
+    },
+    options = {
+      initialize_timeout_sec = 20,
+    },
+    enrich_config = utils.adapter_inject_env,
+  }
+
+  dap.adapters.go_local = {
+    type = "server",
+    -- port = "${port}",
+    port = "${port}",
+    -- port = math.floor(math.random() * 10000),
+    executable = {
+      -- command = "bash",
+      command = "dlv",
+      args = {
+        -- "-c",
+        -- "dlv dap -l 127.0.0.1:${port} --api-version 2  --check-go-version false --allow-non-terminal-interactive 2>&1 | tee /tmp/debug.stdout",
+        -- "dlv dap -l 127.0.0.1:${port}",
+        "dap",
+        "-l",
+        "127.0.0.1:8878",
+        -- "dap -l 127.0.0.1:${port}",
       },
     },
     options = {
