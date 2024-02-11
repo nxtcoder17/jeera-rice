@@ -13,7 +13,6 @@ let
     xorg.xinput
     xclip
     xdragon
-
   ]; 
 
   packages.i3wm = with pkgs; [
@@ -48,7 +47,10 @@ let
     kubernetes-helm 
     kubectl
     k9s
+
     nerdctl
+    rootlesskit
+    buildkit
   ];
 
   packages.cli_workflow = with pkgs; [
@@ -79,6 +81,7 @@ let
     delta
     go-task
     pv # pipe viewer
+    gh
 
     # http load testing
     nghttp2 # for h2load
@@ -107,11 +110,9 @@ let
   packages.gui_apps = with pkgs; [
     telegram-desktop
     google-chrome
+    qutebrowser
+    vscode-fhs
   ];
-
-  # package_groups = {
-  #   kubernetes = {};
-  # };
 in
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -135,17 +136,6 @@ in
   # release notes.
   home.stateVersion = "23.11"; # Please read the comment before changing.
 
-  # home.i3wm = with pkgs; [
-  #   i3
-  #   i3blocks
-  #   scrot
-  #   dmenu-rs
-  # ];
-
-  # home.kubernetes = with pkgs; [
-  #   kubernetes-helm
-  # ];
-
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs;[
@@ -166,11 +156,10 @@ in
     #   echo "Hello, ${config.home.username}!"
     # '')
 
-    wezterm
-    blackbox-terminal
+    # wezterm
+    # blackbox-terminal
     cargo
     glibcLocales
-
   ] 
     ++ packages.xorg
     ++ packages.i3wm
@@ -221,4 +210,5 @@ in
   programs.home-manager.enable = true;
   programs.wezterm.package = nixGLWrap pkgs.wezterm;
   programs.kitty.package = nixGLWrap pkgs.kitty;
+  # programs.firefox-devedition-bin.package = nixGLWrap pkgs.firefox-devedition-bin;
 }

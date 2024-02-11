@@ -70,6 +70,34 @@ opt.smartindent = true
 opt.copyindent = true
 opt.autoindent = true
 
+function _G.indent_with_spaces()
+  -- Tab, Spaces and Indentations
+  opt.tabstop = 2
+  opt.softtabstop = 2
+  opt.shiftwidth = 2  -- spaces per tab when using >> or <<
+  opt.expandtab = true -- expand tabs into spaces
+  opt.autoindent = true
+  opt.smarttab = true
+  opt.shiftround = true
+  -- Copy Previous Indentation
+  opt.smartindent = true
+  opt.copyindent = true
+  opt.autoindent = true
+end
+
+function _G.indent_with_tabs()
+  -- using tabs for indentation, and spaces for everything else
+  -- reference: https://vim.fandom.com/wiki/Indent_with_tabs,_align_with_spaces
+  opt.expandtab = false
+  opt.copyindent = true
+  opt.preserveindent = true
+  opt.softtabstop = 0
+  opt.shiftwidth = 2
+  opt.tabstop = 2
+end
+
+indent_with_tabs()
+
 -- wild menu
 -- opt.wildmenu = true
 -- opt.wildmode = "full"
@@ -116,7 +144,7 @@ opt.switchbuf = "useopen,usetab,newtab"
 vim.o.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
 
 -- augroup highlight_yank
---     autocmd!
+-- autocmd!
 --     autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank("IncSearch", 200)
 -- augroup END
 
@@ -126,6 +154,7 @@ vim.cmd(
 )
 
 -- neovide settings
-opt.guifont = "ComicCodeLigatures-Medium:h11"
+-- opt.guifont = "ComicCodeLigatures-Medium:h11"
+opt.guifont = "ComicCodeLigatures Nerd Font Medium:h11"
 vim.g.neovide_cursor_animation_length = 0
 vim.g.neovide_cursor_trail_size = 0

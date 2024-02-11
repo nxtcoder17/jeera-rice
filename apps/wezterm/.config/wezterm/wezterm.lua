@@ -1,45 +1,88 @@
 local wezterm = require("wezterm")
 
-return {
-  font = wezterm.font_with_fallback({
-    -- "Comic Code Ligatures",
-    "ComicCodeLigatures",
-    "Operator Mono Medium",
-  }),
-  line_height = 1.2,
-  font_size = 12,
-  color_scheme = "Kanagawa (Gogh)",
-  exit_behavior = "Close",
+local config = {}
 
-  -- leader = { key="a", mods="CTRL" },
-  --   keys = {
-  --       -- Send "CTRL-A" to the terminal when pressing CTRL-A, CTRL-A
-  --       { key = "a", mods = "LEADER|CTRL",  action=wezterm.action{SendString="\x01"}},
-  --       { key = "-", mods = "LEADER",       action=wezterm.action{SplitVertical={domain="CurrentPaneDomain"}}},
-  --       { key = "\\",mods = "LEADER",       action=wezterm.action{SplitHorizontal={domain="CurrentPaneDomain"}}},
-  --       { key = "z", mods = "LEADER",       action="TogglePaneZoomState" },
-  --       { key = "c", mods = "LEADER",       action=wezterm.action{SpawnTab="CurrentPaneDomain"}},
-  --       { key = "h", mods = "LEADER",       action=wezterm.action{ActivatePaneDirection="Left"}},
-  --       { key = "j", mods = "LEADER",       action=wezterm.action{ActivatePaneDirection="Down"}},
-  --       { key = "k", mods = "LEADER",       action=wezterm.action{ActivatePaneDirection="Up"}},
-  --       { key = "l", mods = "LEADER",       action=wezterm.action{ActivatePaneDirection="Right"}},
-  --       { key = "H", mods = "LEADER|SHIFT", action=wezterm.action{AdjustPaneSize={"Left", 5}}},
-  --       { key = "J", mods = "LEADER|SHIFT", action=wezterm.action{AdjustPaneSize={"Down", 5}}},
-  --       { key = "K", mods = "LEADER|SHIFT", action=wezterm.action{AdjustPaneSize={"Up", 5}}},
-  --       { key = "L", mods = "LEADER|SHIFT", action=wezterm.action{AdjustPaneSize={"Right", 5}}},
-  --       { key = "1", mods = "LEADER",       action=wezterm.action{ActivateTab=0}},
-  --       { key = "2", mods = "LEADER",       action=wezterm.action{ActivateTab=1}},
-  --       { key = "3", mods = "LEADER",       action=wezterm.action{ActivateTab=2}},
-  --       { key = "4", mods = "LEADER",       action=wezterm.action{ActivateTab=3}},
-  --       { key = "5", mods = "LEADER",       action=wezterm.action{ActivateTab=4}},
-  --       { key = "6", mods = "LEADER",       action=wezterm.action{ActivateTab=5}},
-  --       { key = "7", mods = "LEADER",       action=wezterm.action{ActivateTab=6}},
-  --       { key = "8", mods = "LEADER",       action=wezterm.action{ActivateTab=7}},
-  --       { key = "9", mods = "LEADER",       action=wezterm.action{ActivateTab=8}},
-  --       { key = "&", mods = "LEADER|SHIFT", action=wezterm.action{CloseCurrentTab={confirm=true}}},
-  --       { key = "x", mods = "LEADER",       action=wezterm.action{CloseCurrentPane={confirm=true}}},
-  --   },
+-- In newer versions of wezterm, use the config_builder which will
+-- help provide clearer error messages
 
-  enable_scroll_bar = false,
-  enable_tab_bar = false,
+if wezterm.config_builder then
+  config = wezterm.config_builder()
+end
+
+-- This is where you actually apply your config choices
+
+-- config.font = wezterm.font_with_fallback({
+--   -- {
+--   --   family = "Monaspace Radon",
+--   --   weight = "Light",
+--   --   -- stretch = "Normal",
+--   --   -- style = "Normal",
+--   --   harfbuzz_features = { "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss08", "calt", "dlig" },
+--   -- },
+-- })
+
+config.font = wezterm.font_with_fallback({
+  { family = "Comic Code Ligatures", weight = "DemiBold", stretch = "Normal", style = "Normal" },
+  -- { family = "OperatorMono Nerd Font", weight = "Book",     stretch = "Normal", style = "Normal" },
+  { family = "Fira",                 weight = "Book",     stretch = "Normal", style = "Normal" },
+  { family = "Operator Mono Lig",    weight = "Book",     stretch = "Normal", style = "Normal" },
+  -- { family = "FiraCode Nerd Font Mono", weight = "Regular",     stretch = "Normal", style = "Normal" },
+  -- { family = "ComicCodeLigatures Nerd Font", weight = "Medium",   stretch = "Normal", style = "Normal" },
+  -- { family = "Operator Mono Lig",            weight = "Book",     stretch = "Normal", style = "Normal" },
+})
+
+config.font_size = 10
+config.cell_width = 1
+config.line_height = 1.0
+
+config.font_rules = {
+  {
+    italic = true,
+    -- font = wezterm.font("Operator Mono Lig", { italic = true, weight = "Medium" }),
+    font = wezterm.font("Monaspace Radon", { italic = false, weight = "Medium" }),
+  },
+  {
+    italic = true,
+    intensity = "Bold",
+    font = wezterm.font("Monaspace Radon", {
+      italic = true,
+      weight = "Bold",
+    }),
+  },
 }
+
+config.default_prog = { "fish", "-l" }
+
+-- For example, changing the color scheme:
+config.color_scheme = "nightfox"
+-- config.color_scheme = "Kanagawa (Gogh)"
+-- config.color_scheme = "Tokyo Night Moon"
+-- and finally, return the configuration to wezterm
+
+config.hide_tab_bar_if_only_one_tab = true
+config.text_background_opacity = 0.9
+
+-- config.window_background_image = "/var/home/nxtcoder17/me/jeera-rice/wallpapers/dark-notebook.jpg"
+-- config.window_background_image = "/var/home/nxtcoder17/Downloads/notebook_background_with_black_overlay.png"
+-- config.window_background_image = "/var/home/nxtcoder17/Downloads/notebook_background_final_3840x2160.png"
+config.window_background_image = "/var/home/nxtcoder17/me/jeera-rice/wallpapers/night-fog.jpg"
+config.window_background_image_hsb = {
+  -- Darken the background image by reducing it to 1/3rd
+  brightness = 0.7,
+
+  -- You can adjust the hue by scaling its value.
+  -- a multiplier of 1.0 leaves the value unchanged.
+  hue = 1.0,
+
+  -- You can adjust the saturation also.
+  saturation = 1.0,
+}
+
+config.window_padding = {
+  left = 2,
+  right = 2,
+  top = 17,
+  bottom = 0,
+}
+
+return config

@@ -7,7 +7,8 @@ vim.t.current_dap_repl_dir = nil
 
 -- current dap session id, will be stored in `vim.t.dap_session`
 dap.listeners.after["event_initialized"]["me"] = function()
-  vim.keymap.set("n", "s<leader>", dap.step_over, { silent = true })
+  vim.keymap.set("n", "s,", dap.step_over, { silent = true })
+  vim.keymap.set("n", "sd,", dap.run_to_cursor, { silent = true })
   vim.keymap.set("n", "sds", dap.continue, { silent = true })
   -- vim.t.dap_session = dap.session()
   -- dap.repl.toggle({}, "80vsplit")
@@ -17,7 +18,8 @@ dap.listeners.after["event_initialized"]["me"] = function()
 end
 
 dap.listeners.after["event_terminated"]["me"] = function()
-  vim.keymap.set("n", "s<leader>", "<nop>", { silent = true })
+  vim.keymap.set("n", "s,", "<nop>", { silent = true })
+  vim.keymap.set("n", "sd,", "<nop>", { silent = true })
   vim.keymap.set("n", "sds", "<nop>", { silent = true })
   dap_sessions[vim.fn.getcwd()] = nil
 end
@@ -43,7 +45,7 @@ end, { silent = true })
 -- vim.keymap.set("n", "<leader>dk", require("dap.ui.widgets").hover, { silent = true })
 -- vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { silent = true })
 
-vim.keymap.set("n", "sdb", dap.toggle_breakpoint, { silent = true })
+vim.keymap.set("n", "sdb", dap.toggle_breakpoint, { silent = true, desc = "toggles a breakpoint" })
 
 vim.keymap.set("n", "sdc", function()
   vim.ui.input({
@@ -52,7 +54,7 @@ vim.keymap.set("n", "sdc", function()
   }, function(input)
     dap.set_breakpoint(input)
   end)
-end, { silent = true })
+end, { silent = true, desc = "conditional breakpoint" })
 
 vim.keymap.set("n", "sdl", function()
   vim.ui.input({
@@ -61,7 +63,7 @@ vim.keymap.set("n", "sdl", function()
   }, function(input)
     dap.set_breakpoint(nil, nil, input)
   end)
-end)
+end, { silent = true, desc = "logpoint" })
 
 vim.keymap.set("n", "sdr", function()
   local curr_dir = vim.fn.getcwd()

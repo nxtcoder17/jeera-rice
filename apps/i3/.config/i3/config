@@ -166,7 +166,7 @@ bindsym $ctrl + $exclam           exec $noid $toggleMute
 # Key Mappings
 # -> Opening Terminal
 set $term kitty
-set $term2 konsole --hide-menubar --hide-tabbar
+set $term2 wezterm.AppImage
 bindsym $mod + $return         exec $noid $term
 bindsym $mod + $ctrl + $return exec $noid $term2
 
