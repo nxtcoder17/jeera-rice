@@ -26,6 +26,19 @@ M.color_palette = {
   dark_green = "#152d2e",
 
   non_text = "#3e474d",
+
+  shades_of_cyan_blue = {
+    bright_cyan = "#00FFFF",
+    sky_blue = "#87CEEB",
+    turquoise = "#40E0D0",
+    electric_cyan = "#00FFD1",
+    celeste = "#B2FFFF",
+    cyan_cornflower_blue = "#188BC2",
+    dark_cyan = "#008B8B",
+    teal = "#008080",
+    aqua_marine = "#7FFFD4",
+    cadet_blue = "#5F9EA0",
+  },
 }
 
 -- Default options
@@ -60,7 +73,7 @@ require("nightfox").setup({
       variables = "NONE",
     },
     inverse = { -- Inverse highlight for different types
-      match_paren = true,
+      match_paren = false,
       visual = false,
       search = false,
     },
@@ -98,7 +111,7 @@ require("nightfox").setup({
   groups = {
     nightfox = {
       MatchParen = {
-        fg = "#4d616b",
+        fg = M.color_palette.shades_of_cyan_blue.aqua_marine,
       },
 
       Constant = {
@@ -121,6 +134,18 @@ require("nightfox").setup({
       --
       ["@function.builtin"] = {
         link = "Keyword",
+      },
+
+      ["@function.method"] = {
+        link = "@method",
+      },
+
+      ["@function.macro"] = {
+        link = "@method",
+      },
+
+      ["@function.method.call"] = {
+        fg = M.color_palette.sky_blue
       },
 
       ["@type.builtin"] = {

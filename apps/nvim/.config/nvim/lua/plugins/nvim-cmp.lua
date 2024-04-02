@@ -126,15 +126,15 @@ local function setup_nvim_cmp()
       },
       -- TODO: write my own rg and tmux sources,
       --       tmux list-panes -s -F "#{pane_id}" | xargs -I{} tmux capture-pane -p -t {} | rg "WAIT_" | tr -cd '\11\12\15\40-\176'
-      {
-        name = "rg",
-        priority = 40,
-        keyword_length = 3,
-        group_index = 5,
-        option = {
-          additional_arguments = "--max-depth 6 --one-file-system --ignore-file ~/.config/nvim/scripts/rgignore",
-        },
-      },
+      -- {
+      --   name = "rg",
+      --   priority = 40,
+      --   keyword_length = 3,
+      --   group_index = 5,
+      --   option = {
+      --     additional_arguments = "--max-depth 6 --one-file-system --ignore-file ~/.config/nvim/scripts/rgignore",
+      --   },
+      -- },
     }),
     -- sorting = {
     -- 	priority_weight = 2,

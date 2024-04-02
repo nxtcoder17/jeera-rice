@@ -14,7 +14,7 @@ vim.keymap.set("n", "j", "gj", opts)
 vim.keymap.set("n", "k", "gk", opts)
 
 vim.keymap.set("t", "<esc>", "<C-\\><C-N>", opts)
-vim.keymap.set({ "n", "v" }, "cc", '"+y', opts)
+vim.keymap.set({ "n", "x" }, "cc", '"+y', opts)
 
 -- resetting paste behavior
 -- keymap("x", "p", [["_dp]], opts)

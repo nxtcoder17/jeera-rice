@@ -14,6 +14,7 @@ local common_go_imports = {
   -- k8s.io utils
   'yamlutil "k8s.io/apimachinery/pkg/util/yaml"',
   'apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"',
+  "k8s.io/kubernetes/pkg/util/taints",
 
   -- apimachinery
   'apiErrors "k8s.io/apimachinery/pkg/api/errors"',

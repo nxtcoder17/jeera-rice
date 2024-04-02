@@ -14,7 +14,6 @@
   )
 )
 
-; for bash scripts
 (
   (block_mapping_pair
     ; key: (flow_node) @_expr (#eq? @_expr "query")
@@ -22,22 +21,11 @@
               (block_scalar
                 (comment) @comment
               ) @injection.content 
-              (#eq? @comment "#bash")
+
+              (#eq? @comment "#javascript")
               (#set! injection.include-children)
               (#offset! @injection.content 0 0 0 0)
-              (#set! injection.language "bash")
+              (#set! injection.language "javascript")
           )
-  )
-
-  (block_sequence_item
-    (block_node
-      (block_scalar
-        (comment) @comment
-        ) @injection.content 
-      (#eq? @comment "#bash")
-      (#set! injection.include-children)
-      ; (#offset! @injection.content 0 0 0 0)
-      (#set! injection.language "bash")
-      )
   )
 )

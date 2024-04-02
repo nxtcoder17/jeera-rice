@@ -1,9 +1,19 @@
 local dap = require("dap")
 local Utils = require("functions.utils")
 
+-- DAP defaults
+
+-- Use "tabnew" for all debug adapters
+dap.defaults.fallback.terminal_win_cmd = "tabnew"
+dap.defaults.fallback.focus_terminal = true
+
 _G.dap_sessions = {}
 
 vim.t.current_dap_repl_dir = nil
+
+dap.listeners.before["event_initialized"]["me"] = function()
+  dap.repl.toggle({}, "80vsplit")
+end
 
 -- current dap session id, will be stored in `vim.t.dap_session`
 dap.listeners.after["event_initialized"]["me"] = function()

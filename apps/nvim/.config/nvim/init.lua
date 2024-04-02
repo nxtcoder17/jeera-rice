@@ -36,7 +36,8 @@ local function safeRequire(module)
   if ok then
     return mod
   end
-  vim.cmd.echo("Error loading " .. module)
+  print("error loading: ", module)
+  -- vim.cmd.echo("Error loading " .. module)
 end
 
 safeRequire("globals")

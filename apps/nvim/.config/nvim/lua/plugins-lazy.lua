@@ -105,7 +105,7 @@ local function fuzzy_finders()
   return {
     {
       "nvim-telescope/telescope.nvim",
-      -- event = events.UIEnter,
+      event = events.UIEnter,
       -- event = events.BufWinEnter,
       dependencies = {
         "nvim-lua/plenary.nvim",
@@ -138,6 +138,7 @@ local function fuzzy_finders()
     },
     {
       "ibhagwan/fzf-lua",
+      event = events.UIEnter,
       dependencies = { "nvim-tree/nvim-web-devicons" },
       config = function()
         require("plugins.fzf-lua")
@@ -180,6 +181,14 @@ local function navigation()
     },
 
     { "kevinhwang91/nvim-bqf", ft = "qf" },
+    -- {
+    -- 	"ludovicchabant/vim-gutentags",
+    -- 	config = function()
+    -- 		vim.g.gutentags_ctags_exclude = {
+    -- 		  "@.gitignore"
+    -- 		}
+    -- 	end,
+    -- },
   }
 end
 
@@ -227,6 +236,14 @@ local function syntax()
             })
           end,
         },
+        -- {
+        --   "andymass/vim-matchup",
+        --   event = "BufWinEnter",
+        --   init = function()
+        --     vim.g.matchup_matchparen_offscreen = { method = "popup", fullwidth = 1, syntax_hl = 1 }
+        --     vim.g.matchup_matchparen_deferred = 1
+        --   end,
+        -- },
         { "nvim-treesitter/playground" },
       },
     },
@@ -264,13 +281,26 @@ local function syntax()
     --   end,
     -- },
     {
-      "AckslD/nvim-FeMaco.lua",
+      "bagohart/minimal-narrow-region.nvim",
+      event = "BufReadPost",
       config = function()
-        require("femaco").setup()
+        vim.b.narrow_region_active = false
+
+        vim.keymap.set("x", "s]", function()
+          if vim.b.narrow_region_active then
+            require("minimal-narrow-region").NarrowRegionClose()
+            return
+          end
+          require("minimal-narrow-region").NarrowRegionOpen()
+        end, { silent = true })
+        -- vim.api.nvim_create_user_command("Region", function()
+        --   if vim.b.narrow_region_active then
+        --     require("minimal-narrow-region").NarrowRegionClose()
+        --     return
+        --   end
+        --   require("minimal-narrow-region").NarrowRegionClose()
+        -- end, {})
       end,
-    },
-    {
-      "jmbuhr/otter.nvim",
     },
   }
 end
@@ -315,6 +345,7 @@ local function lsp()
           "typescript-language-server",
           "tailwindcss-language-server",
           "eslint_d",
+          "emmet-language-server",
 
           -- bash
           "bash-language-server",
@@ -401,6 +432,7 @@ local function lsp()
     },
     {
       "j-hui/fidget.nvim",
+      event = events.BufReadPost,
       config = function()
         require("fidget").setup({})
       end,
@@ -520,12 +552,13 @@ local function dap()
   return {
     {
       "mfussenegger/nvim-dap",
-      after = "nvim-lspconfig",
+      event = events.BufReadPost,
       config = function()
         require("plugins.dap")
       end,
       dependencies = {
         "rcarriga/nvim-dap-ui",
+        "nvim-neotest/nvim-nio",
         -- "theHamsta/nvim-dap-virtual-text",
         -- { "jbyuki/one-small-step-for-vimkind", module = "osv" },
       },
@@ -600,7 +633,12 @@ local function ui()
     {
       "stevearc/dressing.nvim",
       event = events.VeryLazy,
-      opts = {},
+      config = function()
+        require("dressing").setup({
+          insert_only = false,
+          start_in_insert = false,
+        })
+      end,
     },
     {
       "echasnovski/mini.nvim",
@@ -629,6 +667,7 @@ local function ui()
           },
           user_default_options = {
             tailwind = true,
+            css = true,
           },
         })
       end,
@@ -681,14 +720,71 @@ local function ui()
       end,
     },
 
+    {
+      "folke/twilight.nvim",
+      event = "BufReadPost",
+    },
+
+    {
+      "folke/noice.nvim",
+      event = events.VeryLazy,
+      dependencies = {
+        "MunifTanjim/nui.nvim",
+      },
+      config = function()
+        require("plugins.noice")
+      end,
+    },
     -- {
-    --   "folke/noice.nvim",
-    --   event = events.VeryLazy,
-    --   dependencies = {
-    --     "MunifTanjim/nui.nvim",
-    --   },
+    --   "Jxstxs/conceal.nvim",
+    --   event = "BufReadPost",
+    --   dependencies = { "nvim-treesitter/nvim-treesitter" },
     --   config = function()
-    --     require("plugins.noice")
+    --     local conceal = require("conceal")
+    --
+    --     -- should be run before .generate_conceals to use user Configuration
+    --     conceal.setup({
+    --       ["go"] = {
+    --         enabled = true,
+    --         keywords = {
+    --           ["Provide"] = {
+    --             enabled = true,
+    --             conceal = "P",
+    --             -- highlight = ""
+    --           },
+    --           ["Invoke"] = {
+    --             conceal = "ß", -- to set the concealing to "R"
+    --           },
+    --           ["for"] = {
+    --             highlight = "keyword", -- to set the Highlight group to "@keyword"
+    --           },
+    --         },
+    --       },
+    --
+    --       ["lua"] = {
+    --         enabled = true,
+    --         keywords = {
+    --           ["local"] = {
+    --             enabled = false, -- to disable concealing for "local"
+    --           },
+    --           ["return"] = {
+    --             conceal = "R", -- to set the concealing to "R"
+    --           },
+    --           ["for"] = {
+    --             highlight = "keyword", -- to set the Highlight group to "@keyword"
+    --           },
+    --         },
+    --       },
+    --     })
+    --
+    --     -- generate the scm queries
+    --     -- only need to be run when the Configuration changes
+    --     conceal.generate_conceals()
+    --
+    --     -- bind a <leader>tc to toggle the concealing level
+    --     vim.keymap.set("n", "<leader>tc", function()
+    --       require("conceal").toggle_conceal()
+    --     end, { silent = true })
     --   end,
     -- },
   }

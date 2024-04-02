@@ -20,7 +20,7 @@ opt.splitbelow = true
 opt.swapfile = false
 
 -- no awkward shitty horizontal shifting due to Diagnostics, GitSigns, etc.
-opt.signcolumn = "yes:2"
+opt.signcolumn = "yes:3"
 
 opt.wrap = true
 

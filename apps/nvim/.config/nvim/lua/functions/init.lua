@@ -1,6 +1,10 @@
 _G.R = function(pkg)
-  package.loaded[pkg or "functions.dev"] = nil
-  return require(pkg or "functions.dev")
+  package.loaded[pkg or "functions.utils"] = nil
+  return require(pkg or "functions.utils")
+end
+
+_G.P = function(...)
+  print(vim.inspect(...))
 end
 
 _G.Fn = function()

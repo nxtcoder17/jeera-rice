@@ -62,6 +62,15 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   end,
 })
 
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  group = group,
+  pattern = { "env", ".env" },
+  callback = function()
+    -- vim.diagnostic.disable(vim.fn.expand("<abuf>"))
+    vim.diagnostic.disable(0)
+  end,
+})
+
 vim.api.nvim_create_autocmd({ "BufNewFile" }, {
   group = group,
   pattern = { "flake.nix" },

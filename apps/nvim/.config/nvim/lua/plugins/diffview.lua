@@ -15,6 +15,10 @@ require("diffview").setup({
     DiffViewOpen = { "--imply-local" },
   },
   keymaps = {
+    view = {
+      { "n", "sn", "]c", { noremap = true, silent = true } },
+      { "n", "sp", "[c", { noremap = true, silent = true } },
+    },
     file_panel = {
       -- disabling the defaults
       {
