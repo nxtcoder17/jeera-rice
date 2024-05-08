@@ -17,7 +17,14 @@ local function find_files(dir, query)
   end
 
   -- fzf.fzf_exec("rg --threads 3 --files --iglob !.git --hidden --sort path", {
-  fzf.fzf_exec("fd --color=never --type f --hidden --follow --exclude .git", {
+  local cmd = "fd --color=never --type f --follow --exclude .git"
+  local filepath = vim.fn.expand("%")
+  if filepath ~= "" then
+    vim.print(string.format("using proximity-sort over %s", filepath))
+    -- cmd = string.format("%s | proximity-sort %s", cmd, filepath)
+  end
+
+  fzf.fzf_exec(cmd, {
     query = query,
     prompt = string.format("Files ❯ "),
     fzf_opts = fzf_opts,

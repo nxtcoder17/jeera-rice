@@ -41,6 +41,12 @@ M.color_palette = {
   },
 }
 
+local light_constrasts = {
+  blue1 = "#e4eaed",
+  green1 = "#ddeddf",
+  green9 = "#576158",
+}
+
 -- Default options
 require("nightfox").setup({
   options = {
@@ -145,7 +151,7 @@ require("nightfox").setup({
       },
 
       ["@function.method.call"] = {
-        fg = M.color_palette.sky_blue
+        fg = M.color_palette.sky_blue,
       },
 
       ["@type.builtin"] = {
@@ -194,20 +200,27 @@ require("nightfox").setup({
     },
     dayfox = {
       MatchParen = {
-        fg = "#dadee0",
-        bg = "#4d616b",
+        bg = "#dadee0",
+        -- fg = "#4d616b",
       },
 
       Cursor = {
-        bg = "#aec3cf",
+        -- bg = "#aec3cf",
+        fg = "#dadee0",
+      },
+
+      Normal = {
+        bg = "#FFFFFF",
       },
 
       Visual = {
-        bg = "#aec3cf",
+        bg = "#dadee0",
+        -- fg = "#aec3cf",
       },
 
       Pmenu = {
-        bg = "#dadee0",
+        -- bg = "dadee0",
+        bg = "#e4eaed",
       },
       CursorLine = {
         bg = "#a8cfe3",
@@ -215,10 +228,14 @@ require("nightfox").setup({
       LineNr = {
         fg = "#4d616b",
       },
+
+      ["@function.call"] = {
+        bg = light_constrasts.green1,
+        fg = light_constrasts.green9,
+      },
     },
   },
 })
 
 -- setup must be called before loading
 vim.cmd("colorscheme nightfox")
--- vim.cmd("colorscheme dayfox")

@@ -42,6 +42,7 @@ local function on_attach(client, bufnr)
   if client ~= nil and client.server_capabilities ~= nil then
     client.server_capabilities.semanticTokensProvider = nil
   end
+  -- client.server_capabilities.semanticTokensProvider = nil
 
   -- vim.api.nvim_create_autocmd("CursorHold", {
   --   buffer = bufnr,
@@ -89,7 +90,8 @@ local function on_attach(client, bufnr)
   vim.keymap.set("n", "gr", function()
     require("telescope.builtin").lsp_references({ include_current_line = false, show_line = false })
   end, opts)
-  vim.keymap.set("n", "gd", "<Cmd>Telescope lsp_definitions<CR>", opts)
+  -- vim.keymap.set("n", "gd", "<Cmd>Telescope lsp_definitions<CR>", opts)
+  vim.keymap.set("n", "gd", "<Cmd>Fzf lsp_definitions jump_to_single_result=true<CR>", opts)
   vim.keymap.set("n", "gD", "<Cmd>Fzf lsp_typedefs<CR>", opts)
   vim.keymap.set("n", "gi", "<Cmd>Fzf lsp_implementations<CR>", opts)
   vim.keymap.set("n", "sr", vim.lsp.buf.rename, opts)
@@ -115,68 +117,68 @@ local lsp_config = require("lspconfig")
 -- table.insert(vim.opt.runtimepath, vim.fn.stdpath("data") .. "/mason/bin")
 vim.env.PATH = vim.env.PATH .. ":" .. vim.fn.stdpath("data") .. "/mason/bin"
 
-local base_dir = vim.fn.stdpath("data") .. "/mason/bin"
-local lsp_servers = {
-  tsserver = {
-    base_dir .. "/typescript-language-server",
-    "--stdio",
-  },
-  graphql = {
-    base_dir .. "/graphql-lsp",
-    "server",
-    "-m",
-    "stream",
-  },
-  rome = {
-    base_dir .. "/rome",
-    -- "--stdio",
-  },
-  yaml = {
-    base_dir .. "/yaml-language-server",
-    "--stdio",
-  },
-  lua = {
-    base_dir .. "/lua-language-server",
-  },
-  go = {
-    base_dir .. "/gopls",
-  },
-  eslint_d = {
-    base_dir .. "/eslint_d",
-    "--stdio",
-  },
-  css = {
-    base_dir .. "/vscode-langservers-extracted/node_modules/.bin/vscode-css-language-server",
-  },
-  tailwindcss = {
-    base_dir .. "/tailwindcss-language-server",
-    "--stdio",
-  },
-  json = {
-    base_dir .. "/jsonls/node_modules/.bin/vscode-json-language-server",
-    "--stdio",
-  },
-  docker = {
-    base_dir .. "/docker-langserver",
-    "--stdio",
-  },
-  bashls = {
-    base_dir .. "/bash-language-server",
-    "start",
-  },
-  python = {
-    base_dir .. "/python/node_modules/.bin/pyright-langserver",
-    "--stdio",
-  },
-  quicklint = {
-    base_dir .. "/quick_lint_js/bin/quick-lint-js",
-    "--lsp",
-  },
-  terraform = {
-    base_dir .. "/terraform-ls",
-    "serve",
-  },
-}
+-- local base_dir = vim.fn.stdpath("data") .. "/mason/bin"
+-- local lsp_servers = {
+--   tsserver = {
+--     base_dir .. "/typescript-language-server",
+--     "--stdio",
+--   },
+--   graphql = {
+--     base_dir .. "/graphql-lsp",
+--     "server",
+--     "-m",
+--     "stream",
+--   },
+--   rome = {
+--     base_dir .. "/rome",
+--     -- "--stdio",
+--   },
+--   yaml = {
+--     base_dir .. "/yaml-language-server",
+--     "--stdio",
+--   },
+--   lua = {
+--     base_dir .. "/lua-language-server",
+--   },
+--   go = {
+--     base_dir .. "/gopls",
+--   },
+--   eslint_d = {
+--     base_dir .. "/eslint_d",
+--     "--stdio",
+--   },
+--   css = {
+--     base_dir .. "/vscode-langservers-extracted/node_modules/.bin/vscode-css-language-server",
+--   },
+--   tailwindcss = {
+--     base_dir .. "/tailwindcss-language-server",
+--     "--stdio",
+--   },
+--   json = {
+--     base_dir .. "/jsonls/node_modules/.bin/vscode-json-language-server",
+--     "--stdio",
+--   },
+--   docker = {
+--     base_dir .. "/docker-langserver",
+--     "--stdio",
+--   },
+--   bashls = {
+--     base_dir .. "/bash-language-server",
+--     "start",
+--   },
+--   python = {
+--     base_dir .. "/python/node_modules/.bin/pyright-langserver",
+--     "--stdio",
+--   },
+--   quicklint = {
+--     base_dir .. "/quick_lint_js/bin/quick-lint-js",
+--     "--lsp",
+--   },
+--   terraform = {
+--     base_dir .. "/terraform-ls",
+--     "serve",
+--   },
+-- }
 
 -- local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
@@ -214,8 +216,8 @@ capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
 
 -- Add bun for Node.js-based servers
 local lspconfig_util = require("lspconfig.util")
-local add_bun_prefix = require("plugins.lsp.bun").add_bun_prefix
-lspconfig_util.on_setup = lspconfig_util.add_hook_before(lspconfig_util.on_setup, add_bun_prefix)
+-- local add_bun_prefix = require("plugins.lsp.bun").add_bun_prefix
+-- lspconfig_util.on_setup = lspconfig_util.add_hook_before(lspconfig_util.on_setup, add_bun_prefix)
 
 local function wrapper(...)
   local has_coq, coq = pcall(require, "coq")
@@ -237,7 +239,7 @@ end
 
 -- tsserver
 lsp_config.tsserver.setup({
-  cmd = lsp_servers.tsserver,
+  -- cmd = lsp_servers.tsserver,
   capabilities = capabilities,
   root_dir = lsp_config.util.root_pattern("jsconfig.json", "tsconfig.json", "package.json", ".git"),
   on_attach = function(client)
@@ -465,7 +467,7 @@ lsp_config.gopls.setup(wrapper({
 }))
 
 lsp_config.terraformls.setup(wrapper({
-  cmd = lsp_servers.terraform,
+  -- cmd = lsp_servers.terraform,
   filetypes = { "terraform", "hcl" },
   on_attach = on_attach,
   root_dir = lsp_config.util.root_pattern(".git", ".terraform", "*.tf", "*.pkr.hcl"),
@@ -520,6 +522,8 @@ require("lspconfig").emmet_language_server.setup({
     variables = {},
   },
 })
+
+lsp_config.biome.setup({})
 
 lsp_config.efm.setup({
   init_options = { documentFormatting = true },

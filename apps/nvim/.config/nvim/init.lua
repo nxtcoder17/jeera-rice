@@ -1,5 +1,47 @@
 -- disabling builtin plugins
 
+-- sourced from `https://nanotipsforvim.prose.sh/using-pcall-to-make-your-config-more-stable`
+local function safeRequire(module)
+  local ok, mod = pcall(require, module)
+  if ok then
+    return mod
+  end
+  print("error loading: ", module)
+  -- vim.cmd.echo("Error loading " .. module)
+end
+
+if vim.g.vscode ~= nil then
+  local opts = { noremap = true, silent = true }
+  vim.cmd([[
+    nnoremap s <Nop>
+    nnoremap ss :w<CR>
+  ]])
+  -- vim.keymap.set({ "n", "v" }, "ss", ":w<CR>", opts)
+
+  -- making splits
+  vim.keymap.set("n", "si", ":vsplit<CR>", opts)
+  vim.keymap.set("n", "sm", ":split<CR>", opts)
+
+  -- only split
+  vim.keymap.set("n", "sx", ":only<CR>", opts)
+  vim.keymap.set("n", "s0", ":tabonly<CR>", opts)
+
+  -- making splits
+  vim.keymap.set("n", "scc", function()
+    local f = vim.fn.expand("%:p")
+    local from_project_root = f:sub(#vim.g.nxt.project_root_dir + 2)
+
+    local lineNr = vim.fn.line(".")
+
+    vim.fn.setreg("+", from_project_root .. ":" .. lineNr)
+  end, { noremap = true, silent = true, desc = "Copy file path, including line number to system clipboard" })
+
+  -- safeRequire("globals")
+  -- safeRequire("settings")
+  -- safeRequire("keymaps")
+  return
+end
+
 vim.g.loaded_gzip = 1
 vim.g.loaded_tar = 1
 vim.g.loaded_tarPlugin = 1
@@ -29,16 +71,6 @@ vim.g.loaded_netrwFileHandlers = 1
 vim.g.loaded_node_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
-
--- sourced from `https://nanotipsforvim.prose.sh/using-pcall-to-make-your-config-more-stable`
-local function safeRequire(module)
-  local ok, mod = pcall(require, module)
-  if ok then
-    return mod
-  end
-  print("error loading: ", module)
-  -- vim.cmd.echo("Error loading " .. module)
-end
 
 safeRequire("globals")
 safeRequire("settings")

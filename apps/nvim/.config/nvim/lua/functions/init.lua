@@ -52,3 +52,5 @@ function _G.smart_tab()
     return string.rep(" ", vim.o.shiftwidth)
   end
 end
+
+-- require("functions.cmd")

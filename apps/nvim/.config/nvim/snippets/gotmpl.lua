@@ -27,13 +27,18 @@ local var_stmt = s(
       end, 1),
       p2 = i(1, "var"),
     }),
-    fmta([[{{- <p1> := get . "<p2>" }}]], {
-      p1 = f(function(...)
-        local args = ...
-        return "$" .. require("functions.strings").camel_case(args[1][1])
-      end, 1),
-      p2 = i(1, "var"),
-    }),
+    fmta(
+      [[{{- <p1> := get . "<p2>" <p0>}}
+    ]],
+      {
+        p1 = f(function(...)
+          local args = ...
+          return "$" .. require("functions.strings").camel_case(args[1][1])
+        end, 1),
+        p2 = i(1, "var"),
+        p0 = i(0),
+      }
+    ),
   })
 )
 

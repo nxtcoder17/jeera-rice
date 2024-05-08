@@ -31,3 +31,29 @@ snippet pushd-silent
 
 snippet popd-silent
 	popd > /dev/null 2>&1 || exit 
+
+snippet parse-flag
+	debug=false
+	while [[ $# -gt 0 ]]; do
+  	case "\$1" in
+    	-d|--debug)
+      	echo "Option -d or --debug is present."
+      	;;
+
+			-n|--name)
+      	if [[ -n "\$2" ]]; then
+        	count="\$2"
+        	echo "Count is set to $count."
+        	shift
+      	else
+        	echo "Error: Count requires a value."
+        	exit 1
+      	fi
+				;;
+    	*)
+      	echo "Unknown option: \$1"
+      	exit 1
+      	;;
+  	esac
+  	shift
+	done

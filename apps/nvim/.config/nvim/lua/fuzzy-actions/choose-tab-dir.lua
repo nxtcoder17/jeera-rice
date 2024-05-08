@@ -2,13 +2,15 @@ local fzf = require("fzf-lua")
 
 ---@param dir string
 local function choose_tab_dir(dir)
-  dir = dir or vim.fn.getcwd()
+  -- dir = dir or vim.fn.getcwd()
+  dir = vim.g.nxt.project_root_dir
 
-  local cmd = string.format(
-    "fd -H --exclude .git --threads 1 -t d -c never . %s | tail -n +2",
-    vim.g.nxt_fns.relative_from_project_root(dir)
-  )
-  print("dir", dir, "cmd", cmd)
+  local cmd = "fd -H --exclude .git --threads 1 -t d -c never"
+  -- local cmd = string.format(
+  -- -- "fd -H --exclude .git --threads 1 -t d -c never . %s | tail -n +2",
+  --   "fd -H --exclude .git --threads 1 -t d -c never",
+  --   -- vim.g.nxt_fns.relative_from_project_root(dir)
+  -- )
 
   local fzf_opts = {}
   if dir ~= vim.g.nxt.project_root_dir then
@@ -20,6 +22,7 @@ local function choose_tab_dir(dir)
   fzf.fzf_exec(cmd, {
     prompt = "Choose Tab Directory ❯ ",
     fzf_opts = fzf_opts,
+    cwd = dir,
     actions = {
       ["default"] = function(selected, _opts)
         vim.t.tab_dir = selected[1]

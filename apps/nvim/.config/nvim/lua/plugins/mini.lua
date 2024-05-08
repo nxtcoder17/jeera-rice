@@ -12,7 +12,7 @@ require("mini.comment").setup({
 })
 
 local hipatterns = require("mini.hipatterns")
-function build_highlight_pattern(keyword)
+local function build_highlight_pattern(keyword)
   return "%f[%w]()" .. keyword .. "()%f[%s]"
 end
 

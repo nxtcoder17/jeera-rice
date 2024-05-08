@@ -23,7 +23,8 @@ local function setup_nvim_cmp()
       -- explanations: https://github.com/hrsh7th/nvim-cmp/blob/main/doc/cmp.txt#L425
       debounce = 30,
       throttle = 20,
-      fetching_timeout = 250,
+      -- fetching_timeout = 250,
+      fetching_timeout = 100,
       async_budget = 50,
       max_view_entries = 30,
     },
@@ -38,8 +39,12 @@ local function setup_nvim_cmp()
     window = {
       completion = {
         winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+        border = "rounded",
         col_offset = -3,
         side_padding = 0,
+      },
+      documentation = {
+        border = "rounded",
       },
     },
     mapping = cmp.mapping.preset.insert({
@@ -56,8 +61,6 @@ local function setup_nvim_cmp()
               fallback()
               return
             end
-          end
-          if cmp.visible() then
             cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true })
             return
           end
@@ -109,21 +112,23 @@ local function setup_nvim_cmp()
     sources = cmp.config.sources({
       { name = "nvim_lsp",   priority = 80 },
       { name = "nvim_lua",   priority = 80 },
+      { name = "tags",       priority = 80 },
       { name = "async_path", priority = 80 },
       { name = "luasnip",    options = { show_autosnippets = true }, priority = 70 },
       { name = "goimports",  priority = 60,                          keyword_length = 3 },
+      -- { name = "cmp_tabby" },
       { name = "codeium" },
-      {
-        name = "buffer",
-        priority = 40,
-        keyword_length = 3,
-        group_index = 5,
-        option = {
-          get_bufnrs = function()
-            return vim.api.nvim_list_bufs()
-          end,
-        },
-      },
+      -- {
+      --   name = "buffer",
+      --   priority = 40,
+      --   keyword_length = 3,
+      --   group_index = 5,
+      --   option = {
+      --     get_bufnrs = function()
+      --       return vim.api.nvim_list_bufs()
+      --     end,
+      --   },
+      -- },
       -- TODO: write my own rg and tmux sources,
       --       tmux list-panes -s -F "#{pane_id}" | xargs -I{} tmux capture-pane -p -t {} | rg "WAIT_" | tr -cd '\11\12\15\40-\176'
       -- {
@@ -149,33 +154,33 @@ local function setup_nvim_cmp()
     -- },
 
     -- copied from TJ Devries (https://github.com/tjdevries/config_manager/blob/83b6897e83525efdfdc24001453137c40373aa00/xdg_config/nvim/after/plugin/completion.lua#L129-L155)
-    -- sorting = {
-    --   -- TODO: Would be cool to add stuff like "See variable names before method names" in rust, or something like that.
-    --   comparators = {
-    --     cmp.config.compare.offset,
-    --     cmp.config.compare.exact,
-    --     cmp.config.compare.score,
-    --
-    --     -- copied from cmp-under, but I don't think I need the plugin for this.
-    --     -- I might add some more of my own.
-    --     function(entry1, entry2)
-    --       local _, entry1_under = entry1.completion_item.label:find("^_+")
-    --       local _, entry2_under = entry2.completion_item.label:find("^_+")
-    --       entry1_under = entry1_under or 0
-    --       entry2_under = entry2_under or 0
-    --       if entry1_under > entry2_under then
-    --         return false
-    --       elseif entry1_under < entry2_under then
-    --         return true
-    --       end
-    --     end,
-    --
-    --     cmp.config.compare.kind,
-    --     cmp.config.compare.sort_text,
-    --     cmp.config.compare.length,
-    --     cmp.config.compare.order,
-    --   },
-    -- },
+    sorting = {
+      -- TODO: Would be cool to add stuff like "See variable names before method names" in rust, or something like that.
+      comparators = {
+        cmp.config.compare.offset,
+        cmp.config.compare.exact,
+        cmp.config.compare.score,
+
+        -- copied from cmp-under, but I don't think I need the plugin for this.
+        -- I might add some more of my own.
+        function(entry1, entry2)
+          local _, entry1_under = entry1.completion_item.label:find("^_+")
+          local _, entry2_under = entry2.completion_item.label:find("^_+")
+          entry1_under = entry1_under or 0
+          entry2_under = entry2_under or 0
+          if entry1_under > entry2_under then
+            return false
+          elseif entry1_under < entry2_under then
+            return true
+          end
+        end,
+
+        cmp.config.compare.kind,
+        cmp.config.compare.sort_text,
+        cmp.config.compare.length,
+        cmp.config.compare.order,
+      },
+    },
 
     formatting = {
       fields = { "kind", "abbr", "menu" },
@@ -193,12 +198,14 @@ local function setup_nvim_cmp()
 
           fuzzy_buffer = "fzf",
           cmp_tabnine = "⚡",
+          cmp_tabby = "⚡ tabby",
           treesitter = "treesitter",
           nvim_lsp_signature_help = "lsp signature",
           path = "path",
           tmux = "tmux",
           goimports = "🥅 Go-Imports",
           copilot = "CoPilot",
+          tags = "tags",
         })[entry.source.name]
 
         local kind = require("lspkind").cmp_format({ mode = "symbol", maxwidth = 50 })(entry, vim_item)

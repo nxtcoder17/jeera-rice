@@ -20,7 +20,7 @@ opt.splitbelow = true
 opt.swapfile = false
 
 -- no awkward shitty horizontal shifting due to Diagnostics, GitSigns, etc.
-opt.signcolumn = "yes:3"
+opt.signcolumn = "yes:2"
 
 opt.wrap = true
 
@@ -136,10 +136,16 @@ opt.ttyfast = true
 
 -- colors
 opt.termguicolors = true
+vim.cmd([[
+  let &t_Cs = "\e[4:3m"
+  let &t_Ce = "\e[4:0m"
+]])
 opt.updatetime = 100
 
 -- buffers
 opt.switchbuf = "useopen,usetab,newtab"
+
+opt.foldmethod = "manual"
 
 vim.o.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
 
@@ -149,9 +155,9 @@ vim.o.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,winpos,termin
 -- augroup END
 
 -- fold text
-vim.cmd(
-  [[ set foldtext=substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').'...'.trim(getline(v:foldend)) ]]
-)
+-- vim.cmd(
+--   [[ set foldtext=substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').'...'.trim(getline(v:foldend)) ]]
+-- )
 
 -- neovide settings
 -- opt.guifont = "ComicCodeLigatures-Medium:h11"

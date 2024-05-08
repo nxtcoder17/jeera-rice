@@ -78,3 +78,47 @@ vim.api.nvim_create_autocmd({ "BufNewFile" }, {
     vim.cmd(string.format("-1r %s/templates/flake.nix", vim.fn.stdpath("config")))
   end,
 })
+
+vim.api.nvim_create_autocmd({ "LspAttach" }, {
+  group = group,
+  pattern = "*",
+  callback = function()
+    --INFO: https://github.com/quangnguyen30192/cmp-nvim-tags/blob/main/README.md#troubleshooting
+    vim.bo.tagfunc = nil
+  end,
+})
+
+local function file_exists(name)
+  local f = io.open(name, "r")
+  return f ~= nil and io.close(f)
+end
+
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+  group = group,
+  pattern = "*",
+  callback = function()
+    coroutine.wrap(function()
+      local co = coroutine.running()
+      if file_exists(string.format("%s/tags", vim.g.nxt.project_root_dir)) then
+        require("plenary.job")
+            :new({
+              command = "bash",
+              args = {
+                "-c",
+                "fd -t file --ignore-vcs --exclude tags -c never > /tmp/list.txt && ctags -L /tmp/list.txt",
+              },
+              cwd = vim.g.nxt.project_root_dir,
+              -- on_exit = function(j, return_val)
+              --   -- vim.print(j:result())
+              --   -- print(return_val)
+              --   for _, v in ipairs(j:result()) do
+              --     print(v)
+              --   end
+              -- end,
+            })
+            :sync()
+      end
+      coroutine.yield()
+    end)()
+  end,
+})

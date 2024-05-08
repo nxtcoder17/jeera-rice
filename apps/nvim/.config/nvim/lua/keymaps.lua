@@ -45,6 +45,13 @@ vim.keymap.set("n", "scc", function()
   vim.fn.setreg("+", from_project_root .. ":" .. lineNr)
 end, { noremap = true, silent = true, desc = "Copy file path, including line number to system clipboard" })
 
+vim.keymap.set("n", "scd", function()
+  local f = vim.fn.expand("%:p")
+  local from_project_root = f:sub(#vim.g.nxt.project_root_dir + 2)
+
+  vim.fn.setreg("+", vim.fs.dirname(from_project_root))
+end, { noremap = true, silent = true, desc = "Copy directory of current buffer to system clipboard" })
+
 -- split resize
 vim.keymap.set({ "n" }, "<C-M-Left>", "<Cmd>vertical resize -5<CR>", opts)
 vim.keymap.set({ "n" }, "<C-M-Right>", "<Cmd>vertical resize +5<CR>", opts)

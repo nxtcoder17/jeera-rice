@@ -2,8 +2,8 @@
 -- vim.keymap.set({ "n", "v" }, "<C-S-w>", "<Nop>", {})
 
 require("nvim-treesitter.configs").setup({
-  ensure_installed = "all",
-  -- ignore_install = { "ocamllex", "swift", "phpdoc" },
+  -- ensure_installed = "all",
+  ignore_install = { "javascript", "typescript", "bash", "go", "lua", "yaml", "json" },
   query_linter = {
     enable = true,
     use_virtual_text = true,
@@ -146,4 +146,14 @@ parser_config.gotmpl = {
   },
   filetype = "gotmpl",
   used_by = { "gohtmltmpl", "gotexttmpl", "gotmpl", "yaml" },
+}
+
+parser_config.dockerfile = {
+  install_info = {
+    url = "https://github.com/tvrinssen/tree-sitter-dockerfile",
+    branch = "pr/support-heredocs",
+    files = { "src/parser.c" },
+  },
+  filetype = "dockerfile",
+  used_by = { "dockerfile" },
 }

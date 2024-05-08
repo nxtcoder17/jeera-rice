@@ -90,7 +90,11 @@ end
 M.fzf_lua_keymaps = function()
   vim.keymap.set("n", "sf", require("fuzzy-actions.find-files"))
 
-  vim.cmd("cnoreabbrev cd lua require('fuzzy-actions.choose-tab-dir')()<CR>")
+  -- vim.cmd(
+  --   [[ cnoreabbrev cd lua require('fuzzy-actions.choose-tab-dir')()<CR>\|lua vim.api.nvim_feedkeys("x", "n", true)<CR> ]]
+  -- )
+  vim.cmd([[ cnoreabbrev cd lua require('fuzzy-actions.choose-tab-dir')()<CR>]])
+  -- vim.keymap.set("c", "cd", require("fuzzy-actions.choose-tab-dir"))
   vim.keymap.set("n", "tl", require("fuzzy-actions.find-tabs"))
   vim.keymap.set("n", "ff", require("fuzzy-actions.grep"))
   vim.keymap.set("n", "s/", "<cmd>FzfLua grep_curbuf<CR>")

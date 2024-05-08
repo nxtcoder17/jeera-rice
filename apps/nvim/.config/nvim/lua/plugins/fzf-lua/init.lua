@@ -1,11 +1,28 @@
 local actions = require("fzf-lua.actions")
 
+vim.cmd([[
+  hi! link FzfFg @operator
+  hi! link FzfBg Normal
+  hi! link FzfHl @variable
+  hi! link FzfFgPlus Normal
+  hi! link FzfBgPlus CursorLine
+  hi! link FzfHlPlus Statement
+  hi! link FzfInfo PreProc
+  hi! link FzfPrompt Conditional
+  hi! link FzfPointer Exception
+  hi! link FzfMarker Keyword
+  hi! link FzfSpinner Label
+  hi! link FzfHeader Comment
+  hi! link FzfGutter Normal
+]])
+
 local fzf = require("fzf-lua")
 fzf.setup({
   "telescope",
   fzf_opts = {
     ["--layout"] = "reverse",
     ["--pointer"] = "👉",
+    ["--tiebreak"] = "index",
   },
   file_icon_padding = " ",
   global_resume = true,
@@ -13,21 +30,19 @@ fzf.setup({
   global_resume_prompt = "resume: ",
 
   fzf_colors = {
-    -- ["fg"] = { "fg", "CursorLine" },
-    ["fg"] = { "fg", "@keyword.operator" },
-    ["bg"] = { "bg", "Normal" },
-    -- ["hl"] = { "fg", "Comment" },
-    ["hl"] = { "fg", "Statement" },
-    ["fg+"] = { "fg", "Normal" },
-    ["bg+"] = { "bg", "CursorLine" },
-    ["hl+"] = { "fg", "Statement" },
-    ["info"] = { "fg", "PreProc" },
-    ["prompt"] = { "fg", "Conditional" },
-    ["pointer"] = { "fg", "Exception" },
-    ["marker"] = { "fg", "Keyword" },
-    ["spinner"] = { "fg", "Label" },
-    ["header"] = { "fg", "Comment" },
-    ["gutter"] = { "bg", "Normal" },
+    ["fg"] = { "fg", "FzfFg" },
+    ["bg"] = { "bg", "FzfBg" },
+    ["hl"] = { "fg", "FzfHl" },
+    ["fg+"] = { "fg", "FzfFgPlus" },
+    ["bg+"] = { "bg", "FzfBgPlus" },
+    ["hl+"] = { "fg", "FzfHlPlus" },
+    ["info"] = { "fg", "FzfInfo" },
+    ["prompt"] = { "fg", "FzfPrompt" },
+    ["pointer"] = { "fg", "FzfPointer" },
+    ["marker"] = { "fg", "FzfMarker" },
+    ["spinner"] = { "fg", "FzfSpinner" },
+    ["header"] = { "fg", "FzfHeader" },
+    ["gutter"] = { "bg", "FzfGutter" },
   },
 
   winopts = {

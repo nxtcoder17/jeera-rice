@@ -25,21 +25,21 @@ local events = {
 
 local function colorschemes()
   return {
-    {
-      "folke/tokyonight.nvim",
-      lazy = false,
-      priority = 1000,
-      opts = {},
-      config = function()
-        -- vim.o.background = "dark"
-        -- vim.o.background = "light"
-        -- require("plugins.tokyonight")
-      end,
-    },
+    -- {
+    --   "folke/tokyonight.nvim",
+    --   lazy = false,
+    --   priority = 1000,
+    --   opts = {},
+    --   config = function()
+    --     -- vim.o.background = "dark"
+    --     -- vim.o.background = "light"
+    --     -- require("plugins.tokyonight")
+    --   end,
+    -- },
     {
       "catppuccin/nvim",
       config = function()
-        -- require("plugins.colorschemes.catppuccin")
+        require("plugins.colorschemes.catppuccin")
       end,
     },
     -- {
@@ -49,55 +49,54 @@ local function colorschemes()
     --   -- 	require("plugins.gruvbox-material")
     --   -- end,
     -- },
-    {
-      "rebelot/kanagawa.nvim",
-      lazy = false,
-      event = events.VeryLazy,
-      -- init = function()
-      -- 	require("plugins.kanagawa")
-      -- 	vim.o.background = "light"
-      -- 	vim.cmd("colorscheme kanagawa-lotus")
-      -- end,
-    },
+    -- {
+    --   "rebelot/kanagawa.nvim",
+    --   lazy = false,
+    --   event = events.VeryLazy,
+    --   init = function()
+    --   	require("plugins.kanagawa")
+    --   	vim.o.background = "light"
+    --   	vim.cmd("colorscheme kanagawa-lotus")
+    --   end,
+    -- },
     --   {
     --     "towolf/vim-helm",
     --     ft = { "gotmpl", "gotexttmpl", "yaml" },
     --   },
-    {
-      "mcchrish/zenbones.nvim",
-      dependencies = {
-        "rktjmp/lush.nvim",
-      },
-      config = function()
-        -- require("plugins.colorschemes.zenbones")
-      end,
-    },
-    {
-      "RRethy/nvim-base16",
-      config = function()
-        -- require("plugins.colorschemes.base16")
-      end,
-    },
-    {
-      "neanias/everforest-nvim",
-      version = false,
-      lazy = false,
-      priority = 1000, -- make sure to load this before all the other start plugins
-      -- Optional; default configuration will be used if setup isn't called.
-      config = function()
-        -- vim.opt.background = "light"
-        -- require("plugins.tokyonight")
-        -- require("plugins.colorschemes.everforest")
-        -- vim.cmd([[colorscheme everforest]])
-      end,
-    },
-
-    {
-      "EdenEast/nightfox.nvim",
-      config = function()
-        require("plugins.colorschemes.nightfox")
-      end,
-    },
+    -- {
+    --   "mcchrish/zenbones.nvim",
+    --   dependencies = {
+    --     "rktjmp/lush.nvim",
+    --   },
+    --   config = function()
+    --     require("plugins.colorschemes.zenbones")
+    --   end,
+    -- },
+    -- {
+    --   "RRethy/nvim-base16",
+    --   config = function()
+    --     -- require("plugins.colorschemes.base16")
+    --   end,
+    -- },
+    -- {
+    --   "neanias/everforest-nvim",
+    --   version = false,
+    --   lazy = false,
+    --   priority = 1000, -- make sure to load this before all the other start plugins
+    --   -- Optional; default configuration will be used if setup isn't called.
+    --   config = function()
+    --     -- vim.opt.background = "light"
+    --     -- require("plugins.tokyonight")
+    --     -- require("plugins.colorschemes.everforest")
+    --     -- vim.cmd([[colorscheme everforest]])
+    --   end,
+    -- },
+    -- {
+    --   "EdenEast/nightfox.nvim",
+    --   config = function()
+    --     require("plugins.colorschemes.nightfox")
+    --   end,
+    -- },
   }
 end
 
@@ -105,14 +104,15 @@ local function fuzzy_finders()
   return {
     {
       "nvim-telescope/telescope.nvim",
-      event = events.UIEnter,
+      -- event = events.UIEnter,
       -- event = events.BufWinEnter,
+      lazy = true,
       dependencies = {
         "nvim-lua/plenary.nvim",
-        { "nvim-tree/nvim-web-devicons",              event = events.VeryLazy },
-        { "nvim-telescope/telescope-fzf-native.nvim", build = "make",          event = events.VeryLazy },
-        { "gbrlsnchs/telescope-lsp-handlers.nvim",    event = events.VeryLazy, after = "nvim-lspconfig" },
-        { "nvim-telescope/telescope-ui-select.nvim",  event = events.VeryLazy },
+        { "nvim-tree/nvim-web-devicons" },
+        { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+        { "gbrlsnchs/telescope-lsp-handlers.nvim",    after = "nvim-lspconfig" },
+        { "nvim-telescope/telescope-ui-select.nvim" },
         -- { "nvim-telescope/telescope-dap.nvim" },
         -- {
         --   "nvim-telescope/telescope-smart-history.nvim",
@@ -127,14 +127,14 @@ local function fuzzy_finders()
         require("telescope").load_extension("lsp_handlers")
         require("telescope").load_extension("ui-select")
         -- require("telescope").load_extension("dap")
-        require("keymaps-for-plugins").telescope_keymaps()
+        -- require("keymaps-for-plugins").telescope_keymaps()
       end,
       cmd = {
         "Telescope",
       },
-      keys = {
-        "sf",
-      },
+      -- keys = {
+      --   "sf",
+      -- },
     },
     {
       "ibhagwan/fzf-lua",
@@ -142,7 +142,11 @@ local function fuzzy_finders()
       dependencies = { "nvim-tree/nvim-web-devicons" },
       config = function()
         require("plugins.fzf-lua")
+        require("keymaps-for-plugins").fzf_lua_keymaps()
       end,
+      keys = {
+        "sf",
+      },
     },
   }
 end
@@ -205,6 +209,7 @@ local function session_managers()
       },
       -- event = events.UIEnter,
       dependencies = { "nvim-lua/plenary.nvim" },
+      lazy = true,
       config = function()
         require("plugins.possession")
       end,
@@ -222,6 +227,12 @@ local function syntax()
       end,
       dependencies = {
         { "nvim-treesitter/nvim-treesitter-textobjects" },
+        -- {
+        --   "yorickpeterse/nvim-tree-pairs",
+        --   config = function()
+        --     require("tree-pairs").setup()
+        --   end,
+        -- },
         {
           "JoosepAlviste/nvim-ts-context-commentstring",
           config = function()
@@ -232,6 +243,7 @@ local function syntax()
                 gotmpl = "{{- /* %s */}}",
                 terraform = "# %s",
                 proto = "// %s",
+                kdl = "// %s",
               },
             })
           end,
@@ -272,14 +284,16 @@ local function syntax()
         require("sentiment").setup({})
       end,
     },
-    -- {
-    --   "kevinhwang91/nvim-ufo",
-    --   dependencies = "kevinhwang91/promise-async",
-    --   event = "BufReadPost", -- needed for folds to load properly
-    --   config = function()
-    --     require("plugins.nvim-ufo")
-    --   end,
-    -- },
+
+    {
+      "kevinhwang91/nvim-ufo",
+      dependencies = "kevinhwang91/promise-async",
+      event = "BufReadPost", -- needed for folds to load properly
+      config = function()
+        require("plugins.nvim-ufo")
+      end,
+    },
+
     {
       "bagohart/minimal-narrow-region.nvim",
       event = "BufReadPost",
@@ -311,32 +325,10 @@ local function lsp()
       "williamboman/mason.nvim",
       cmd = { "Mason" },
       opts = { max_concurrent_installers = 10 },
-      -- opts = {
-      --   ensure_installed = {
-      --     "eslint_d",
-      --     "stylua",
-      --     "gofumpt",
-      --     "goimports_reviser",
-      --     "golines",
-      --     "tree-sitter-cli",
-      --     "shellcheck",
-      --     "shfmt",
-      --     "delve",
-      --
-      --     -- formatters
-      --
-      --     --lsp
-      --     "bash-language-server",
-      --     "lua-language-server",
-      --     "typescript-language-server",
-      --     "tailwindcss-language-server",
-      --     "gopls",
-      --     "pyright",
-      --     "terraform-ls",
-      --   },
-      -- },
       build = function()
         local ensure_installed = {
+          "tree-sitter-cli",
+
           -- lua
           "lua-language-server",
           "stylua",
@@ -360,6 +352,7 @@ local function lsp()
           "gomodifytags",
           "impl",
           "iferr",
+          "json-to-struct",
 
           -- graphql
           "graphql-language-service-cli",
@@ -369,6 +362,10 @@ local function lsp()
 
           --python
           "pyright",
+
+          -- terraform
+          "terraform-ls",
+          "tflint",
 
           -- linter
           "efm",
@@ -430,13 +427,13 @@ local function lsp()
       },
       config = true,
     },
-    {
-      "j-hui/fidget.nvim",
-      event = events.BufReadPost,
-      config = function()
-        require("fidget").setup({})
-      end,
-    },
+    -- {
+    --   "j-hui/fidget.nvim",
+    --   event = events.BufReadPost,
+    --   config = function()
+    --     require("fidget").setup({})
+    --   end,
+    -- },
   }
 
   local coc_lsp = {
@@ -466,6 +463,22 @@ local function completions()
         { "andersevenrud/cmp-tmux" },
         { "saadparwaiz1/cmp_luasnip" },
         { "FelipeLema/cmp-async-path" },
+        -- {
+        --   "nzlov/cmp-tabby",
+        --   config = function()
+        --     local tabby = require("cmp_tabby.config")
+        --
+        --     tabby:setup({
+        --       max_lines = 1000,
+        --     })
+        --     tabby:setup({
+        --       host = "http://192.168.0.117:8080",
+        --       token = "auth_8967cbf1f3504011817695c6d31bb46d",
+        --       max_lines = 1000,
+        --     })
+        --   end,
+        -- },
+        { "quangnguyen30192/cmp-nvim-tags" },
         {
           "L3MON4D3/LuaSnip",
           config = function()
@@ -488,6 +501,12 @@ local function completions()
       event = events.BufReadPost,
       config = function()
         require("codeium").setup({})
+      end,
+    },
+    {
+      "TabbyML/vim-tabby",
+      config = function()
+        vim.g.tabby_keybinding_accept = "<M-l>"
       end,
     },
 
@@ -536,6 +555,7 @@ local function search_and_replace()
   return {
     {
       "windwp/nvim-spectre",
+      lazy = true,
       cmd = {
         "Spectre",
       },
@@ -543,6 +563,7 @@ local function search_and_replace()
     },
     {
       "mg979/vim-visual-multi",
+      lazy = true,
       keys = { "<C-n>" },
     },
   }
@@ -632,7 +653,7 @@ local function ui()
     },
     {
       "stevearc/dressing.nvim",
-      event = events.VeryLazy,
+      after = "BufReadPost",
       config = function()
         require("dressing").setup({
           insert_only = false,
@@ -695,19 +716,6 @@ local function ui()
     },
 
     {
-      "AckslD/messages.nvim",
-      cmd = {
-        "Messages",
-      },
-      config = function()
-        require("messages").setup()
-        _G.Msg = function(...)
-          require("messages.api").capture_thing(...)
-        end
-      end,
-    },
-
-    {
       "chrisgrieser/nvim-origami",
       event = "BufReadPost", -- later or on keypress would prevent saving folds
       opts = true,        -- needed even when using default config
@@ -725,66 +733,14 @@ local function ui()
       event = "BufReadPost",
     },
 
-    {
-      "folke/noice.nvim",
-      event = events.VeryLazy,
-      dependencies = {
-        "MunifTanjim/nui.nvim",
-      },
-      config = function()
-        require("plugins.noice")
-      end,
-    },
     -- {
-    --   "Jxstxs/conceal.nvim",
-    --   event = "BufReadPost",
-    --   dependencies = { "nvim-treesitter/nvim-treesitter" },
+    --   "folke/noice.nvim",
+    --   event = events.VeryLazy,
+    --   dependencies = {
+    --     "MunifTanjim/nui.nvim",
+    --   },
     --   config = function()
-    --     local conceal = require("conceal")
-    --
-    --     -- should be run before .generate_conceals to use user Configuration
-    --     conceal.setup({
-    --       ["go"] = {
-    --         enabled = true,
-    --         keywords = {
-    --           ["Provide"] = {
-    --             enabled = true,
-    --             conceal = "P",
-    --             -- highlight = ""
-    --           },
-    --           ["Invoke"] = {
-    --             conceal = "ß", -- to set the concealing to "R"
-    --           },
-    --           ["for"] = {
-    --             highlight = "keyword", -- to set the Highlight group to "@keyword"
-    --           },
-    --         },
-    --       },
-    --
-    --       ["lua"] = {
-    --         enabled = true,
-    --         keywords = {
-    --           ["local"] = {
-    --             enabled = false, -- to disable concealing for "local"
-    --           },
-    --           ["return"] = {
-    --             conceal = "R", -- to set the concealing to "R"
-    --           },
-    --           ["for"] = {
-    --             highlight = "keyword", -- to set the Highlight group to "@keyword"
-    --           },
-    --         },
-    --       },
-    --     })
-    --
-    --     -- generate the scm queries
-    --     -- only need to be run when the Configuration changes
-    --     conceal.generate_conceals()
-    --
-    --     -- bind a <leader>tc to toggle the concealing level
-    --     vim.keymap.set("n", "<leader>tc", function()
-    --       require("conceal").toggle_conceal()
-    --     end, { silent = true })
+    --     require("plugins.noice")
     --   end,
     -- },
   }

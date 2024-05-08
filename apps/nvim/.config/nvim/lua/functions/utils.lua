@@ -98,4 +98,18 @@ M.system_call = function(cmd)
   return s
 end
 
+M.handle_abbrev = function(luafn) end
+
+M.open_selection_in_new_buffer = function()
+  local selection = vim.fn.getreg("*")
+  vim.cmd("enew")
+  vim.cmd("setlocal buftype=nofile")
+  vim.cmd("setlocal bufhidden=delete")
+  vim.cmd("setlocal noswapfile")
+  vim.cmd("setlocal nomodifiable")
+  vim.cmd("setlocal readonly")
+  vim.cmd("setlocal buftype=nofile")
+  vim.cmd("setlocal bufhidden=delete")
+end
+
 return M
