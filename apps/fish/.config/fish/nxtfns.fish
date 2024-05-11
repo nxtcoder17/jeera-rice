@@ -17,6 +17,12 @@ function curl-cookie --description "curl sets up cookie"
   curl -s -L0 (cat ~/.kl-cookies | xargs -I{} echo -n '--cookie {}' | xargs -n1) "$argv"
 end
 
+function dockersize --description "docker size of a function in IEC format"
+  docker manifest inspect -v "$argv[1]" | jq -c 'if type == "array" then .[] else . end' |  jq -r '
+      [ ( .Descriptor.platform | [ .os, .architecture, .variant, ."os.version" ] | del(..|nulls) | join("/") ), ( [ .SchemaV2Manifest.layers[].size ] | add ) ] | join(" ")
+    ' | numfmt --to iec --format '%.2f' --field 2 | column -t
+end
+
 # function go-test-cover --description "go test with coverprofile and opening that profile in browser"
 #   set -l coverprofile (mktemp)
 #   go test -coverprofile=$coverprofile $argv

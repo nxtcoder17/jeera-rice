@@ -4,8 +4,11 @@ function fish_mode_prompt
   # NOOP - Disable vim mode indicator
 end
 
+set -x fish_prompt_pwd_dir_length 5
+set -x fish_prompt_pwd_full_dirs 4
+
 # if test (command -v exa | wc -l) -gt 0
-if type -q exa 
+if type -q exa
     alias ls 'exa --icons'
     alias ll 'exa -la --icons'
 end
@@ -27,18 +30,39 @@ alias hm 'home-manager'
 alias hme 'home-manager edit'
 alias hms 'home-manager switch'
 
-if type -q kubie
-    alias kx 'kubie ctx'
+function sudo  --description "wraps sudo but tries to preserve PATH, as nix installed binaries are not in SUDO user PATH"
+  set cmd $argv[1]
+  if [ -z "$cmd" ]
+    command sudo $argv
+    return
+  end
+
+  if string match -- '-*' $cmd 2>&1 > /dev/null
+    command sudo $argv
+    return
+  end
+
+  command sudo $(which $cmd) $argv[2..-1]
+end
+
+function direnv --description "direnv hook"
+  echo "direnv hook loading ..."
+  command direnv $argv 2>&1 > /dev/null
 end
 
 if [ -f "$__fish_config_dir/nxtfns.fish" ]
     source "$__fish_config_dir/nxtfns.fish"
 end
 
+function gdiff --description "git diff with FZF"
+  set preview "git diff $argv --color=always -- {-1}"
+  git diff $argv --name-only | fzf -m --ansi --preview $preview
+end
+
 function addToPath --description "add item to system path"
     for item in $argv
-        contains $item $PATH 
-        or set -x PATH $item $PATH 
+        contains $item $PATH
+        or set -x PATH $item $PATH
     end
 end
 
@@ -161,6 +185,9 @@ set -gx GPG_TTY (tty) # to make GPG work
 addToPath /usr/local/bin
 addToPath $HOME/.local/bin $HOME/me/jeera-rice/bin $HOME/workspace/.local/share/node/.bin
 
+# only while development
+addToPath "$HOME/workspace/github.com/kloudlite/internal-tools/bin"
+
 # node js global install packages
 addToPath $XDG_DATA_HOME/node/bin
 
@@ -240,7 +267,7 @@ else
     # set --global hydro_symbol_prompt ❱
     set --global hydro_symbol_prompt 😎
 
-    # check if fish is in private mode 
+    # check if fish is in private mode
     if [ ! -z "$fish_private_mode" ]
       set --global hydro_symbol_prompt 🕵️
     end
@@ -257,21 +284,15 @@ set -x LC_ALL "en_US.UTF-8"
 set -x LANG "en_US.UTF-8"
 set -x LC_TYPE "en_US.UTF-8"
 
-# set -x LUA_PATH "$HOME/.nix-profile/lib/lua/5.4/lpeg.so;;"
-# set -x LUA_CPATH "$HOME/.nix-profile/lib/lua/5.4/lpeg.so;;"
-
 zoxide init fish | source
-# starship init fish | source
 
 # bun
 set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
 
-set fish_theme "./themes/nightfox.fish"
+set fish_theme "./themes/light-or-dark-theme.fish"
 if [ -f "$__fish_config_dir/$fish_theme" ]
     source "$__fish_config_dir/$fish_theme"
 end
 
-set -x DIRENV_LOG_FORMAT ""
-
-echo "$PATH" > "/tmp/$USER-paths"
+set -x FZF_DEFAULT_OPTS $FZF_DEFAULT_OPTS '--color=fg:#252424,fg+:#211b1b,bg:#ffffff,bg+:#f0f0f0 --color=hl:#2fb891,hl+:#1f9f7a,info:#afaf87,marker:#1f9f7a --color=prompt:#1f9f7a,spinner:#2e3993,pointer:#2e3993,header:#87afaf --color=gutter:#ffffff,border:#262626,label:#aeaeae,query:#2e3993 --border-label="" --preview-window="border-rounded" --prompt="> " --marker=">" --pointer="👉" --separator="─" --scrollbar="│"'

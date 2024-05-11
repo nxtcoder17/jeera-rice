@@ -12,7 +12,9 @@ k9s:
     crumbsless: false
     reactive: false
     noIcons: false
-    skin: nightfox
+    # skin: nightfox
+    # skin: everforest-light
+    skin: light-or-dark
   skipLatestRevCheck: false
   disablePodCounting: false
   shellPod:
@@ -28,7 +30,7 @@ k9s:
       labels: {}
   logger:
     tail: 100
-    buffer: 5000
+    buffer: 50000
     sinceSeconds: -1
     fullScreen: false
     textWrap: true

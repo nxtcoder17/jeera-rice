@@ -1,0 +1,1 @@
+/var/home/nxtcoder17/.config/fish/themes/dayfox.fish
