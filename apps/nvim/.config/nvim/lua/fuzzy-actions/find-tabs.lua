@@ -1,5 +1,3 @@
-local fzf = require("fzf-lua")
-
 local function find_tabs()
   local tab_names = {}
   local tab_name_to_win_id = {}
@@ -13,7 +11,7 @@ local function find_tabs()
     tab_name_to_win_id[tab_name] = win_id
   end
 
-  fzf.fzf_exec(tab_names, {
+  require("fzf-lua").fzf_exec(tab_names, {
     prompt = "Tabs ❯ ",
     actions = {
       -- Use fzf-lua builtin actions or your own handler

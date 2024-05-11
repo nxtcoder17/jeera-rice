@@ -1,6 +1,3 @@
-local fzf = require("fzf-lua")
-local actions = require("fzf-lua.actions")
-
 ---@param dir string
 ---@param query string
 local function grep_with_fzf(dir, query)
@@ -16,7 +13,7 @@ local function grep_with_fzf(dir, query)
   --   )
   -- end
 
-  vim.cmd("FzfLua grep_cword")
+  vim.cmd("FzfLua grep")
 end
 
 return grep_with_fzf

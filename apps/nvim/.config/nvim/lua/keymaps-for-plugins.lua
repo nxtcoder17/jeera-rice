@@ -59,10 +59,10 @@ M.toggleterm_keymaps = function()
   end, opts)
 end
 
-M.rnvimr_keymaps = function()
-  vim.keymap.set("n", "<M-o>", ":RnvimrToggle<CR>")
-  vim.keymap.set("t", "<M-o>", "<C-\\><C-n>:RnvimrToggle<CR>")
-end
+-- M.rnvimr_keymaps = function()
+--   vim.keymap.set("n", "<M-o>", ":RnvimrToggle<CR>")
+--   vim.keymap.set("t", "<M-o>", "<C-\\><C-n>:RnvimrToggle<CR>")
+-- end
 
 M.telescope_keymaps = function()
   --   vim.keymap.set("n", "sb", require("telescope.builtin").buffers, opts)
@@ -84,29 +84,22 @@ M.telescope_keymaps = function()
   --     require("plugins.custom-pickers.utility-pickers").pick()
   --   end, { silent = true, noremap = true })
 
-  M.fzf_lua_keymaps()
+  -- M.fzf_lua_keymaps()
 end
 
-M.fzf_lua_keymaps = function()
-  vim.keymap.set("n", "sf", require("fuzzy-actions.find-files"))
-
-  -- vim.cmd(
-  --   [[ cnoreabbrev cd lua require('fuzzy-actions.choose-tab-dir')()<CR>\|lua vim.api.nvim_feedkeys("x", "n", true)<CR> ]]
-  -- )
-  vim.cmd([[ cnoreabbrev cd lua require('fuzzy-actions.choose-tab-dir')()<CR>]])
-  -- vim.keymap.set("c", "cd", require("fuzzy-actions.choose-tab-dir"))
-  vim.keymap.set("n", "tl", require("fuzzy-actions.find-tabs"))
-  vim.keymap.set("n", "ff", require("fuzzy-actions.grep"))
-  vim.keymap.set("n", "s/", "<cmd>FzfLua grep_curbuf<CR>")
-  vim.keymap.set("n", "sb", "<Cmd>FzfLua buffers<CR>")
-end
-
-M.nvim_tmux_navigator_keymaps = function()
-  vim.keymap.set("n", "<M-h>", require("nvim-tmux-navigation").NvimTmuxNavigateLeft)
-  vim.keymap.set("n", "<M-l>", require("nvim-tmux-navigation").NvimTmuxNavigateRight)
-  vim.keymap.set("n", "<M-j>", require("nvim-tmux-navigation").NvimTmuxNavigateDown)
-  vim.keymap.set("n", "<M-k>", require("nvim-tmux-navigation").NvimTmuxNavigateUp)
-end
+-- M.fzf_lua_keymaps = function()
+--   vim.keymap.set("n", "sf", require("fuzzy-actions.find-files"))
+--
+--   -- vim.cmd(
+--   --   [[ cnoreabbrev cd lua require('fuzzy-actions.choose-tab-dir')()<CR>\|lua vim.api.nvim_feedkeys("x", "n", true)<CR> ]]
+--   -- )
+--   vim.cmd([[ cnoreabbrev cd lua require('fuzzy-actions.choose-tab-dir')()<CR>]])
+--   -- vim.keymap.set("c", "cd", require("fuzzy-actions.choose-tab-dir"))
+--   vim.keymap.set("n", "tl", require("fuzzy-actions.find-tabs"))
+--   vim.keymap.set("n", "ff", require("fuzzy-actions.grep"))
+--   vim.keymap.set("n", "s/", "<cmd>FzfLua grep_curbuf<CR>")
+--   vim.keymap.set("n", "sb", "<Cmd>FzfLua buffers<CR>")
+-- end
 
 M.luasnip_keymaps = function()
   vim.keymap.set({ "i", "s" }, "<C-l>", function()
@@ -120,14 +113,6 @@ M.luasnip_keymaps = function()
       require("luasnip").change_choice(-1)
     end
   end)
-
-  -- vim.keymap.set("n", "<leader>sr", function()
-  --   require("spectre").open_visual({ select_word = true })
-  -- end)
-  --
-  -- vim.keymap.set("n", "<leader>r", function()
-  --   require("replacer").run()
-  -- end)
 end
 
 M.copilot_mappings = function()
@@ -152,10 +137,6 @@ M.vim_wordmotion_mappings = function()
     nmap cw ce
     nmap cW cE
   ]])
-end
-
-M.neozoom_mappings = function()
-  vim.keymap.set("n", "sz", ":NeoZoomToggle<CR>", { silent = true, noremap = true })
 end
 
 return M

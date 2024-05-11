@@ -1,0 +1,90 @@
+simplified_ui true
+default_layout "compact"
+keybinds clear-defaults=true {
+  normal {
+    bind "Ctrl a" { SwitchToMode "tmux"; }
+
+    bind "Alt h"  { MoveFocus "Left"; }  
+    bind "Alt l"  { MoveFocus "Right"; }  
+    bind "Alt j"  { MoveFocus "Down"; }  
+    bind "Alt k"  { MoveFocus "Up"; }  
+
+    bind "Alt 1" { GoToTab 1; SwitchToMode "Normal"; }
+    bind "Alt 2" { GoToTab 2; SwitchToMode "Normal"; }
+    bind "Alt 3" { GoToTab 3; SwitchToMode "Normal"; }
+    bind "Alt 4" { GoToTab 4; SwitchToMode "Normal"; }
+    bind "Alt 5" { GoToTab 5; SwitchToMode "Normal"; }
+    bind "Alt 6" { GoToTab 6; SwitchToMode "Normal"; }
+    bind "Alt 7" { GoToTab 7; SwitchToMode "Normal"; }
+    bind "Alt 8" { GoToTab 8; SwitchToMode "Normal"; }
+    bind "Alt 9" { GoToTab 9; SwitchToMode "Normal"; }
+    bind "Alt 0" { GoToTab 10; SwitchToMode "Normal"; }
+  }
+  tmux {
+    bind "Ctrl o" { SwitchToMode "Normal"; }
+    bind "Esc" { SwitchToMode "Normal"; }
+
+    bind "-" { NewPane "Down"; SwitchToMode "Normal"; }
+    bind "\\" { NewPane "Right"; SwitchToMode "Normal"; }
+
+    bind "Ctrl e" { WriteChars "vi ."; Write 13; SwitchToMode "Normal"; }
+    bind "Ctrl r" { WriteChars "kubie ctx"; Write 13; SwitchToMode "Normal"; }
+
+    bind "Ctrl u" { CloseFocus; SwitchToMode "Normal"; }
+    bind "z" { ToggleFocusFullscreen; SwitchToMode "Normal"; }
+    bind "d" { Detach; }
+    bind "s" { ToggleActiveSyncTab; SwitchToMode "Normal"; }
+
+    bind "h" { MoveFocus "Left"; SwitchToMode "Normal"; }
+    bind "l" { MoveFocus "Right"; SwitchToMode "Normal"; }
+    bind "j" { MoveFocus "Down"; SwitchToMode "Normal"; }
+    bind "k" { MoveFocus "Up"; SwitchToMode "Normal"; }
+
+    bind "y" { NewPane "Down"; SwitchToMode "Normal"; }
+    bind "n" { NewPane "Right"; SwitchToMode "Normal"; }
+
+    bind "c" { NewTab; SwitchToMode "Normal"; }
+    bind "Ctrl l" { GoToNextTab; SwitchToMode "Normal"; }
+    bind "Ctrl h" { GoToPreviousTab; SwitchToMode "Normal"; }
+
+    bind "H" { Resize "Decrease"; }
+    bind "L" { Resize "Increase"; }
+
+    // bind "p" { TogglePaneEmbedOrFloating; SwitchToMode "Normal"; }
+    bind "p" { SwitchToMode "Pane"; }
+    bind "f" { ToggleFloatingPanes; SwitchToMode "Normal"; }
+
+    bind "[" { SwitchToMode "Scroll"; }
+    bind "," { SwitchToMode "RenameTab"; TabNameInput 0; }
+    bind ";" { SwitchToMode "RenameTab"; TabNameInput 0; }
+  }
+
+  pane {
+    bind "f" { TogglePaneEmbedOrFloating; SwitchToMode "Normal"; }
+  }
+
+  scroll {
+    bind "Esc" { SwitchToMode "Normal"; }
+  }
+
+  renametab {
+    bind "Enter" { SwitchToMode "Normal"; }
+  }
+}
+
+theme "tokyo-night-dark"
+themes {
+    tokyo-night-dark {
+        fg 169 177 214
+        bg 26 27 38
+        black 56 62 90
+        red 249 51 87
+        green 158 206 106
+        yellow 224 175 104
+        blue 122 162 247
+        magenta 187 154 247
+        cyan 42 195 222
+        white 192 202 245
+        orange 255 158 100
+    }
+}

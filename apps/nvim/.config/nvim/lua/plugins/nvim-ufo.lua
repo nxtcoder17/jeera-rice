@@ -9,7 +9,8 @@ local ufo = require("ufo")
 
 require("ufo").setup({
   provider_selector = function(bufnr, filetype, buftype)
-    return ""
+    -- return ""
+    return { "treesitter" }
   end,
   enable_get_fold_virt_text = true,
 })
@@ -30,10 +31,6 @@ end, { desc = " 󱃄 Close All Folds" })
 vim.keymap.set("n", "zR", function()
   ufo.openFoldsExceptKinds({ "comment" })
 end, { desc = " Open All Folds except comments" })
-
-vim.keymap.set("n", "zM", function()
-  ufo.closeFoldsExceptKinds({ "comment" })
-end)
 
 vim.cmd([[
 hi! link UfoFoldedEllipsis @comment

@@ -1,5 +1,3 @@
-local fzf = require("fzf-lua")
-
 ---@param dir string
 local function choose_tab_dir(dir)
   -- dir = dir or vim.fn.getcwd()
@@ -19,7 +17,7 @@ local function choose_tab_dir(dir)
     }
   end
 
-  fzf.fzf_exec(cmd, {
+  require("fzf-lua").fzf_exec(cmd, {
     prompt = "Choose Tab Directory ❯ ",
     fzf_opts = fzf_opts,
     cwd = dir,

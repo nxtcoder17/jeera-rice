@@ -1,9 +1,9 @@
-local fzf = require("fzf-lua")
-local actions = require("fzf-lua.actions")
-
 ---@param dir string
 ---@param query string
 local function find_files(dir, query)
+  local fzf = require("fzf-lua")
+  local actions = require("fzf-lua.actions")
+
   dir = dir or vim.loop.cwd()
   query = query or ""
 

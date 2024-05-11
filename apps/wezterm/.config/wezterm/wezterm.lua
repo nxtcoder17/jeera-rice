@@ -65,7 +65,8 @@ config.text_background_opacity = 0.9
 -- config.window_background_image = "/var/home/nxtcoder17/me/jeera-rice/wallpapers/dark-notebook.jpg"
 -- config.window_background_image = "/var/home/nxtcoder17/Downloads/notebook_background_with_black_overlay.png"
 -- config.window_background_image = "/var/home/nxtcoder17/Downloads/notebook_background_final_3840x2160.png"
-config.window_background_image = "/var/home/nxtcoder17/me/jeera-rice/wallpapers/night-fog.jpg"
+-- config.window_background_image = "/var/home/nxtcoder17/me/jeera-rice/wallpapers/night-fog.jpg"
+config.window_background_image = "/var/home/nxtcoder17/Downloads/white-paper.png"
 config.window_background_image_hsb = {
   -- Darken the background image by reducing it to 1/3rd
   brightness = 0.7,

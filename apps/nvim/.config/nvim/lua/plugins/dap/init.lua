@@ -44,7 +44,6 @@ vim.fn.sign_define("DapBreakpoint", { text = "🟥", texthl = "", linehl = "", n
 vim.fn.sign_define("DapBreakpointCondition", { text = "❓", texthl = "", linehl = "", numhl = "" })
 vim.fn.sign_define("DapBreakpointRejected", { text = "⚠️", texthl = "", linehl = "", numhl = "" })
 vim.fn.sign_define("DapStopped", { text = "⭐️", texthl = "", linehl = "DapStoppedLinehl", numhl = "" })
-vim.api.nvim_set_hl(0, "DapStoppedLinehl", { bg = "#555530" })
 
 require("plugins.dap.keymaps")
 require("plugins.dap.languages.go").setup()
