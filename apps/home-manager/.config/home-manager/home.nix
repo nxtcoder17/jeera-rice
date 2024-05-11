@@ -11,6 +11,9 @@ let
     xorg.setxkbmap
     xorg.xhost
     xorg.xinput
+    xorg.xkill
+    lxappearance
+
     xclip
     xdragon
   ]; 
@@ -24,6 +27,9 @@ let
     rofi
     acpi
 
+    # wayfire window manager
+    wayfire-with-plugins
+
     # image viewers
     feh
     sxiv
@@ -33,6 +39,9 @@ let
 
     kitty
     networkmanagerapplet
+
+    keyd
+    waybar
   ];
 
   packages.audio_video = with pkgs; [
@@ -51,12 +60,22 @@ let
     nerdctl
     rootlesskit
     buildkit
+    docker-buildx # copy $HOME/.nix-profile/bin/docker-buildx to $XDG_CONFIG_DIR/docker/cli-plugins/docker-buildx
+    docker-compose # cp $HOME/.nix-profile/bin/docker-compose $XDG_CONFIG_DIR/docker/cli-plugins/docker-compose
+    docker-slim
+    dive
+
+    awscli2
+    lens
+
+    google-cloud-sdk
   ];
 
   packages.cli_workflow = with pkgs; [
     # shells
     fish
     bash
+    readline
 
     # navigation
     zoxide
@@ -64,10 +83,12 @@ let
     ripgrep
     fd
     fzf
+    proximity-sort
 
     # commonly used tools
     du-dust
     tmux
+    zellij
     bat
     btop
     ranger
@@ -75,7 +96,6 @@ let
     git
     redshift
     axel
-    nix-direnv
     yq
     jq
     delta
@@ -91,6 +111,8 @@ let
     netcat-gnu
     sshuttle
     wirelesstools
+    nmap
+    socat
 
     # mouse control
     warpd
@@ -102,16 +124,26 @@ let
     nodejs-slim
     nodePackages.npm
 
-    go_1_21
+    go_1_22
+    gopls
     gnumake
     gcc13
+    git-filter-repo
+    upx
+
+    universal-ctags
+    lz4
+    lrzip
+
+    cloudflare-warp
+    nix-serve-ng
   ];
 
   packages.gui_apps = with pkgs; [
     telegram-desktop
     google-chrome
     qutebrowser
-    vscode-fhs
+    screenkey
   ];
 in
 {
@@ -120,12 +152,8 @@ in
   home.username = "nxtcoder17";
   home.homeDirectory = "/var/home/nxtcoder17";
 
-  nixpkgs =  {
-    config = {
-      allowUnfree = true;
-      allowUnfreePredicate = (_: true);
-    };
-  };
+  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfreePredicate = (_: true);
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -171,6 +199,7 @@ in
 
   programs.direnv = {
     enable = true;
+    nix-direnv.enable = true;
   };
 
 
@@ -203,12 +232,16 @@ in
   home.sessionVariables = {
     EDITOR = "nvim"; 
     TMUX_SHELL = "${pkgs.fish}";
-    DIRENV_LOG_FORMAT = "";
+    # TMUX_SHELL = "fish";
+    #DIRENV_LOG_FORMAT = "\033[2mdirenv: %%s\033[0m"; # source: https://ianthehenry.com/posts/how-to-learn-nix/nix-direnv/
+    #DIRENV_LOG_FORMAT = ""; # source: https://ianthehenry.com/posts/how-to-learn-nix/nix-direnv/
+    NIXOS_OZONE_WL = "1";
   };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   programs.wezterm.package = nixGLWrap pkgs.wezterm;
   programs.kitty.package = nixGLWrap pkgs.kitty;
+
   # programs.firefox-devedition-bin.package = nixGLWrap pkgs.firefox-devedition-bin;
 }
