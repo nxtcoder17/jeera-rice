@@ -4,8 +4,8 @@ function fish_mode_prompt
   # NOOP - Disable vim mode indicator
 end
 
-set -x fish_prompt_pwd_dir_length 5
-set -x fish_prompt_pwd_full_dirs 4
+set -x fish_prompt_pwd_dir_length 20
+set -x fish_prompt_pwd_full_dirs yes
 
 # if test (command -v exa | wc -l) -gt 0
 if type -q exa
@@ -113,7 +113,7 @@ function ck --description "choose-kubeconfig"
 
     # printf '%s ' (string unescape {prompt})
     if [ -n "$is_valid_kubeconfig" ]
-      printf '%s󱃾 %s%s ' (set_color "#5582a1") $TMP_KUBECONFIG_FILE $hydro_color_normal
+      printf '%s󱃾 %s%s ' (set_color -o "#5582a1") $TMP_KUBECONFIG_FILE $hydro_color_normal
     end
 
     # Due to idiosyncrasies with the way fish is managing newlines in
@@ -179,20 +179,19 @@ set -gx _ZO_EXCLUDE_DIRS "$HOME:$HOME/workspace/kloudlite/archived/.*"
 
 # set -gx FZF_DEFAULT_COMMAND "rg --files --hidden --follow --smart-case"
 
-set -gx GPG_TTY (tty) # to make GPG work
+set -gx GPG_TTY (tty) # to make GPG work with TTY input box
 
 #--------------------------------------------------
 addToPath /usr/local/bin
-addToPath $HOME/.local/bin $HOME/me/jeera-rice/bin $HOME/workspace/.local/share/node/.bin
+addToPath $HOME/me/jeera-rice/bin # jeera rice bin scripts
+addToPath $HOME/.local/bin # local binaries
 
 # only while development
 addToPath "$HOME/workspace/github.com/kloudlite/internal-tools/bin"
 
-# node js global install packages
-addToPath $XDG_DATA_HOME/node/bin
-
-# go install binaries
-addToPath $XDG_DATA_HOME/go/bin
+addToPath $XDG_DATA_HOME/node/bin # nodejs global binaries
+addToPath $XDG_DATA_HOME/bun/bin # nodejs global binaries
+addToPath $XDG_DATA_HOME/go/bin # go binaries
 
 if status is-interactive
     # Commands to run in interactive sessions can go here
@@ -240,7 +239,9 @@ set __fish_git_prompt_char_upstream_prefix ' '
 set --global hydro_multiline true
 set --global hydro_color_git "#71bd80"
 set --global hydro_color_prompt "#3a73d6"
-set --global hydro_color_pwd "#2fbaf5"
+# set --global hydro_color_pwd "#2fbaf5"
+set --global hydro_color_pwd -o "#465d66"
+# set --global hydro_color_pwd -o "#0e7387"
 
 set --global hydro_symbol_git_dirty	$__fish_git_prompt_char_dirtystate
 set --global hydro_symbol_git_ahead $__fish_git_prompt_char_upstream_ahead
@@ -287,7 +288,7 @@ set -x LC_TYPE "en_US.UTF-8"
 zoxide init fish | source
 
 # bun
-set --export BUN_INSTALL "$HOME/.bun"
+set --export BUN_INSTALL "$XDG_DATA_HOME/bun"
 set --export PATH $BUN_INSTALL/bin $PATH
 
 set fish_theme "./themes/light-or-dark-theme.fish"
@@ -296,3 +297,6 @@ if [ -f "$__fish_config_dir/$fish_theme" ]
 end
 
 set -x FZF_DEFAULT_OPTS $FZF_DEFAULT_OPTS '--color=fg:#252424,fg+:#211b1b,bg:#ffffff,bg+:#f0f0f0 --color=hl:#2fb891,hl+:#1f9f7a,info:#afaf87,marker:#1f9f7a --color=prompt:#1f9f7a,spinner:#2e3993,pointer:#2e3993,header:#87afaf --color=gutter:#ffffff,border:#262626,label:#aeaeae,query:#2e3993 --border-label="" --preview-window="border-rounded" --prompt="> " --marker=">" --pointer="👉" --separator="─" --scrollbar="│"'
+
+set -x BAT_THEME "OneHalfLight"
+set -x BAT_STYLE "numbers"
