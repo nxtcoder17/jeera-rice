@@ -40,12 +40,13 @@ M.base64_decode = function(text)
   text = text or M.get_selection()
   logger.debug("[base64_decode] decoding input: ", text)
 
-  local ok, b64 = pcall(require, "base64")
-  if not ok then
-    logger.debug("base64 not installed")
-  end
+  -- local ok, b64 = pcall(require, "base64")
+  -- if not ok then
+  --   logger.debug("base64 not installed")
+  -- end
 
-  local v = b64.decode(text)
+  -- local v = b64.decode(text)
+  local v = vim.base64.decode(text)
   logger.debug("[base64_decode] decoded output:", v)
 
   if os.execute("command -v xclip") == 0 then
@@ -58,12 +59,13 @@ M.base64_encode = function(text)
   text = text or M.get_selection()
   logger.debug("[base64_encode] encoding input: ", text)
 
-  local ok, b64 = pcall(require, "base64")
-  if not ok then
-    logger.debug("base64 not installed")
-  end
-
-  local v = b64.encode(text)
+  -- local ok, b64 = pcall(require, "base64")
+  -- if not ok then
+  --   logger.debug("base64 not installed")
+  -- end
+  --
+  -- local v = b64.encode(text)
+  local v = vim.base64.encode(text)
   logger.debug("[base64_encode] encoded output: ", v)
   if os.execute("command -v xclip") == 0 then
     os.execute(string.format("echo -n %s | xclip -sel clip", v))

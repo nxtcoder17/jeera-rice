@@ -13,7 +13,7 @@ local function choose_tab_dir(dir)
   local fzf_opts = {}
   if dir ~= vim.g.nxt.project_root_dir then
     fzf_opts = {
-      ["--header"] = string.format("'%s'", "📂 " .. dir:sub(#vim.g.nxt.project_root_dir + 2)),
+      ["--header"] = string.format("%s", "📂 " .. dir:sub(#vim.g.nxt.project_root_dir + 2)),
     }
   end
 

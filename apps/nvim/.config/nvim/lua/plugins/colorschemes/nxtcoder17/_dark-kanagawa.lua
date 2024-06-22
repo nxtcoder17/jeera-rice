@@ -1,0 +1,61 @@
+-- local colors = require("colors")
+--
+-- local function recommended_for_floating_windows(theme)
+--   return {
+--     NormalFloat = { bg = "none" },
+--     FloatBorder = { bg = "none" },
+--     FloatTitle = { bg = "none" },
+--
+--     -- Save an hlgroup with dark background and dimmed foreground
+--     -- so that you can use it where your still want darker windows.
+--     -- E.g.: autocmd TermOpen * setlocal winhighlight=Normal:NormalDark
+--     NormalDark = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
+--
+--     -- Popular plugins that open floats will link to NormalFloat by default;
+--     -- set their background accordingly if you wish to keep them dark and borderless
+--     LazyNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
+--     MasonNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
+--
+--     TelescopeTitle = { fg = theme.ui.special, bold = true },
+--     TelescopePromptNormal = { bg = theme.ui.bg_p1 },
+--     TelescopePromptBorder = { fg = theme.ui.bg_p1, bg = theme.ui.bg_p1 },
+--     TelescopeResultsNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m1 },
+--     TelescopeResultsBorder = { fg = theme.ui.bg_m1, bg = theme.ui.bg_m1 },
+--     TelescopePreviewNormal = { bg = theme.ui.bg_dim },
+--     TelescopePreviewBorder = { bg = theme.ui.bg_dim, fg = theme.ui.bg_dim },
+--   }
+-- end
+--
+-- vim.opt.fillchars:append({
+--   horiz = "━",
+--   horizup = "┻",
+--   horizdown = "┳",
+--   vert = "┃",
+--   vertleft = "┨",
+--   vertright = "┣",
+--   verthoriz = "╋",
+-- })
+--
+-- local overrides = function(themeColors)
+--   local changes = {}
+--   return vim.tbl_deep_extend("force", changes, recommended_for_floating_windows(themeColors.theme))
+-- end
+--
+-- require("kanagawa").setup({
+--   compile = true,
+--   undercurl = true,
+--   globalStatus = true,
+--   transparent = true,
+--   overrides = overrides,
+--   -- colors = colors,
+--   keywordStyle = { italic = true },
+--   specialReturn = true, -- special highlight for the return keyword
+--   theme = "wave",
+--   background = {
+--     dark = "wave",
+--     light = "lotus",
+--   },
+-- })
+--
+-- vim.cmd("colorscheme kanagawa")
+

@@ -230,42 +230,47 @@ exec $noid xinput set-prop 'Synaptics TM3276-022' 'libinput Tapping Enabled' 1
 
 # Bar Configuration
 
+# colors
 set $transparent    #00000000
 
 set $bg "#2e4270"
-set $bg2 "#152a47"
+# set $bg2 "#152a47"
+set $bg2 "#eff1f5"
 set $fg "#86bd8e"
 set $fg2 "#abd0d9"
 set $bg3 "#c791ab"
 
-bar {
-	status_command i3blocks
-	i3bar_command i3bar -t
-	position top
-	mode hide
-	modifier $mod
+# bar {
+# 	status_command i3blocks
+# 	i3bar_command i3bar -t
+# 	position top
+# 	mode hide
+# 	modifier $mod
+#
+# 	# font pango: Operator Mono Lig Book Bold 12
+# 	font pango: Comic Code Ligatures Medium 10
+#
+# 	# setting from i3blocks
+# 	separator_symbol " "
+#
+# 	workspace_buttons yes
+#
+# 	binding_mode_indicator no
+#
+# 	colors {
+# 		background $bg2
+# 		# textcolor for the bar
+# 		statusline $fg
+#
+# 		#	 ColorClass			  Border			    Background	Foreground Text
+#     # focused_workspace   $transparent    $fg2        $bg2
+#     focused_workspace   $transparent    $fg2        $bg2
+# 		inactive_workspace  $transparent    $bg					$fg
+# 		urgent_workspace    $transparent    $bg3				$transparent
+# 	}
+# }
 
-	# font pango: Operator Mono Lig Book Bold 12
-	font pango: Comic Code Ligatures Medium 10
-
-	# setting from i3blocks
-	separator_symbol " "
-
-	workspace_buttons yes
-
-	binding_mode_indicator no
-
-	colors {
-		background $bg2
-		# textcolor for the bar
-		statusline $fg
-
-		#	 ColorClass			Border			Background		   Foreground Text
-    focused_workspace   $transparent    $fg2        $bg2
-		inactive_workspace  $transparent    $bg					$fg
-		urgent_workspace    $transparent    $bg3				$transparent
-	}
-}
+include "~/.config/i3/theme.conf"
 
 # intellij idea specifics
 for_window [class="jetbrains-idea" title="win0"] floating enable;
@@ -296,6 +301,8 @@ for_window [title="NxtTerm"] floating enable
 for_window [title="NxtTerm"] resize set 1200 1000
 for_window [title="NxtTerm"] move scratchpad
 for_window [title="NxtTerm"] border pixel 3
+
+for_window [urgent=latest] exec --no-startup-id wmctrl -r keepass -b remove,demands_attention
 
 set $startNxtTerm '$noid konsole --hide-menubar -p tabtitle=NxtTerm'
 set $toggleNxtTerm '[title="NxtTerm"] scratchpad show; move position center'

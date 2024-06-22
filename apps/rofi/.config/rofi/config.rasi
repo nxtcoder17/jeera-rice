@@ -1,1 +1,3 @@
-@theme "/home/nxtcoder17/.local/share/rofi/themes/nord.rasi"
+//@theme "/home/nxtcoder17/.local/share/rofi/themes/nord.rasi"
+//@theme "/nix/store/ypaqwhmgj4xfmwd68rj0227spky52mhw-rofi-1.7.5/share/rofi/themes/paper-float.rasi"
+@theme "/nix/store/ypaqwhmgj4xfmwd68rj0227spky52mhw-rofi-1.7.5/share/rofi/themes/Paper.rasi"

@@ -13,7 +13,7 @@ local function grep_with_fzf(dir, query)
   --   )
   -- end
 
-  vim.cmd("FzfLua grep")
+  vim.cmd("FzfLua grep_cword")
 end
 
 return grep_with_fzf

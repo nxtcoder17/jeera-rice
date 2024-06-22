@@ -12,17 +12,19 @@ local function find_files(dir, query)
     fzf_opts = vim.tbl_extend(
       "force",
       fzf_opts,
-      { ["--header"] = string.format("'%s'", "📂 " .. dir:sub(#vim.g.nxt.project_root_dir + 2)) }
+      { ["--header"] = string.format("%s", "📂 " .. dir:sub(#vim.g.nxt.project_root_dir + 2)) }
     )
   end
 
   -- fzf.fzf_exec("rg --threads 3 --files --iglob !.git --hidden --sort path", {
-  local cmd = "fd --color=never --type f --follow --exclude .git"
-  local filepath = vim.fn.expand("%")
-  if filepath ~= "" then
-    vim.print(string.format("using proximity-sort over %s", filepath))
-    -- cmd = string.format("%s | proximity-sort %s", cmd, filepath)
-  end
+  local cmd = "rg --threads 3 --files --iglob !.git --hidden --sort path"
+  -- local cmd = "fd --hidden --color=never --type f --follow --exclude .git"
+
+  -- local filepath = vim.fn.expand("%")
+  -- if filepath ~= "" then
+  --   vim.print(string.format("using proximity-sort over %s", filepath))
+  --   cmd = string.format("%s | proximity-sort %s", cmd, filepath)
+  -- end
 
   fzf.fzf_exec(cmd, {
     query = query,
@@ -48,7 +50,7 @@ local function find_files(dir, query)
         if dir ~= vim.g.nxt.project_root_dir then
           return find_files(vim.g.nxt.project_root_dir, q)
         end
-        return find_files(nil, q)
+        return find_files("", q)
       end,
     },
   })

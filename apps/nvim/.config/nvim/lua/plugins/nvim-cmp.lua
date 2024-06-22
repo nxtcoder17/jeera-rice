@@ -45,6 +45,8 @@ local function setup_nvim_cmp()
       },
       documentation = {
         border = "rounded",
+        col_offset = -3,
+        side_padding = 0,
       },
     },
     mapping = cmp.mapping.preset.insert({
@@ -117,7 +119,7 @@ local function setup_nvim_cmp()
       { name = "luasnip",    options = { show_autosnippets = true }, priority = 70 },
       { name = "goimports",  priority = 60,                          keyword_length = 3 },
       -- { name = "cmp_tabby" },
-      { name = "codeium" },
+      { name = "supermaven", priority = 50 },
       -- {
       --   name = "buffer",
       --   priority = 40,

@@ -10,4 +10,4 @@ vim.g[zenbones_variant] = {
   transparent_background = true,
 }
 
-vim.cmd("colorscheme " .. zenbones_variant)
+-- vim.cmd("colorscheme " .. zenbones_variant)

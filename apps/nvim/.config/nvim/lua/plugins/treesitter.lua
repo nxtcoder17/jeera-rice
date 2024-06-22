@@ -144,7 +144,7 @@ parser_config.gotmpl = {
     branch = "fix_brackets",
     files = { "src/parser.c" },
   },
-  filetype = "gotmpl",
+  filetype = { "gotmpl", "gohtmltmpl" },
   used_by = { "gohtmltmpl", "gotexttmpl", "gotmpl", "yaml" },
 }
 

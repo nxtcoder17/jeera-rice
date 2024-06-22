@@ -91,6 +91,14 @@ require("mini.align").setup({})
 
 local MiniStatusline = require("mini.statusline")
 
+local check_macro_recording = function()
+  if vim.fn.reg_recording() ~= "" then
+    return "Recording @" .. vim.fn.reg_recording()
+  else
+    return ""
+  end
+end
+
 function active_status_line()
   -- stylua: ignore start
   local mode, mode_hl     = MiniStatusline.section_mode({ trunc_width = 120 })
@@ -105,7 +113,7 @@ function active_status_line()
     from_project_root = "📂 " .. from_project_root
   end
 
-  -- Usage of `MiniStatusline.combine_groups()` ensures highlighting and
+   -- Usage of `MiniStatusline.combine_groups()` ensures highlighting and
   -- correct padding with spaces between groups (accounts for 'missing'
   -- sections, etc.)
   return MiniStatusline.combine_groups({
@@ -114,6 +122,7 @@ function active_status_line()
     '%<', -- Mark general truncate point
     { hl = 'MiniStatuslineFilename', strings = { filename } },
     '%=', -- End left alignment
+    { hl = "MiniStatuslineFilename", strings = { check_macro_recording() } },
     { hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
     { hl = 'MiniStatuslineFileinfo', strings = { from_project_root } },
     { hl = mode_hl,                  strings = { location } },

@@ -2,8 +2,9 @@ local colors = require("colors")
 
 require("catppuccin").setup({
   -- flavour = "macchiato", -- latte, frappe, macchiato, mocha
+  -- flavour = vim.opt.background == "light" and "latte" or "macchiato", -- latte, frappe, macchiato, mocha
   flavour = "latte", -- latte, frappe, macchiato, mocha
-  background = {    -- :h background
+  background = {
     light = "latte",
     dark = "macchiato",
   },
@@ -50,31 +51,38 @@ require("catppuccin").setup({
         ["@number"] = { fg = colors.palette["blue-chill"]["900"] },
         ["@variable"] = { fg = colors.palette["bermuda-gray"]["900"] },
         ["@variable.parameter"] = { fg = colors.palette["blue-chill"]["500"], style = { "italic" } },
-        ["@variable.member"] = { fg = colors.palette["blue-chill"]["600"], style = { "italic" } },
+        -- ["@variable.member"] = { fg = colors.palette["blue-chill"]["600"], style = { "italic" } },
+        ["@variable.member"] = { fg = colors.palette["rose-of-sharon"]["800"], style = { "italic" } },
         ["Identifier"] = { link = "@variable" },
 
-        ["@function"] = { fg = colors.palette["blue-chill"]["600"], style = { "bold", "italic" } },
+        -- ["@function"] = { fg = colors.palette["blue-chill"]["600"], style = { "italic" } },
+        ["@function"] = { link = "@constant" },
         ["@method"] = { link = "@function" },
         ["@function.builtin"] = { link = "@function" },
-        ["@function.method"] = { link = "@function" },
-        ["@function.call"] = { link = "@function" },
-        ["@function.method.call"] = { link = "@function" },
+        -- ["@function.method"] = { fg = colors.palette["curious-blue"]["700"], style = { "bold" } },
+        ["@function.method"] = { link = "@constant" },
+
+        ["@function.call"] = { fg = colors.palette["curious-blue"]["700"], style = { "bold" } },
+        ["@function.method.call"] = { link = "@function.call" },
 
         ["@module"] = { fg = colors.palette["contessa"]["800"], bg = colors.palette["contessa"]["50"] },
 
         ["@punctuation"] = { fg = colors.palette["blue-chill"]["800"] },
         ["@punctuation.bracket"] = { link = "@punctuation" },
+        ["@punctuation.bracket.lua"] = { link = "@punctuation" },
         ["@punctuation.special"] = {
           fg = colors.palette["contessa"]["700"],
           style = { "italic" },
         },
         ["@constructor"] = { link = "@punctuation" },
+        ["@constructor.lua"] = { link = "@punctuation" },
         ["@operator"] = { link = "@punctuation" },
 
         ["MatchParen"] = { fg = colors.palette["blue-chill"]["900"], bg = colors.palette["blue-chill"]["200"] },
 
         ["@constant"] = { fg = colors.palette["blue-chill"]["900"], style = { "bold" } },
         ["@constant.builtin"] = { link = "@constant" },
+        ["Constant"] = { link = "@constant" },
 
         -- types, like go structs
         ["@type"] = { fg = colors.palette["blue-chill"]["900"] },
@@ -83,14 +91,18 @@ require("catppuccin").setup({
 
         -- @attribute are  graphql directives, like @hasLoggedIn
         ["@attribute"] = { fg = colors.palette["contessa"]["600"] },
+        ["Special"] = { link = "@attribute" },
 
         ["Structure"] = { link = "@type.builtin" },
         ["Type"] = { link = "@type.builtin" },
         ["Number"] = { link = "@constant" },
 
         ["Statement"] = { link = "@punctuation" }, -- fzf lua selection
-        -- ["@string"] = { fg = colors.palette["curious-blue"]["600"] },
-        ["@string"] = { fg = colors.gel_pen_variants["pale-blue"] },
+        ["@string"] = {
+          -- fg = colors.gel_pen_variants["pale-blue"],
+          fg = colors.palette["blue-chill"]["700"],
+          -- bg = colors.palette["bermuda-gray"]["50"]
+        },
 
         -- struct fields
         ["@property"] = { fg = colors.palette["curious-blue"]["700"] },
@@ -103,7 +115,17 @@ require("catppuccin").setup({
         Normal = { fg = colors.gel_pen_variants["blue-black"] },
 
         DiagnosticUnderlineError = { fg = "#d20f3a", bg = colors.palette["mandy"]["100"], style = { "undercurl" } },
+        DiagnosticUnderlineWarn = {
+          -- fg = colors.palette["rose-of-sharon"]["500"],
+          bg = colors.palette["rose-of-sharon"]["50"],
+          style = { "undercurl" },
+        },
         DapStoppedLinehl = { bg = colors.palette["rose-of-sharon"]["200"] },
+
+        -- lang specific tressitter groups
+        -- [ gitcommit ]
+        ["gitcommitFirstline"] = { link = "@type" },
+        ["gitcommitSummary"] = { link = "@string" },
       }
     end,
   },

@@ -7,3 +7,5 @@ aliases:
   ro: roles
   rb: rolebindings
   np: networkpolicies
+  apps: crds.kloudlite.io/v1/apps
+  lf: crds.kloudlite.io/v1/lifecycles

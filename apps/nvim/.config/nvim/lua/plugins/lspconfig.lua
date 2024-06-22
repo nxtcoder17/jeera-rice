@@ -39,6 +39,11 @@ local function on_attach(client, bufnr)
   --   vim.lsp.inlay_hint.enable(bufnr, true)
   -- end
 
+  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+    border = "rounded",
+    title = "",
+  })
+
   if client ~= nil and client.server_capabilities ~= nil then
     client.server_capabilities.semanticTokensProvider = nil
   end
@@ -82,9 +87,9 @@ local function on_attach(client, bufnr)
   vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
   vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, opts)
   vim.keymap.set({ "n", "v" }, "<M-CR>", vim.lsp.buf.code_action, opts)
-  vim.keymap.set("n", "f;", function()
-    vim.lsp.buf.format({ async = false })
-  end, opts)
+  -- vim.keymap.set("n", "f;", function()
+  --   vim.lsp.buf.format({ async = false })
+  -- end, opts)
 
   -- vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
   vim.keymap.set("n", "gr", function()
@@ -524,6 +529,8 @@ require("lspconfig").emmet_language_server.setup({
 })
 
 lsp_config.biome.setup({})
+
+lsp_config.htmx.setup({})
 
 lsp_config.efm.setup({
   init_options = { documentFormatting = true },

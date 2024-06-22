@@ -10,4 +10,4 @@ CMD="$HOME/.local/tars.uz/idea/bin/idea.sh"
 # cpulimit -l 550 nohup "$CMD" "$@" &> /dev/null &
 # echo executing $CMD
 # $CMD
-nohup "$CMD" "$@" &> /dev/null &
+nohup "$CMD" "$@" &>/dev/null &

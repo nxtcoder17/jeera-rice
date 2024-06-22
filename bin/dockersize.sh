@@ -78,13 +78,6 @@ if [ -z "$file" ]; then
 	file=$manifest_file_parsed
 fi
 
-# cat $manifest_file_parsed | jq -r 'if (.Descriptor.mediaType == "application/vnd.oci.image.manifest.v1+json") then
-# "\(.Descriptor.platform.os)/\(.Descriptor.platform.architecture) \(.OCIManifest.config.size + (.OCIManifest.layers | map_values(.size) |add))"
-#   end
-# ' | numfmt --to=iec --format '%.2f' --field 2
-
-# media_types=$(jq '.Descriptor.mediaType' -r <$file)
-
 jq -r 'map(select(.Descriptor.platform.os != "unknown")) | map_values(
   if .Descriptor.platform.os != "unknown" then
     if .Descriptor.mediaType == "application/vnd.oci.image.manifest.v1+json" then
@@ -96,20 +89,3 @@ jq -r 'map(select(.Descriptor.platform.os != "unknown")) | map_values(
     end
   end
 ) | .[]' <"$file" | numfmt --to=iec --format '%.2f' --field 2 | column --table
-
-# for media_type in $media_types; do
-# 	case "$media_type" in
-# 	"application/vnd.oci.image.manifest.v1+json")
-# 		jq '"\(.Descriptor.platform.os)/\(.Descriptor.platform.architecture) \(.OCIManifest.config.size + (.OCIManifest.layers | map_values(.size) |add))"' -r <"$file" | numfmt --to=iec --format '%.2f' --field 2 | column --table
-# 		;;
-# 	"application/vnd.docker.distribution.manifest.v2+json")
-# 		echo "here"
-# 		set -x
-# 		jq '"\(.Descriptor.platform.os)/\(.Descriptor.platform.architecture) \(.SchemaV2Manifest.config.size + (.SchemaV2Manifest.layers | map_values(.size) |add))"' -r <"$manifest_file_parsed" | numfmt --to=iec --format '%.2f' --field 2 | column --table
-# 		set +x
-# 		;;
-# 	*)
-# 		echo "unknown $media_type"
-# 		;;
-# 	esac
-# done

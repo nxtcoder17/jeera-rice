@@ -74,6 +74,7 @@ vim.g.loaded_ruby_provider = 0
 
 safeRequire("globals")
 safeRequire("settings")
+safeRequire("theme")
 safeRequire("autocmds")
 safeRequire("keymaps")
 safeRequire("plugins-lazy")

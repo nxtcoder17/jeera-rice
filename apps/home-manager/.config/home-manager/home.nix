@@ -57,6 +57,16 @@ let
     kubectl
     k9s
 
+    (writeShellScriptBin "k3d" ''
+      #! /usr/bin/env bash
+      if [ ! -f "~/.local/bin/k3d" ]; then
+        echo "Downloading k3d..."
+        curl -L0 https://github.com/k3d-io/k3d/releases/download/v5.6.3/k3d-linux-amd64 > ~/.local/bin/k3d
+        chmod +x ~/.local/bin/k3d
+      fi
+      ~/.local/bin/k3d "$@"
+    '')
+    
     nerdctl
     rootlesskit
     buildkit
@@ -68,12 +78,18 @@ let
     awscli2
     lens
 
-    google-cloud-sdk
+    #google-cloud-sdk
+    #google-cloud-sdk-gce
+    (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin])
   ];
 
   packages.cli_workflow = with pkgs; [
     # shells
     fish
+    fishPlugins.autopair
+    fishPlugins.hydro
+
+    gitstatus
     bash
     readline
 
@@ -99,7 +115,6 @@ let
     yq
     jq
     delta
-    go-task
     pv # pipe viewer
     gh
 
@@ -109,6 +124,7 @@ let
     # networking
     inetutils
     netcat-gnu
+    dogdns
     sshuttle
     wirelesstools
     nmap
@@ -137,6 +153,7 @@ let
 
     cloudflare-warp
     nix-serve-ng
+    hyperfine
   ];
 
   packages.gui_apps = with pkgs; [
@@ -144,6 +161,9 @@ let
     google-chrome
     qutebrowser
     screenkey
+
+    vivaldi
+    vivaldi-ffmpeg-codecs
   ];
 in
 {

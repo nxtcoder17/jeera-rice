@@ -16,7 +16,7 @@ set-window-option -g pane-active-border-style fg=$colorBorder,bold
 set-window-option -g pane-border-style fg=$colorSecondary
 
 # plugin: tmux-pop-color
-set -g @tmux-pop-color white
+set -g @tmux-pop-color black
 
 # status-bar
 set -g window-status-format "#[fg=$colorSecondary,bold,bg=default]#[fg=$colorPrimaryText,bold,bg=$colorSecondary] #I #[fg=$colorSecondaryText,bg=$colorSecondary,bold,noitalics,nounderscore] #W #F #[fg=$colorSecondary,bg=default]"
