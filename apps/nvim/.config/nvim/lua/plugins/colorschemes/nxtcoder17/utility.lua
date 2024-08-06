@@ -1,0 +1,14 @@
+-- local M = {}
+--
+-- -- params is a table of options to override the default
+-- -- values of the highlight group
+-- -- @param hl_group string
+-- -- @param params table<string, any>
+-- -- @param params.fg string
+-- -- @return nil
+-- function M.override(hl_group, params)
+-- end
+--
+-- M.override("normal", {
+--
+-- })

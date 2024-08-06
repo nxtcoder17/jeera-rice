@@ -13,7 +13,11 @@ local function grep_with_fzf(dir, query)
   --   )
   -- end
 
-  vim.cmd("FzfLua grep_cword")
+  if vim.fn.mode() == "n" then
+    vim.cmd("FzfLua grep_cword")
+  elseif vim.fn.mode() == "v" then
+    vim.cmd("FzfLua grep_visual")
+  end
 end
 
 return grep_with_fzf

@@ -1,0 +1,11 @@
+snippet mk-script-pkg
+  (writeShellScriptBin "${1:binary}" ''
+    #! /usr/bin/env bash
+    if [ ! -x "$HOME/.local/bin/$1" ]; then
+      echo "Downloading $1..."
+      # curl -L0 ${2:url} > $HOME/.local/bin/$1
+      # chmod +x $HOME/.local/bin/$1
+    fi
+    $HOME/.local/bin/$1 "$@"
+  '')
+

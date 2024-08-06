@@ -25,17 +25,15 @@ local events = {
 
 local function colorschemes()
   return {
-    -- {
-    --   "folke/tokyonight.nvim",
-    --   lazy = false,
-    --   priority = 1000,
-    --   opts = {},
-    --   config = function()
-    --     -- vim.o.background = "dark"
-    --     -- vim.o.background = "light"
-    --     -- require("plugins.tokyonight")
-    --   end,
-    -- },
+    {
+      "folke/tokyonight.nvim",
+      -- lazy = false,
+      -- priority = 1000,
+      -- opts = {},
+      config = function()
+        require("plugins.colorschemes.nxtcoder17")
+      end,
+    },
     {
       "nvim-colortils/colortils.nvim",
       cmd = { "Colortils" },
@@ -58,17 +56,17 @@ local function colorschemes()
     --   -- 	require("plugins.gruvbox-material")
     --   -- end,
     -- },
-    {
-      "rebelot/kanagawa.nvim",
-      lazy = false,
-      event = events.VeryLazy,
-      init = function()
-        require("plugins.colorschemes.nxtcoder17")
-        -- require("plugins.kanagawa")
-        -- vim.o.background = "light"
-        -- vim.cmd("colorscheme kanagawa-lotus")
-      end,
-    },
+    -- {
+    --   "rebelot/kanagawa.nvim",
+    --   lazy = false,
+    --   event = events.VeryLazy,
+    --   init = function()
+    --     require("plugins.colorschemes.nxtcoder17")
+    --     -- require("plugins.kanagawa")
+    --     -- vim.o.background = "light"
+    --     -- vim.cmd("colorscheme kanagawa-lotus")
+    --   end,
+    -- },
     --   {
     --     "towolf/vim-helm",
     --     ft = { "gotmpl", "gotexttmpl", "yaml" },
@@ -111,35 +109,35 @@ end
 
 local function fuzzy_finders()
   return {
-    {
-      "nvim-telescope/telescope.nvim",
-      -- event = events.UIEnter,
-      -- event = events.BufWinEnter,
-      lazy = true,
-      dependencies = {
-        "nvim-lua/plenary.nvim",
-        { "nvim-tree/nvim-web-devicons" },
-        { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-        { "gbrlsnchs/telescope-lsp-handlers.nvim",    after = "nvim-lspconfig" },
-        { "nvim-telescope/telescope-ui-select.nvim" },
-        -- { "nvim-telescope/telescope-dap.nvim" },
-        -- {
-        --   "nvim-telescope/telescope-smart-history.nvim",
-        --   requires = {
-        --     "kkharji/sqlite.lua",
-        --   },
-        -- },
-      },
-      config = function()
-        require("plugins.telescope")
-        require("telescope").load_extension("fzf")
-        require("telescope").load_extension("lsp_handlers")
-        require("telescope").load_extension("ui-select")
-      end,
-      cmd = {
-        "Telescope",
-      },
-    },
+    -- {
+    --   "nvim-telescope/telescope.nvim",
+    --   -- event = events.UIEnter,
+    --   -- event = events.BufWinEnter,
+    --   lazy = true,
+    --   dependencies = {
+    --     "nvim-lua/plenary.nvim",
+    --     { "nvim-tree/nvim-web-devicons" },
+    --     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    --     { "gbrlsnchs/telescope-lsp-handlers.nvim",    after = "nvim-lspconfig" },
+    --     { "nvim-telescope/telescope-ui-select.nvim" },
+    --     -- { "nvim-telescope/telescope-dap.nvim" },
+    --     -- {
+    --     --   "nvim-telescope/telescope-smart-history.nvim",
+    --     --   requires = {
+    --     --     "kkharji/sqlite.lua",
+    --     --   },
+    --     -- },
+    --   },
+    --   config = function()
+    --     require("plugins.telescope")
+    --     require("telescope").load_extension("fzf")
+    --     require("telescope").load_extension("lsp_handlers")
+    --     require("telescope").load_extension("ui-select")
+    --   end,
+    --   cmd = {
+    --     "Telescope",
+    --   },
+    -- },
     {
       "ibhagwan/fzf-lua",
       dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -154,11 +152,12 @@ local function fuzzy_finders()
         "FzfLua",
       },
       keys = {
-        { "sf", require("fuzzy-actions.find-files"), mode = "n", desc = "Find Files" },
-        { "tl", require("fuzzy-actions.find-tabs"),  mode = "n", desc = "Find Tabs" },
-        { "ff", require("fuzzy-actions.grep"),       mode = "n", desc = "Grep" },
-        { "s/", "<Cmd>FzfLua grep_curbuf<CR>",       mode = "n", desc = "Grep Current Buffer" },
-        { "sb", "<Cmd>FzfLua buffers<CR>",           mode = "n", desc = "Pick Buffer" },
+        { "sf", require("fuzzy-actions.find-files"), mode = "n",          desc = "Find Files" },
+        { "tl", require("fuzzy-actions.find-tabs"),  mode = "n",          desc = "Find Tabs" },
+        { "ff", require("fuzzy-actions.grep"),       mode = { "n", "v" }, desc = "Grep" },
+        { "f;", require("fuzzy-actions.quicklist"),  mode = { "n", "v" }, desc = "QuickList" },
+        { "s/", "<Cmd>FzfLua grep_curbuf<CR>",       mode = "n",          desc = "Grep Current Buffer" },
+        { "sb", "<Cmd>FzfLua buffers<CR>",           mode = "n",          desc = "Pick Buffer" },
       },
     },
   }
@@ -303,25 +302,26 @@ local function syntax()
         { "nvim-treesitter/playground" },
       },
     },
+    -- {
+    --   "nvim-treesitter/nvim-treesitter-context",
+    --   event = events.BufReadPost,
+    --   dependencies = { "nvim-treesitter" },
+    --   config = function()
+    --     require("treesitter-context").setup()
+    --   end,
+    -- },
+    -- {
+    --   "ziontee113/syntax-tree-surfer",
+    --   dependencies = {
+    --     "nvim-treesitter",
+    --   },
+    --   event = events.BufReadPost,
+    --   config = function()
+    --     require("plugins.syntax-tree-surfer")
+    --   end,
+    -- },
     {
-      "nvim-treesitter/nvim-treesitter-context",
-      event = events.BufReadPost,
-      dependencies = { "nvim-treesitter" },
-      config = function()
-        require("treesitter-context").setup()
-      end,
-    },
-    {
-      "ziontee113/syntax-tree-surfer",
-      dependencies = {
-        "nvim-treesitter",
-      },
-      event = events.BufReadPost,
-      config = function()
-        require("plugins.syntax-tree-surfer")
-      end,
-    },
-    {
+      -- enhanced highlighting for semantic match pairs
       "utilyre/sentiment.nvim",
       event = events.BufReadPost,
       config = function()
@@ -367,9 +367,9 @@ local function lsp()
   local neovim_native_lsp = {
     {
       "williamboman/mason.nvim",
-      cmd = { "Mason" },
+      cmd = { "Mason", "MasonInstall" },
       opts = { max_concurrent_installers = 10 },
-      build = function()
+      init = function()
         local ensure_installed = {
           "tree-sitter-cli",
 
@@ -379,9 +379,12 @@ local function lsp()
 
           -- javascript
           "typescript-language-server",
-          "tailwindcss-language-server",
           "eslint_d",
           "emmet-language-server",
+
+          -- css
+          "css-lsp",
+          "tailwindcss-language-server",
 
           -- bash
           "bash-language-server",
@@ -411,11 +414,19 @@ local function lsp()
           "terraform-ls",
           "tflint",
 
+          -- protobuf
+          "buf-language-server",
+
           -- linter
           "efm",
+
+          -- helm
+          "helm-ls",
         }
 
-        vim.cmd("MasonInstall " .. table.concat(ensure_installed, " "))
+        vim.api.nvim_create_user_command("MasonInstallMissing", function()
+          vim.cmd("MasonInstall " .. table.concat(ensure_installed, " "))
+        end, { nargs = 0 })
       end,
       config = function()
         require("mason").setup()
@@ -430,7 +441,7 @@ local function lsp()
       -- commit = "67f151e84daddc86cc65f5d935e592f76b9f4496",
       dependencies = {
         { "folke/neodev.nvim", ft = "lua" },
-        "williamboman/mason-lspconfig.nvim",
+        -- "williamboman/mason-lspconfig.nvim",
         "b0o/schemastore.nvim",
       },
     },
@@ -501,8 +512,9 @@ local function completions()
       version = false,
       event = events.InsertEnter,
       dependencies = {
+        { "hrsh7th/cmp-nvim-lsp-signature-help" },
         { "hrsh7th/cmp-nvim-lsp" },
-        { "lukas-reineke/cmp-rg" },
+        -- { "lukas-reineke/cmp-rg" },
         { "hrsh7th/cmp-cmdline" },
         { "andersevenrud/cmp-tmux" },
         { "saadparwaiz1/cmp_luasnip" },
@@ -534,6 +546,8 @@ local function completions()
 
     {
       "supermaven-inc/supermaven-nvim",
+      commit = "2d9f42e0dcf57a06dce5bf8b23db427ae3b7799f",
+      event = events.InsertEnter,
       config = function()
         require("supermaven-nvim").setup({
           keymaps = {

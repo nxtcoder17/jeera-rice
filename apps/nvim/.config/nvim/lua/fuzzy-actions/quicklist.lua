@@ -1,18 +1,29 @@
-local utils = require("functions.utils")
-
 local function quicklist()
-  local choices = {
-    ["[buf] format"] = function()
-      vim.lsp.buf.format({ async = false })
-      vim.cmd("write")
-    end,
-    ["[util] base64 encode"] = utils.base64_encode,
-    ["[util] base64 decode"] = utils.base64_decode,
+  local utils = require("functions.utils")
+
+  local actions = {
+    {
+      label = "[buf] format",
+      action = function()
+        vim.lsp.buf.format({ async = false })
+        vim.cmd("write")
+      end,
+    },
+    {
+      label = "[util] base64 encode",
+      action = utils.base64_encode,
+    },
+    {
+      label = "[util] base64 decode",
+      action = utils.base64_decode,
+    },
   }
 
   local choices_keys = {}
-  for k, _ in pairs(choices) do
-    table.insert(choices_keys, k)
+  local choices_map = {}
+  for k, v in pairs(actions) do
+    table.insert(choices_keys, v.label)
+    choices_map[v.label] = v.action
   end
 
   require("fzf-lua").fzf_exec(choices_keys, {
@@ -20,21 +31,16 @@ local function quicklist()
     actions = {
       -- Use fzf-lua builtin actions or your own handler
       ["default"] = function(selected, opts)
-        print(selected[1])
-        local fn = choices[selected[1]]
-        local v = fn()
-        print(v)
+        local fn = choices_map[selected[1]]
+        if not fn then
+          return
+        end
+        fn()
       end,
     },
   })
 end
 
-vim.keymap.set({ "n", "v" }, "f;", quicklist, { desc = "Quicklist" })
-
---[[
-hello
-aGVsbG8=
-hello
---]]
+-- vim.keymap.set({ "n", "v" }, "f;", quicklist, { desc = "Quicklist" })
 
 return quicklist

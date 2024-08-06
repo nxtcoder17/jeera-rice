@@ -75,19 +75,23 @@ vim.keymap.set("n", "sdl", function()
   end)
 end, { silent = true, desc = "logpoint" })
 
+-- vim.keymap.set("n", "sdr", function()
+--   local curr_dir = vim.fn.getcwd()
+--   local dsession = dap_sessions[curr_dir]
+--   print("pre toggle", curr_dir)
+--   if dsession ~= nil then
+--     if vim.t.current_dap_repl_dir ~= nil and vim.t.current_dap_repl_dir ~= curr_dir then
+--       dap.repl.close()
+--     end
+--     dap.set_session(dsession)
+--     dap.repl.toggle({}, "80vsplit")
+--     vim.t.current_dap_repl_dir = curr_dir
+--     print("post toggle")
+--   end
+-- end)
+
 vim.keymap.set("n", "sdr", function()
-  local curr_dir = vim.fn.getcwd()
-  local dsession = dap_sessions[curr_dir]
-  print("pre toggle", curr_dir)
-  if dsession ~= nil then
-    if vim.t.current_dap_repl_dir ~= nil and vim.t.current_dap_repl_dir ~= curr_dir then
-      dap.repl.close()
-    end
-    dap.set_session(dsession)
-    dap.repl.toggle({}, "80vsplit")
-    vim.t.current_dap_repl_dir = curr_dir
-    print("post toggle")
-  end
+  require("dapui").toggle()
 end)
 
 vim.keymap.set("n", "sdR", function()

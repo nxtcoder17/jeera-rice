@@ -11,6 +11,7 @@ opt.showmode = false
 
 -- global statusline
 opt.laststatus = 3
+opt.showtabline = 2
 
 opt.cmdheight = 0
 

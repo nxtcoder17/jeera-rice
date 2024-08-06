@@ -1,4 +1,4 @@
-local cmp = require("cmp")
+-- local cmp = require("cmp")
 
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -13,9 +13,10 @@ luasnip.config.set_config({
 
 local log = require("plenary.log").new({ plugin = "cmp", level = "debug" })
 
-cmp.register_source("goimports", require("plugins.cmp-sources.go-imports"))
-
 local function setup_nvim_cmp()
+  local cmp = require("cmp")
+  cmp.register_source("goimports", require("plugins.cmp-sources.go-imports"))
+
   cmp.setup({
     performance = {
       -- PERF lower values for lag-free performance
@@ -112,14 +113,15 @@ local function setup_nvim_cmp()
     }),
 
     sources = cmp.config.sources({
-      { name = "nvim_lsp",   priority = 80 },
-      { name = "nvim_lua",   priority = 80 },
-      { name = "tags",       priority = 80 },
-      { name = "async_path", priority = 80 },
-      { name = "luasnip",    options = { show_autosnippets = true }, priority = 70 },
-      { name = "goimports",  priority = 60,                          keyword_length = 3 },
+      { name = "nvim_lsp",                priority = 80 },
+      { name = "nvim_lsp_signature_help", priority = 80 },
+      { name = "nvim_lua",                priority = 80 },
+      { name = "tags",                    priority = 80 },
+      { name = "async_path",              priority = 80 },
+      { name = "luasnip",                 options = { show_autosnippets = true }, priority = 70 },
+      { name = "goimports",               priority = 60,                          keyword_length = 3 },
       -- { name = "cmp_tabby" },
-      { name = "supermaven", priority = 50 },
+      { name = "supermaven",              priority = 50 },
       -- {
       --   name = "buffer",
       --   priority = 40,
@@ -259,8 +261,7 @@ end
 
 setup_nvim_cmp()
 
-vim.api.nvim_create_user_command(
-  "RestartCmp",
-  setup_nvim_cmp,
-  { desc = "restarts nvim-cmp, as it sometimes stops giving suggestions" }
-)
+vim.api.nvim_create_user_command("RestartCmp", function()
+  R("cmp")
+  setup_nvim_cmp()
+end, { desc = "restarts nvim-cmp, as it sometimes stops giving suggestions" })

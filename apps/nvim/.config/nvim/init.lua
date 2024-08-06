@@ -77,7 +77,7 @@ safeRequire("settings")
 safeRequire("theme")
 safeRequire("autocmds")
 safeRequire("keymaps")
-safeRequire("plugins-lazy")
+safeRequire("plugins")
 safeRequire("functions")
 safeRequire("commands")
 
