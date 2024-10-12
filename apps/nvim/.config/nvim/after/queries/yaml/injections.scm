@@ -1,4 +1,10 @@
 ; extends
+;
+; (
+;   (comment) @injection.content
+;   (#set! injection.language "markdown")
+; )
+
 (
   (block_mapping_pair
     ; key: (flow_node) @_expr (#eq? @_expr "query")

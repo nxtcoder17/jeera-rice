@@ -27,8 +27,8 @@ opt.wrap = true
 
 vim.opt.list = true
 vim.opt.listchars = {
-  eol = "↵",
-  tab = " ",
+	eol = "↵",
+	tab = " ",
 }
 
 -- opt.listchars:append({ eol = " 󰌑 ", tab = "" })
@@ -46,22 +46,22 @@ opt.undodir = { vim.fn.stdpath("cache") .. "undodir" }
 opt.undofile = true
 
 opt.listchars = {
-  ["eol"] = "↲",
-  -- ["tab"] = "»·",
-  ["tab"] = "·",
-  ["space"] = "␣",
-  ["trail"] = "-",
-  ["extends"] = "☛",
-  ["precedes"] = "☚",
+	["eol"] = "↲",
+	-- ["tab"] = "»·",
+	["tab"] = "·",
+	["space"] = "␣",
+	["trail"] = "-",
+	["extends"] = "☛",
+	["precedes"] = "☚",
 
-  ["conceal"] = "┊",
-  ["nbsp"] = "☠",
+	["conceal"] = "┊",
+	["nbsp"] = "☠",
 }
 
 -- Tab, Spaces and Indentations
 opt.tabstop = 2
 opt.softtabstop = 2
-opt.shiftwidth = 2   -- spaces per tab when using >> or <<
+opt.shiftwidth = 2 -- spaces per tab when using >> or <<
 opt.expandtab = true -- expand tabs into spaces
 opt.autoindent = true
 opt.smarttab = true
@@ -72,29 +72,29 @@ opt.copyindent = true
 opt.autoindent = true
 
 function _G.indent_with_spaces()
-  -- Tab, Spaces and Indentations
-  opt.tabstop = 2
-  opt.softtabstop = 2
-  opt.shiftwidth = 2  -- spaces per tab when using >> or <<
-  opt.expandtab = true -- expand tabs into spaces
-  opt.autoindent = true
-  opt.smarttab = true
-  opt.shiftround = true
-  -- Copy Previous Indentation
-  opt.smartindent = true
-  opt.copyindent = true
-  opt.autoindent = true
+	-- Tab, Spaces and Indentations
+	opt.tabstop = 2
+	opt.softtabstop = 2
+	opt.shiftwidth = 2 -- spaces per tab when using >> or <<
+	opt.expandtab = true -- expand tabs into spaces
+	opt.autoindent = true
+	opt.smarttab = true
+	opt.shiftround = true
+	-- Copy Previous Indentation
+	opt.smartindent = true
+	opt.copyindent = true
+	opt.autoindent = true
 end
 
 function _G.indent_with_tabs()
-  -- using tabs for indentation, and spaces for everything else
-  -- reference: https://vim.fandom.com/wiki/Indent_with_tabs,_align_with_spaces
-  opt.expandtab = false
-  opt.copyindent = true
-  opt.preserveindent = true
-  opt.softtabstop = 0
-  opt.shiftwidth = 2
-  opt.tabstop = 2
+	-- using tabs for indentation, and spaces for everything else
+	-- reference: https://vim.fandom.com/wiki/Indent_with_tabs,_align_with_spaces
+	opt.expandtab = false
+	opt.copyindent = true
+	opt.preserveindent = true
+	opt.softtabstop = 0
+	opt.shiftwidth = 2
+	opt.tabstop = 2
 end
 
 indent_with_tabs()

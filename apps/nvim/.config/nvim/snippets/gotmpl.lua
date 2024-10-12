@@ -17,7 +17,11 @@ local postfix = require("luasnip.extras.postfix").postfix
 
 local snippets, autosnippets = {}, {}
 
-local var_stmt = s(
+local function new_snippet(item)
+  return table.insert(snippets, item)
+end
+
+new_snippet(s(
   "var",
   c(1, {
     fmta([[{{- <p1> := <p2> }}]], {
@@ -40,7 +44,47 @@ local var_stmt = s(
       }
     ),
   })
-)
+))
 
-table.insert(snippets, var_stmt)
+-- local var_stmt = s(
+--   "var",
+--   c(1, {
+--     fmta([[{{- <p1> := <p2> }}]], {
+--       p1 = f(function(...)
+--         local args = ...
+--         return "$" .. require("functions.strings").camel_case(args[1][1])
+--       end, 1),
+--       p2 = i(1, "var"),
+--     }),
+--     fmta(
+--       [[{{- <p1> := get . "<p2>" <p0>}}
+--     ]],
+--       {
+--         p1 = f(function(...)
+--           local args = ...
+--           return "$" .. require("functions.strings").camel_case(args[1][1])
+--         end, 1),
+--         p2 = i(1, "var"),
+--         p0 = i(0),
+--       }
+--     ),
+--   })
+-- )
+-- table.insert(snippets, var_stmt)
+
+new_snippet(s(
+  "define",
+  fmta(
+    [[
+{{- define "<p1>" }}
+<p0>
+{{- end }}
+]],
+    {
+      p1 = i(1, "name"),
+      p0 = i(0),
+    }
+  )
+))
+
 return snippets, autosnippets

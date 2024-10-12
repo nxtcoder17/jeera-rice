@@ -1,4 +1,4 @@
-; extends
+; inherits: gotmpl
 
 ; (
 ;   (text) @injection.content
@@ -8,11 +8,10 @@
 ((text) @injection.content
  (#set! injection.language "yaml")
  (#set! injection.combined))
-;
-; ((text) @injection.content
-;   (#eq? "#graphql")
-;   (#set! injection.language "comment")
-;   (#set! injection.combined))
+
+; inherits gotmpl
+
+; (text) @yaml
 ;
 ; ((text) @injection.content
 ;  (#set! injection.language "html")

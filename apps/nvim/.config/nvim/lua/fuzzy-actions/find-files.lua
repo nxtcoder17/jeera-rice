@@ -62,15 +62,16 @@ local function find_files(dir, query)
 	local fzf = require("fzf-lua")
 
 	dir = dir or vim.loop.cwd()
-	query = query or ""
 
 	fzf.files({
 		ignore_current_file = true,
 		cwd = dir,
+		query = query or "",
 		cwd_prompt = dir ~= vim.g.nxt.project_root_dir,
 		actions = {
 			["ctrl-f"] = function(_, opts)
 				local q = fzf.get_last_query(opts)
+				print("last query", q)
 				if dir ~= vim.g.nxt.project_root_dir then
 					return find_files(vim.g.nxt.project_root_dir, q)
 				end

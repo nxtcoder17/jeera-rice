@@ -1,148 +1,173 @@
 local colors = require("colors")
 
-require("catppuccin").setup({
-  -- flavour = "macchiato", -- latte, frappe, macchiato, mocha
-  -- flavour = vim.opt.background == "light" and "latte" or "macchiato", -- latte, frappe, macchiato, mocha
-  flavour = "latte", -- latte, frappe, macchiato, mocha
-  background = {
-    light = "latte",
-    dark = "macchiato",
+local hl_groups = {
+  --[[
+    Groups are the highlight group definitions.
+      + keys are the name of the highlight groups that will be overridden.
+      + values are the highlight group definitions, which are tables with the following keys:
+        - fg: foreground color
+        - bg: background color
+        - style: style of the highlight, can be one of the following:
+          - bold
+          - italic
+          - underline
+          - undercurl
+          - reverse
+          - nocombine
+        - sp: special color for the highlight, can be one of the following:
+          - comment
+          - constant
+          - identifier
+          - statement
+          - error
+          - type
+          - include
+          - keyword
+          - struct
+          - string
+          - character
+          - number
+          - boolean
+          - float
+          - function
+          - title
+          - variable
+          - constructor
+          - field
+          - property
+          - method
+          - operator
+          - preproc
+          - constant.builtin
+          - constant.macro
+          - repeat
+          - label
+          - conditional
+          - keyword.operator
+          - keyword.return
+          - keyword.function
+          - keyword.statement
+        - link: another highlight group to link to, see |:help highlight-links|
+    --]]
+
+  MatchParen = {
+    bg = "#dadee0",
+    -- fg = "#4d616b",
   },
-  transparent_background = true, -- disables setting the background color.
-  show_end_of_buffer = false,   -- shows the '~' characters after the end of buffers
-  term_colors = false,          -- sets terminal colors(e.g. `g:terminal_color_0`)
-  dim_inactive = {
-    enabled = false,            -- dims the background color of inactive window
-    shade = "dark",
-    percentage = 0.15,          -- percentage of the shade to apply to the inactive window
+
+  Cursor = {
+    -- bg = "#aec3cf",
+    fg = "#dadee0",
   },
-  no_italic = false,            -- Force no italic
-  no_bold = false,              -- Force no bold
-  no_underline = false,         -- Force no underline
-  styles = {                    -- Handles the styles of general hi groups (see `:h highlight-args`):
-    comments = { "italic" },    -- Change the style of comments
-    conditionals = { "italic" },
-    loops = {},
-    functions = {},
-    keywords = {},
-    strings = {},
-    variables = {},
-    numbers = {},
-    booleans = {},
-    properties = {},
-    types = {},
-    operators = {},
+  --
+  Normal = {
+    bg = "#FFFFFF",
+    -- bg = colors.palette["black"]["50"],
   },
-  color_overrides = {},
-  custom_highlights = {},
-  highlight_overrides = {
-    all = function(all)
-      return {
-        NvimTreeNormal = { fg = all.none },
-        CmpBorder = { fg = "#3e4145" },
-      }
-    end,
-    latte = function(latte)
-      return {
-        -- Normal = { fg = latte.base },
-        -- Normal = { fg = "#b5bbc4" },
-        -- Normal = { bg = "#f0f5f1" },
-        ["@boolean"] = { fg = colors.palette["blue-chill"]["900"] },
-        ["@number"] = { fg = colors.palette["blue-chill"]["900"] },
-        ["@variable"] = { fg = colors.palette["bermuda-gray"]["900"] },
-        ["@variable.parameter"] = { fg = colors.palette["blue-chill"]["500"], style = { "italic" } },
-        -- ["@variable.member"] = { fg = colors.palette["blue-chill"]["600"], style = { "italic" } },
-        ["@variable.member"] = { fg = colors.palette["rose-of-sharon"]["800"], style = { "italic" } },
-        ["Identifier"] = { link = "@variable" },
 
-        -- ["@function"] = { fg = colors.palette["blue-chill"]["600"], style = { "italic" } },
-        ["@function"] = { link = "@constant" },
-        ["@method"] = { link = "@function" },
-        ["@function.builtin"] = { link = "@function" },
-        -- ["@function.method"] = { fg = colors.palette["curious-blue"]["700"], style = { "bold" } },
-        ["@function.method"] = { link = "@constant" },
-
-        ["@function.call"] = { fg = colors.palette["curious-blue"]["700"], style = { "bold" } },
-        ["@function.method.call"] = { link = "@function.call" },
-
-        ["@module"] = { fg = colors.palette["contessa"]["800"], bg = colors.palette["contessa"]["50"] },
-
-        ["@punctuation"] = { fg = colors.palette["blue-chill"]["800"] },
-        ["@punctuation.bracket"] = { link = "@punctuation" },
-        ["@punctuation.bracket.lua"] = { link = "@punctuation" },
-        ["@punctuation.special"] = {
-          fg = colors.palette["contessa"]["700"],
-          style = { "italic" },
-        },
-        ["@constructor"] = { link = "@punctuation" },
-        ["@constructor.lua"] = { link = "@punctuation" },
-        ["@operator"] = { link = "@punctuation" },
-
-        ["MatchParen"] = { fg = colors.palette["blue-chill"]["900"], bg = colors.palette["blue-chill"]["200"] },
-
-        ["@constant"] = { fg = colors.palette["blue-chill"]["900"], style = { "bold" } },
-        ["@constant.builtin"] = { link = "@constant" },
-        ["Constant"] = { link = "@constant" },
-
-        -- types, like go structs
-        ["@type"] = { fg = colors.palette["blue-chill"]["900"] },
-        ["@type.definition"] = { link = "@type" },
-        ["@type.builtin"] = { fg = colors.palette["rose-of-sharon"]["800"], style = { "italic" } },
-
-        -- @attribute are  graphql directives, like @hasLoggedIn
-        ["@attribute"] = { fg = colors.palette["contessa"]["600"] },
-        ["Special"] = { link = "@attribute" },
-
-        ["Structure"] = { link = "@type.builtin" },
-        ["Type"] = { link = "@type.builtin" },
-        ["Number"] = { link = "@constant" },
-
-        ["Statement"] = { link = "@punctuation" }, -- fzf lua selection
-        ["@string"] = {
-          -- fg = colors.gel_pen_variants["pale-blue"],
-          fg = colors.palette["blue-chill"]["700"],
-          -- bg = colors.palette["bermuda-gray"]["50"]
-        },
-
-        -- struct fields
-        ["@property"] = { fg = colors.palette["curious-blue"]["700"] },
-        -- ["@property"] = { fg = "#1f719b" },
-
-        -- PmenuSel = { fg = "NONE", bg = colors.palette["mantis"]["50"] },
-        PmenuSel = { fg = colors.palette["blue-chill"]["600"], bg = colors.palette["blue-chill"]["50"] },
-        Pmenu = { fg = colors.palette["blue-chill"]["600"], bg = "NONE" },
-        -- CursorLine = { fg = colors.palette["curious-blue"]["800"], bg = colors.palette["curious-blue"]["100"] },
-        Normal = { fg = colors.gel_pen_variants["blue-black"] },
-
-        DiagnosticUnderlineError = { fg = "#d20f3a", bg = colors.palette["mandy"]["100"], style = { "undercurl" } },
-        DiagnosticUnderlineWarn = {
-          -- fg = colors.palette["rose-of-sharon"]["500"],
-          bg = colors.palette["rose-of-sharon"]["50"],
-          style = { "undercurl" },
-        },
-        DapStoppedLinehl = { bg = colors.palette["rose-of-sharon"]["200"] },
-
-        -- lang specific tressitter groups
-        -- [ gitcommit ]
-        ["gitcommitFirstline"] = { link = "@type" },
-        ["gitcommitSummary"] = { link = "@string" },
-      }
-    end,
+  Visual = {
+    bg = "#dadee0",
+    -- fg = "#aec3cf",
   },
-  integrations = {
-    cmp = true,
-    gitsigns = true,
-    nvimtree = true,
-    treesitter = true,
-    notify = false,
-    rainbow_delimiters = true,
-    mini = {
-      enabled = true,
-      indentscope_color = "",
+
+  Pmenu = {
+    -- bg = vim.NIL,
+    bg = colors.palette["kidnapper"]["50"],
+  },
+  CursorLine = {
+    bg = "#a8cfe3",
+  },
+  LineNr = {
+    fg = "#4d616b",
+  },
+
+  -- ["@function.call"] = {
+  --   bg = colors.palette["black"]["50"],
+  -- },
+
+  -- ["@string"] = {
+  --   bg = colors.palette["black"]["50"],
+  -- },
+
+  ["@property"] = {
+    fg = colors.palette["black"]["500"],
+  },
+
+  ["@module"] = {
+    fg = colors.palette["bermuda-gray"]["400"],
+    bg = "",
+    style = "italic",
+  },
+
+  ["@type"] = {
+    fg = colors.palette["kidnapper"]["500"],
+    bg = colors.palette["kidnapper"]["50"],
+    style = "bold",
+  },
+  ["@type.builtin"] = {
+    fg = colors.palette["black"]["400"],
+    bg = colors.palette["mantis"]["50"],
+  },
+
+  ["@function.method"] = {
+    fg = colors.palette["blue-chill"]["500"],
+    style = "bold",
+  },
+
+  ["@function"] = {
+    fg = colors.palette["blue-chill"]["500"],
+    style = "bold",
+  },
+
+  ["@function.builtin"] = {
+    fg = colors.palette["blue-chill"]["500"],
+    style = "bold",
+  },
+
+  ["DiagnosticUnderlineError"] = {
+    bg = colors.palette["contessa"]["700"],
+    fg = colors.palette["contessa"]["50"],
+  },
+
+  ["@function.method.call"] = {
+    fg = colors.palette["blue-chill"]["400"],
+    style = "bold,italic",
+    bg = colors.palette["blue-chill"]["50"],
+  },
+
+  ["@function.call"] = {
+    fg = colors.palette["blue-chill"]["400"],
+    style = "bold,italic",
+    bg = colors.palette["blue-chill"]["50"],
+  },
+}
+
+require("nightfox").setup({
+  options = {
+    transparent = true,
+    terminal_colors = true, -- Set terminal colors (vim.g.terminal_color_*) used in `:terminal`
+
+    styles = {            -- Style to be applied to different syntax groups
+      comments = "italic", -- Value is any valid attr-list value `:help attr-list`
+      conditionals = "italic",
+      constants = "italic",
+      functions = "NONE",
+      keywords = "italic",
+      numbers = "NONE",
+      operators = "NONE",
+      strings = "NONE",
+      types = "NONE",
+      variables = "NONE",
     },
-    -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
+    inverse = { -- Inverse highlight for different types
+      match_paren = false,
+      visual = false,
+      search = false,
+    },
+  },
+  groups = {
+    ["dayfox"] = hl_groups,
   },
 })
 
--- setup must be called before loading
-vim.cmd.colorscheme("catppuccin")
+vim.cmd("colorscheme dayfox")

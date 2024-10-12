@@ -203,6 +203,21 @@ M.palette = {
 		["900"] = "#811a39",
 		["950"] = "#48091a",
 	},
+
+	-- vim.cmd([[let @a = "^[0ca'[^[pf:<80><fd>5r=<80><fd>5j"]])
+	["purple-heart"] = {
+		["50"] = "#f3f1ff",
+		["100"] = "#ebe5ff",
+		["200"] = "#d9ceff",
+		["300"] = "#bea6ff",
+		["400"] = "#9f75ff",
+		["500"] = "#843dff",
+		["600"] = "#7916ff",
+		["700"] = "#6b04fd",
+		["800"] = "#5a03d5",
+		["900"] = "#4b05ad",
+		["950"] = "#2c0076",
+	},
 }
 
 -- source: https://www.reddit.com/r/GoodNotes/comments/s91wwi/zebra_sarasa_pen_color_hex_codes/

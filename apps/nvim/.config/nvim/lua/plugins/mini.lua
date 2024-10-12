@@ -1,7 +1,21 @@
+local lang_comments = {
+  gotmpl = "{{- /* %s */}}",
+  terraform = "# %s",
+  proto = "// %s",
+  kdl = "// %s",
+  gotexttmpl = "{{- /* %s */}}",
+  gohtmltmpl = "{{- /* %s */}}",
+}
+
 require("mini.comment").setup({
   options = {
     custom_commentstring = function()
-      return require("ts_context_commentstring.internal").calculate_commentstring() or vim.bo.commentstring
+      -- return require("ts_context_commentstring.internal").calculate_commentstring() or vim.bo.commentstring
+      local v = lang_comments[vim.bo.filetype]
+      if v ~= nil then
+        return v
+      end
+      return require("ts_context_commentstring").calculate_commentstring() or vim.bo.commentstring
     end,
   },
   mappings = {
@@ -113,7 +127,7 @@ function active_status_line()
     from_project_root = "📂 " .. from_project_root
   end
 
-   -- Usage of `MiniStatusline.combine_groups()` ensures highlighting and
+  -- Usage of `MiniStatusline.combine_groups()` ensures highlighting and
   -- correct padding with spaces between groups (accounts for 'missing'
   -- sections, etc.)
   return MiniStatusline.combine_groups({

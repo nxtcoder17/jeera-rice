@@ -43,3 +43,4 @@ require("aerial").setup({
   context_char = "▏",
   show_current_context = true,
 })
+

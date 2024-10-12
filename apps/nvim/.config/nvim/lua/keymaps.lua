@@ -37,19 +37,19 @@ vim.keymap.set("n", "s0", ":tabonly<CR>", opts)
 
 -- making splits
 vim.keymap.set("n", "scc", function()
-  local f = vim.fn.expand("%:p")
-  local from_project_root = f:sub(#vim.g.nxt.project_root_dir + 2)
+	local f = vim.fn.expand("%:p")
+	local from_project_root = f:sub(#vim.g.nxt.project_root_dir + 2)
 
-  local lineNr = vim.fn.line(".")
+	local lineNr = vim.fn.line(".")
 
-  vim.fn.setreg("+", from_project_root .. ":" .. lineNr)
+	vim.fn.setreg("+", from_project_root .. ":" .. lineNr)
 end, { noremap = true, silent = true, desc = "Copy file path, including line number to system clipboard" })
 
 vim.keymap.set("n", "scd", function()
-  local f = vim.fn.expand("%:p")
-  local from_project_root = f:sub(#vim.g.nxt.project_root_dir + 2)
+	local f = vim.fn.expand("%:p")
+	local from_project_root = f:sub(#vim.g.nxt.project_root_dir + 2)
 
-  vim.fn.setreg("+", vim.fs.dirname(from_project_root))
+	vim.fn.setreg("+", vim.fs.dirname(from_project_root))
 end, { noremap = true, silent = true, desc = "Copy directory of current buffer to system clipboard" })
 
 -- split resize
@@ -88,35 +88,73 @@ vim.keymap.set("n", "g*", "g*zz", opts)
 vim.keymap.set("n", "g#", "g#zz", opts)
 
 local function closeFloating()
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    if not vim.api.nvim_win_is_valid(win) then
-      return
-    end
-    local config = vim.api.nvim_win_get_config(win)
-    if config and config.relative ~= "" then
-      local _result, _err = pcall(function()
-        vim.api.nvim_win_close(win, true)
-      end)
-    end
-  end
+	for _, win in ipairs(vim.api.nvim_list_wins()) do
+		if not vim.api.nvim_win_is_valid(win) then
+			return
+		end
+		local config = vim.api.nvim_win_get_config(win)
+		if config and config.relative ~= "" then
+			local _result, _err = pcall(function()
+				vim.api.nvim_win_close(win, true)
+			end)
+		end
+	end
 end
 
 --vim.keymap.set("n", "<BS>", ":set nohls <CR>|:lua closeFloating() <CR>", opts)
 vim.keymap.set("n", "<BS>", function()
-  closeFloating()
-  vim.cmd("nohls")
+	closeFloating()
+	vim.cmd("nohls")
 end, opts)
 vim.keymap.set("n", "<Esc>", ":nohls<CR>")
 
 -- creating scratch files
 vim.api.nvim_create_user_command("Scratch", function()
-  vim.cmd("vne | setlocal buftype=nofile | setlocal bufhidden=hide | setlocal noswapfile")
+	vim.cmd("vne | setlocal buftype=nofile | setlocal bufhidden=hide | setlocal noswapfile")
 end, {})
 
 vim.api.nvim_create_user_command("LspClearLog", function()
-  -- /home/nxtcoder17/.local/state/nvim/lsp.log
-  os.execute(string.format("rm -rf %s/lsp.log", os.getenv("XDG_STATE_HOME") or os.getenv("HOME") .. "/.local/state"))
+	-- /home/nxtcoder17/.local/state/nvim/lsp.logt os.execute(string.format("rm -rf %s/lsp.log", os.getenv("XDG_STATE_HOME") or os.getenv("HOME") .. "/.local/state"))
 end, {})
 
 -- because rnvimr shits wqa
 vim.keymap.set("c", "wqa", "wa! | qa!", opts)
+
+-- local shift_ascii_codes = {
+-- 	["!"] = 33, -- Shift + 1
+-- 	['"'] = 34, -- Shift + 2
+-- 	["#"] = 35, -- Shift + 3
+-- 	["$"] = 36, -- Shift + 4
+-- 	["%"] = 37, -- Shift + 5
+-- 	["&"] = 38, -- Shift + 6
+-- 	["'"] = 39, -- Shift + 7
+-- 	["("] = 40, -- Shift + 8
+-- 	[")"] = 41, -- Shift + 9
+-- 	["*"] = 42, -- Shift + 0
+-- 	["+"] = 43, -- Shift + =
+-- 	[":"] = 58, -- Shift + ;
+-- 	["<"] = 60, -- Shift + ,
+-- 	[">"] = 62, -- Shift + .
+-- 	["?"] = 63, -- Shift + /
+-- 	["@"] = 64, -- Shift + 2 (on some keyboards)
+-- 	["^"] = 94, -- Shift + 6
+-- 	["_"] = 95, -- Shift + -
+-- 	["|"] = 124, -- Shift + \
+-- 	["~"] = 126, -- Shift + `
+-- }
+
+-- this is a hack to bind `Alt + Shift + {1-5}` to corresponding tabs in the editor, just for faster tab switching
+
+for key, value in pairs({ "!", "@", "#", "$", "%" }) do
+	vim.keymap.set({ "n", "v", "i" }, "<M-" .. value .. ">", function()
+		for tabidx, tabnr in ipairs(vim.api.nvim_list_tabpages()) do
+			if tabidx == key then
+				local win_id = vim.api.nvim_tabpage_get_win(tabnr)
+				vim.api.nvim_set_current_win(win_id)
+			end
+		end
+	end)
+end
+
+-- Example of accessing the ASCII code for Shift + 1
+-- print("ASCII code for Shift + 1 ( ! ): " .. shift_ascii_codes["!"]) -- Output: 33
