@@ -3,7 +3,6 @@ set -U fish_greeting
 function fish_mode_prompt
   # NOOP - Disable vim mode indicator
 end
-#
 
 # if test (command -v exa | wc -l) -gt 0
 if type -q exa
@@ -20,7 +19,6 @@ abbr nv 'nvim'
 alias k 'kubectl'
 alias k9s 'k9s --logoless --headless -c ns'
 alias cc 'xclip -sel clip'
-alias ls 'exa --icons -FG'
 alias rm 'rm -i'
 # alias task 'go-task'
 
@@ -31,6 +29,32 @@ alias hms 'home-manager switch'
 alias reload_fish "source ~/.config/fish/config.fish"
 
 set -x SYSTEM_THEME $(cat ~/.system-theme)
+
+# function reload_fish_theme --on-variable SYSTEM_UI_THEME
+function reload_fish_theme
+  if [ "$SYSTEM_THEME" = "" ]
+    set -gx SYSTEM_THEME $(cat ~/.system-theme)
+  end
+
+  # fish theme
+  [ "$SYSTEM_THEME" = "dark" ] && source "$__fish_config_dir/themes/kanagawa.fish"
+  [ "$SYSTEM_THEME" = "light" ] && source "$__fish_config_dir/themes/dayfox.fish"
+
+  # FZF theme
+  set -gx FZF_DEFAULT_OPTS '--border-label="" --preview-window="border-rounded" --prompt="> " --marker=">" --pointer="👉" --separator="─" --scrollbar="│"'
+
+  [ "$SYSTEM_THEME" = "dark" ] && set -x FZF_DEFAULT_OPTS "\
+    --color=bg+:#363a4f,spinner:#f4dbd6,hl:#ed8796 \
+    --color=fg:#cad3f5,header:#ed8796,info:#c6a0f6,pointer:#f4dbd6 \
+    --color=marker:#f4dbd6,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796" $FZF_DEFAULT_OPTS
+
+  [ "$SYSTEM_THEME" = "light" ] && set -x FZF_DEFAULT_OPTS '--color=fg:#252424,fg+:#211b1b,bg+:#f0f0f0 --color=hl:#2fb891,hl+:#1f9f7a,info:#afaf87,marker:#1f9f7a --color=prompt:#1f9f7a,spinner:#2e3993,pointer:#2e3993,header:#87afaf --color=gutter:#ffffff,border:#262626,label:#aeaeae,query:#2e3993' $FZF_DEFAULT_OPTS
+
+  # bat theme
+  set -gx BAT_STYLE "numbers"
+  [ "$SYSTEM_THEME" = "dark" ] && set -gx BAT_THEME "OneHalfDark"
+  [ "$SYSTEM_THEME" = "light" ] && set -gx BAT_THEME "OneHalfLight"
+end
 
 function sudo  --description "wraps sudo but tries to preserve PATH, as nix installed binaries are not in SUDO user PATH"
   set cmd $argv[1]
@@ -87,55 +111,26 @@ if ! functions -q fish_prompt_original
   functions -c fish_prompt fish_prompt_original
 end
 
-# echo "snippet inspired from kubie"
 function ck --description "choose-kubeconfig"
   set dir $HOME/.kube/configs
 
   # need to do command grouping for chaining 2 separate commands into one redirection
   # read here https://unix.stackexchange.com/questions/223835/capturing-output-redirection-of-commands-chained-by
-  set filter_cmd 'begin; echo "no-selection" && command ls ~/.kube/configs ; end | fzf'
+  # set chosen_kubeconfig (begin; echo "no-selection" && command ls ~/.kube/configs ; end | fzf --reverse --prompt "choose kubeconfig > ")
+  set chosen_kubeconfig (command ls ~/.kube/configs | fzf --reverse --prompt "choose kubeconfig > ")
 
-  set -gx TMP_KUBECONFIG_FILE (eval $filter_cmd)
-
-  set -gx is_valid_kubeconfig "true"
-
-  if [ -z "$TMP_KUBECONFIG_FILE" -o "$TMP_KUBECONFIG_FILE" = "no-selection" ]
-    set -gx is_valid_kubeconfig ""
-  end
-
-  # [ -z "$TMP_KUBECONFIG_FILE" ] && set -gx is_valid_kubeconfig ""
-  # [ "$TMP_KUBECONFIG_FILE" = "no-selection" ] && set -gx is_valid_kubeconfig ""
-
-  if [ -n "$is_valid_kubeconfig" ]
-    set -gx KUBECONFIG "$dir/$TMP_KUBECONFIG_FILE"
-  else
+  if [ -z "$chosen_kubeconfig" ]
     set -e KUBECONFIG
+    return
   end
-
-  # functions --copy fish_prompt fish_prompt_original
-  function fish_prompt
-    set -l original (fish_prompt_original)
-
-    handle_nix_shell
-
-    # printf '%s ' (string unescape {prompt})
-    if [ -n "$is_valid_kubeconfig" ]
-      set kubeconfig_color "#8DAB35"
-      [ "$SYSTEM_THEME" = "light" ] && set kubeconfig_color "#5582a1"
-      printf '%s󱃾 %s%s ' (set_color -o $kubeconfig_color) $TMP_KUBECONFIG_FILE $hydro_color_normal
-    end
-
-    # Due to the way fish is managing newlines in
-    # process substitions, each line needs to be printed separately
-    # to mirror the existing output. For more details,
-    # see https://github.com/fish-shell/fish-shell/issues/159.
-    for line in $original
-        echo -e $line
-    end
-  end
+  set -gx KUBECONFIG ~/.kube/configs/$chosen_kubeconfig
 end
 
+set -g fish_prompt_pwd_full_dirs 5
+
 function fish_prompt
+  reload_fish_theme
+
   if [ $EUID -eq 0 ]
       set --global hydro_color_prompt "#bf4b52"
       set --global hydro_symbol_prompt ' √π'
@@ -144,25 +139,36 @@ function fish_prompt
       set --global hydro_symbol_prompt "😎"
       if [ -n "$IN_NIX_SHELL" ]
         set --global hydro_color_prompt "#49ebc2"
-        set --global hydro_symbol_prompt ""
+        [ "$SYSTEM_THEME" = "light" ] && set --global hydro_color_prompt "#35ab8e"
+        set --global hydro_symbol_prompt " "
       end
 
       # check if fish is in private mode
       if [ ! -z "$fish_private_mode" ]
-        set --global hydro_symbol_prompt 🕵️
+        # set --global hydro_color_prompt "#e0da82"
+        set --global hydro_symbol_prompt "🥷"
       end
 
       # check if fish is running in nix shell/flake environment
   end
 
-  set -l original (fish_prompt_original)
+  set -g __fish_git_prompt_showupstream auto
 
-  # handle_nix_shell
-
-  # see https://github.com/fish-shell/fish-shell/issues/159.
-  for line in $original
-    echo -e $line
+  set nix_color "#8DAB35"
+  [ "$SYSTEM_THEME" = "light" ] && set nix_color "#35ab8e"
+  if [ -n "$IN_NIX_SHELL" ]
+    printf "%sNIX%s " (set_color $nix_color) $hydro_color_normal
   end
+
+  if [ -n "$KUBECONFIG" ]
+    set kubeconfig_color "#8DAB35"
+    printf '%s󱃾 %s%s ' (set_color -o $kubeconfig_color) (basename $KUBECONFIG) $hydro_color_normal
+  end
+
+  set -g color_pwd "#2fbaf5"
+  [ "$SYSTEM_THEME" = "light" ] && set -g color_pwd "#2F5BA2"
+  printf "%s%s%s %s\n" (set_color $color_pwd) (prompt_pwd) (set_color $hydro_color_normal) (fish_git_prompt)
+  printf "%s%s " (set_color $hydro_color_prompt) $hydro_symbol_prompt
 end
 
 set -gx EDITOR nvim
@@ -198,7 +204,7 @@ set -gx _JAVA_AWT_WM_NONREPARENTING "1"
 ### zoxide exclude DIRS
 set -gx _ZO_EXCLUDE_DIRS "$HOME:$HOME/workspace/kloudlite/archived/.*"
 
-set -gx FZF_DEFAULT_COMMAND "rg --files --hidden --follow --smart-case"
+set -gx FZF_DEFAULT_COMMAND "rg --files --reverse --hidden --follow --smart-case"
 
 set -gx GPG_TTY (tty) # to make GPG work with TTY input box
 
@@ -295,24 +301,3 @@ zoxide init fish | source
 # bun
 set --export BUN_INSTALL "$XDG_DATA_HOME/bun"
 set --export PATH $BUN_INSTALL/bin $PATH
-
-set -x SYSTEM_THEME $(cat ~/.system-theme)
-
-# fish theme
-[ "$SYSTEM_THEME" = "dark" ] && source "$__fish_config_dir/themes/kanagawa.fish"
-[ "$SYSTEM_THEME" = "light" ] && source "$__fish_config_dir/themes/dayfox.fish"
-
-# FZF theme
-set -x FZF_DEFAULT_OPTS '--border-label="" --preview-window="border-rounded" --prompt="> " --marker=">" --pointer="👉" --separator="─" --scrollbar="│"'
-
-[ "$SYSTEM_THEME" = "dark" ] && set -x FZF_DEFAULT_OPTS "\
-  --color=bg+:#363a4f,spinner:#f4dbd6,hl:#ed8796 \
-  --color=fg:#cad3f5,header:#ed8796,info:#c6a0f6,pointer:#f4dbd6 \
-  --color=marker:#f4dbd6,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796" $FZF_DEFAULT_OPTS
-
-[ "$SYSTEM_THEME" = "light" ] && set -x FZF_DEFAULT_OPTS '--color=fg:#252424,fg+:#211b1b,bg+:#f0f0f0 --color=hl:#2fb891,hl+:#1f9f7a,info:#afaf87,marker:#1f9f7a --color=prompt:#1f9f7a,spinner:#2e3993,pointer:#2e3993,header:#87afaf --color=gutter:#ffffff,border:#262626,label:#aeaeae,query:#2e3993' $FZF_DEFAULT_OPTS
-
-# bat theme
-set -x BAT_STYLE "numbers"
-[ "$SYSTEM_THEME" = "dark" ] && set -x BAT_THEME "OneHalfDark"
-[ "$SYSTEM_THEME" = "light" ] && set -x BAT_THEME "OneHalfLight"

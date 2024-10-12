@@ -1,3 +1,4 @@
+# [source](https://github.com/catppuccin/k9s/blob/main/dist/catppuccin-latte-transparent.yaml)
 k9s:
   body:
     fgColor: '#4c4f69'
@@ -35,15 +36,13 @@ k9s:
       newColor: '#1e66f5'
       modifyColor: '#7287fd'
       addColor: '#40a02b'
-
-      pendingColor: '#cfbc6b'
-      errorColor: '#9e5968'
-
+      pendingColor: '#fe640b'
+      errorColor: '#d20f39'
       highlightColor: '#04a5e5'
       killColor: '#8839ef'
       completedColor: '#9ca0b0'
   info:
-    fgColor: '#9e5968'
+    fgColor: '#fe640b'
     sectionColor: '#4c4f69'
   views:
     table:

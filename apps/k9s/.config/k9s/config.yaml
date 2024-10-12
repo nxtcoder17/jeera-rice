@@ -1,5 +1,5 @@
 k9s:
-  liveViewAutoRefresh: false
+  liveViewAutoRefresh: true
   screenDumpDir: /var/home/nxtcoder17/.local/state/k9s/screen-dumps
   refreshRate: 2
   maxConnRetry: 5
@@ -15,6 +15,7 @@ k9s:
     # skin: nightfox
     # skin: everforest-light
     skin: light-or-dark
+    # skin: catppuccin-latte
   skipLatestRevCheck: false
   disablePodCounting: false
   shellPod:
@@ -29,7 +30,7 @@ k9s:
       namespaces: []
       labels: {}
   logger:
-    tail: 100
+    tail: 10000
     buffer: 50000
     sinceSeconds: -1
     fullScreen: false

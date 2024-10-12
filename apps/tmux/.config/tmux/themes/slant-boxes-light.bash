@@ -1,12 +1,10 @@
+# vim: set ft=bash:
 colorPrimary="#cbdbc5"
 colorSecondary="#e1e5eb"
 colorPrimaryText="#4c5c47"
 colorSecondaryText="#4c5c47"
 
 colorBackground="$colorSecondary"
-
-colorWhite="#ffffff"
-colorBlack="#000000"
 
 colorBorder="#698e91"
 

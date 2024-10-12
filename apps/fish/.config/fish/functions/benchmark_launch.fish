@@ -1,3 +1,3 @@
 function benchmark_launch
-  hyperfine 'fish -i -c "exit"'
+  hyperfine --warmup 17 'fish -i -c "exit"'
 end

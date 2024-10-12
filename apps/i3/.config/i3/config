@@ -149,8 +149,8 @@ bindsym XF86AudioMute exec $noid pactl set-sink-mute 0 toggle
 set $minorInc $noid pamixer --allow-boost -i 5
 set $majorInc $noid pamixer --allow-boost -i 10
 
-bindsym $alt + $plus							 exec $minorInc
-bindsym $alt + $$shift + $plus     exec $majorInc
+bindsym $alt + $plus							exec $minorInc
+bindsym $alt + $shift + $plus     exec $majorInc
 
 # Increasing volume vars
 set $minorDec $noid pamixer --allow-boost -d 5
@@ -173,13 +173,14 @@ bindsym $mod + $ctrl + $return exec $noid $term2
 set $rofiOpts -matching fuzzy -sort-method fzf
 
 # -> Rofi combined run:window
-bindsym $mod + d exec $noid rofi -show combi $rofiOpts
+# bindsym $mod + d exec $noid rofi -show combi $rofiOpts -width 700 -font "Serious Shanns 12"
+bindsym $mod + d exec $noid rofi -show combi -matching fuzzy -sort-method fzf -width 700
+
+# -> Executing Rofi Run Window
+bindsym $mod + $shift + d exec $noid rofi -show drun $rofiOpts -lines 5 -eh 1 -width 600 -location 0 -hide-scrollbar -bw 4 -opacity 100 -bc "#283e26" -bg "#1f1513" -fg "$ffffff" -hlbg "#283e26" -hlfg "#ffffff" -bgalt "#527d41" -separator-style "solid"
 
 # dunstctl
 bindsym $mod + $bs exec $noid dunstctl close
-
-# -> Executing Rofi Run Window
-bindsym $mod + $shift + d exec $noid rofi -show drun $rofiOpts -lines 5 -eh 1 -width 600 -location 0 -hide-scrollbar -bw 4 -opacity 100 -bc "#283e26" -bg "#1f1513" -fg "$ffffff" -hlbg "#283e26" -hlfg "#ffffff" -bgalt "#527d41" -separator-style "solid" -padding 50 
 
 # bindsym $alt + i		exec $noid rofi -modi 'chrome:chrome-switch-tabs' -show chrome
 
@@ -228,17 +229,13 @@ exec $noid blueman-applet
 # TouchPad: Tap To Click
 exec $noid xinput set-prop 'Synaptics TM3276-022' 'libinput Tapping Enabled' 1
 
+# i3 auto layout (https://github.com/chmln/i3-auto-layout)
+exec_always $noid i3-auto-layout
+
 # Bar Configuration
 
 # colors
 set $transparent    #00000000
-
-set $bg "#2e4270"
-# set $bg2 "#152a47"
-set $bg2 "#eff1f5"
-set $fg "#86bd8e"
-set $fg2 "#abd0d9"
-set $bg3 "#c791ab"
 
 # bar {
 # 	status_command i3blocks
@@ -291,6 +288,7 @@ for_window [class="firefox" title="Firefox — Sharing Indicator"] floating enab
 for_window [class="firefox" title="Pushbullet – Mozilla Firefox"] floating enable
 for_window [class="firefox" title="About Mozilla Firefox"] floating enable
 for_window [title="Picture-in-Picture"] floating enable
+for_window [instance="copyq"] floating enable, resize set 1000 600, border pixel
 
 # ScratchPad
 bindsym $mod+$shift+BackSpace move scratchpad

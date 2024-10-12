@@ -2,7 +2,7 @@
 
 { config, pkgs, nixGLWrap, ... }:
 
-let 
+let
   packages.xorg = with pkgs; [
     xorg.xrandr
     xorg.xset
@@ -16,7 +16,7 @@ let
 
     xclip
     xdragon
-  ]; 
+  ];
 
   packages.i3wm = with pkgs; [
     i3
@@ -39,6 +39,7 @@ let
 
     kitty
     networkmanagerapplet
+    networkmanager
 
     keyd
     waybar
@@ -52,8 +53,8 @@ let
     mpv
   ];
 
-  packages.kubernetes = with pkgs; [ 
-    kubernetes-helm 
+  packages.kubernetes = with pkgs; [
+    kubernetes-helm
     kubectl
     k9s
 
@@ -66,7 +67,7 @@ let
       fi
       ~/.local/bin/k3d "$@"
     '')
-    
+
     nerdctl
     rootlesskit
     buildkit
@@ -78,20 +79,49 @@ let
     awscli2
     lens
 
-    #google-cloud-sdk
-    #google-cloud-sdk-gce
-    (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin])
+    (google-cloud-sdk.withExtraComponents [ google-cloud-sdk.components.gke-gcloud-auth-plugin ])
+    azure-cli
   ];
 
   packages.cli_workflow = with pkgs; [
+    (writeShellScriptBin "nvim" ''
+      #! /usr/bin/env bash
+      dest=$HOME/.local/tars.uz/nvim
+      if ! command -v $dest/bin/nvim  &> /dev/null; then
+      	rm -rf $dest
+        echo "Downloading neovim..."
+        dir=$(mktemp -d)
+        trap "rm -rf $dir" EXIT
+        pushd $dir
+        curl -L0 https://github.com/neovim/neovim/releases/download/v0.10.2/nvim-linux64.tar.gz > nvim.tar.gz
+        tar xf nvim.tar.gz
+        rm nvim.tar.gz
+        mv nvim-linux64 $dest
+        popd
+      fi
+       $dest/bin/nvim "$@"
+    '')
+
+    (writeShellScriptBin "fwatcher" ''
+      #! /usr/bin/env bash
+      fwatcher_bin=$HOME/.local/bin/fwatcher
+      if ! command -v $fwatcher_bin  &> /dev/null; then
+        echo "Downloading fwatcher..."
+        curl -L0 https://github.com/nxtcoder17/fwatcher/releases/latest/download/fwatcher-linux-amd64 > $fwatcher_bin
+        chmod +x $fwatcher_bin
+      fi
+       $fwatcher_bin "$@"
+    '')
+
     # shells
     fish
     fishPlugins.autopair
-    fishPlugins.hydro
+    # fishPlugins.hydro
 
     gitstatus
     bash
     readline
+    ncdu
 
     # navigation
     zoxide
@@ -135,6 +165,8 @@ let
 
     # database cli tools
     mongosh
+    mycli
+    redli
 
     # global programming languages support 
     nodejs-slim
@@ -151,19 +183,55 @@ let
     lz4
     lrzip
 
-    cloudflare-warp
+    # cloudflare-warp
     nix-serve-ng
     hyperfine
+
+    # pdf
+    pdftk
   ];
 
   packages.gui_apps = with pkgs; [
     telegram-desktop
     google-chrome
-    qutebrowser
     screenkey
 
-    vivaldi
+    # vivaldi
     vivaldi-ffmpeg-codecs
+
+    freshfetch
+
+    fontforge-gtk
+    vlc
+    zathura
+
+    copyq
+
+    # zed-editor
+    (writeShellScriptBin "zed" ''
+      #! /usr/bin/env bash
+      if [ ! -x "$HOME/.local/bin/zed" ]; then
+        echo "Downloading zed..."
+        dir="$HOME/.local/tars.uz"
+        echo mkdir -p $dir
+        mkdir -p $dir
+        curl -L0 https://github.com/zed-industries/zed/releases/download/v0.145.1-pre/zed-linux-x86_64.tar.gz > $dir/zed.tar.gz
+        ls -al $dir
+        tar xf $dir/zed.tar.gz -C $dir
+        ln -sf $dir/zed-preview.app/bin/zed $HOME/.local/bin/zed
+      fi
+      $HOME/.local/bin/zed "$@"
+    '')
+
+    (writeShellScriptBin "discord" ''
+      #! /usr/bin/env bash
+      name="discord"
+      if ! flatpak list | awk -F \t '{print $2}' | grep -i $name 2>/dev/null; then
+        echo "Downloading $name"
+        flatpak install flathub com.discordapp.Discord
+      fi
+      flatpak run com.discordapp.Discord "$@"
+    '')
   ];
 in
 {
@@ -208,13 +276,13 @@ in
     # blackbox-terminal
     cargo
     glibcLocales
-  ] 
-    ++ packages.xorg
-    ++ packages.i3wm
-    ++ packages.audio_video
-    ++ packages.cli_workflow
-    ++ packages.kubernetes
-    ++ packages.gui_apps
+  ]
+  ++ packages.xorg
+  ++ packages.i3wm
+  ++ packages.audio_video
+  ++ packages.cli_workflow
+  ++ packages.kubernetes
+  ++ packages.gui_apps
   ;
 
   programs.direnv = {
@@ -250,7 +318,7 @@ in
   #  /etc/profiles/per-user/nxtcoder17/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    EDITOR = "nvim"; 
+    EDITOR = "nvim";
     TMUX_SHELL = "${pkgs.fish}";
     # TMUX_SHELL = "fish";
     #DIRENV_LOG_FORMAT = "\033[2mdirenv: %%s\033[0m"; # source: https://ianthehenry.com/posts/how-to-learn-nix/nix-direnv/

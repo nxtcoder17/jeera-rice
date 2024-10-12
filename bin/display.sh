@@ -12,21 +12,21 @@ cmd=$1
 shift 1
 case $cmd in
 only-monitor)
-	xrandr --output $monitor --mode $monitorMode --auto && xrandr --output $laptop --off
-	# xrandr --output $monitor --mode $monitorMode --auto && xrandr --output $monitor --primary --left-of "$laptop"
-	[ -f $HOME/.fehbg ] && source $HOME/.fehbg
-	;;
+  xrandr --output $monitor --mode $monitorMode --auto --primary && xrandr --output $laptop --off
+  # xrandr --output $monitor --mode $monitorMode --auto && xrandr --output $monitor --primary --left-of "$laptop"
+  [ -f "$HOME"/.fehbg ] && source $HOME/.fehbg
+  ;;
 only-laptop)
-	xrandr --output $laptop --auto && xrandr --output $monitor --off
-	[ -f $HOME/.fehbg ] && source $HOME/.fehbg
-	;;
+  xrandr --output $laptop --auto && xrandr --output $monitor --off
+  [ -f "$HOME"/.fehbg ] && source $HOME/.fehbg
+  ;;
 left-right)
-	xrandr --output $laptop --auto
-	xrandr --output $monitor --left-of $laptop --mode $monitorMode --auto
-	[ -f $HOME/.fehbg ] && source $HOME/.fehbg
-	;;
+  xrandr --output $laptop --auto
+  xrandr --output $monitor --left-of $laptop --mode $monitorMode --auto
+  [ -f $HOME/.fehbg ] && source $HOME/.fehbg
+  ;;
 *)
-	item=$(echo -e "only-monitor\nonly-laptop\nleft-right" | dmenu)
-	eval $0 $item
-	;;
+  item=$(echo -e "only-monitor\nonly-laptop\nleft-right" | dmenu)
+  eval $0 $item
+  ;;
 esac

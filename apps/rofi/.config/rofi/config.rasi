@@ -1,3 +1,19 @@
-//@theme "/home/nxtcoder17/.local/share/rofi/themes/nord.rasi"
-//@theme "/nix/store/ypaqwhmgj4xfmwd68rj0227spky52mhw-rofi-1.7.5/share/rofi/themes/paper-float.rasi"
-@theme "/nix/store/ypaqwhmgj4xfmwd68rj0227spky52mhw-rofi-1.7.5/share/rofi/themes/Paper.rasi"
+configuration{
+    modi: "run,drun,window";
+    icon-theme: "Oranchelo";
+    show-icons: false;
+    terminal: "kitty";
+    drun-display-format: "{icon} {name}";
+    location: 0;
+    disable-history: false;
+    hide-scrollbar: true;
+    display-drun: "   Apps ";
+    display-run: "   Run ";
+    display-window: " 󰕰  Window";
+    display-combi: "󰨝 Combi";
+    display-Network: " 󰤨  Network";
+    sidebar-mode: false;
+    font: "Serious Shanns 16";
+}
+
+@theme "catppuccin-mocha"

@@ -1,4 +1,7 @@
+# vim: set ft=conf:
+
 exit: C-e
+hint_activation_key: M-x
 history_activation_key: M-;
 
 cursor_color: #27f2db
@@ -11,7 +14,14 @@ scroll_down: J
 scroll_up: K
 
 # hint_bgcolor: #8aa7ab
-hint_fgcolor: #38e8ff
-hint_font: "Comic Code Ligatures Medium"
+# hint_fgcolor: #38e8ff
 
+hint_bgcolor: #e6f3f5
+hint_fgcolor: #3f4445
 
+# --fg: ; --bg: #d5f0f0;
+hint_bgcolor: #d5f0f0
+hint_fgcolor: #244242
+# hint_font: "Comic Code Ligatures Medium"
+hint_font: "Serious Shanns Bold"
+hint_size: 20
