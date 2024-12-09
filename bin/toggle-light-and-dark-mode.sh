@@ -22,11 +22,13 @@ if [ "$theme" == "light" ]; then
 
   # change vim theme
   # echo 'require("plugins.colorschemes.nightfox.dayfox")' >~/.config/nvim/lua/plugins/colorschemes/nightfox/init.lua
-  echo 'vim.opt.background = "light"' >~/.config/nvim/lua/theme.lua
+  # echo 'vim.opt.background = "light"' >~/.config/nvim/lua/theme.lua
+
+  # nvim --cmd "set background=light" "+lua ReloadColorscheme()" "+exit"
 
   # change wallpaper
   # feh --bg-tile ~/me/jeera-rice/wallpapers/zephyrus.png
-  feh --bg-tile ~/me/jeera-rice/wallpapers/black-and-white-river.jpeg
+  # feh --bg-tile ~/me/jeera-rice/wallpapers/black-and-white-river.jpeg
 
   # change kitty background
   ln -sf ~/me/jeera-rice/wallpapers/paper-backgrounds/white-paper.png ~/.cache/kitty-background.png
@@ -53,7 +55,9 @@ if [ "$theme" == "dark" ]; then
 
   # change vim theme
   # echo 'require("plugins.colorschemes.nightfox.nightfox")' >~/.config/nvim/lua/plugins/colorschemes/nightfox/init.lua
-  echo 'vim.opt.background = "dark"' >~/.config/nvim/lua/theme.lua
+  # echo 'vim.opt.background = "dark"' >~/.config/nvim/lua/theme.lua
+
+  # nvim --cmd "set background=dark" "+lua ReloadColorscheme()" "+exit"
 
   # change wallpaper
   feh --bg-tile ~/me/jeera-rice/wallpapers/firewatch-dark.jpg

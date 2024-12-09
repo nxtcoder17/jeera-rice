@@ -1,3 +1,4 @@
+" vim: set ft=vim
 " hi! Folded guibg=#273a57
 " hi! LineNr guifg='#587d54' guibg='0c2b3b'
 " hi! Comment guifg='#61768c' cterm=underline
@@ -12,5 +13,5 @@
 " echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')  
 " endfunction
 
-"hi! Normal guibg=#252626
+" hi! Normal guibg=#252626
 

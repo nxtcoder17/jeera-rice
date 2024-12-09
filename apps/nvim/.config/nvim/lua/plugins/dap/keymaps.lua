@@ -1,5 +1,4 @@
 local dap = require("dap")
-local Utils = require("functions.utils")
 
 -- DAP defaults
 
@@ -12,40 +11,38 @@ _G.dap_sessions = {}
 vim.t.current_dap_repl_dir = nil
 
 dap.listeners.before["event_initialized"]["me"] = function()
-  dap.repl.toggle({}, "80vsplit")
+	dap.repl.toggle({}, "80vsplit")
 end
 
 -- current dap session id, will be stored in `vim.t.dap_session`
 dap.listeners.after["event_initialized"]["me"] = function()
-  vim.keymap.set("n", "s,", dap.step_over, { silent = true })
-  vim.keymap.set("n", "sd,", dap.run_to_cursor, { silent = true })
-  vim.keymap.set("n", "sds", dap.continue, { silent = true })
-  -- vim.t.dap_session = dap.session()
-  -- dap.repl.toggle({}, "80vsplit")
-  dap_sessions[vim.fn.getcwd()] = dap.session()
-  vim.t.current_dap_repl_dir = vim.fn.getcwd()
-  dap.repl.toggle({}, "80vsplit")
+	vim.keymap.set("n", "s,", dap.step_over, { silent = true })
+	vim.keymap.set("n", "sd,", dap.run_to_cursor, { silent = true })
+	vim.keymap.set("n", "sds", dap.continue, { silent = true })
+	-- vim.t.dap_session = dap.session()
+	-- dap.repl.toggle({}, "80vsplit")
+	dap_sessions[vim.fn.getcwd()] = dap.session()
+	vim.t.current_dap_repl_dir = vim.fn.getcwd()
+	dap.repl.toggle({}, "80vsplit")
 end
 
 dap.listeners.after["event_terminated"]["me"] = function()
-  vim.keymap.set("n", "s,", "<nop>", { silent = true })
-  vim.keymap.set("n", "sd,", "<nop>", { silent = true })
-  vim.keymap.set("n", "sds", "<nop>", { silent = true })
-  dap_sessions[vim.fn.getcwd()] = nil
+	vim.keymap.set("n", "s,", "<nop>", { silent = true })
+	vim.keymap.set("n", "sd,", "<nop>", { silent = true })
+	vim.keymap.set("n", "sds", "<nop>", { silent = true })
+	dap_sessions[vim.fn.getcwd()] = nil
 end
-
-local logger = Utils.new_logger("dap-session-keymaps")
 
 vim.keymap.set("n", "sd", "<nop>")
 
 -- vim.keymap.set("n", "sdk", require("dap.ui.widgets").hover, { silent = true })
 
 vim.keymap.set("n", "sdk", function()
-  require("dapui").eval(vim.fn.expand("<cexpr>"), { enter = true })
+	require("dapui").eval(vim.fn.expand("<cexpr>"), { enter = true })
 end)
 
 vim.keymap.set("n", "sde", function()
-  require("dapui").float_element("watches", { enter = true })
+	require("dapui").float_element("watches", { enter = true })
 end, { silent = true })
 
 -- vim.keymap.set("v", "sde", function()
@@ -58,21 +55,21 @@ end, { silent = true })
 vim.keymap.set("n", "sdb", dap.toggle_breakpoint, { silent = true, desc = "toggles a breakpoint" })
 
 vim.keymap.set("n", "sdc", function()
-  vim.ui.input({
-    prompt = "Breakpoint Condition > ",
-    default = "",
-  }, function(input)
-    dap.set_breakpoint(input)
-  end)
+	vim.ui.input({
+		prompt = "Breakpoint Condition > ",
+		default = "",
+	}, function(input)
+		dap.set_breakpoint(input)
+	end)
 end, { silent = true, desc = "conditional breakpoint" })
 
 vim.keymap.set("n", "sdl", function()
-  vim.ui.input({
-    prompt = "Logpoint Message > ",
-    default = "",
-  }, function(input)
-    dap.set_breakpoint(nil, nil, input)
-  end)
+	vim.ui.input({
+		prompt = "Logpoint Message > ",
+		default = "",
+	}, function(input)
+		dap.set_breakpoint(nil, nil, input)
+	end)
 end, { silent = true, desc = "logpoint" })
 
 -- vim.keymap.set("n", "sdr", function()
@@ -91,25 +88,26 @@ end, { silent = true, desc = "logpoint" })
 -- end)
 
 vim.keymap.set("n", "sdr", function()
-  require("dapui").toggle()
+	-- require("dapui").toggle()
+	dap.repl.toggle({}, "80vsplit")
 end)
 
 vim.keymap.set("n", "sdR", function()
-  local session = dap_sessions[vim.fn.getcwd()]
-  if session ~= nil then
-    dap.set_session(session)
-    dap.terminate()
-    dap.run_last()
-    return
-  end
+	local session = dap_sessions[vim.fn.getcwd()]
+	if session ~= nil then
+		dap.set_session(session)
+		dap.terminate()
+		dap.run_last()
+		return
+	end
 
-  vim.notify("No previous session found", vim.log.levels.WARN)
+	vim.notify("No previous session found", vim.log.levels.WARN)
 end)
 
 vim.api.nvim_create_user_command("DapKillSession", function()
-  local session = dap_sessions[vim.fn.getcwd()]
-  if session ~= nil then
-    dap.set_session(session)
-    dap.terminate()
-  end
+	local session = dap_sessions[vim.fn.getcwd()]
+	if session ~= nil then
+		dap.set_session(session)
+		dap.terminate()
+	end
 end, { nargs = 0 })

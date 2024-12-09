@@ -1,4 +1,4 @@
-vim.treesitter.set_query(
+vim.treesitter.query.set(
   "go",
   "folds",
   [[

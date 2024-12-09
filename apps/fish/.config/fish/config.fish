@@ -16,9 +16,20 @@ abbr gss 'git status -s'
 abbr gsw 'git pull && git switch'
 abbr nv 'nvim'
 
+alias vi 'nvim'
+alias vim 'nvim'
 alias k 'kubectl'
 alias k9s 'k9s --logoless --headless -c ns'
-alias cc 'xclip -sel clip'
+alias cat 'bat'
+
+function cc --description "copies stdout to system clipboard"
+  if test "$XDG_BACKEND" = "wayland"
+    wl-copy
+    return
+  end
+  xclip -sel clip
+end
+
 alias rm 'rm -i'
 # alias task 'go-task'
 
@@ -40,6 +51,9 @@ function reload_fish_theme
   [ "$SYSTEM_THEME" = "dark" ] && source "$__fish_config_dir/themes/kanagawa.fish"
   [ "$SYSTEM_THEME" = "light" ] && source "$__fish_config_dir/themes/dayfox.fish"
 
+  # theming for github.com/nxtcoder17/runfile
+  set -gx RUNFILE_THEME $SYSTEM_THEME
+
   # FZF theme
   set -gx FZF_DEFAULT_OPTS '--border-label="" --preview-window="border-rounded" --prompt="> " --marker=">" --pointer="👉" --separator="─" --scrollbar="│"'
 
@@ -53,22 +67,26 @@ function reload_fish_theme
   # bat theme
   set -gx BAT_STYLE "numbers"
   [ "$SYSTEM_THEME" = "dark" ] && set -gx BAT_THEME "OneHalfDark"
-  [ "$SYSTEM_THEME" = "light" ] && set -gx BAT_THEME "OneHalfLight"
+  [ "$SYSTEM_THEME" = "light" ] && set -gx BAT_THEME "gruvbox-light"
 end
 
 function sudo  --description "wraps sudo but tries to preserve PATH, as nix installed binaries are not in SUDO user PATH"
-  set cmd $argv[1]
-  if [ -z "$cmd" ]
-    command sudo $argv
-    return
-  end
+  # echo "path: $PATH"
+  command sudo -E env "PATH=$PATH" $argv
 
-  if string match -- '-*' $cmd 2>&1 > /dev/null
-    command sudo --preserve-env=PATH $argv
-    return
-  end
-
-  command sudo --preserve-env=PATH env $(which $cmd) $argv[2..-1]
+  # set cmd $argv[1]
+  # if [ -z "$cmd" ]
+  #   command sudo -E PATH=$PATH $argv
+  #   return
+  # end
+  #
+  # if string match -- '-*' $cmd 2>&1 > /dev/null
+  #   command sudo -E PATH=$PATH  $argv
+  #   return
+  # end
+  #
+  # # command sudo env $(which $cmd) $argv[2..-1]
+  # command sudo -E PATH=$PATH $argv 
 end
 
 function direnv --description "direnv hook"
@@ -167,6 +185,9 @@ function fish_prompt
 
   set -g color_pwd "#2fbaf5"
   [ "$SYSTEM_THEME" = "light" ] && set -g color_pwd "#2F5BA2"
+  if [ -n "$KL_SHELL" ]
+    printf "%s(kl shell) %s" (set_color $color_pwd) (set_color $hydro_color_normal)
+  end
   printf "%s%s%s %s\n" (set_color $color_pwd) (prompt_pwd) (set_color $hydro_color_normal) (fish_git_prompt)
   printf "%s%s " (set_color $hydro_color_prompt) $hydro_symbol_prompt
 end
@@ -175,6 +196,7 @@ set -gx EDITOR nvim
 set -gx PAGER less
 set -gx EMAIL "nxtcoder17@gmail.com"
 set -gx BROWSER "firefox"
+set -gx DIRENV_LOG_FORMAT ""
 
 set -gx XDG_CONFIG_HOME "$HOME/.config"
 set -gx XDG_CACHE_HOME "$HOME/.cache"

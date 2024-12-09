@@ -2,7 +2,7 @@
 --   commented = true,
 -- })
 
-local dap, dapui = require("dap"), require("dapui")
+local dap, dapui = Require("dap"), Require("dapui")
 dapui.setup({
 	layouts = {
 		{
@@ -28,8 +28,8 @@ dapui.setup({
 })
 
 dap.listeners.after.event_initialized["dapui_config"] = function()
-	-- dap.repl.toggle({}, "80vsplit")
-	dapui.open()
+	dap.repl.toggle({}, "80vsplit")
+	-- dapui.open()
 end
 
 dap.listeners.before.event_terminated["dapui_config"] = function()

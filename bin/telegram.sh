@@ -1,0 +1,1 @@
+MESA_LOADER_DRIVER_OVERRIDE=kms_swrast telegram-desktop

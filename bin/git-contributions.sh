@@ -9,8 +9,8 @@ username=$1
 #            {print "files changed", files, "lines inserted:", inserted, "lines deleted:", deleted}'
 #
 
-git log --shortstat --author $username \
-    | grep "files\? changed" \
-    | awk '{files+=$1; inserted+=$4; deleted+=$6} END \
+# git log --shortstat --author $username |
+git log --shortstat --email $username |
+  grep "files\? changed" |
+  awk '{files+=$1; inserted+=$4; deleted+=$6} END \
            {print "[", files, "files changed ] [", inserted ,"lines inserted ] [",  deleted, "lines deleted ]"}'
-

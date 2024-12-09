@@ -1,0 +1,12 @@
+[Unit]
+Description=Xremap Daemon
+
+[Service]
+Restart=always
+ReStartSec=60
+User=root
+ExecStart=sh -c '/home/nxtcoder17/.local/bin/xremap /home/nxtcoder17/.config/xremap/config.yml'
+StartLimitInterval=30
+
+[Install]
+WantedBy=default.target

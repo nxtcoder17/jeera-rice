@@ -8,10 +8,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixgl = {
-      url = "github:guibou/nixGL";
-      # flake = false;
-    };
+    nixgl.url = "github:nix-community/nixGL";
   };
 
   outputs = { nixpkgs, home-manager, nixgl, ... }:
@@ -23,6 +20,8 @@
         overlays = [ nixgl.overlay ];
       };
       nixGL = import <nixgl> { };
+
+      # does not work
       nixGLWrap = pkg:
         let
           bin = "${pkg}/bin";
@@ -32,14 +31,46 @@
           name = "nixGL-${pkg.name}";
           paths = map
             (name: pkgs.writeShellScriptBin name ''
-              exec -a "$0" ${nixGL.auto.nixGLNvidia}/bin/nixGLNvidia ${bin}/${name} "$@"
+              exec -a "$0" ${nixGL.auto.nixGLNvidia}/bin/nixGLNvidia-${nixGL.nvidiaVersion} ${bin}/${name} "$@"
             '')
             executables;
         };
-        # use this as `programs.kitty.package = nixGLWrap pkgs.kitty;`
-    in {
-      homeConfigurations."nxtcoder17" = home-manager.lib.homeManagerConfiguration {
+
+      runWithNvidiaGPU = pkg:
+        let
+          name = "gpu-${pkg.name}";
+        in
+        pkgs.stdenv.mkDerivation
+          {
+            name = name;
+            pname = name;
+            src = pkg.name;
+            unpackPhase = ":";
+            installPhase = ''
+              nvidia_version=$(cat /proc/driver/nvidia/version | grep NVRM | awk '{print $8}')
+              mkdir -p $out/bin
+
+              for item in `ls ${pkg}/bin`; do
+                echo "#! /usr/bin/env bash" > "$out/bin/gpu-$item"
+                echo "nixGLNvidia-$nvidia_version ${pkg}/bin/$item" >> "$out/bin/gpu-$item"
+                chmod +x $out/bin/gpu-$item
+              done
+            '';
+          };
+
+
+      # use this as `programs.kitty.package = nixGLWrap pkgs.kitty;`
+      username = "nxtcoder17";
+      NvidiaVersion = "sample";
+    in
+    {
+      homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
+
+        extraSpecialArgs = {
+          nvidiaVersion = NvidiaVersion;
+          runWithNvidiaGPU = runWithNvidiaGPU;
+        };
 
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.

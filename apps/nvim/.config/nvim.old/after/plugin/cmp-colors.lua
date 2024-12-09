@@ -1,7 +1,5 @@
 local hlGroups = {
   PmenuSel = { bg = "#282C34", fg = "NONE" },
-  -- PmenuSel = { bg = "#87ab9e", fg = "NONE" },
-  -- Pmenu = { fg = "#C5CDD9", bg = "#22252A" },
   Pmenu = { fg = "#C5CDD9", bg = "#0c1129" },
   CmpItemAbbrDeprecated = { fg = "#7E8294", bg = "NONE", strikethrough = true },
   CmpItemAbbrMatch = { fg = "#82AAFF", bg = "NONE", bold = true },
@@ -37,6 +35,10 @@ local hlGroups = {
   CmpItemKindTypeParameter = { fg = "#D8EEEB", bg = "#58B5A8" },
 }
 
-for key, value in pairs(hlGroups) do
-  vim.api.nvim_set_hl(0, key, value)
+local enabled = true
+
+if enabled then
+  for key, value in pairs(hlGroups) do
+    -- vim.api.nvim_set_hl(0, key, value)
+  end
 end

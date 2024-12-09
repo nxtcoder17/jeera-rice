@@ -22,7 +22,7 @@ only-laptop)
   ;;
 left-right)
   xrandr --output $laptop --auto
-  xrandr --output $monitor --left-of $laptop --mode $monitorMode --auto
+  xrandr --output $monitor --right-of $laptop --mode $monitorMode --auto
   [ -f $HOME/.fehbg ] && source $HOME/.fehbg
   ;;
 *)

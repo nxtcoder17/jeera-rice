@@ -1,26 +1,37 @@
--- vim.g.nxt is a global table that contains all the global variables, written by me
--- it is just a precaution to not pollute the global namespace
-vim.g.nxt = {
-  home = os.getenv("HOME"),
-  project_root_dir = vim.fn.getcwd(), -- this is tab local directory
-  nvim_dir = vim.fn.stdpath("config"),
-  colors_ns_id = vim.api.nvim_create_namespace("colors"),
-}
-
-vim.api.nvim_set_hl_ns(vim.g.nxt.colors_ns_id)
-
-vim.g.nxt_fns = {
-  relative_from_project_root = function(dir)
-    return dir:sub(#vim.g.nxt.project_root_dir + 2)
-  end,
-
-  is_light_theme = function()
-    return vim.o.background == "light"
-  end,
-}
-
-if vim.g.nxt_fns.is_light_theme() then
-  vim.g.nxt_colors = {}
-else
-  vim.g.nxt_colors = {}
+-- [source](https://nanotipsforvim.prose.sh/using-pcall-to-make-your-config-more-stable)
+_G.Require = function(module)
+	local ok, mod = pcall(require, module)
+	if ok then
+		return mod
+	end
+	print("ERROR while loading module: ", module)
 end
+
+---@param pkg any
+_G.R = function(pkg)
+	package.loaded[pkg] = nil
+	return Require(pkg)
+end
+
+---pretty print for lua datastructures
+_G.P = function(...)
+	vim.print(vim.inspect(...))
+end
+
+_G.NewLogger = function(name, level)
+	level = level or "debug"
+	return Require("plenary.log").new({
+		plugin = name,
+		level = level,
+
+		outfile = require("plenary.path"):new(vim.fn.stdpath("cache"), "log", name .. ".log").filename,
+	})
+end
+
+-- _G.Logger = _G.NewLogger("global-logger")
+
+-- INFO: neovim configuration directory
+vim.g.nvim_dir = vim.fn.stdpath("config")
+
+-- INFO: directory at which vim has been started
+vim.g.project_root_dir = vim.fn.getcwd()

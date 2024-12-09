@@ -1,6 +1,6 @@
 # [Learn NIX](https://nixos.org/manual/nix/stable/language/)
 
-{ config, pkgs, nixGLWrap, ... }:
+{ config, pkgs, lib, nvidiaVersion, runWithNvidiaGPU, nixGLWrap, ... }:
 
 let
   packages.xorg = with pkgs; [
@@ -12,10 +12,62 @@ let
     xorg.xhost
     xorg.xinput
     xorg.xkill
+    xorg.libXcomposite
     lxappearance
 
     xclip
     xdragon
+
+    # picom-pijulius
+
+    # -- xcb related
+    # xorg.xcbutil
+    # xcb-util-cursor
+    # xorg.xcbutilwm
+    # xorg.xcbutilrenderutil
+    # xorg.xcbutilkeysyms
+    # xorg.libxcb
+  ];
+
+  packages.hyprland = with pkgs; [
+    #hyprland
+    hyprland-protocols
+
+
+    hyprland-workspaces
+    wofi
+    swaynotificationcenter # swaync
+    gtk3
+    tilix
+    xdg-desktop-portal-hyprland
+    xdg-desktop-portal-gtk
+    swaybg
+    waybar
+
+    wlprop
+    dmenu-wayland
+    rofi-wayland
+
+    hyprlandPlugins.hyprexpo
+    hyprcursor
+    hyprlock
+    wlogout
+    hypridle
+    hyprshot
+    hyprshade
+
+    ripdrag # for drag-and-drop (xdragon in Xorg)
+
+    light
+    networkmanager
+    wev
+    nwg-look
+    gammastep
+  ];
+
+  packages.hardware_acceleration = with pkgs; [
+    # read more at https://wiki.archlinux.org/title/Hardware_video_acceleration
+    vdpauinfo
   ];
 
   packages.i3wm = with pkgs; [
@@ -27,8 +79,9 @@ let
     rofi
     acpi
 
+
     # wayfire window manager
-    wayfire-with-plugins
+    # wayfire-with-plugins
 
     # image viewers
     feh
@@ -71,19 +124,26 @@ let
     nerdctl
     rootlesskit
     buildkit
-    docker-buildx # copy $HOME/.nix-profile/bin/docker-buildx to $XDG_CONFIG_DIR/docker/cli-plugins/docker-buildx
-    docker-compose # cp $HOME/.nix-profile/bin/docker-compose $XDG_CONFIG_DIR/docker/cli-plugins/docker-compose
+    docker-buildx # POST-INSTALL: `sudo cp $HOME/.nix-profile/bin/docker-buildx $XDG_CONFIG_HOME/docker/cli-plugins/docker-buildx`
+    docker-compose # POST-INSTALL: `sudo cp $HOME/.nix-profile/bin/docker-compose $XDG_CONFIG_HOME/docker/cli-plugins/docker-compose`
     docker-slim
     dive
 
     awscli2
-    lens
+    # lens
 
     (google-cloud-sdk.withExtraComponents [ google-cloud-sdk.components.gke-gcloud-auth-plugin ])
-    azure-cli
+    # azure-cli
   ];
 
   packages.cli_workflow = with pkgs; [
+    python312Packages.gtts
+    networkmanager
+    graphviz
+
+    transmission_4
+    jujutsu
+
     (writeShellScriptBin "nvim" ''
       #! /usr/bin/env bash
       dest=$HOME/.local/tars.uz/nvim
@@ -102,6 +162,33 @@ let
        $dest/bin/nvim "$@"
     '')
 
+    (stdenv.mkDerivation {
+      name = "nvim2";
+      pname = "nvim2";
+      version = "08049f6";
+      src = fetchurl {
+        url = "https://github.com/neovim/neovim/releases/download/v0.10.2/nvim-linux64.tar.gz";
+        sha256 = "sha256-n2luY11QO4ROTnjoiiK89RKnjyiL9HE3mvw9AAThUhc=";
+      };
+      buildInputs = [ bash subversion ];
+      nativeBuildInputs = [ coreutils makeWrapper ];
+      installPhase = ''
+        mkdir -p $out/bin
+        echo 'SOURCE:'
+        tar xf $src
+        ls -al $src
+
+        echo "OUT:"
+        ls -al $out
+        cp -R nvim-linux64 $out/nvim
+        ln -sf $out/nvim/bin/nvim $out/bin/nvim2
+        # cp github-downloader.sh $out/bin/github-downloader.sh
+        # wrapProgram $out/bin/github-downloader.sh \
+        #   --prefix PATH : ${lib.makeBinPath [ bash subversion ]}
+      '';
+    }
+    )
+
     (writeShellScriptBin "fwatcher" ''
       #! /usr/bin/env bash
       fwatcher_bin=$HOME/.local/bin/fwatcher
@@ -113,13 +200,25 @@ let
        $fwatcher_bin "$@"
     '')
 
+    (writeShellScriptBin "testing" ''
+      #! /usr/bin/env bash
+      mkdir -p $out
+      echo "out is $out"
+    '')
+
+    nix-output-monitor
+    nvd
+
     # shells
     fish
+    zsh
     fishPlugins.autopair
     # fishPlugins.hydro
 
     gitstatus
     bash
+    glibcLocales
+    bash-completion
     readline
     ncdu
 
@@ -138,6 +237,7 @@ let
     bat
     btop
     ranger
+    yazi-unwrapped
     stow
     git
     redshift
@@ -160,6 +260,7 @@ let
     nmap
     socat
 
+
     # mouse control
     warpd
 
@@ -169,8 +270,9 @@ let
     redli
 
     # global programming languages support 
-    nodejs-slim
+    nodejs
     nodePackages.npm
+    nodePackages.pnpm
 
     go_1_22
     gopls
@@ -186,6 +288,8 @@ let
     # cloudflare-warp
     nix-serve-ng
     hyperfine
+
+    bun
 
     # pdf
     pdftk
@@ -232,13 +336,121 @@ let
       fi
       flatpak run com.discordapp.Discord "$@"
     '')
+
+    (writeShellScriptBin "zen-browser" ''
+      #! /usr/bin/env bash
+      dest=$HOME/.local/bin/zen-browser
+      if ! command -v $dest &> /dev/null; then
+        echo "Downloading zen browser..."
+        curl -L0 https://github.com/zen-browser/desktop/releases/latest/download/zen-generic.AppImage > $dest
+        chmod +x $dest
+        popd
+      fi
+      $dest "$@"
+    '')
+
+    # (stdenv.mkDerivation {
+    #   name = "zen-browser";
+    #   pname = "zen-browser";
+    #   version = "";
+    #   src = fetchurl {
+    #     url = "https://github.com/zen-browser/desktop/releases/latest/download/zen-generic.AppImage";
+    #     sha256 = "";
+    #   };
+    #   buildInputs = [ bash ];
+    #   nativeBuildInputs = [ coreutils makeWrapper ];
+    #   installPhase = ''
+    #     mkdir -p $out/bin
+    #     cp -R nvim-linux64 $out/nvim
+    #     ln -sf $out/nvim/bin/nvim $out/bin/nvim2
+    #     # cp github-downloader.sh $out/bin/github-downloader.sh
+    #     # wrapProgram $out/bin/github-downloader.sh \
+    #     #   --prefix PATH : ${lib.makeBinPath [ bash subversion ]}
+    #   '';
+    # }
+    # )
+
+
+    # (stdenv.mkDerivation {
+    #   name = "zen2";
+    #   # pname = "zen2";
+    #   src = fetchurl
+    #     {
+    #       url = "https://github.com/zen-browser/desktop/releases/latest/download/zen-generic.AppImage";
+    #       sha256 = "sha256-ULs54/BuLzHhqnjgENgtpaP60uqir+kromJxekGq5d4=";
+    #       curlOpts = "-L0";
+    #     };
+    #   # src = ":";
+    #   buildPhase = ":";
+    #   unpackPhase = ":";
+    #   installPhase = ''
+    #     mkdir -p $out/bin
+    #     cp --remove-destination  $src $out/bin/zen-browser2
+    #     echo "#! /usr/bin/env bash" > $out/bin/testing
+    #     echo "echo $src" >> $out/bin/testing
+    #     output=$(ls -al)
+    #     output+=$(ls $src)
+    #     output+="$(echo src size: $(du -hs $src))"
+    #     # echo "echo $(ls $src)" >> $out/bin/testing
+    #     # echo "echo $(file $src)" >> $out/bin/testing
+    #     echo "echo $out/bin" >> $out/bin/testing
+    #     echo "ls $out/bin" >> $out/bin/testing
+    #     echo "echo $(du -hs $out/bin/zen-browser2)" >> $out/bin/testing
+    #     chmod +x $out/bin/testing
+    #     chmod +x $out/bin/zen-browser2
+    #
+    #     output+="$(echo output size: $(du -hs $out/bin/zen-browser2))"
+    #     echo "echo '$output'" >> $out/bin/testing
+    #   '';
+    #
+    #   meta = with lib; {
+    #     homepage = "https://github.com/borkdude/babashka";
+    #     description = "Clojure scripting interpreter";
+    #     platforms = platforms.linux;
+    #     maintainers = with maintainers; [ filthy-trender ];
+    #   };
+    #
+    #   # installPhase = '' 
+    #   #   mkdir -p $out/bin
+    #   #   curl -L0 https://github.com/zen-browser/desktop/releases/latest/download/zen-generic.AppImage > $out/bin/zen-browser2
+    #   #   chmod +x $out/bin/zen-browser2
+    #   # '';
+    #
+    #   # meta = with pkgs.stdenv.lib; {
+    #   #   description = "downloaded from github releases";
+    #   #   platforms = platforms.linux;
+    #   # };
+    # })
+
+    firefox-devedition
+    # (nixGL firefox-devedition)
+
+  ];
+
+  packages.nxtcoder17 = with pkgs; [
+    (runWithNvidiaGPU firefox-devedition)
+
+    (writeShellScriptBin "with-gpu" ''
+      #! /usr/bin/env bash
+      echo "got from input (nvidia_version: ${nvidiaVersion})"
+      # nvidia_version=$(cat /proc/driver/nvidia/version | grep NVRM | awk '{print $8}')
+      # nixGLNvidia-$nvidia_version $@
+    '')
   ];
 in
 {
+  # imports = [
+  #   # TODO: remove when https://github.com/nix-community/home-manager/pull/5355 gets merged:
+  #   (builtins.fetchurl {
+  #     url = "https://raw.githubusercontent.com/Smona/home-manager/nixgl-compat/modules/misc/nixgl.nix";
+  #     sha256 = "01dkfr9wq3ib5hlyq9zq662mp0jl42fw3f6gd2qgdf8l8ia78j7i";
+  #   })
+  # ];
+
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "nxtcoder17";
-  home.homeDirectory = "/var/home/nxtcoder17";
+  home.homeDirectory = "/home/nxtcoder17";
 
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowUnfreePredicate = (_: true);
@@ -254,7 +466,7 @@ in
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = with pkgs;[
+  home.packages = with pkgs; [
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -277,18 +489,26 @@ in
     cargo
     glibcLocales
   ]
-  ++ packages.xorg
-  ++ packages.i3wm
+  ++ packages.hyprland
+  # ++ packages.xorg
+  # ++ packages.i3wm
   ++ packages.audio_video
   ++ packages.cli_workflow
   ++ packages.kubernetes
   ++ packages.gui_apps
+  ++ packages.hardware_acceleration
+  ++ packages.nxtcoder17
   ;
 
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
   };
+
+  # programs.chromium = {
+  #   enable = true;
+  #   package = (nixGL pkgs.chromium);
+  # };
 
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -321,15 +541,23 @@ in
     EDITOR = "nvim";
     TMUX_SHELL = "${pkgs.fish}";
     # TMUX_SHELL = "fish";
-    #DIRENV_LOG_FORMAT = "\033[2mdirenv: %%s\033[0m"; # source: https://ianthehenry.com/posts/how-to-learn-nix/nix-direnv/
-    #DIRENV_LOG_FORMAT = ""; # source: https://ianthehenry.com/posts/how-to-learn-nix/nix-direnv/
-    NIXOS_OZONE_WL = "1";
+    # DIRENV_LOG_FORMAT = "\033[2mdirenv: %%s\033[0m"; # source: https://ianthehenry.com/posts/how-to-learn-nix/nix-direnv/
+    DIRENV_LOG_FORMAT = ""; # source: https://ianthehenry.com/posts/how-to-learn-nix/nix-direnv/
+    # NIXOS_OZONE_WL = "1";
+    #LOCALES_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
+    # LOCALES_ARCHIVE_GLIBC = "${pkgs.glibcLocales}/lib/locale/locale-archive";
   };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   programs.wezterm.package = nixGLWrap pkgs.wezterm;
   programs.kitty.package = nixGLWrap pkgs.kitty;
+  # programs.zen-browser.package = nixGLWrap pkgs.zen-browser;
+  # programs.firefox.package = nixGLWrap pkgs.firefox;
+
+  # programs.bash.completion.enable = true;
+  # programs.bash.blesh.enable = true;
+  # programs.bash.enableLsColors = true;
 
   # programs.firefox-devedition-bin.package = nixGLWrap pkgs.firefox-devedition-bin;
 }

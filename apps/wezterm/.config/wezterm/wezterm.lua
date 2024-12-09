@@ -23,9 +23,10 @@ end
 
 config.font = wezterm.font_with_fallback({
   { family = "Comic Code Ligatures", weight = "DemiBold", stretch = "Normal", style = "Normal" },
+  -- { family = "ComicShannsMono Nerd Font Mono", weight = "DemiBold", stretch = "Normal", style = "Normal" },
   -- { family = "OperatorMono Nerd Font", weight = "Book",     stretch = "Normal", style = "Normal" },
-  { family = "Fira",                 weight = "Book",     stretch = "Normal", style = "Normal" },
-  { family = "Operator Mono Lig",    weight = "Book",     stretch = "Normal", style = "Normal" },
+  -- { family = "Fira",                 weight = "Book",     stretch = "Normal", style = "Normal" },
+  -- { family = "Operator Mono Lig",    weight = "Book",     stretch = "Normal", style = "Normal" },
   -- { family = "FiraCode Nerd Font Mono", weight = "Regular",     stretch = "Normal", style = "Normal" },
   -- { family = "ComicCodeLigatures Nerd Font", weight = "Medium",   stretch = "Normal", style = "Normal" },
   -- { family = "Operator Mono Lig",            weight = "Book",     stretch = "Normal", style = "Normal" },
@@ -66,7 +67,7 @@ config.text_background_opacity = 0.9
 -- config.window_background_image = "/var/home/nxtcoder17/Downloads/notebook_background_with_black_overlay.png"
 -- config.window_background_image = "/var/home/nxtcoder17/Downloads/notebook_background_final_3840x2160.png"
 -- config.window_background_image = "/var/home/nxtcoder17/me/jeera-rice/wallpapers/night-fog.jpg"
-config.window_background_image = "/var/home/nxtcoder17/Downloads/white-paper.png"
+-- config.window_background_image = "/var/home/nxtcoder17/Downloads/white-paper.png"
 config.window_background_image_hsb = {
   -- Darken the background image by reducing it to 1/3rd
   brightness = 0.7,
