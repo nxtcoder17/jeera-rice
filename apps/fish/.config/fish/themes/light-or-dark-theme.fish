@@ -1,1 +1,1 @@
-/var/home/nxtcoder17/.config/fish/themes/dayfox.fish
+/var/home/nxtcoder17/.config/fish/themes/nightfox.fish

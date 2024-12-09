@@ -36,13 +36,12 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 	end,
 })
 
-vim.api.nvim_create_autocmd({ "BufNewFile" }, {
-	group = global,
-	pattern = { "flake.nix" },
-	callback = function()
-		vim.cmd(string.format("-1r %s/templates/flake.nix", vim.fn.stdpath("config")))
-	end,
-})
+-- vim.api.nvim_create_autocmd({ "BufNewFile" }, {
+-- 	group = global,
+-- 	callback = function()
+-- 		vim.cmd(string.format("-1r %s/skeletons/%s.nix", vim.fn.stdpath("config"), vim.b.filetype))
+-- 	end,
+-- })
 
 vim.api.nvim_create_autocmd({ "LspAttach" }, {
 	group = global,

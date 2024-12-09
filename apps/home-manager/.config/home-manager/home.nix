@@ -189,16 +189,32 @@ let
     }
     )
 
-    (writeShellScriptBin "fwatcher" ''
-      #! /usr/bin/env bash
-      fwatcher_bin=$HOME/.local/bin/fwatcher
-      if ! command -v $fwatcher_bin  &> /dev/null; then
-        echo "Downloading fwatcher..."
-        curl -L0 https://github.com/nxtcoder17/fwatcher/releases/latest/download/fwatcher-linux-amd64 > $fwatcher_bin
-        chmod +x $fwatcher_bin
-      fi
-       $fwatcher_bin "$@"
-    '')
+    # (writeShellScriptBin "fwatcher" ''
+    #   #! /usr/bin/env bash
+    #   fwatcher_bin=$HOME/.local/bin/fwatcher
+    #   if ! command -v $fwatcher_bin  &> /dev/null; then
+    #     echo "Downloading fwatcher..."
+    #     curl -L0 https://github.com/nxtcoder17/fwatcher/releases/latest/download/fwatcher-linux-amd64 > $fwatcher_bin
+    #     chmod +x $fwatcher_bin
+    #   fi
+    #    $fwatcher_bin "$@"
+    # '')
+
+    (stdenv.mkDerivation rec {
+      name = "fwatcher";
+      pname = "fwatcher";
+      src = fetchurl {
+        url = "https://github.com/nxtcoder17/fwatcher/releases/download/v1.0.2/fwatcher-linux-amd64";
+        sha256 = "sha256-V5v0zfwkhInLEWouvjtXuW3kHuvMiLtA7eddHxsz1B4=";
+      };
+      unpackPhase = ":";
+      installPhase = ''
+        mkdir -p $out/bin
+        cp $src $out/bin/$name
+        chmod +x $out/bin/$name
+      '';
+    })
+
 
     (writeShellScriptBin "testing" ''
       #! /usr/bin/env bash
@@ -236,7 +252,10 @@ let
     zellij
     bat
     btop
+
     ranger
+    ueberzugpp # for ranger image preview
+
     yazi-unwrapped
     stow
     git
