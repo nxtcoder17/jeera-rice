@@ -1,0 +1,18 @@
+@import "./dist/output.css";
+@import "./firefox-csshacks/hide_tabs_toolbar.css";
+
+#home-button,
+#reload-button,
+#save-to-pocket-button {
+  display: none !important;
+}
+
+:root {
+  --lwt-accent-color-inactive: color-mix(in lab, AccentColor 35%, #000000) !important;
+}
+
+
+:root {
+  /* accent-color: red !important; */
+  accent-color: #1d1d21 !important;
+}
