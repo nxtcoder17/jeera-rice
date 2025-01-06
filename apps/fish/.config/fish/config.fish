@@ -21,6 +21,7 @@ alias vim 'nvim'
 alias k 'kubectl'
 alias k9s 'k9s --logoless --headless -c ns'
 alias cat 'bat'
+alias cursor 'cursor --enable-features=UseOzonePlatform,WaylandWindowDecorations,WebRTCPipeWireCapturer --ozone-platform-hint=auto'
 
 function cc --description "copies stdout to system clipboard"
   if test "$XDG_BACKEND" = "wayland"

@@ -38,7 +38,7 @@ let
     wofi
     swaynotificationcenter # swaync
     gtk3
-    tilix
+    # tilix
     xdg-desktop-portal-hyprland
     xdg-desktop-portal-gtk
     swaybg
@@ -61,7 +61,7 @@ let
     light
     networkmanager
     wev
-    nwg-look
+    nwg-look # lx appearance for wayland
     gammastep
   ];
 
@@ -129,7 +129,7 @@ let
     docker-slim
     dive
 
-    awscli2
+    # awscli2
     # lens
 
     (google-cloud-sdk.withExtraComponents [ google-cloud-sdk.components.gke-gcloud-auth-plugin ])
@@ -144,47 +144,44 @@ let
     transmission_4
     jujutsu
 
-    (writeShellScriptBin "nvim" ''
-      #! /usr/bin/env bash
-      dest=$HOME/.local/tars.uz/nvim
-      if ! command -v $dest/bin/nvim  &> /dev/null; then
-      	rm -rf $dest
-        echo "Downloading neovim..."
-        dir=$(mktemp -d)
-        trap "rm -rf $dir" EXIT
-        pushd $dir
-        curl -L0 https://github.com/neovim/neovim/releases/download/v0.10.2/nvim-linux64.tar.gz > nvim.tar.gz
-        tar xf nvim.tar.gz
-        rm nvim.tar.gz
-        mv nvim-linux64 $dest
-        popd
-      fi
-       $dest/bin/nvim "$@"
-    '')
+    # (writeShellScriptBin "nvim" ''
+    #   #! /usr/bin/env bash
+    #   dest=$HOME/.local/tars.uz/nvim
+    #   if ! command -v $dest/bin/nvim  &> /dev/null; then
+    #   	rm -rf $dest
+    #     echo "Downloading neovim..."
+    #     dir=$(mktemp -d)
+    #     trap "rm -rf $dir" EXIT
+    #     pushd $dir
+    #     curl -L0 https://github.com/neovim/neovim/releases/download/v0.10.2/nvim-linux64.tar.gz > nvim.tar.gz
+    #     tar xf nvim.tar.gz
+    #     rm nvim.tar.gz
+    #     mv nvim-linux64 $dest
+    #     popd
+    #   fi
+    #    $dest/bin/nvim "$@"
+    # '')
 
-    (stdenv.mkDerivation {
-      name = "nvim2";
-      pname = "nvim2";
-      version = "08049f6";
+    (stdenv.mkDerivation rec {
+      name = "nvim";
+      pname = name;
       src = fetchurl {
-        url = "https://github.com/neovim/neovim/releases/download/v0.10.2/nvim-linux64.tar.gz";
-        sha256 = "sha256-n2luY11QO4ROTnjoiiK89RKnjyiL9HE3mvw9AAThUhc=";
+        url = "https://github.com/neovim/neovim/releases/download/v0.10.3/nvim-linux64.tar.gz";
+        sha256 = "sha256-vhiZFaKg2jYVV24tsGp8cUrvCukmtNphB+WJo8xiPlw=";
+        # for v0.10.2: sha256 = "sha256-n2luY11QO4ROTnjoiiK89RKnjyiL9HE3mvw9AAThUhc=";
+
+        # url = "https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz";
+        # sha256 = "sha256-O5X+J8k8cC6cluymCyRd1e6cI6Ruav/YfL9wYOaWPq8=";
       };
-      buildInputs = [ bash subversion ];
-      nativeBuildInputs = [ coreutils makeWrapper ];
+      # buildInputs = [ bash ];
+      # nativeBuildInputs = [ ];
       installPhase = ''
         mkdir -p $out/bin
-        echo 'SOURCE:'
         tar xf $src
         ls -al $src
 
-        echo "OUT:"
-        ls -al $out
         cp -R nvim-linux64 $out/nvim
-        ln -sf $out/nvim/bin/nvim $out/bin/nvim2
-        # cp github-downloader.sh $out/bin/github-downloader.sh
-        # wrapProgram $out/bin/github-downloader.sh \
-        #   --prefix PATH : ${lib.makeBinPath [ bash subversion ]}
+        ln -sf $out/nvim/bin/nvim $out/bin/$name
       '';
     }
     )
@@ -330,6 +327,8 @@ let
 
     copyq
 
+    # (runWithNvidiaGPU code-cursor)
+
     # zed-editor
     (writeShellScriptBin "zed" ''
       #! /usr/bin/env bash
@@ -356,38 +355,71 @@ let
       flatpak run com.discordapp.Discord "$@"
     '')
 
-    (writeShellScriptBin "zen-browser" ''
-      #! /usr/bin/env bash
-      dest=$HOME/.local/bin/zen-browser
-      if ! command -v $dest &> /dev/null; then
-        echo "Downloading zen browser..."
-        curl -L0 https://github.com/zen-browser/desktop/releases/latest/download/zen-generic.AppImage > $dest
-        chmod +x $dest
-        popd
-      fi
-      $dest "$@"
-    '')
+    (stdenv.mkDerivation rec {
+      name = "sublime";
+      pname = "sublime";
+      src = fetchurl {
+        url = "https://download.sublimetext.com/sublime_text_build_4180_x64.tar.xz";
+        sha256 = "sha256-pl42AR4zWF3vx3wPSZkfIP7Oksune5nsbmciyJUv8D4=";
+      };
+      # unpackPhase = ":";
+      buildInputs = with pkgs; [ bash ];
+      installPhase = ''
+        tar xf $src
+        mkdir -p $out/bin $out/share/applications
+        mv sublime_text $out/sublime-extract
+        ln -sf $out/sublime-extract/sublime_text $out/bin/$name
+        ln -sf $out/sublime-extract/sublime_text.desktop $out/share/applications/$name.desktop
+      '';
+    })
 
-    # (stdenv.mkDerivation {
-    #   name = "zen-browser";
-    #   pname = "zen-browser";
+    (runWithNvidiaGPU (stdenv.mkDerivation rec {
+      name = "zen-browser";
+      pname = name;
+      version = "";
+      src = fetchurl {
+        url = "https://github.com/zen-browser/desktop/releases/download/1.0.2-b.5/zen-x86_64.AppImage";
+        sha256 = "sha256-faJzPHtjE3Q+9WpPm1Lip4f7RJQrhWdTU+MFaCXy2Xg=";
+
+        # url = "https://github.com/zen-browser/desktop/releases/latest/download/zen-generic.AppImage";
+        # sha256 = "sha256-Dy21dVatjyl9AiDm+SXEnoT+HMHCtTZehXUAyYKiUpU=";
+      };
+      unpackPhase = ":";
+      buildInputs = with pkgs; [ bash unzip ];
+      installPhase = ''
+        mkdir -p $out/appimage $out/bin
+        cp $src $out/appimage/$name
+        chmod +x $out/appimage/$name
+        pushd $out/appimage
+        ./$name --appimage-extract
+        popd
+        ln -sf $out/appimage/squashfs-root/AppRun $out/bin/$name
+      '';
+    }))
+
+    (runWithNvidiaGPU vmware-horizon-client)
+
+    # (runWithNvidiaGPU (stdenv.mkDerivation rec {
+    #   name = "cursor";
+    #   pname = name;
     #   version = "";
     #   src = fetchurl {
-    #     url = "https://github.com/zen-browser/desktop/releases/latest/download/zen-generic.AppImage";
-    #     sha256 = "";
+    #     url = "https://downloader.cursor.sh/linux/appImage/x64";
+    #     sha256 = "sha256-adEyDExGvxwpvAT0qYiCfvkpINP9BJ6a+LSwQHQ/H/U=";
     #   };
-    #   buildInputs = [ bash ];
-    #   nativeBuildInputs = [ coreutils makeWrapper ];
+    #   unpackPhase = ":";
+    #   buildInputs = with pkgs; [ bash unzip ];
+    #   # nativeBuildInputs = [ coreutils makeWrapper ];
     #   installPhase = ''
-    #     mkdir -p $out/bin
-    #     cp -R nvim-linux64 $out/nvim
-    #     ln -sf $out/nvim/bin/nvim $out/bin/nvim2
-    #     # cp github-downloader.sh $out/bin/github-downloader.sh
-    #     # wrapProgram $out/bin/github-downloader.sh \
-    #     #   --prefix PATH : ${lib.makeBinPath [ bash subversion ]}
+    #     mkdir -p $out/appimage $out/bin
+    #     cp $src $out/appimage/$name
+    #     chmod +x $out/appimage/$name
+    #     pushd $out/appimage
+    #     ./$name --appimage-extract
+    #     popd
+    #     ln -sf $out/appimage/squashfs-root/AppRun $out/bin/$name
     #   '';
-    # }
-    # )
+    # }))
 
 
     # (stdenv.mkDerivation {

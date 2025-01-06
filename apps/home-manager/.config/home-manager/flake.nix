@@ -9,9 +9,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixgl.url = "github:nix-community/nixGL";
+
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, nixgl, ... }:
+  outputs = { nixpkgs, home-manager, nixgl, ghostty, ... }:
     let
       system = "x86_64-linux";
       # pkgs = nixpkgs.legacyPackages.${system};
@@ -19,6 +23,9 @@
         system = system;
         overlays = [ nixgl.overlay ];
       };
+
+      ghostty_term = ghostty.packages.${system}.ghostty;
+
       nixGL = import <nixgl> { };
 
       # does not work
@@ -52,7 +59,7 @@
 
               for item in `ls ${pkg}/bin`; do
                 echo "#! /usr/bin/env bash" > "$out/bin/gpu-$item"
-                echo "nixGLNvidia-$nvidia_version ${pkg}/bin/$item" >> "$out/bin/gpu-$item"
+                echo "nixGLNvidia-$nvidia_version ${pkg}/bin/$item \$@" >> "$out/bin/gpu-$item"
                 chmod +x $out/bin/gpu-$item
               done
             '';
@@ -74,7 +81,15 @@
 
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
-        modules = [ ./home.nix ];
+        modules = [
+          ./home.nix
+          {
+            home.packages = with pkgs; [
+              # ghostty.packages.${system}.default
+              (runWithNvidiaGPU ghostty.packages.${system}.default)
+            ];
+          }
+        ];
 
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
