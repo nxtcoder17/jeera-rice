@@ -85,7 +85,9 @@ local overrides = function(colors)
 	local palette = colors.palette
 	local theme = colors.theme
 	return {
-		Identifier = { fg = palette.lotusGreen },
+		-- Identifier = { fg = palette.lotusGreen2 },
+		Identifier = { fg = palette.lotusViolet4 },
+		-- Identifier = { fg = palette.lotusGreen },
 		-- DiagnosticError = { fg = palette.peachRed, bg=palette.winterRed, undercurl = true },
 		-- DiagnosticFloatingError = { link = "DiagnosticError" },
 		-- DiagnosticUnderlineError = { link = "DiagnosticError" },

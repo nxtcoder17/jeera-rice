@@ -43,12 +43,15 @@ local function_like_nodes = {
 	"function_definition",
 }
 
+-- ensure, terminal also sends <C-S-j> binding
 vim.keymap.set("n", "<C-S-j>", function()
 	sts.filtered_jump(function_like_nodes, true)
 	vim.cmd("normal zz")
+	print("jumping to function like_nodes")
 end, fn.join_tables(opts, { desc = "jumping to next function like nodes" }))
 
 vim.keymap.set("n", "<C-S-k>", function()
 	sts.filtered_jump(function_like_nodes, false)
 	vim.cmd("normal zz")
+	print("jumping to function like_nodes")
 end, fn.join_tables(opts, { desc = "jumping to previous function like nodes" }))

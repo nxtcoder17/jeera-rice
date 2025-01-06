@@ -23,9 +23,13 @@ cmp.setup({
 		throttle = 0,
 
 		-- fetching_timeout = 250,
-		fetching_timeout = 100,
+		fetching_timeout = 60,
 		async_budget = 50,
 		max_view_entries = 30,
+	},
+
+	completion = {
+		-- autocomplete = true, -- to disable automatic completion popup, change to false
 	},
 
 	preselect = cmp.PreselectMode.None,
@@ -122,6 +126,7 @@ cmp.setup({
 		{ name = "async_path", priority = 80 },
 		{ name = "luasnip", options = { show_autosnippets = true }, priority = 70 },
 		{ name = "go:imports", priority = 60, keyword_length = 3 },
+
 		-- { name = "cmp_tabby" },
 		-- { name = "supermaven", priority = 50 },
 		-- {

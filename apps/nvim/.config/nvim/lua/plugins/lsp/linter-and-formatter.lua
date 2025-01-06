@@ -30,6 +30,9 @@ M.setup_mason = function()
 
 		-- sql
 		"sqlfluff",
+
+		-- HTML
+		"prettier_d",
 	}
 
 	for _, item in ipairs(requirements) do
@@ -79,6 +82,9 @@ M.setup_lsp = function(on_attach, capabilities_wrapper)
 				sh = {
 					require("efmls-configs.linters.shellcheck"),
 					require("efmls-configs.formatters.shfmt"),
+				},
+				html = {
+					require("efmls-configs.formatters.prettier_d"),
 				},
 				-- sql = {
 				-- 	Require("efmls-configs.linters.sqlfluff"),

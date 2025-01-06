@@ -23,6 +23,7 @@ function M.setup()
 			type = "go",
 			name = "Debug",
 			request = "launch",
+			outputMode = "remote",
 			-- program = "${fileDirname}",
 			args = function()
 				return load("return " .. vim.fn.input({ prompt = "Run Args: ", default = [[{ "--dev", }]] }))()

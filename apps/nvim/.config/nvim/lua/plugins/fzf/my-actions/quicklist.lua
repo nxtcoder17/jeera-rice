@@ -5,7 +5,8 @@ local function quicklist()
 		{
 			label = "[code] format",
 			action = function()
-				vim.lsp.buf.format({ async = false })
+				Require("conform").format()
+				-- vim.lsp.buf.format({ async = false })
 				vim.cmd("write")
 			end,
 		},

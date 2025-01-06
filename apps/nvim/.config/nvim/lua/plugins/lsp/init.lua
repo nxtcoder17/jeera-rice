@@ -135,6 +135,7 @@ local function wrapper(...)
 end
 
 Require("plugins.lsp.languages.go").setup_lsp(on_attach, wrapper)
+Require("plugins.lsp.languages.c").setup_lsp(on_attach, wrapper)
 Require("plugins.lsp.languages.lua").setup_lsp(on_attach, wrapper)
 Require("plugins.lsp.languages.typescript").setup_lsp(on_attach, wrapper)
 Require("plugins.lsp.languages.deno").setup_lsp(on_attach, wrapper)

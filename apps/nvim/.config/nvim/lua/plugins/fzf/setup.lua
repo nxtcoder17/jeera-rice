@@ -71,6 +71,16 @@ fzf.setup({
 	global_resume_query = true,
 	global_resume_prompt = "resume: ",
 
+	oldfiles = {
+		include_current_session = true,
+	},
+
+	previewers = {
+		builtin = {
+			syntax_limit_b = 1024 * 100, -- 100KB
+		},
+	},
+
 	fzf_colors = {
 		["fg"] = { "fg", "FzfFg" },
 		["bg"] = { "bg", "FzfBg" },

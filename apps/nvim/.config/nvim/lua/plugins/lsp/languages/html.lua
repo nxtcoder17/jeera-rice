@@ -19,7 +19,12 @@ M.setup_lsp = function(on_attach, capabilities_wrapper)
 	local lsp_config = Require("lspconfig")
 
 	lsp_config.html.setup(capabilities_wrapper({
-		on_attach = on_attach,
+		on_attach = function(client)
+			client.server_capabilities.documentFormattingProvider = false
+			client.server_capabilities.documentRangeFormattingProvider = false
+
+			on_attach(client)
+		end,
 		filetypes = { "gohtmltmpl", "html", "htmljinja", "svelte", "vue" },
 	}))
 

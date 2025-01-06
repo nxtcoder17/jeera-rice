@@ -22,6 +22,11 @@ local overrides = function(colors)
 	local palette = colors.palette
 	return {
 		Identifier = { fg = palette.lightBlue },
+
+		-- lsp
+		DiagnosticWarn = { bg = lib.darken(palette.autumnYellow, 90), undercurl = true },
+		DiagnosticUnderlineWarn = { link = "DiagnosticWarn" },
+
 		DiagnosticError = { fg = palette.peachRed, bg = palette.winterRed, undercurl = true },
 		DiagnosticFloatingError = { link = "DiagnosticError" },
 		DiagnosticUnderlineError = { link = "DiagnosticError" },
@@ -40,11 +45,14 @@ local overrides = function(colors)
 		-- PmenuThumb = { bg = theme.ui.bg_p2 },
 		FloatBorder = { bg = "none" },
 
+		StatusLine = { bg = "none" },
+
 		-- tabby overrides
-		TablineFill = { bg = "none" },
+		-- TablineFill = { link = "TablineSel" },
+		TabLineFill = { bg = "none" },
 		-- Tabline = { fg = palette.sumiInk1, bg = palette.sumiInk2 },
-		Tabline = { link = "Comment" },
-		TablineSel = { link = "Keyword" },
+		TabLine = { link = "Comment" },
+		TabLineSel = { link = "Keyword" },
 
 		-- mini statusline
 		MiniStatuslineFilename = { fg = palette.lightBlue, bg = "none", italic = true },
@@ -71,7 +79,7 @@ vim.opt.fillchars:append({
 
 require("kanagawa").setup({
 	compile = true,
-	uncercurl = true,
+	undercurl = true,
 	globalStatus = true,
 	transparent = true,
 	colors = my_colors,

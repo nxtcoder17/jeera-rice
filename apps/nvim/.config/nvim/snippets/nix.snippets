@@ -26,9 +26,9 @@ snippet flake.nix
                 };
                 unpackPhase = ":";
                 installPhase = ''
-                  mkdir -p $out/bin
-                  cp $src $out/bin/$name
-                  chmod +x $out/bin/$name
+                  mkdir -p $$out/bin
+                  cp $$src $$out/bin/$$name
+                  chmod +x $$out/bin/$$name
                 '';
               })
 
@@ -36,14 +36,14 @@ snippet flake.nix
                 name = "run";
                 pname = "run";
                 src = fetchurl {
-                  url = "https://github.com/nxtcoder17/Runfile/releases/download/v1.0.2/runfile-linux-amd64";
-                  sha256 = "sha256-V5v0zfwkhInLEWouvjtXuW3kHuvMiLtA7eddHxsz1B4=";
+                  url = "https://github.com/nxtcoder17/Runfile/releases/download/v1.2.0/run-linux-amd64";
+                  sha256 = "sha256-SKLuX/i86cpryK1TFOrtXGLikikwEuH0dPU4xur6N/Y=";
                 };
                 unpackPhase = ":";
                 installPhase = ''
-                  mkdir -p $out/bin
-                  cp $src $out/bin/$name
-                  chmod +x $out/bin/$name
+                  mkdir -p $$out/bin
+                  cp $$src $$out/bin/$$name
+                  chmod +x $$out/bin/$$name
                 '';
               })
 
@@ -57,7 +57,6 @@ snippet flake.nix
       );
   }
 
-
 snippet install-binary
   (stdenv.mkDerivation rec {
     name = "${1:binary}";
@@ -68,9 +67,39 @@ snippet install-binary
     };
     unpackPhase = ":";
     installPhase = ''
-      mkdir -p $out/bin
-      cp $src $out/bin/$name
-      chmod +x $out/bin/$name
+      mkdir -p $$out/bin
+      cp $$src $$out/bin/$$name
+      chmod +x $$out/bin/$$name
     '';
   })
+
+
+snippet install-from-appimage 
+    (stdenv.mkDerivation rec {
+      name = "zen-browser";
+      pname = name;
+      version = "";
+      src = fetchurl {
+        url = "https://github.com/zen-browser/desktop/releases/latest/download/zen-generic.AppImage";
+        sha256 = "sha256-Dy21dVatjyl9AiDm+SXEnoT+HMHCtTZehXUAyYKiUpU=";
+      };
+      unpackPhase = ":";
+      buildInputs = with pkgs; [ bash unzip ];
+      # nativeBuildInputs = [ coreutils makeWrapper ];
+      installPhase = ''
+        mkdir -p $$out/appimage $$out/bin
+        cp $$src $$out/appimage/$$name
+        chmod +x $$out/appimage/$$name
+        pushd $$out/appimage
+        ./$$name --appimage-extract
+        popd
+        ln -sf $$out/appimage/squashfs-root/AppRun $$out/bin/$$name
+      '';
+    })
+
+snippet shell-script
+  (pkgs.writeScriptBin "${1:script-name}" ''
+    #!${pkgs.stdenv.shell}
+    ${2://your-script-here}
+  '')
 

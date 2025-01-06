@@ -19,9 +19,11 @@ local function fuzzy_finders()
 	return {
 		{
 			"ibhagwan/fzf-lua",
+			commit = "86b77a661ff38bf08b1ceb5a6c3c257285a42a4d",
 			dependencies = { "nvim-tree/nvim-web-devicons" },
-			-- event = "VeryLazy",
 			lazy = true,
+			-- event = "UIEnter",
+			-- event = "Lazy",
 			config = function()
 				require("plugins.fzf")
 			end,
@@ -38,9 +40,9 @@ local function colorschemes()
 	return {
 		{
 			"rebelot/kanagawa.nvim",
-			lazy = false,
-			priority = 1000,
-			init = function()
+			event = "UIEnter",
+			-- priority = 1000,
+			config = function()
 				Require("plugins.colorschemes")
 			end,
 		},
@@ -60,7 +62,7 @@ local function syntax()
 				-- {
 				--   "yorickpeterse/nvim-tree-pairs",
 				--   config = function()
-				--     require("tree-pairs").setup()
+				---     require("tree-pairs").setup()
 				--   end,
 				-- },
 				{
@@ -122,7 +124,7 @@ local function syntax()
 			"utilyre/sentiment.nvim",
 			event = "BufReadPost",
 			config = function()
-				require("sentiment").setup({})
+				require("sentiment").setup()
 			end,
 		},
 
@@ -151,6 +153,7 @@ local function lsp()
 				require("mason").setup()
 
 				Require("plugins.lsp.languages.go").setup_mason()
+				Require("plugins.lsp.languages.c").setup_mason()
 				Require("plugins.lsp.languages.lua").setup_mason()
 				Require("plugins.lsp.languages.typescript").setup_mason()
 				Require("plugins.lsp.languages.deno").setup_mason()
@@ -167,7 +170,7 @@ local function lsp()
 				Require("plugins.lsp.languages.protobuf").setup_mason()
 				Require("plugins.lsp.languages.sql").setup_mason()
 
-				Require("plugins.lsp.linter-and-formatter").setup_mason()
+				Require("plugins.lsp.formatter").setup_mason()
 			end,
 		},
 		{
@@ -189,6 +192,14 @@ local function lsp()
 			after = "nvim-lspconfig",
 			version = "v0.2.x", -- tag is optional
 			dependencies = { "neovim/nvim-lspconfig" },
+		},
+		{
+			"stevearc/conform.nvim",
+			event = "BufRead",
+			after = "nvim-lspconfig",
+			config = function()
+				Require("plugins.lsp.formatter").setup_formatters()
+			end,
 		},
 
 		{
@@ -313,10 +324,11 @@ local function completions()
 		},
 
 		{
-			-- "hrsh7th/nvim-cmp",
-			"yioneko/nvim-cmp",
-			branch = "perf",
-			version = false,
+			"hrsh7th/nvim-cmp",
+			-- commit = "b555203ce4bd7ff6192e759af3362f9d217e8c89",
+
+			-- "yioneko/nvim-cmp",
+			-- branch = "perf",
 			event = "InsertEnter",
 			after = "LuaSnip",
 			dependencies = {
@@ -576,7 +588,7 @@ local function terminals()
 		},
 		{
 			"akinsho/toggleterm.nvim",
-			-- event = events.VeryLazy,
+			-- event = "UIEnter",
 			keys = { "st" },
 			version = "*",
 			config = function()

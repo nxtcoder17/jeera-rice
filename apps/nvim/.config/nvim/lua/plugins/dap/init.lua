@@ -9,7 +9,7 @@ dapui.setup({
 			elements = {
 				"breakpoints",
 				"watches",
-				-- "stacks",
+				"stacks",
 				-- "scopes",
 			},
 			size = 40,
