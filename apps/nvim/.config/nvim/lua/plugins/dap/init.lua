@@ -55,3 +55,13 @@ vim.api.nvim_create_autocmd("FileType", {
 require("plugins.dap.keymaps")
 require("plugins.dap.languages.go").setup()
 require("plugins.dap.languages.lua").setup()
+
+local autocmds = vim.api.nvim_create_augroup("plugins.dap", { clear = true })
+
+vim.api.nvim_create_autocmd("FileType", {
+	group = autocmds,
+	pattern = "dapui_events",
+	callback = function()
+		vim.cmd("set wrap")
+	end,
+})

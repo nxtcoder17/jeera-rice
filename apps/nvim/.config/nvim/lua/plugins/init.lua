@@ -186,13 +186,13 @@ local function lsp()
 				"b0o/schemastore.nvim",
 			},
 		},
-		{
-			"creativenull/efmls-configs-nvim",
-			event = "BufRead",
-			after = "nvim-lspconfig",
-			version = "v0.2.x", -- tag is optional
-			dependencies = { "neovim/nvim-lspconfig" },
-		},
+		-- {
+		-- 	"creativenull/efmls-configs-nvim",
+		-- 	event = "BufRead",
+		-- 	after = "nvim-lspconfig",
+		-- 	version = "v0.2.x", -- tag is optional
+		-- 	dependencies = { "neovim/nvim-lspconfig" },
+		-- },
 		{
 			"stevearc/conform.nvim",
 			event = "BufRead",

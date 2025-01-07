@@ -26,16 +26,15 @@ ls.setup({
 	ext_opts = {
 		[types.choiceNode] = {
 			active = {
-				-- virt_text = { { "●", "@keyword" } },
 				virt_text = { { "●", "LuasnipChoiceNode" } },
 			},
 		},
-		[types.insertNode] = {
-			active = {
-				-- virt_text = { { "●", "@function" } },
-				virt_text = { { "●", "LuasnipInsertNode" } },
-			},
-		},
+
+		-- [types.insertNode] = {
+		-- 	active = {
+		-- 		virt_text = { { "●", "LuasnipInsertNode" } },
+		-- 	},
+		-- },
 	},
 })
 

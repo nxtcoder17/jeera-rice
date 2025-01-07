@@ -29,7 +29,8 @@ cmp.setup({
 	},
 
 	completion = {
-		-- autocomplete = true, -- to disable automatic completion popup, change to false
+		-- INFO: to disable automatic completion popup, change to false
+		-- autocomplete = true,
 	},
 
 	preselect = cmp.PreselectMode.None,
@@ -215,7 +216,6 @@ cmp.setup({
 				kind.kind = " ❯⚊ "
 			end
 
-			-- kind.menu = "    (" .. (strings[2] or "") .. ")"
 			kind.menu = "    (" .. (menu or "Ω") .. ")"
 
 			local item = entry:get_completion_item()

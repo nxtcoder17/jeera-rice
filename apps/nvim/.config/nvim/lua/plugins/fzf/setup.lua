@@ -148,6 +148,11 @@ fzf.setup({
 		ignore_current_line = true,
 	},
 
+	grep = {
+		formatter = "path.filename_first",
+		multiline = 2,
+	},
+
 	actions = {
 		buffers = {
 			-- providers that inherit these actions:
