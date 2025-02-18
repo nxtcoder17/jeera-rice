@@ -610,8 +610,8 @@ end
 local function nxtcoder17_plugins()
 	return {
 		{
-			-- "nxtcoder17/http-cli",
-			dir = "~/workspace/nxtcoder17/http-cli",
+			"nxtcoder17/http-cli",
+			-- dir = "~/workspace/nxtcoder17/http-cli",
 			build = "task build",
 			cmd = {
 				"Gql",
