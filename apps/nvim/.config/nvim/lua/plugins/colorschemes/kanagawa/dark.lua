@@ -1,4 +1,4 @@
-local lib = Require("plugins.colorschemes.kanagawa.lib")
+local lib = Require("plugins.colorschemes.lib")
 
 vim.o.background = "dark"
 

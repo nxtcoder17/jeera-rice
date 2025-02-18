@@ -177,3 +177,8 @@ vim.o.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,winpos,termin
 -- vim.opt.foldlevel = 99
 -- vim.opt.foldlevelstart = 1
 -- vim.opt.foldnestmax = 4
+--
+vim.opt.formatoptions = vim.opt.formatoptions + "j" -- remove comment leader when joining comment lines
+vim.opt.formatoptions = vim.opt.formatoptions + "n" -- smart auto-indenting inside numbered lists
+
+vim.o.diffopt = "internal,filler,closeoff,indent-heuristic,linematch:60,algorithm:histogram"

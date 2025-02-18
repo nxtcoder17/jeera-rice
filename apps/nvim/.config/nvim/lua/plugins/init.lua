@@ -38,14 +38,57 @@ end
 
 local function colorschemes()
 	return {
-		{
-			"rebelot/kanagawa.nvim",
-			event = "UIEnter",
-			-- priority = 1000,
-			config = function()
-				Require("plugins.colorschemes")
-			end,
-		},
+		-- {
+		-- 	"rebelot/kanagawa.nvim",
+		-- 	event = "UIEnter",
+		-- 	-- priority = 1000,
+		-- 	config = function()
+		-- 		Require("plugins.colorschemes.kanagawa")
+		-- 	end,
+		-- },
+		-- {
+		-- 	"EdenEast/nightfox.nvim",
+		-- 	config = function()
+		-- 		-- require("plugins.colorschemes.nightfox")
+		-- 		require("plugins.colorschemes.nightfox.light")
+		-- 	end,
+		-- },
+		-- {
+		-- 	"NLKNguyen/papercolor-theme",
+		-- 	config = function()
+		-- 		vim.o.background = os.getenv("SYSTEM_THEME") or "dark"
+		--
+		-- 		vim.g.PaperColor_Theme_Options = {
+		-- 			theme = {
+		-- 				default = {
+		-- 					transparent_background = 1,
+		-- 				},
+		-- 			},
+		-- 		}
+		--
+		-- 		vim.cmd.colorscheme("PaperColor")
+		-- 	end,
+		-- },
+		-- {
+		-- 	"echasnovski/mini.base16",
+		-- 	config = function()
+		-- 		require("plugins.mini.mini-base16")
+		-- 	end,
+		-- },
+		-- {
+		-- 	"zenbones-theme/zenbones.nvim",
+		-- 	-- -- Optionally install Lush. Allows for more configuration or extending the colorscheme
+		-- 	-- -- If you don't want to install lush, make sure to set g:zenbones_compat = 1
+		-- 	-- -- In Vim, compat mode is turned on as Lush only works in Neovim.
+		-- 	dependencies = "rktjmp/lush.nvim",
+		-- 	lazy = false,
+		-- 	priority = 1000,
+		-- 	-- you can set set configuration options here
+		-- 	config = function()
+		-- 		vim.g.zenbones_darken_comments = 45
+		-- 		vim.cmd.colorscheme("zenbones")
+		-- 	end,
+		-- },
 	}
 end
 
@@ -342,10 +385,57 @@ local function completions()
 				{ "FelipeLema/cmp-async-path" },
 				{ "quangnguyen30192/cmp-nvim-tags" },
 				{ "onsails/lspkind.nvim" },
+				{
+					"zbirenbaum/copilot-cmp",
+					config = function()
+						require("copilot_cmp").setup()
+					end,
+				},
 			},
 			config = function()
 				-- Require("plugins.completions.luasnip")
 				Require("plugins.completions.cmp")
+			end,
+		},
+
+		-- github copilot setup
+		{
+			"zbirenbaum/copilot.lua",
+			-- event = "VeryLazy",
+			lazy = true,
+			cmd = {
+				"Copilot",
+			},
+			config = function()
+				vim.g.copilot_no_tab_map = true
+				vim.keymap.set({ "n", "i" }, "<C-CR>", function()
+					-- vim.cmd("call copilot#Accept('<CR/>')")
+					require("copilot.suggestion").accept()
+				end)
+
+				vim.keymap.set({ "i" }, "<C-j>", function()
+					require("copilot.suggestion").next()
+				end)
+
+				vim.keymap.set({ "i" }, "<C-k>", function()
+					require("copilot.suggestion").prev()
+				end)
+
+				vim.keymap.set({ "i" }, "<C-c>", function()
+					require("copilot.suggestion").prev()
+				end)
+
+				require("copilot").setup({
+					panel = { enabled = true },
+					filetypes = {
+						["*"] = true,
+					},
+					suggestion = {
+						enabled = true,
+						auto_trigger = true,
+						keymap = nil,
+					},
+				})
 			end,
 		},
 
@@ -412,6 +502,9 @@ local function mini_nvim()
 			-- event = "UIEnter",
 			event = "BufReadPre",
 			branch = "stable",
+			init = function()
+				Require("plugins.mini.mini-base16")
+			end,
 			config = function()
 				require("plugins.mini")
 			end,
@@ -528,8 +621,21 @@ local function nxtcoder17_plugins()
 			config = function()
 				require("http-cli").setup({
 					envFile = function()
-						-- return string.format("%s/%s", vim.env.PWD, ".secrets/gqlenv.yml")
-						return string.format("%s/%s", vim.env.PWD, ".secrets/http-cli-env.yml")
+						local v = os.getenv("HTTP_CLI_ENV")
+						if v ~= "" then
+							return v
+						end
+
+						local paths = {
+							vim.fn.getcwd() .. "/.secrets/http-cli-env.yml",
+							vim.g.project_root_dir .. "/.secrets/http-cli-env.yml",
+						}
+
+						for _, path in ipairs(paths) do
+							if Require("functions.fs").exists(path) then
+								return path
+							end
+						end
 					end,
 				})
 			end,
@@ -615,6 +721,20 @@ local function terminals()
 	}
 end
 
+local function lua_rocks()
+	return {
+		{
+			"vhyrro/luarocks.nvim",
+			priority = 1000, -- Very high priority is required, luarocks.nvim should run as the first plugin in your config.
+			opts = {
+				rocks = {
+					"lpeg",
+				},
+			},
+		},
+	}
+end
+
 local plugins = {}
 vim.list_extend(plugins, fuzzy_finders())
 vim.list_extend(plugins, colorschemes())
@@ -631,6 +751,7 @@ vim.list_extend(plugins, mini_nvim())
 vim.list_extend(plugins, nxtcoder17_plugins())
 vim.list_extend(plugins, file_managers())
 vim.list_extend(plugins, terminals())
+vim.list_extend(plugins, lua_rocks())
 
 require("lazy").setup(plugins, {
 	ui = {

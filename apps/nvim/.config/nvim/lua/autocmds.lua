@@ -71,7 +71,7 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 							"-c",
 							"fd -t file --ignore-vcs --exclude tags -c never > /tmp/list.txt && ctags -L /tmp/list.txt",
 						},
-						cwd = vim.g.nxt.project_root_dir,
+						cwd = vim.g.project_root_dir,
 						-- on_exit = function(j, return_val)
 						--   -- vim.print(j:result())
 						--   -- print(return_val)
@@ -84,5 +84,25 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 			end
 			coroutine.yield()
 		end)()
+	end,
+})
+
+vim.api.nvim_create_autocmd({ "InsertEnter" }, {
+	group = global,
+	pattern = "*",
+	callback = function()
+		vim.cmd("TSBufDisable highlight")
+		-- coroutine.wrap(function()
+		-- 	local co = coroutine.running()
+		-- 	coroutine.yield()
+		-- end)()
+	end,
+})
+
+vim.api.nvim_create_autocmd({ "InsertLeave" }, {
+	group = global,
+	pattern = "*",
+	callback = function()
+		vim.cmd("TSBufEnable highlight")
 	end,
 })

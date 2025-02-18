@@ -8,7 +8,7 @@ M.setup_mason = function()
 
 		"black",
 
-		"prettier_d",
+		"prettierd",
 		"djlint",
 	}
 

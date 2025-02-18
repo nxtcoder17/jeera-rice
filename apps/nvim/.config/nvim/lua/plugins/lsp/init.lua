@@ -152,4 +152,4 @@ Require("plugins.lsp.languages.protobuf").setup_lsp(on_attach, wrapper)
 Require("plugins.lsp.languages.htmx").setup_lsp(on_attach, wrapper)
 Require("plugins.lsp.languages.sql").setup_lsp(on_attach, wrapper)
 
-Require("plugins.lsp.formatter").setup_lsp(on_attach, wrapper)
+Require("plugins.lsp.formatter").setup_formatters(on_attach, wrapper)

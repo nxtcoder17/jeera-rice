@@ -30,7 +30,7 @@ cmp.setup({
 
 	completion = {
 		-- INFO: to disable automatic completion popup, change to false
-		-- autocomplete = true,
+		-- autocomplete = false,
 	},
 
 	preselect = cmp.PreselectMode.None,
@@ -127,6 +127,7 @@ cmp.setup({
 		{ name = "async_path", priority = 80 },
 		{ name = "luasnip", options = { show_autosnippets = true }, priority = 70 },
 		{ name = "go:imports", priority = 60, keyword_length = 3 },
+		{ name = "copilot", group_index = 2 },
 
 		-- { name = "cmp_tabby" },
 		-- { name = "supermaven", priority = 50 },

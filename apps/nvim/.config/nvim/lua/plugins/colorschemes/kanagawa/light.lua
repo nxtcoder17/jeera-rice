@@ -79,7 +79,7 @@ local my_colors = {
 	},
 }
 
-local lib = Require("plugins.colorschemes.kanagawa.lib")
+local lib = Require("plugins.colorschemes.lib")
 
 local overrides = function(colors)
 	local palette = colors.palette
@@ -127,7 +127,7 @@ local overrides = function(colors)
 		--
 		-- -- mini hi patterns
 		-- MiniHipatternsInfo = { fg = palette.waveBlue1, bg = palette.crystalBlue, bold = true, italic = true},
-		WinSeparator = { fg = Require("plugins.colorschemes.kanagawa.lib").lighten(palette.lotusGray, 20) },
+		WinSeparator = { fg = lib.lighten(palette.lotusGray, 20) },
 
 		-- for luasnip
 		LuasnipChoiceNode = { link = "Keyword" },

@@ -30,6 +30,7 @@ vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
 
 require("options")
+require("folds")
 require("globals")
 Require("plugins")
 

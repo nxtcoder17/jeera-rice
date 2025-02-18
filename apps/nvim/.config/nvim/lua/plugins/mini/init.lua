@@ -12,6 +12,9 @@ Require("mini.surround").setup({
 	},
 })
 
+-- INFO: loading this colorscheme as part of init process directly
+-- Require("plugins.mini.mini-base16")
+
 Require("mini.align").setup({})
 
 Require("plugins.mini.mini-git")

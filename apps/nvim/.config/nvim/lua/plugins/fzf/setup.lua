@@ -150,7 +150,6 @@ fzf.setup({
 
 	grep = {
 		formatter = "path.filename_first",
-		multiline = 2,
 	},
 
 	actions = {

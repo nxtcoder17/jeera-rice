@@ -9,35 +9,22 @@ snippet flake.nix
     outputs = { self, nixpkgs, flake-utils }:
       flake-utils.lib.eachDefaultSystem (system:
         let
-          pkgs = import nixpkgs { inherit system; };
+          pkgs = import nixpkgs {
+            inherit system; 
+            # config.allowUnfree = true;
+          };
         in
         {
           devShells.default = pkgs.mkShell {
             # hardeningDisable = [ "all" ];
 
             buildInputs = with pkgs; [
-
-              (stdenv.mkDerivation rec {
-                name = "fwatcher";
-                pname = "fwatcher";
-                src = fetchurl {
-                  url = "https://github.com/nxtcoder17/fwatcher/releases/download/v1.0.2/fwatcher-linux-amd64";
-                  sha256 = "sha256-V5v0zfwkhInLEWouvjtXuW3kHuvMiLtA7eddHxsz1B4=";
-                };
-                unpackPhase = ":";
-                installPhase = ''
-                  mkdir -p $$out/bin
-                  cp $$src $$out/bin/$$name
-                  chmod +x $$out/bin/$$name
-                '';
-              })
-
               (stdenv.mkDerivation rec {
                 name = "run";
                 pname = "run";
                 src = fetchurl {
                   url = "https://github.com/nxtcoder17/Runfile/releases/download/v1.2.0/run-linux-amd64";
-                  sha256 = "sha256-SKLuX/i86cpryK1TFOrtXGLikikwEuH0dPU4xur6N/Y=";
+                  sha256 = "sha256-JbowwBx8BRWoyH8dMmD0PArYD6eKUVJXVQ4X3E9lXnY=";
                 };
                 unpackPhase = ":";
                 installPhase = ''
