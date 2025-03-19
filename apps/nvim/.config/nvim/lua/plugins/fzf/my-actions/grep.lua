@@ -13,11 +13,11 @@ local function grep_with_fzf(dir, query, call_depth)
 	local current_line = vim.fn.line(".")
 	local current_col = vim.fn.col(".")
 
-	local rg_opts = {
-		["--ignore-file"] = string.format("%s:%d:%d", current_file, current_line, current_col),
-	}
+	-- local rg_opts = {
+	-- 	["--ignore-file"] = string.format("%s:%d:%d", current_file, current_line, current_col),
+	-- }
 
-	print("called", "dir", dir, "query", query, "call-depth", call_depth)
+	-- print("called", "dir", dir, "query", query, "call-depth", call_depth)
 
 	local fzf = Require("fzf-lua")
 
@@ -26,7 +26,7 @@ local function grep_with_fzf(dir, query, call_depth)
 		fzf.grep_cword({
 			cwd = dir,
 			query = query,
-			rg_opts = rg_opts,
+			-- rg_opts = rg_opts,
 			actions = {
 				["ctrl-f"] = function(_, opts)
 					local q = fzf.get_last_query()
@@ -44,7 +44,7 @@ local function grep_with_fzf(dir, query, call_depth)
 		fzf.grep_visual({
 			cwd = dir,
 			query = query,
-			rg_opts = rg_opts,
+			-- rg_opts = rg_opts,
 		})
 	end
 end

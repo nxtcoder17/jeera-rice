@@ -118,6 +118,7 @@ fzf.setup({
 	},
 
 	files = {
+		-- cmd = { "rg", "--files" },
 		prompt = "Files ❯ ",
 		cwd_prompt = false,
 		fzf_opts = {

@@ -35,6 +35,9 @@ Require("nvim-treesitter.configs").setup({
 	highlight = {
 		enable = true,
 		additional_vim_regex_highlighting = false,
+		disable = function(_, bufnr)
+			return vim.api.nvim_buf_line_count(bufnr) > 1500
+		end,
 	},
 
 	incremental_selection = {
@@ -156,3 +159,5 @@ parser_config.gotmpl = {
 	filetype = { "gotmpl", "gotexttmpl", "gohtmltmpl" },
 	used_by = { "gohtmltmpl", "gotexttmpl", "gotmpl", "yaml" },
 }
+
+Require("plugins.treesitter.buf-highlight-lag-fix")

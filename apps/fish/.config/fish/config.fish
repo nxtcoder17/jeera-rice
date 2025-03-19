@@ -10,6 +10,14 @@ if type -q exa
     alias ll 'exa -la --icons'
 end
 
+# source nix if not already sourced
+if ! test command -v nix &> /dev/null
+  set nix_daemon_file "/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish"
+ if test -f "$nix_daemon_file" 
+   source "$nix_daemon_file"
+ end
+end
+
 # git abbreviations
 abbr gs 'git status'
 abbr gss 'git status -s'
@@ -213,7 +221,7 @@ set -gx GOPATH "$XDG_DATA_HOME/go"
 set -gx K9SCONFIG "$XDG_CONFIG_HOME/k9s"
 set -gx DOCKER_CONFIG "$XDG_CONFIG_HOME/docker"
 set -gx GTK2_RC_FILES "$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
-set -gx _JAVA_OPTIONS "-DJava.util.prefs.userRoot=$XDG_CONFIG_HOME/java -Dsun.java2d.opengl=true -Dawt.useSystemAAFontSettings=on"
+set -gx _JAVA_OPTIONS "-DJava.util.prefs.userRoot=$XDG_CONFIG_HOME/java -Dsun.java2d.opengl=true -Dawt.useSystemAAFontSettings=on -Dawt.toolkit.name=WLToolkit"
 
 set -gx NODE_REPL_HISTORY "$XDG_DATA_HOME/node_repl_history"
 set -gx NPM_CONFIG_USERCONFIG "$XDG_CONFIG_HOME/npm/npmrc"
@@ -324,3 +332,4 @@ zoxide init fish | source
 # bun
 set --export BUN_INSTALL "$XDG_DATA_HOME/bun"
 set --export PATH $BUN_INSTALL/bin $PATH
+

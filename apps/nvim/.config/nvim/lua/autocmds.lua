@@ -92,10 +92,6 @@ vim.api.nvim_create_autocmd({ "InsertEnter" }, {
 	pattern = "*",
 	callback = function()
 		vim.cmd("TSBufDisable highlight")
-		-- coroutine.wrap(function()
-		-- 	local co = coroutine.running()
-		-- 	coroutine.yield()
-		-- end)()
 	end,
 })
 
@@ -103,6 +99,9 @@ vim.api.nvim_create_autocmd({ "InsertLeave" }, {
 	group = global,
 	pattern = "*",
 	callback = function()
+		if vim.b.no_ts_highlight == true then
+			return
+		end
 		vim.cmd("TSBufEnable highlight")
 	end,
 })

@@ -9,13 +9,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixgl.url = "github:nix-community/nixGL";
-
-    ghostty = {
-      url = "github:ghostty-org/ghostty";
-    };
   };
 
-  outputs = { nixpkgs, home-manager, nixgl, ghostty, ... }:
+  outputs = { nixpkgs, home-manager, nixgl, ... }:
     let
       system = "x86_64-linux";
       # pkgs = nixpkgs.legacyPackages.${system};
@@ -24,7 +20,7 @@
         overlays = [ nixgl.overlay ];
       };
 
-      ghostty_term = ghostty.packages.${system}.ghostty;
+      # ghostty_term = ghostty.packages.${system}.ghostty;
 
       nixGL = import <nixgl> { };
 
@@ -46,6 +42,11 @@
       runWithNvidiaGPU = pkg:
         let
           name = "gpu-${pkg.name}";
+          # pkgs = import nixpkgs {
+          #   inherit system;
+          #   overlays = [ nixgl.overlay ];
+          # };
+          # echo "${pkgs.nixgl.auto.nixGLNvidia}/bin/nixGLNvidia-${pkgs.nixgl.nvidiaVersion} ${pkg}/bin/$item" >> $out/bin/$item
         in
         pkgs.stdenv.mkDerivation
           {
@@ -58,12 +59,33 @@
               mkdir -p $out/bin
 
               for item in `ls ${pkg}/bin`; do
-                echo "#! /usr/bin/env bash" > "$out/bin/gpu-$item"
-                echo "nixGLNvidia-$nvidia_version ${pkg}/bin/$item \$@" >> "$out/bin/gpu-$item"
-                chmod +x $out/bin/gpu-$item
+                echo "#! /usr/bin/env bash" > "$out/bin/$item"
+                echo "nixGLNvidia-$nvidia_version ${pkg}/bin/$item \$@" >> "$out/bin/$item"
+                chmod +x $out/bin/$item
               done
             '';
           };
+
+      withPostInstallScript = pkg: (script:
+        let
+          name = "post-install-${pkg.name}";
+        in
+        pkgs.stdenv.mkDerivation
+          {
+            name = name;
+            pname = name;
+            src = pkg.name;
+            unpackPhase = ":";
+            installPhase = ''
+              mkdir -p $out/bin
+              for item in `ls ${pkg}/bin`; do
+                cp ${pkg}/bin/$item $out/bin/$item
+              done
+
+              PACKAGE=${pkg}
+              ${script}
+            '';
+          });
 
 
       # use this as `programs.kitty.package = nixGLWrap pkgs.kitty;`
@@ -77,6 +99,7 @@
         extraSpecialArgs = {
           nvidiaVersion = NvidiaVersion;
           runWithNvidiaGPU = runWithNvidiaGPU;
+          withPostInstallScript = withPostInstallScript;
         };
 
         # Specify your home configuration modules here, for example,
@@ -84,10 +107,7 @@
         modules = [
           ./home.nix
           {
-            home.packages = with pkgs; [
-              # ghostty.packages.${system}.default
-              (runWithNvidiaGPU ghostty.packages.${system}.default)
-            ];
+            home.packages = with pkgs; [];
           }
         ];
 

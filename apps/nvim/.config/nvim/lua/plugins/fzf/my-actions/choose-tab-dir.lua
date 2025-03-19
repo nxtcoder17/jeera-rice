@@ -3,7 +3,8 @@ local function choose_tab_dir(dir)
 	-- dir = dir or vim.fn.getcwd()
 	dir = vim.g.project_root_dir
 
-	local cmd = "fd -H --exclude .git --threads 1 -t d -c never"
+	local cmd = "fd -H --exclude .git -t d -c never"
+	-- local cmd = "rg --files | xargs -I {} dirname {} | sort -u | grep -v '^.$'"
 
 	local fzf_opts = {}
 	if dir ~= vim.g.project_root_dir then

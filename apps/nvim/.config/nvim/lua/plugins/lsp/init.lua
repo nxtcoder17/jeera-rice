@@ -20,7 +20,29 @@ vim.diagnostic.config({
 			min = min_severity,
 			max = vim.diagnostic.severity.ERROR,
 		},
+		text = {
+			[vim.diagnostic.severity.HINT] = "⚡",
+			[vim.diagnostic.severity.INFO] = "»",
+			[vim.diagnostic.severity.WARN] = "🗯️",
+			[vim.diagnostic.severity.ERROR] = "🔥",
+		},
+		linehl = {
+			[vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
+			[vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
+			[vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+			[vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+		},
+		numhl = {
+			[vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
+			[vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
+			[vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+			[vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+		},
 	},
+	-- virtual_lines = {
+	-- 	min = min_severity,
+	-- 	max = vim.diagnostic.severity.ERROR,
+	-- },
 	float = {
 		source = "always",
 		focusable = false,
@@ -98,20 +120,20 @@ local function on_attach(client, bufnr)
 	-- vim.keymap.set("n", "gr", function()
 	-- 	require("telescope.builtin").lsp_references({ include_current_line = false, show_line = false })
 	-- end, opts)
-	vim.keymap.set("n", "gd", "<Cmd>Fzf lsp_definitions jump_to_single_result=true<CR>", opts)
+	vim.keymap.set("n", "gd", "<Cmd>Fzf lsp_definitions jump1=true<CR>", opts)
 	vim.keymap.set("n", "gD", "<Cmd>Fzf lsp_typedefs<CR>", opts)
 	vim.keymap.set("n", "gi", "<Cmd>Fzf lsp_implementations<CR>", opts)
 	vim.keymap.set("n", "sr", vim.lsp.buf.rename, opts)
 end
 
--- LSP signs default
-local signs = { Error = "🔥", Warn = "🗯️", Hint = "⚡", Info = "»" }
-
-for type, icon in pairs(signs) do
-	local hl = "DiagnosticSign" .. type
-	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end
-
+-- -- LSP signs default
+-- local signs = { Error = "🔥", Warn = "🗯️", Hint = "⚡", Info = "»" }
+--
+-- for type, icon in pairs(signs) do
+-- 	local hl = "DiagnosticSign" .. type
+-- 	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+-- end
+--
 -- table.insert(vim.opt.runtimepath, vim.fn.stdpath("data") .. "/mason/bin")
 vim.env.PATH = vim.env.PATH .. ":" .. vim.fn.stdpath("data") .. "/mason/bin"
 

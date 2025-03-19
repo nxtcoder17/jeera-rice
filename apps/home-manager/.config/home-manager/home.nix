@@ -1,22 +1,27 @@
 # [Learn NIX](https://nixos.org/manual/nix/stable/language/)
 
-{ config, pkgs, lib, nvidiaVersion, runWithNvidiaGPU, nixGLWrap, ... }:
+{ config, pkgs, lib, nvidiaVersion, runWithNvidiaGPU, withPostInstallScript, nixGLWrap, ... }:
 
 let
   packages.xorg = with pkgs; [
+    # xorg.xinit
+    # xorg.xauth
     xorg.xrandr
     xorg.xset
     xcape
-    xorg.xmodmap
+    # xorg.xmodmap
     xorg.setxkbmap
-    xorg.xhost
+    # xorg.xhost
     xorg.xinput
-    xorg.xkill
-    xorg.libXcomposite
-    lxappearance
+    xorg.xev
+
+    # xorg.xkill
+    # xorg.libXcomposite
+    # lxappearance
 
     xclip
     xdragon
+    sx # a simple alternative to xinit and startx
 
     # picom-pijulius
 
@@ -29,11 +34,15 @@ let
     # xorg.libxcb
   ];
 
+  packages.wayfire = with pkgs; [
+    # wayfire-with-plugins
+    # wlrobs
+    xdg-desktop-portal-wlr
+  ];
+
   packages.hyprland = with pkgs; [
     #hyprland
     hyprland-protocols
-
-
     hyprland-workspaces
     wofi
     swaynotificationcenter # swaync
@@ -63,6 +72,15 @@ let
     wev
     nwg-look # lx appearance for wayland
     gammastep
+    wf-recorder
+
+    dart-sass
+  ];
+
+  packages.linux = with pkgs; [
+  ];
+
+  packages.macos = with pkgs; [
   ];
 
   packages.hardware_acceleration = with pkgs; [
@@ -76,12 +94,8 @@ let
     scrot
     dmenu-rs
     sysstat
-    rofi
+    # rofi
     acpi
-
-
-    # wayfire window manager
-    # wayfire-with-plugins
 
     # image viewers
     feh
@@ -90,12 +104,11 @@ let
     dunst
     light
 
-    kitty
+    # (runWithNvidiaGPU kitty)
     networkmanagerapplet
     networkmanager
 
     keyd
-    waybar
   ];
 
   packages.audio_video = with pkgs; [
@@ -124,12 +137,16 @@ let
     nerdctl
     rootlesskit
     buildkit
+    # ((withPostInstallScript docker-buildx) ''
+    #   mkdir -p /home/nxtcoder17/.config/docker/cli-plugins
+    #   cp $PACKAGE/bin/docker-buildx /home/nxtcoder17/.config/docker/cli-plugins/docker-buildx
+    # '')
     docker-buildx # POST-INSTALL: `sudo cp $HOME/.nix-profile/bin/docker-buildx $XDG_CONFIG_HOME/docker/cli-plugins/docker-buildx`
     docker-compose # POST-INSTALL: `sudo cp $HOME/.nix-profile/bin/docker-compose $XDG_CONFIG_HOME/docker/cli-plugins/docker-compose`
     docker-slim
     dive
 
-    # awscli2
+    awscli2
     # lens
 
     (google-cloud-sdk.withExtraComponents [ google-cloud-sdk.components.gke-gcloud-auth-plugin ])
@@ -141,37 +158,22 @@ let
     networkmanager
     graphviz
 
+    clamav
+    (runWithNvidiaGPU ghostty)
+
     transmission_4
     jujutsu
-
-    # (writeShellScriptBin "nvim" ''
-    #   #! /usr/bin/env bash
-    #   dest=$HOME/.local/tars.uz/nvim
-    #   if ! command -v $dest/bin/nvim  &> /dev/null; then
-    #   	rm -rf $dest
-    #     echo "Downloading neovim..."
-    #     dir=$(mktemp -d)
-    #     trap "rm -rf $dir" EXIT
-    #     pushd $dir
-    #     curl -L0 https://github.com/neovim/neovim/releases/download/v0.10.2/nvim-linux64.tar.gz > nvim.tar.gz
-    #     tar xf nvim.tar.gz
-    #     rm nvim.tar.gz
-    #     mv nvim-linux64 $dest
-    #     popd
-    #   fi
-    #    $dest/bin/nvim "$@"
-    # '')
+    # ags
 
     (stdenv.mkDerivation rec {
       name = "nvim";
       pname = name;
       src = fetchurl {
-        url = "https://github.com/neovim/neovim/releases/download/v0.10.3/nvim-linux64.tar.gz";
-        sha256 = "sha256-vhiZFaKg2jYVV24tsGp8cUrvCukmtNphB+WJo8xiPlw=";
-        # for v0.10.2: sha256 = "sha256-n2luY11QO4ROTnjoiiK89RKnjyiL9HE3mvw9AAThUhc=";
+        url = "https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.tar.gz";
+        sha256 = "sha256-YH1TVW359/4BLW7hE/pE183hG/tZDVF4kbsk91ipnAk=";
 
-        # url = "https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz";
-        # sha256 = "sha256-O5X+J8k8cC6cluymCyRd1e6cI6Ruav/YfL9wYOaWPq8=";
+        # url = "https://github.com/neovim/neovim/releases/download/v0.10.3/nvim-linux64.tar.gz";
+        # sha256 = "sha256-vhiZFaKg2jYVV24tsGp8cUrvCukmtNphB+WJo8xiPlw=";
       };
       # buildInputs = [ bash ];
       # nativeBuildInputs = [ ];
@@ -180,7 +182,7 @@ let
         tar xf $src
         ls -al $src
 
-        cp -R nvim-linux64 $out/nvim
+        cp -R nvim-linux-x86_64 $out/nvim
         ln -sf $out/nvim/bin/nvim $out/bin/$name
       '';
     }
@@ -229,9 +231,9 @@ let
     # fishPlugins.hydro
 
     gitstatus
-    bash
+    # bash
     glibcLocales
-    bash-completion
+    # bash-completion
     readline
     ncdu
 
@@ -309,14 +311,21 @@ let
 
     # pdf
     pdftk
+    duf
+
+    postgresql
   ];
 
   packages.gui_apps = with pkgs; [
+    graphite-gtk-theme
+    graphite-cursors
+
     telegram-desktop
     google-chrome
     screenkey
 
-    # vivaldi
+    (runWithNvidiaGPU vivaldi)
+    (runWithNvidiaGPU windsurf)
     vivaldi-ffmpeg-codecs
 
     freshfetch
@@ -326,6 +335,8 @@ let
     zathura
 
     copyq
+
+    gtk-engine-murrine
 
     # (runWithNvidiaGPU code-cursor)
 
@@ -378,8 +389,8 @@ let
       pname = name;
       version = "";
       src = fetchurl {
-        url = "https://github.com/zen-browser/desktop/releases/download/1.0.2-b.5/zen-x86_64.AppImage";
-        sha256 = "sha256-faJzPHtjE3Q+9WpPm1Lip4f7RJQrhWdTU+MFaCXy2Xg=";
+        url = "https://github.com/zen-browser/desktop/releases/latest/download/zen-x86_64.AppImage";
+        sha256 = "sha256-GJuxooMV6h3xoYB9hA9CaF4g7JUIJ2ck5/hiQp89Y5o=";
 
         # url = "https://github.com/zen-browser/desktop/releases/latest/download/zen-generic.AppImage";
         # sha256 = "sha256-Dy21dVatjyl9AiDm+SXEnoT+HMHCtTZehXUAyYKiUpU=";
@@ -397,90 +408,12 @@ let
       '';
     }))
 
-    (runWithNvidiaGPU vmware-horizon-client)
-
-    # (runWithNvidiaGPU (stdenv.mkDerivation rec {
-    #   name = "cursor";
-    #   pname = name;
-    #   version = "";
-    #   src = fetchurl {
-    #     url = "https://downloader.cursor.sh/linux/appImage/x64";
-    #     sha256 = "sha256-adEyDExGvxwpvAT0qYiCfvkpINP9BJ6a+LSwQHQ/H/U=";
-    #   };
-    #   unpackPhase = ":";
-    #   buildInputs = with pkgs; [ bash unzip ];
-    #   # nativeBuildInputs = [ coreutils makeWrapper ];
-    #   installPhase = ''
-    #     mkdir -p $out/appimage $out/bin
-    #     cp $src $out/appimage/$name
-    #     chmod +x $out/appimage/$name
-    #     pushd $out/appimage
-    #     ./$name --appimage-extract
-    #     popd
-    #     ln -sf $out/appimage/squashfs-root/AppRun $out/bin/$name
-    #   '';
-    # }))
-
-
-    # (stdenv.mkDerivation {
-    #   name = "zen2";
-    #   # pname = "zen2";
-    #   src = fetchurl
-    #     {
-    #       url = "https://github.com/zen-browser/desktop/releases/latest/download/zen-generic.AppImage";
-    #       sha256 = "sha256-ULs54/BuLzHhqnjgENgtpaP60uqir+kromJxekGq5d4=";
-    #       curlOpts = "-L0";
-    #     };
-    #   # src = ":";
-    #   buildPhase = ":";
-    #   unpackPhase = ":";
-    #   installPhase = ''
-    #     mkdir -p $out/bin
-    #     cp --remove-destination  $src $out/bin/zen-browser2
-    #     echo "#! /usr/bin/env bash" > $out/bin/testing
-    #     echo "echo $src" >> $out/bin/testing
-    #     output=$(ls -al)
-    #     output+=$(ls $src)
-    #     output+="$(echo src size: $(du -hs $src))"
-    #     # echo "echo $(ls $src)" >> $out/bin/testing
-    #     # echo "echo $(file $src)" >> $out/bin/testing
-    #     echo "echo $out/bin" >> $out/bin/testing
-    #     echo "ls $out/bin" >> $out/bin/testing
-    #     echo "echo $(du -hs $out/bin/zen-browser2)" >> $out/bin/testing
-    #     chmod +x $out/bin/testing
-    #     chmod +x $out/bin/zen-browser2
-    #
-    #     output+="$(echo output size: $(du -hs $out/bin/zen-browser2))"
-    #     echo "echo '$output'" >> $out/bin/testing
-    #   '';
-    #
-    #   meta = with lib; {
-    #     homepage = "https://github.com/borkdude/babashka";
-    #     description = "Clojure scripting interpreter";
-    #     platforms = platforms.linux;
-    #     maintainers = with maintainers; [ filthy-trender ];
-    #   };
-    #
-    #   # installPhase = '' 
-    #   #   mkdir -p $out/bin
-    #   #   curl -L0 https://github.com/zen-browser/desktop/releases/latest/download/zen-generic.AppImage > $out/bin/zen-browser2
-    #   #   chmod +x $out/bin/zen-browser2
-    #   # '';
-    #
-    #   # meta = with pkgs.stdenv.lib; {
-    #   #   description = "downloaded from github releases";
-    #   #   platforms = platforms.linux;
-    #   # };
-    # })
-
-    firefox-devedition
-    # (nixGL firefox-devedition)
-
+    # (runWithNvidiaGPU firefox-devedition)
+    (runWithNvidiaGPU jetbrains.idea-ultimate)
+    kanata
   ];
 
   packages.nxtcoder17 = with pkgs; [
-    (runWithNvidiaGPU firefox-devedition)
-
     (writeShellScriptBin "with-gpu" ''
       #! /usr/bin/env bash
       echo "got from input (nvidia_version: ${nvidiaVersion})"
@@ -518,31 +451,17 @@ in
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
-
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
-
-    # wezterm
-    # blackbox-terminal
     cargo
     glibcLocales
+    # rofi-wayland
+    sassc
+    noto-fonts
+    noto-fonts-color-emoji
   ]
   ++ packages.hyprland
-  # ++ packages.xorg
-  # ++ packages.i3wm
+  ++ packages.wayfire
+  ++ packages.xorg
+  ++ packages.i3wm
   ++ packages.audio_video
   ++ packages.cli_workflow
   ++ packages.kubernetes
@@ -565,17 +484,22 @@ in
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
-
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
+    ".config/docker/cli-plugins/docker-compose" = {
+      source = "${pkgs.docker-compose}/bin/docker-compose";
+    };
+    ".config/docker/cli-plugins/docker-buildx" = {
+      source = "${pkgs.docker-buildx}/bin/docker-buildx";
+    };
   };
+
+
+  # xdg.configFile = {
+  #     “nvim” = {
+  #           source = config.lib.file.mkOutOfStoreSymlink “${dotty}/config/nvim”;
+  #           recursive = true;
+  #     };
+  # };
+  #
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. If you don't want to manage your shell through Home
@@ -601,14 +525,4 @@ in
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-  programs.wezterm.package = nixGLWrap pkgs.wezterm;
-  programs.kitty.package = nixGLWrap pkgs.kitty;
-  # programs.zen-browser.package = nixGLWrap pkgs.zen-browser;
-  # programs.firefox.package = nixGLWrap pkgs.firefox;
-
-  # programs.bash.completion.enable = true;
-  # programs.bash.blesh.enable = true;
-  # programs.bash.enableLsColors = true;
-
-  # programs.firefox-devedition-bin.package = nixGLWrap pkgs.firefox-devedition-bin;
 }

@@ -19,7 +19,7 @@ local function fuzzy_finders()
 	return {
 		{
 			"ibhagwan/fzf-lua",
-			commit = "86b77a661ff38bf08b1ceb5a6c3c257285a42a4d",
+			-- commit = "86b77a661ff38bf08b1ceb5a6c3c257285a42a4d",
 			dependencies = { "nvim-tree/nvim-web-devicons" },
 			lazy = true,
 			-- event = "UIEnter",
@@ -94,6 +94,10 @@ end
 
 local function syntax()
 	return {
+		{
+			"sheerun/vim-polyglot",
+			event = "VeryLazy",
+		},
 		{
 			"nvim-treesitter/nvim-treesitter",
 			event = "BufReadPost",
@@ -171,18 +175,18 @@ local function syntax()
 			end,
 		},
 
-		{
-			"kevinhwang91/nvim-ufo",
-			dependencies = "kevinhwang91/promise-async",
-			-- event = "BufReadPost", -- needed for folds to load properly
-			cmd = {
-				"UfoEnable",
-				"UfoDisable",
-			},
-			config = function()
-				require("plugins.treesitter.nvim-ufo")
-			end,
-		},
+		-- {
+		-- 	"kevinhwang91/nvim-ufo",
+		-- 	dependencies = "kevinhwang91/promise-async",
+		-- 	-- event = "BufReadPost", -- needed for folds to load properly
+		-- 	cmd = {
+		-- 		"UfoEnable",
+		-- 		"UfoDisable",
+		-- 	},
+		-- 	config = function()
+		-- 		require("plugins.treesitter.nvim-ufo")
+		-- 	end,
+		-- },
 	}
 end
 

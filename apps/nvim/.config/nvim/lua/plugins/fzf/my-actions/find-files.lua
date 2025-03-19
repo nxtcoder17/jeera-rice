@@ -6,7 +6,11 @@ local function find_files(dir, query)
 	dir = dir or vim.loop.cwd()
 	query = query or ""
 
+	-- fzf_lua.setup({ files = { cmd = "rg --files" } })
+
 	fzf.files({
+		-- cmd = "fd --type file --follow --hidden --exclude .git",
+		-- cmd = "rg --files",
 		ignore_current_file = true,
 		cwd = dir,
 		query = query,

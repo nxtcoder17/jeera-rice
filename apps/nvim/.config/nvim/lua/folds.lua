@@ -29,10 +29,51 @@ function _G.foldtext()
 	return prefix .. dashes .. suffix .. stripped
 end
 
+local logger = NewLogger("folds")
+
+function MyFoldExpr(ln)
+	local indent = vim.fn.indent(ln) / vim.opt.shiftwidth:get()
+
+	-- local indent_t = vim.b.custom_fold_indent_level or 1
+	local line = vim.fn.getline(ln)
+
+	if line:match("^%s*$") then
+		return "=" -- No folding for empty lines
+	end
+
+	-- logger.debug(string.format("line: %s, indent: %d", line, indent))
+
+	if vim.b.custom_fold_indent_level ~= nil then
+		local ct = vim.b.custom_fold_indent_level
+
+		if indent < ct then
+			return "0"
+		elseif indent == ct then
+			return string.format("%d", indent + 1)
+		elseif indent > ct then
+			return string.format("%d", ct - indent + 1)
+		end
+	end
+
+	-- return "-1"
+	return string.format("%d", indent)
+end
+
 -- start unfolded
-vim.opt.foldlevelstart = 99
+vim.opt.foldlevelstart = 99 -- start buffer with all folds open
 vim.opt.foldmethod = "indent"
+
+-- vim.opt.foldmethod = "expr"
+-- vim.opt.foldexpr = "v:lua.MyFoldExpr(v:lnum)"
+
 vim.opt.foldnestmax = 1
 vim.opt.foldminlines = 0 -- Allow closing even 1-line folds.
 
 vim.opt.foldtext = "v:lua.foldtext()"
+
+vim.api.nvim_create_user_command("FoldAtLevel", function(params)
+	vim.b.custom_fold_indent_level = params.fargs[1]
+
+	vim.opt.foldmethod = "expr"
+	vim.opt.foldexpr = "v:lua.MyFoldExpr(v:lnum)"
+end, { desc = "indent folding only at this level", nargs = 1 })
