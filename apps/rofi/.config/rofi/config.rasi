@@ -13,7 +13,7 @@ configuration{
     display-combi: "󰨝 Combi";
     display-Network: " 󰤨  Network";
     sidebar-mode: false;
-    font: "Serious Shanns 16";
+    font: "Recursive Sans Casual Static Medium 16";
 }
 
 @theme "catppuccin-mocha"
