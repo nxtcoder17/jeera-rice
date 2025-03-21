@@ -3,7 +3,7 @@
 
 -- TODO: make this prompt use fzf filters
 vim.api.nvim_create_user_command("Todo", function(opts)
-	print(vim.inspect(opts))
+	-- print(vim.inspect(opts))
 	Require("fzf-lua").grep({ search = "TODO|HACK|NOTE|FIXME", no_esc = true })
 end, {
 	nargs = "*",
