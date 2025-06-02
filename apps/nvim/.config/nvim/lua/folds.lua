@@ -66,14 +66,7 @@ vim.opt.foldmethod = "indent"
 -- vim.opt.foldmethod = "expr"
 -- vim.opt.foldexpr = "v:lua.MyFoldExpr(v:lnum)"
 
-vim.opt.foldnestmax = 1
-vim.opt.foldminlines = 0 -- Allow closing even 1-line folds.
+vim.opt.foldnestmax = 10
+vim.opt.foldminlines = 1 -- Allow closing even 1-line folds.
 
 vim.opt.foldtext = "v:lua.foldtext()"
-
-vim.api.nvim_create_user_command("FoldAtLevel", function(params)
-	vim.b.custom_fold_indent_level = params.fargs[1]
-
-	vim.opt.foldmethod = "expr"
-	vim.opt.foldexpr = "v:lua.MyFoldExpr(v:lnum)"
-end, { desc = "indent folding only at this level", nargs = 1 })

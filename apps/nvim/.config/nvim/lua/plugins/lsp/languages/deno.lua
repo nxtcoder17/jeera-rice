@@ -18,7 +18,20 @@ M.setup_lsp = function(on_attach, capabilities_wrapper)
 	local lsp_config = Require("lspconfig")
 
 	lsp_config.denols.setup(capabilities_wrapper({
-		root_dir = lsp_config.util.root_pattern("deno.lock"),
+		root_dir = lsp_config.util.root_pattern("deno.lock", "deno.json"),
+		settings = {
+			deno = {
+				enable = true,
+				lint = true,
+				suggest = {
+					imports = {
+						hosts = {
+							["https://deno.land"] = true,
+						},
+					},
+				},
+			},
+		},
 		on_attach = on_attach,
 	}))
 end

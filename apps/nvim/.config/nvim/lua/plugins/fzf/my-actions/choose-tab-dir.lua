@@ -17,6 +17,7 @@ local function choose_tab_dir(dir)
 		prompt = "Choose Tab Directory ❯ ",
 		fzf_opts = fzf_opts,
 		cwd = dir,
+		multiprocess = false,
 		actions = {
 			["default"] = function(selected, _opts)
 				vim.t.tab_dir = selected[1]

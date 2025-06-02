@@ -53,7 +53,7 @@ opt.listchars = {
 	["space"] = "␣",
 	["trail"] = "-",
 	["extends"] = "☛",
-	["precedes"] = "☚",
+	-- ["precedes"] = "☚",
 
 	["conceal"] = "┊",
 	["nbsp"] = "☠",
@@ -116,7 +116,7 @@ vim.list_extend(opt.wildignore, {
 })
 
 -- completion
-opt.completeopt = "menuone,noselect"
+opt.completeopt = "menuone,noselect,noinsert"
 
 -- Fast Scrolling
 opt.ttimeoutlen = 10
@@ -155,29 +155,6 @@ opt.switchbuf = "useopen,usetab,newtab"
 
 vim.o.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
 
--- augroup highlight_yank
--- autocmd!
---     autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank("IncSearch", 200)
--- augroup END
-
--- fold text
--- vim.cmd(
---   [[ set foldtext=substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').'...'.trim(getline(v:foldend)) ]]
--- )
-
--- opt.foldmethod = "manual"
-
--- DO NOT USE: if using nvim-ufo
--- TREESITTER based folding
--- [snippet source](https://www.jackfranklin.co.uk/blog/code-folding-in-vim-neovim/)
--- vim.opt.foldmethod = "expr"
--- vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
--- vim.opt.foldcolumn = "0"
--- vim.opt.foldtext = ""
--- vim.opt.foldlevel = 99
--- vim.opt.foldlevelstart = 1
--- vim.opt.foldnestmax = 4
---
 vim.opt.formatoptions = vim.opt.formatoptions + "j" -- remove comment leader when joining comment lines
 vim.opt.formatoptions = vim.opt.formatoptions + "n" -- smart auto-indenting inside numbered lists
 

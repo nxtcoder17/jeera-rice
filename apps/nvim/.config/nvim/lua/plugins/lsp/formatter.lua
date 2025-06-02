@@ -25,6 +25,7 @@ M.setup_formatters = function()
 			lua = { "stylua" },
 			python = { "black" },
 			javascript = { "prettierd", stop_after_first = true },
+			-- javascriptreact = { "prettierd", stop_after_first = true },
 			html = { "prettierd" },
 			gohtmltmpl = { "djlint" },
 		},

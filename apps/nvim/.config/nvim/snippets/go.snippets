@@ -6,3 +6,27 @@ snippet test_compare_output
 snippet deprecate 
 	// Deprecated: ${1:message}
 
+snippet templates.embed
+	package templates
+
+	import (
+		"embed"
+		"path/filepath"
+
+		"github.com/kloudlite/operator/pkg/templates"
+	)
+
+	//go:embed *
+	var templatesDir embed.FS
+
+	type templateFile string
+
+	const (
+		${1:// YourTemplate            templateFile = "./path-to-your-template"}
+	)
+
+	func Read(t templateFile) ([]byte, error) {
+		return templatesDir.ReadFile(filepath.Join(string(t)))
+	}
+
+	var ParseBytes = templates.ParseBytes

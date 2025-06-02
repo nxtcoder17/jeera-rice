@@ -9,8 +9,15 @@ local function opt(description)
 	}
 end
 
+-- allows pasting without yanking deleted text
+keymap({ "x" }, "p", "P")
+
 -- free's up the `s` key
 keymap({ "n", "v" }, "s", "<Nop>", opts)
+
+-- why, cause i keep on typing it for some weird reason
+keymap({ "c" }, "w'", "<Nop>", opts)
+keymap({ "c" }, "w,", "<Nop>", opts)
 
 keymap({ "n" }, ";", ":", opt("in normal mode, ; acts like a :"))
 
@@ -131,7 +138,7 @@ local function faster_tab_switching()
 
 	-- INFO: this is a hack to bind `Alt + Shift + {1-5}` to corresponding tabs in the editor, just for faster tab switching
 	for key, value in pairs({ "!", "@", "#", "$", "%" }) do
-		keymap({ "n", "v", "i" }, "<M-" .. value .. ">", function()
+		keymap({ "n", "v", "i", "t" }, "<M-" .. value .. ">", function()
 			local tabnr = vim.api.nvim_list_tabpages()[key]
 			local win_id = vim.api.nvim_tabpage_get_win(tabnr)
 			vim.api.nvim_set_current_win(win_id)
@@ -142,3 +149,45 @@ end
 vim.cmd([[ cnoreabbrev cd lua require('plugins.fzf.my-actions.choose-tab-dir')()<CR>]])
 
 faster_tab_switching()
+
+vim.keymap.set({ "n" }, "st", function()
+	if vim.t.terminal ~= nil then
+		if vim.api.nvim_buf_is_valid(vim.t.terminal.buf) then
+			vim.t.terminal.toggle()
+			return
+		end
+	end
+
+	local dir = vim.fn.getcwd()
+
+	local init_cmd = {
+		["fish"] = { "fish", "--init-command", string.format("pushd %s; pushd %s", vim.g.project_root_dir, dir) },
+		["bash"] = { "bash", "--init-file", string.format("<(pushd %s; pushd %s)", vim.g.project_root_dir, dir) },
+		["zsh"] = { "zsh", "-c", string.format("pushd %s; pushd %s; zsh -i", vim.g.project_root_dir, dir) },
+	}
+
+	local term = require("lazy.util").float_term(init_cmd[vim.fs.basename(os.getenv("SHELL"))], {
+		cwd = dir,
+		ft = "Terminal",
+		size = { width = 0.7, height = 0.7 },
+		persistent = true,
+	})
+
+	local on_term_visible = function()
+		vim.api.nvim_set_option_value(
+			"winhighlight",
+			"Normal:Normal,FloatBorder:Pmenu",
+			{ scope = "local", win = term.win }
+		)
+	end
+
+	on_term_visible()
+
+	vim.t.terminal = {
+		buf = term.buf,
+		toggle = function()
+			term:toggle()
+			on_term_visible()
+		end,
+	}
+end, { noremap = true, silent = true, desc = "opens up a terminal in tab local working directory" })

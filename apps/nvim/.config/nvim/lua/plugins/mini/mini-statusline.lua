@@ -8,6 +8,11 @@ local check_macro_recording = function()
 	end
 end
 
+local function lsp_progress()
+	vim.cmd.redrawstatus()
+	return vim.lsp.status()
+end
+
 function active_status_line()
 	local mode, mode_hl = MiniStatusline.section_mode({ trunc_width = 120 })
 	local git = MiniStatusline.section_git({ trunc_width = 75 })
@@ -31,6 +36,7 @@ function active_status_line()
 		{ hl = "MiniStatuslineFilename", strings = { filename } },
 		"%=", -- End left alignment
 		{ hl = "MiniStatuslineFilename", strings = { check_macro_recording() } },
+		{ hl = "MiniStatuslineFileinfo", strings = { lsp_progress() } },
 		{ hl = "MiniStatuslineFileinfo", strings = { fileinfo } },
 		{ hl = "MiniStatuslineFileinfo", strings = { from_project_root } },
 		{ hl = mode_hl, strings = { location } },

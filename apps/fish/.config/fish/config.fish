@@ -1,16 +1,16 @@
 set -U fish_greeting
 
-function fish_mode_prompt
-  # NOOP - Disable vim mode indicator
-end
-
-# if test (command -v exa | wc -l) -gt 0
 if type -q exa
-    alias ls 'exa --icons'
-    alias ll 'exa -la --icons'
+  alias ls 'exa --icons'
+  alias ll 'exa -la --icons'
 end
 
-# source nix if not already sourced
+# alias sudo "sudo -E env"
+alias vim 'nvim'
+# function sudo 
+#   command sudo -E=env $argv
+# end
+
 if ! test command -v nix &> /dev/null
   set nix_daemon_file "/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish"
  if test -f "$nix_daemon_file" 
@@ -48,102 +48,95 @@ alias hms 'home-manager switch'
 
 alias reload_fish "source ~/.config/fish/config.fish"
 
-set -x SYSTEM_THEME $(cat ~/.system-theme)
-
-# function reload_fish_theme --on-variable SYSTEM_UI_THEME
-function reload_fish_theme
-  if [ "$SYSTEM_THEME" = "" ]
-    set -gx SYSTEM_THEME $(cat ~/.system-theme)
-  end
-
-  # fish theme
-  [ "$SYSTEM_THEME" = "dark" ] && source "$__fish_config_dir/themes/kanagawa.fish"
-  [ "$SYSTEM_THEME" = "light" ] && source "$__fish_config_dir/themes/dayfox.fish"
-
-  # theming for github.com/nxtcoder17/runfile
-  set -gx RUNFILE_THEME $SYSTEM_THEME
-
-  # FZF theme
-  set -gx FZF_DEFAULT_OPTS '--border-label="" --preview-window="border-rounded" --prompt="> " --marker=">" --pointer="👉" --separator="─" --scrollbar="│"'
-
-  [ "$SYSTEM_THEME" = "dark" ] && set -x FZF_DEFAULT_OPTS "\
-    --color=bg+:#363a4f,spinner:#f4dbd6,hl:#ed8796 \
-    --color=fg:#cad3f5,header:#ed8796,info:#c6a0f6,pointer:#f4dbd6 \
-    --color=marker:#f4dbd6,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796" $FZF_DEFAULT_OPTS
-
-  [ "$SYSTEM_THEME" = "light" ] && set -x FZF_DEFAULT_OPTS '--color=fg:#252424,fg+:#211b1b,bg+:#f0f0f0 --color=hl:#2fb891,hl+:#1f9f7a,info:#afaf87,marker:#1f9f7a --color=prompt:#1f9f7a,spinner:#2e3993,pointer:#2e3993,header:#87afaf --color=gutter:#ffffff,border:#262626,label:#aeaeae,query:#2e3993' $FZF_DEFAULT_OPTS
-
-  # bat theme
-  set -gx BAT_STYLE "numbers"
-  [ "$SYSTEM_THEME" = "dark" ] && set -gx BAT_THEME "OneHalfDark"
-  [ "$SYSTEM_THEME" = "light" ] && set -gx BAT_THEME "gruvbox-light"
-end
-
 function sudo  --description "wraps sudo but tries to preserve PATH, as nix installed binaries are not in SUDO user PATH"
   # echo "path: $PATH"
   command sudo -E env "PATH=$PATH" $argv
-
-  # set cmd $argv[1]
-  # if [ -z "$cmd" ]
-  #   command sudo -E PATH=$PATH $argv
-  #   return
-  # end
-  #
-  # if string match -- '-*' $cmd 2>&1 > /dev/null
-  #   command sudo -E PATH=$PATH  $argv
-  #   return
-  # end
-  #
-  # # command sudo env $(which $cmd) $argv[2..-1]
-  # command sudo -E PATH=$PATH $argv 
 end
 
-function direnv --description "direnv hook"
-  echo "direnv hook loading ..."
-  command direnv $argv 2>&1 > /dev/null
-end
-
-if [ -f "$__fish_config_dir/nxtfns.fish" ]
-    source "$__fish_config_dir/nxtfns.fish"
-end
-
-function gdiff --description "git diff with FZF"
-  set preview "git diff $argv --color=always -- {-1}"
-  git diff $argv --name-only | fzf -m --ansi --preview $preview
-end
-
-function addToPath --description "add item to system path"
-    for item in $argv
-        contains $item $PATH
-        or set -x PATH $item $PATH
-    end
-end
-
+## i don't want any right prompt
 function fish_right_prompt
- #intentionally left blank
 end
 
-set -x fish_prompt_pwd_dir_length 20
-set -x fish_prompt_pwd_full_dirs yes
+### fish bindings
+set __fish_git_prompt_char_cleanstate ''
+set __fish_git_prompt_char_dirtystate '  '
+set __fish_git_prompt_char_invalidstate '  '
+set __fish_git_prompt_char_stagedstate '  '
+set __fish_git_prompt_char_stashstate '  '
+set __fish_git_prompt_char_stateseparator ''
+set __fish_git_prompt_char_untrackedfiles '  '
+set __fish_git_prompt_char_upstream_ahead ''
+set __fish_git_prompt_char_upstream_behind ''
+set __fish_git_prompt_char_upstream_diverged ''
+set __fish_git_prompt_char_upstream_equal ''
+# set __fish_git_prompt_char_upstream_prefix ' '
 
-function handle_nix_shell --description "checks if fish is running in a nix flake/shell"
-  set nix_color "#8DAB35"
-  [ "$SYSTEM_THEME" = "light" ] && set nix_color "#35ab8e"
-  if [ -n "$IN_NIX_SHELL" ]
-    printf "%sNIX%s " (set_color $nix_color) $hydro_color_normal
+set -g fish_prompt_pwd_full_dirs 3
+
+# colors
+set -g __color_dir "#2fbaf5"
+set -g __color_git "#58bf9c"
+set -g __color_kubeconfig "#2fbaf5"
+set -g __color_nix "#2fbaf5"
+
+set -g __icon_nix " "
+set -g __icon_sep "|"
+
+function fish_prompt --on-var _async_prompt_content
+  # set prompt_char "😎"
+  set prompt_char "ϟ" # Greek Small Letter Koppa[1]
+  # set prompt_char "𝛌"
+  [ ! -z "$fish_private_mode" ] && set prompt_char "🥷"
+  [ "$EUID" -eq 0 ] && set prompt_char "√π"
+  [ -n "$IN_NIX_SHELL" ] && set prompt_char " " && set prompt_color $__color_nix
+
+  if [ -n "$KUBECONFIG" ]
+    printf "%s(󰠳 %s)%s " (set_color $__color_kubeconfig) (basename $KUBECONFIG) (set_color $fish_color_normal)
+  end
+
+  printf "%s%s" (set_color $fish_color_cwd) (prompt_pwd)
+  printf "%s%s" (set_color $fish_color_git) (fish_git_prompt)
+  printf "%s\n" (set_color $fish_color_normal)
+
+  printf "$prompt_char "
+end
+
+function edit_cmd --description 'Input command in external editor'
+  set -l f (mktemp /tmp/fish.cmd.XXXXXXXX)
+  if test -n "$f"
+      set -l p (commandline -C)
+      commandline -b > $f
+      nvim -c 'set ft=fish' $f
+      commandline -r (more $f)
+      commandline -C $p
+      command rm $f
   end
 end
 
-if ! functions -q fish_prompt_original
-  functions -c fish_prompt fish_prompt_original
+function fish_user_key_bindings
+  bind \ce 'edit_cmd'
+  bind -M insert \ce 'edit_cmd'
+
+  bind -M insert \cf forward-char
+end
+
+if status is-interactive
+  # Commands to run in interactive sessions can go here
+  # constant Environments
+  set fish_cursor_default block
+  set fish_cursor_insert line
+  set fish_cursor_replace_one underscore
+  set fish_cursor_visual block
+
+  fish_vi_key_bindings
+
+  function fish_mode_prompt
+    # NOOP - Disable vim mode indicator
+  end
 end
 
 function ck --description "choose-kubeconfig"
   set dir $HOME/.kube/configs
-
-  # need to do command grouping for chaining 2 separate commands into one redirection
-  # read here https://unix.stackexchange.com/questions/223835/capturing-output-redirection-of-commands-chained-by
-  # set chosen_kubeconfig (begin; echo "no-selection" && command ls ~/.kube/configs ; end | fzf --reverse --prompt "choose kubeconfig > ")
   set chosen_kubeconfig (command ls ~/.kube/configs | fzf --reverse --prompt "choose kubeconfig > ")
 
   if [ -z "$chosen_kubeconfig" ]
@@ -153,183 +146,49 @@ function ck --description "choose-kubeconfig"
   set -gx KUBECONFIG ~/.kube/configs/$chosen_kubeconfig
 end
 
-set -g fish_prompt_pwd_full_dirs 5
+zoxide init fish | source
 
-function fish_prompt
-  reload_fish_theme
+# base16 manager
+[ -f ~/.base16/fish.fish ] && source ~/.base16/fish.fish
+[ -f ~/.base16/fzf.fish ] && source ~/.base16/fzf.fish
 
-  if [ $EUID -eq 0 ]
-      set --global hydro_color_prompt "#bf4b52"
-      set --global hydro_symbol_prompt ' √π'
-  else
-      # set --global hydro_symbol_prompt ❱
-      set --global hydro_symbol_prompt "😎"
-      if [ -n "$IN_NIX_SHELL" ]
-        set --global hydro_color_prompt "#49ebc2"
-        [ "$SYSTEM_THEME" = "light" ] && set --global hydro_color_prompt "#35ab8e"
-        set --global hydro_symbol_prompt " "
-      end
-
-      # check if fish is in private mode
-      if [ ! -z "$fish_private_mode" ]
-        # set --global hydro_color_prompt "#e0da82"
-        set --global hydro_symbol_prompt "🥷"
-      end
-
-      # check if fish is running in nix shell/flake environment
-  end
-
-  set -g __fish_git_prompt_showupstream auto
-
-  set nix_color "#8DAB35"
-  [ "$SYSTEM_THEME" = "light" ] && set nix_color "#35ab8e"
-  if [ -n "$IN_NIX_SHELL" ]
-    printf "%sNIX%s " (set_color $nix_color) $hydro_color_normal
-  end
-
-  if [ -n "$KUBECONFIG" ]
-    set kubeconfig_color "#8DAB35"
-    printf '%s󱃾 %s%s ' (set_color -o $kubeconfig_color) (basename $KUBECONFIG) $hydro_color_normal
-  end
-
-  set -g color_pwd "#2fbaf5"
-  [ "$SYSTEM_THEME" = "light" ] && set -g color_pwd "#2F5BA2"
-  if [ -n "$KL_SHELL" ]
-    printf "%s(kl shell) %s" (set_color $color_pwd) (set_color $hydro_color_normal)
-  end
-  printf "%s%s%s %s\n" (set_color $color_pwd) (prompt_pwd) (set_color $hydro_color_normal) (fish_git_prompt)
-  printf "%s%s " (set_color $hydro_color_prompt) $hydro_symbol_prompt
-end
-
-set -gx EDITOR nvim
-set -gx PAGER less
-set -gx EMAIL "nxtcoder17@gmail.com"
-set -gx BROWSER "firefox"
-set -gx DIRENV_LOG_FORMAT ""
-
-set -gx XDG_CONFIG_HOME "$HOME/.config"
-set -gx XDG_CACHE_HOME "$HOME/.cache"
-set -gx XDG_DATA_HOME "$HOME/.local/share"
-set -gx XDG_STATE_HOME "$HOME/.local/state"
-
-# set -gx XINITRC "$XDG_CONFIG_HOME/x11/xinitrc"
-set -gx INPUTRC "$XDG_CONFIG_HOME/inputrc"
-
-# APPLICATION specifics
 set -gx SHELL $(which fish)
-set -gx GOPATH "$XDG_DATA_HOME/go"
-set -gx K9SCONFIG "$XDG_CONFIG_HOME/k9s"
 set -gx DOCKER_CONFIG "$XDG_CONFIG_HOME/docker"
-set -gx GTK2_RC_FILES "$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
-set -gx _JAVA_OPTIONS "-DJava.util.prefs.userRoot=$XDG_CONFIG_HOME/java -Dsun.java2d.opengl=true -Dawt.useSystemAAFontSettings=on -Dawt.toolkit.name=WLToolkit"
-
-set -gx NODE_REPL_HISTORY "$XDG_DATA_HOME/node_repl_history"
-set -gx NPM_CONFIG_USERCONFIG "$XDG_CONFIG_HOME/npm/npmrc"
-set -gx NPM_CONFIG_CACHE "$XDG_CACHE_HOME/npm"
-set -gx NPM_CONFIG_TMP "$XDG_RUNTIME_DIR/npm"
 set -gx NPM_CONFIG_STORE_DIR "$XDG_DATA_HOME/node/bin"
 
-set -gx XAUTHORITY "$HOME/.Xauthority"
-set -gx _JAVA_AWT_WM_NONREPARENTING "1"
-
-### zoxide exclude DIRS
+## zoxide exclude DIRS
 set -gx _ZO_EXCLUDE_DIRS "$HOME:$HOME/workspace/kloudlite/archived/.*"
 
 set -gx FZF_DEFAULT_COMMAND "rg --files --reverse --hidden --follow --smart-case"
-
 set -gx GPG_TTY (tty) # to make GPG work with TTY input box
-
-#--------------------------------------------------
-addToPath /usr/local/bin
-addToPath $HOME/me/jeera-rice/bin # jeera rice bin scripts
-addToPath $HOME/.local/bin # local binaries
-
-# only while development
-addToPath "$HOME/workspace/github.com/kloudlite/internal-tools/bin"
-
-addToPath $XDG_DATA_HOME/node/bin # nodejs global binaries
-addToPath $XDG_DATA_HOME/bun/bin # bun binaries
-addToPath $XDG_DATA_HOME/go/bin # go binaries
-
-if status is-interactive
-    # Commands to run in interactive sessions can go here
-    # constant Environments
-  set fish_cursor_default block
-  set fish_cursor_insert line
-  set fish_cursor_replace_one underscore
-  set fish_cursor_visual block
-
-  fish_vi_key_bindings
-end
-
-function edit_cmd --description 'Input command in external editor'
-    set -l f (mktemp /tmp/fish.cmd.XXXXXXXX)
-    if test -n "$f"
-        set -l p (commandline -C)
-        commandline -b > $f
-        nvim -c 'set ft=fish' $f
-        commandline -r (more $f)
-        commandline -C $p
-        command rm $f
-    end
-end
-
-function fish_user_key_bindings
-    bind \ce 'edit_cmd'
-    bind -M insert \ce 'edit_cmd'
-end
-
-### fish bindings
-set __fish_git_prompt_char_cleanstate '  '
-set __fish_git_prompt_char_dirtystate '  '
-set __fish_git_prompt_char_invalidstate '  '
-set __fish_git_prompt_char_stagedstate '  '
-set __fish_git_prompt_char_stashstate '  '
-set __fish_git_prompt_char_stateseparator ' '
-set __fish_git_prompt_char_untrackedfiles '  '
-set __fish_git_prompt_char_upstream_ahead '  '
-set __fish_git_prompt_char_upstream_behind '  '
-set __fish_git_prompt_char_upstream_diverged '  '
-set __fish_git_prompt_char_upstream_equal '  '
-set __fish_git_prompt_char_upstream_prefix ' '
-
-set --global hydro_multiline true
-set git_color "#58bf9c"
-[ "$SYSTEM_THEME" = "light" ] && set git_color "#047D54"
-set --global hydro_color_git -o $git_color
-set --global hydro_color_prompt "#3a73d6"
-
-set -g color_pwd "#2fbaf5"
-[ "$SYSTEM_THEME" = "light" ] && set -g color_pwd "#2F5BA2"
-set --global hydro_color_pwd $color_pwd
-
-set --global hydro_symbol_git_dirty	$__fish_git_prompt_char_dirtystate
-set --global hydro_symbol_git_ahead $__fish_git_prompt_char_upstream_ahead
-set --global hydro_symbol_git_behind $__fish_git_prompt_char_upstream_behind
-
-# export LD_LIBRARY_PATH=/usr/local/boost_1_54_0/stage/lib:$LD_LIBRARY_PATH
-#
-function wgr --description "restarts wireguard"
-    wg-quick down "$argv"
-    wg-quick up "$argv"
-end
-
-function xfix --description "fixes x clipboard"
-echo "
-#!/sbin/bash
-export XAUTHORITY=~/.Xauthority
-" > /etc/profile.d/xauth.sh
-end
-
 
 set -x LANGUAGE "en_US.UTF-8"
 set -x LC_ALL "en_US.UTF-8"
 set -x LANG "en_US.UTF-8"
 set -x LC_TYPE "en_US.UTF-8"
+set -x MANPAGER 'nvim +Man!'
 
-zoxide init fish | source
+set -gx DIRENV_LOG_FORMAT ""
+set -gx EDITOR nvim
+set -gx PAGER less
 
-# bun
-set --export BUN_INSTALL "$XDG_DATA_HOME/bun"
-set --export PATH $BUN_INSTALL/bin $PATH
+# xdg path
+set -gx XDG_CONFIG_HOME "$HOME/.config"
+set -gx XDG_CACHE_HOME "$HOME/.cache"
+set -gx XDG_DATA_HOME "$HOME/.local/share"
+set -gx XDG_STATE_HOME "$HOME/.local/state"
 
+set -gx GOPATH "$XDG_DATA_HOME/go"
+
+set -gx NPM_CONFIG_USERCONFIG "$XDG_CONFIG_HOME/npm/npmrc"
+set -gx NPM_CONFIG_CACHE "$XDG_CACHE_HOME/npm"
+set -gx NPM_CONFIG_TMP "$XDG_RUNTIME_DIR/npm"
+set -gx NPM_CONFIG_STORE_DIR "$XDG_DATA_HOME/node/bin"
+
+fish_add_path "$HOME/me/jeera-rice/bin"
+fish_add_path "$HOME/.local/bin"
+fish_add_path "$GOPATH/bin"
+fish_add_path $HOME/workspace/github.com/kloudlite/internal-tools/bin
+fish_add_path "$XDG_DATA_HOME/node/bin"
+fish_add_path "$XDG_DATA_HOME/bun/bin"
+fish_add_path "$XDG_DATA_HOME/pnpm/bin"

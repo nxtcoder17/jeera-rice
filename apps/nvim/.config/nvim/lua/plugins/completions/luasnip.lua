@@ -52,6 +52,10 @@ Require("luasnip.loaders.from_snipmate").lazy_load({
 	paths = snippet_paths,
 })
 
+vim.keymap.set({ "i", "s", "x" }, "<C-e>", function()
+	require("luasnip").expand()
+end, { silent = true })
+
 vim.keymap.set({ "i", "s" }, "<C-l>", function()
 	if require("luasnip").choice_active() then
 		require("luasnip").change_choice(1)

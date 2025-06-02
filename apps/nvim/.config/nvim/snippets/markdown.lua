@@ -15,25 +15,25 @@ local fmta = require("luasnip.extras.fmt").fmta
 local snippets, autosnippets = {}, {}
 
 local changelog_type = s(
-  "changelog_type",
-  fmta(
-    [[
+	"changelog_type",
+	fmta(
+		[[
   ### <header>
 
   - <pos>
   ]],
-    {
-      header = c(1, {
-        t("Added"),
-        t("Changed"),
-        t("Deprecated"),
-        t("Removed"),
-        t("Fixed"),
-        t("Security"),
-      }),
-      pos = i(0),
-    }
-  )
+		{
+			header = c(1, {
+				t("Added"),
+				t("Changed"),
+				t("Deprecated"),
+				t("Removed"),
+				t("Fixed"),
+				t("Security"),
+			}),
+			pos = i(0),
+		}
+	)
 )
 
 table.insert(snippets, changelog_type)

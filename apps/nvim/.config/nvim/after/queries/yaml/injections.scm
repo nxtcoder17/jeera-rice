@@ -35,3 +35,16 @@
           )
   )
 )
+
+(block_mapping_pair
+  value: (block_node 
+           (block_scalar
+              (comment) @comment
+            ) @injection.content
+          )
+
+          (#eq? @comment "#bash")
+          (#set! injection.include-children)
+          (#offset! @injection.content 0 0 0 0)
+          (#set! injection.language "bash")
+)

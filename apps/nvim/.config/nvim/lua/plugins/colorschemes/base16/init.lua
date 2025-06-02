@@ -144,6 +144,28 @@ light.grayscale = Theme({
 	lib.hl("WinSeparator", { bg = "None" })
 end)
 
+light.papercolor = Theme({
+	-- name: "Papercolor Light"
+	-- author: Jon Leopard (http://github.com/jonleopard), based on PaperColor Theme (https://github.com/NLKNguyen/papercolor-theme)
+	-- variant: "light"
+	base00 = "#eeeeee",
+	base01 = "#af0000",
+	base02 = "#008700",
+	base03 = "#5f8700",
+	base04 = "#0087af",
+	base05 = "#444444",
+	base06 = "#005f87",
+	base07 = "#878787",
+	base08 = "#bcbcbc",
+	base09 = "#d70000",
+	base0A = "#d70087",
+	base0B = "#8700af",
+	base0C = "#d75f00",
+	base0D = "#d75f00",
+	base0E = "#005faf",
+	base0F = "#005f87",
+}):modify(function(p) end):set_hl_groups(function(p) end)
+
 dark.tomorrow_night = Theme({
 	-- name: "Tomorrow Night"
 	-- author: "Chris Kempson (http://chriskempson.com)"
@@ -194,13 +216,24 @@ end):set_hl_groups(function(p)
 
 	lib.hl("FloatBorder", { link = "Comment" })
 
-	lib.hl("Pmenu", { bg = "None" })
+	lib.hl("Pmenu", { fg = p.base0D, bg = "None" })
 	lib.hl("PmenuExtra", { bg = "None" })
-	lib.hl("PmenuSel", { bg = p.base0C, fg = p.base0A })
+	lib.hl("PmenuSel", { fg = p.base0C })
 
 	lib.hl("CmpItemMenu", { link = "Pmenu" })
 
 	lib.hl("WinSeparator", { bg = "None" })
+
+	lib.hl("DiagnosticError", { bg = lib.darken(p.base0F, 80), fg = lib.lighten(p.base0F, 30) })
+	-- lib.hl("DiagnosticSignError", { link = "DiagnosticError" })
+	-- lib.hl("DiagnosticFloatingError", { link = "DiagnosticError" })
+	lib.hl("DiagnosticUnnecessary", { fg = p.base03, style = "undercurl", sp = p.base0F })
+
+	lib.hl("DiagnosticUnderlineWarn", { style = "undercurl" })
+	lib.hl("DiagnosticUnderlineError", { style = "undercurl" })
+	lib.hl("DiagnosticUnderlineHint", { style = "undercurl" })
+
+	lib.hl("Visual", { bg = lib.darken(p.base0C, 90) })
 end)
 
 dark.kanagawa = Theme({
@@ -222,6 +255,64 @@ dark.kanagawa = Theme({
 	base0E = "#957fb8",
 	base0F = "#d27e99",
 })
+
+-- name: "Black Metal (Gorgoroth)"
+-- author: "metalelf0 (https://github.com/metalelf0)"
+-- source: https://tinted-theming.github.io/tinted-gallery/
+dark.black_metal_gorgoroth = Theme({
+	base00 = "#000000",
+	base01 = "#121212",
+	base02 = "#222222",
+	base03 = "#333333",
+	base04 = "#999999",
+	base05 = "#c1c1c1",
+	base06 = "#999999",
+	base07 = "#c1c1c1",
+	base08 = "#5f8787",
+	base09 = "#aaaaaa",
+	base0A = "#8c7f70",
+	base0B = "#9b8d7f",
+	base0C = "#aaaaaa",
+	base0D = "#888888",
+	base0E = "#999999",
+	base0F = "#444444",
+}):set_hl_groups(function(p)
+	-- util.hl("Normal", { bg = string.format("%s%s", p.base00, "00") })
+
+	-- inactive
+	lib.hl("NormalNC", { bg = "None" })
+
+	lib.hl("Whitespace", { link = "Comment" })
+
+	lib.hl("LineNr", { bg = "None", fg = p.base03 })
+
+	lib.hl("SignColumn", { bg = "None" })
+
+	-- INFO: nontext and whitespace are for listchars highlighting
+	lib.hl("NonText", { fg = lib.darken(p.base03, 60) })
+	lib.hl("Whitespace", { fg = lib.darken(p.base03, 60) })
+
+	lib.hl("MatchParen", { bg = lib.darken(p.base0A, 80), fg = p.base0A })
+
+	lib.hl("FloatBorder", { link = "Comment" })
+
+	lib.hl("Pmenu", { fg = p.base0D, bg = "None" })
+	lib.hl("PmenuExtra", { bg = "None" })
+	lib.hl("PmenuSel", { fg = p.base0C })
+
+	lib.hl("CmpItemMenu", { link = "Pmenu" })
+
+	lib.hl("WinSeparator", { bg = "None" })
+
+	lib.hl("DiagnosticError", { bg = lib.darken(p.base0F, 80), fg = lib.lighten(p.base0F, 30) })
+	-- lib.hl("DiagnosticSignError", { link = "DiagnosticError" })
+	-- lib.hl("DiagnosticFloatingError", { link = "DiagnosticError" })
+	lib.hl("DiagnosticUnnecessary", { fg = p.base03, style = "undercurl", sp = p.base0F })
+
+	lib.hl("Visual", { bg = lib.darken(p.base02, 30) })
+
+	lib.hl("@variable", { fg = lib.darken(p.base05, 20) })
+end)
 
 M.light = light
 M.dark = dark

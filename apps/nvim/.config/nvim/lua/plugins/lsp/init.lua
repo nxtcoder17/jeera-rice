@@ -23,15 +23,15 @@ vim.diagnostic.config({
 		text = {
 			[vim.diagnostic.severity.HINT] = "⚡",
 			[vim.diagnostic.severity.INFO] = "»",
-			[vim.diagnostic.severity.WARN] = "🗯️",
+			[vim.diagnostic.severity.WARN] = "",
 			[vim.diagnostic.severity.ERROR] = "🔥",
 		},
-		linehl = {
-			[vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
-			[vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
-			[vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
-			[vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
-		},
+		-- linehl = {
+		-- 	[vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
+		-- 	[vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
+		-- 	[vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+		-- 	[vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+		-- },
 		numhl = {
 			[vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
 			[vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
@@ -69,9 +69,8 @@ local function on_attach(client, bufnr)
 
 	if client ~= nil and client.server_capabilities ~= nil then
 		-- client.server_capabilities.semanticTokensProvider = nil
-		client.server_capabilities.semanticTokensProvider = false -- turn off semantic tokens
+		client.server_capabilities.semanticTokensProvider = {}
 	end
-	-- client.server_capabilities.semanticTokensProvider = nil
 
 	-- vim.api.nvim_create_autocmd("CursorHold", {
 	--   buffer = bufnr,
@@ -94,6 +93,7 @@ local function on_attach(client, bufnr)
 		if ft == "typescript" or ft == "typescript.tsx" or ft == "typescriptreact" then
 			severity.min = vim.diagnostic.severity.HINT
 		end
+		vim.diagnostic.goto_next()
 		vim.diagnostic.goto_next({ severity = severity })
 	end, opts)
 
@@ -143,17 +143,70 @@ local function wrapper(...)
 		return coq.lsp_ensure_capabilities(...)
 	end
 
-	local has_cmp, cmp = pcall(require, "cmp")
+	local has_cmp, _ = pcall(require, "cmp")
 	if has_cmp then
-		return vim.tbl_deep_extend(
-			"force",
-			...,
-			-- { capabilities = cmp.update_capabilities(vim.lsp.protocol.make_client_capabilities()) }
-			{ capabilities = require("cmp_nvim_lsp").default_capabilities() }
-		)
+		return vim.tbl_deep_extend("force", ..., {
+			capabilities = require("cmp_nvim_lsp").default_capabilities(),
+		})
+	end
+
+	local has_blink, _ = pcall(require, "blink.cmp")
+	if has_blink then
+		return vim.tbl_deep_extend("force", ..., {
+			capabilities = require("blink.cmp").get_lsp_capabilities(),
+		})
 	end
 
 	return ...
+end
+
+if os.getenv("NO_LSP") == "true" then
+	vim.opt.tags = { "./tags", "tags" }
+
+	local opts = { noremap = true, silent = true }
+
+	vim.keymap.set("n", "gd", function()
+		local word = vim.fn.expand("<cword>")
+		vim.cmd("tag " .. word)
+	end, opts)
+
+	vim.keymap.set("n", "gr", function()
+		require("fzf-lua").grep({ search = vim.fn.expand("<cword>") })
+	end, opts)
+
+	vim.keymap.set("n", "gi", function()
+		require("fzf-lua").tags({ fzf_opts = { ["--query"] = vim.fn.expand("<cword>") } })
+	end, opts)
+
+	Require("plugins.lsp.linter-and-formatter").setup_lsp(nil, nil)
+
+	local lspconfig = require("lspconfig")
+	local configs = require("lspconfig.configs")
+
+	if not configs.diagnostics_lsp then
+		configs.diagnostics_lsp = {
+			default_config = {
+				cmd = { "diagnostics" },
+				root_dir = lspconfig.util.root_pattern(".git"),
+				filetypes = { "go" },
+			},
+			docs = {
+				description = [[
+https://github.com/nxtcoder17/diagnostics
+
+only for diagnostics
+]],
+			},
+		}
+	end
+
+	lspconfig.diagnostics_lsp.setup({
+		on_attach = function()
+			print("DIAGNOSTICS ...")
+		end,
+	})
+
+	return
 end
 
 Require("plugins.lsp.languages.go").setup_lsp(on_attach, wrapper)

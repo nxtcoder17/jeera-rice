@@ -9,6 +9,7 @@ local theme = (function()
 		-- return themes.light.grayscale
 	end
 	return themes.dark.tomorrow_night
+	-- return themes.dark.black_metal_gorgoroth
 end)()
 
 Require("mini.base16").setup({

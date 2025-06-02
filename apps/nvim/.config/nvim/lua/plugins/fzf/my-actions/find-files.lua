@@ -15,6 +15,7 @@ local function find_files(dir, query)
 		cwd = dir,
 		query = query,
 		cwd_prompt = dir ~= vim.g.project_root_dir,
+		multiprocess = false,
 		actions = {
 			["ctrl-f"] = function(_, opts)
 				local q = fzf.get_last_query()

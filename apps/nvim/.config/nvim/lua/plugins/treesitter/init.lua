@@ -105,35 +105,6 @@ Require("nvim-treesitter.configs").setup({
 			},
 		},
 
-		-- move = {
-		--   enable = true,
-		--   set_jumps = true, -- whether to set jumps in the jumplist
-		--   goto_next_start = {
-		--     ["<C-j>"] = { query = "@function.outer", desc = "Next Function Start" },
-		--     ["<M-j>"] = { query = "@block.outer", desc = "Next Block Start" },
-		--     -- ["<M-j>"] = { query = "@statement.outer", desc = "Next Statement Start" },
-		--     -- ["]m"] = "@function.outer",
-		--     -- ["]]"] = "@class.outer",
-		--   },
-		--   goto_next_end = {
-		--     ["<C-S-j>"] = "@function.outer",
-		--     -- ["]M"] = "@function.outer",
-		--     -- ["]["] = "@class.outer",
-		--   },
-		--   goto_previous_start = {
-		--     ["<C-k>"] = "@function.outer",
-		--     ["<M-k>"] = { query = "@block.outer", desc = "Previous Block Start" },
-		--     -- ["<M-k>"] = { query = "@statement.outer", desc = "Previous Statement Start" },
-		--     -- ["[m"] = "@function.outer",
-		--     -- ["[["] = "@class.outer",
-		--   },
-		--   goto_previous_end = {
-		--     ["<C-S-k>"] = "@function.outer",
-		--     -- ["[M"] = "@function.outer",
-		--     -- ["[]"] = "@class.outer",
-		--   },
-		-- },
-
 		select = {
 			enable = true,
 			lookahead = true,
@@ -146,6 +117,8 @@ Require("nvim-treesitter.configs").setup({
 				["ic"] = "@call.inner",
 			},
 		},
+
+		playground = {},
 	},
 })
 

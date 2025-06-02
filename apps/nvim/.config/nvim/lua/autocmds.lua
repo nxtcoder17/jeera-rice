@@ -1,11 +1,16 @@
-local global = vim.api.nvim_create_augroup("autocmds", {
-	clear = true,
-})
+local global = vim.api.nvim_create_augroup("autocmds", { clear = true })
 
 vim.api.nvim_create_autocmd("TermOpen", {
 	group = global,
 	callback = function()
 		vim.cmd("set ft=terminal")
+	end,
+})
+
+vim.api.nvim_create_autocmd("TextYankPost", {
+	group = global,
+	callback = function()
+		vim.hl.on_yank({ higroup = "IncSearch", priority = 250, timeout = 200 })
 	end,
 })
 
@@ -91,7 +96,9 @@ vim.api.nvim_create_autocmd({ "InsertEnter" }, {
 	group = global,
 	pattern = "*",
 	callback = function()
-		vim.cmd("TSBufDisable highlight")
+		if vim.fn.exists(":TSBufDisable") > 0 then
+			vim.cmd("TSBufDisable highlight")
+		end
 	end,
 })
 
@@ -102,6 +109,20 @@ vim.api.nvim_create_autocmd({ "InsertLeave" }, {
 		if vim.b.no_ts_highlight == true then
 			return
 		end
-		vim.cmd("TSBufEnable highlight")
+		if vim.fn.exists(":TSBufEnable") > 0 then
+			vim.cmd("TSBufEnable highlight")
+		end
+	end,
+})
+
+vim.api.nvim_create_autocmd("BufReadPost", {
+	group = global,
+	desc = "Go to the last location when opening a buffer",
+	callback = function(args)
+		local mark = vim.api.nvim_buf_get_mark(args.buf, '"')
+		local line_count = vim.api.nvim_buf_line_count(args.buf)
+		if mark[1] > 0 and mark[1] <= line_count then
+			vim.cmd('normal! g`"zz')
+		end
 	end,
 })

@@ -18,42 +18,6 @@ vim.cmd([[
   hi! link FzfGutter Normal
 ]])
 
-local function ivy_layout(opts, ...)
-	opts = opts or {}
-	opts["winopts"] = opts.winopts or {}
-
-	return vim.tbl_deep_extend("force", {
-		-- prompt = prompt,
-		fzf_opts = { ["--layout"] = "reverse" },
-		winopts = {
-			title_pos = opts["winopts"].title and "center" or nil,
-			height = 0.35,
-			width = 1.00,
-			row = 1,
-			col = 1,
-			-- border = { " ", " ", " ", " ", " ", " ", " ", " " },
-			border = {
-				"╭",
-				"─",
-				"╮",
-				"│",
-				"╯",
-				"─",
-				"╰",
-				"│",
-			},
-			preview = {
-				layout = "flex",
-				hidden = "nohidden",
-				flip_columns = 130,
-				scrollbar = "float",
-				scrolloff = "-1",
-				scrollchars = { "█", "░" },
-			},
-		},
-	}, opts, ...)
-end
-
 local fzf = Require("fzf-lua")
 fzf.setup({
 	"telescope",
@@ -70,6 +34,7 @@ fzf.setup({
 	global_resume = true,
 	global_resume_query = true,
 	global_resume_prompt = "resume: ",
+	multiprocess = false,
 
 	oldfiles = {
 		include_current_session = true,
@@ -151,6 +116,10 @@ fzf.setup({
 
 	grep = {
 		formatter = "path.filename_first",
+	},
+
+	live_grep = {
+		multiprocess = false,
 	},
 
 	actions = {

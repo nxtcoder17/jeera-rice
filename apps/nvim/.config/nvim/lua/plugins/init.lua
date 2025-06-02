@@ -31,73 +31,18 @@ local function fuzzy_finders()
 				"Fzf",
 				"FzfLua",
 			},
+
 			keys = { "sf", "cd", "f;" },
 		},
 	}
 end
 
-local function colorschemes()
-	return {
-		-- {
-		-- 	"rebelot/kanagawa.nvim",
-		-- 	event = "UIEnter",
-		-- 	-- priority = 1000,
-		-- 	config = function()
-		-- 		Require("plugins.colorschemes.kanagawa")
-		-- 	end,
-		-- },
-		-- {
-		-- 	"EdenEast/nightfox.nvim",
-		-- 	config = function()
-		-- 		-- require("plugins.colorschemes.nightfox")
-		-- 		require("plugins.colorschemes.nightfox.light")
-		-- 	end,
-		-- },
-		-- {
-		-- 	"NLKNguyen/papercolor-theme",
-		-- 	config = function()
-		-- 		vim.o.background = os.getenv("SYSTEM_THEME") or "dark"
-		--
-		-- 		vim.g.PaperColor_Theme_Options = {
-		-- 			theme = {
-		-- 				default = {
-		-- 					transparent_background = 1,
-		-- 				},
-		-- 			},
-		-- 		}
-		--
-		-- 		vim.cmd.colorscheme("PaperColor")
-		-- 	end,
-		-- },
-		-- {
-		-- 	"echasnovski/mini.base16",
-		-- 	config = function()
-		-- 		require("plugins.mini.mini-base16")
-		-- 	end,
-		-- },
-		-- {
-		-- 	"zenbones-theme/zenbones.nvim",
-		-- 	-- -- Optionally install Lush. Allows for more configuration or extending the colorscheme
-		-- 	-- -- If you don't want to install lush, make sure to set g:zenbones_compat = 1
-		-- 	-- -- In Vim, compat mode is turned on as Lush only works in Neovim.
-		-- 	dependencies = "rktjmp/lush.nvim",
-		-- 	lazy = false,
-		-- 	priority = 1000,
-		-- 	-- you can set set configuration options here
-		-- 	config = function()
-		-- 		vim.g.zenbones_darken_comments = 45
-		-- 		vim.cmd.colorscheme("zenbones")
-		-- 	end,
-		-- },
-	}
-end
-
 local function syntax()
 	return {
-		{
-			"sheerun/vim-polyglot",
-			event = "VeryLazy",
-		},
+		-- {
+		-- 	"sheerun/vim-polyglot",
+		-- 	event = "VeryLazy",
+		-- },
 		{
 			"nvim-treesitter/nvim-treesitter",
 			event = "BufReadPost",
@@ -145,7 +90,6 @@ local function syntax()
 				--     vim.g.matchup_matchparen_deferred = 1
 				--   end,
 				-- },
-				{ "nvim-treesitter/playground" },
 			},
 		},
 		{
@@ -174,19 +118,6 @@ local function syntax()
 				require("sentiment").setup()
 			end,
 		},
-
-		-- {
-		-- 	"kevinhwang91/nvim-ufo",
-		-- 	dependencies = "kevinhwang91/promise-async",
-		-- 	-- event = "BufReadPost", -- needed for folds to load properly
-		-- 	cmd = {
-		-- 		"UfoEnable",
-		-- 		"UfoDisable",
-		-- 	},
-		-- 	config = function()
-		-- 		require("plugins.treesitter.nvim-ufo")
-		-- 	end,
-		-- },
 	}
 end
 
@@ -228,18 +159,28 @@ local function lsp()
 			end,
 			-- commit = "67f151e84daddc86cc65f5d935e592f76b9f4496",
 			dependencies = {
-				{ "folke/neodev.nvim", ft = "lua" },
 				-- "williamboman/mason-lspconfig.nvim",
 				"b0o/schemastore.nvim",
 			},
 		},
-		-- {
-		-- 	"creativenull/efmls-configs-nvim",
-		-- 	event = "BufRead",
-		-- 	after = "nvim-lspconfig",
-		-- 	version = "v0.2.x", -- tag is optional
-		-- 	dependencies = { "neovim/nvim-lspconfig" },
-		-- },
+
+		{ -- nvim lua typings
+			"folke/lazydev.nvim",
+			ft = "lua",
+			opts = {
+				library = {
+					{ path = "luvit-meta/library", words = { "vim%.uv" } },
+				},
+			},
+		},
+		{ "Bilal2453/luvit-meta", lazy = true }, -- not as dependency, since never needs to be loaded
+
+		{
+			"creativenull/efmls-configs-nvim",
+			event = "BufRead",
+			after = "nvim-lspconfig",
+			dependencies = { "neovim/nvim-lspconfig" },
+		},
 		{
 			"stevearc/conform.nvim",
 			event = "BufRead",
@@ -338,16 +279,13 @@ local function navigation()
 				{ "cw", "ce", mode = "n" },
 				{ "cW", "cE", mode = "n" },
 			},
-			-- config = function()
-			--   require("keymaps-for-plugins").vim_wordmotion_mappings()
-			-- end,
 		},
 
 		-- {
 		-- 	"ludovicchabant/vim-gutentags",
 		-- 	config = function()
 		-- 		vim.g.gutentags_ctags_exclude = {
-		-- 		  "@.gitignore"
+		-- 			"@.gitignore",
 		-- 		}
 		-- 	end,
 		-- },
@@ -364,6 +302,7 @@ local function completions()
 	return {
 		{
 			"L3MON4D3/LuaSnip",
+			version = "v2.*",
 			event = "BufReadPost",
 			config = function()
 				Require("plugins.completions.luasnip")
@@ -372,10 +311,6 @@ local function completions()
 
 		{
 			"hrsh7th/nvim-cmp",
-			-- commit = "b555203ce4bd7ff6192e759af3362f9d217e8c89",
-
-			-- "yioneko/nvim-cmp",
-			-- branch = "perf",
 			event = "InsertEnter",
 			after = "LuaSnip",
 			dependencies = {
@@ -383,87 +318,15 @@ local function completions()
 				{ "hrsh7th/cmp-nvim-lsp-signature-help" },
 				{ "hrsh7th/cmp-nvim-lsp" },
 				-- { "lukas-reineke/cmp-rg" },
-				{ "hrsh7th/cmp-cmdline" },
-				{ "andersevenrud/cmp-tmux" },
+				-- { "hrsh7th/cmp-cmdline" },
+				-- { "andersevenrud/cmp-tmux" },
 				{ "saadparwaiz1/cmp_luasnip" },
 				{ "FelipeLema/cmp-async-path" },
 				{ "quangnguyen30192/cmp-nvim-tags" },
-				{ "onsails/lspkind.nvim" },
-				{
-					"zbirenbaum/copilot-cmp",
-					config = function()
-						require("copilot_cmp").setup()
-					end,
-				},
 			},
 			config = function()
 				-- Require("plugins.completions.luasnip")
 				Require("plugins.completions.cmp")
-			end,
-		},
-
-		-- github copilot setup
-		{
-			"zbirenbaum/copilot.lua",
-			-- event = "VeryLazy",
-			lazy = true,
-			cmd = {
-				"Copilot",
-			},
-			config = function()
-				vim.g.copilot_no_tab_map = true
-				vim.keymap.set({ "n", "i" }, "<C-CR>", function()
-					-- vim.cmd("call copilot#Accept('<CR/>')")
-					require("copilot.suggestion").accept()
-				end)
-
-				vim.keymap.set({ "i" }, "<C-j>", function()
-					require("copilot.suggestion").next()
-				end)
-
-				vim.keymap.set({ "i" }, "<C-k>", function()
-					require("copilot.suggestion").prev()
-				end)
-
-				vim.keymap.set({ "i" }, "<C-c>", function()
-					require("copilot.suggestion").prev()
-				end)
-
-				require("copilot").setup({
-					panel = { enabled = true },
-					filetypes = {
-						["*"] = true,
-					},
-					suggestion = {
-						enabled = true,
-						auto_trigger = true,
-						keymap = nil,
-					},
-				})
-			end,
-		},
-
-		-- INFO: supermaven is just much better than Copilot
-		{
-			"supermaven-inc/supermaven-nvim",
-			commit = "2d9f42e0dcf57a06dce5bf8b23db427ae3b7799f",
-			-- event = events.InsertEnter,
-			-- lazy = true,
-			cmd = {
-				"SupermavenStart",
-				"SupermavenStop",
-				"SupermavenUseFree",
-				"SupermavenStatus",
-			},
-			config = function()
-				require("supermaven-nvim").setup({
-					keymaps = {
-						accept_suggestion = "<M-l>",
-						-- clear_suggestion = "<C-]>",
-					},
-					disable_inline_completion = false, -- disables inline completion for use with cmp
-					-- disable_keymaps = true,
-				})
 			end,
 		},
 	}
@@ -478,6 +341,10 @@ local function search_and_replace()
 				"Spectre",
 			},
 			config = true,
+		},
+		{
+			"dyng/ctrlsf.vim",
+			-- lazy = true,
 		},
 	}
 end
@@ -506,9 +373,9 @@ local function mini_nvim()
 			-- event = "UIEnter",
 			event = "BufReadPre",
 			branch = "stable",
-			init = function()
-				Require("plugins.mini.mini-base16")
-			end,
+			-- init = function()
+			-- 	Require("plugins.mini.mini-base16")
+			-- end,
 			config = function()
 				require("plugins.mini")
 			end,
@@ -583,6 +450,10 @@ local function editor_ui_enhancements()
 				require("plugins.ui.tabby")
 			end,
 		},
+		-- {
+		-- 	"sphamba/smear-cursor.nvim",
+		-- 	opts = {},
+		-- },
 
 		-- {
 		-- 	"toppair/peek.nvim",
@@ -614,8 +485,8 @@ end
 local function nxtcoder17_plugins()
 	return {
 		{
-			"nxtcoder17/http-cli",
-			-- dir = "~/workspace/nxtcoder17/http-cli",
+			-- "nxtcoder17/http-cli",
+			dir = "~/workspace/nxtcoder17/http-cli",
 			build = "task build",
 			cmd = {
 				"Gql",
@@ -686,42 +557,42 @@ end
 
 local function terminals()
 	return {
-		{
-			"chomosuke/term-edit.nvim",
-			ft = { "toggleterm", "terminal" },
-			version = "v1.*",
-			config = function()
-				require("term-edit").setup({
-					prompt_end = "😎 ",
-				})
-			end,
-		},
-		{
-			"akinsho/toggleterm.nvim",
-			-- event = "UIEnter",
-			keys = { "st" },
-			version = "*",
-			config = function()
-				require("plugins.toggleterm")
-			end,
-		},
-		{
-			"samjwill/nvim-unception",
-			lazy = true,
-			init = function()
-				vim.g.unception_open_buffer_in_new_tab = true
-				vim.api.nvim_create_autocmd("User", {
-					pattern = "UnceptionEditRequestReceived",
-					callback = function()
-						-- Toggle the terminal off.
-						local ok, toggleterm = pcall(require, "toggleterm")
-						if ok then
-							toggleterm.toggle()
-						end
-					end,
-				})
-			end,
-		},
+		-- {
+		-- 	"chomosuke/term-edit.nvim",
+		-- 	ft = { "toggleterm", "terminal" },
+		-- 	version = "v1.*",
+		-- 	config = function()
+		-- 		require("term-edit").setup({
+		-- 			prompt_end = "😎 ",
+		-- 		})
+		-- 	end,
+		-- },
+		-- {
+		-- 	"akinsho/toggleterm.nvim",
+		-- 	-- event = "UIEnter",
+		-- 	keys = { "st" },
+		-- 	version = "*",
+		-- 	config = function()
+		-- 		require("plugins.toggleterm")
+		-- 	end,
+		-- },
+		-- {
+		-- 	"samjwill/nvim-unception",
+		-- 	lazy = true,
+		-- 	init = function()
+		-- 		vim.g.unception_open_buffer_in_new_tab = true
+		-- 		vim.api.nvim_create_autocmd("User", {
+		-- 			pattern = "UnceptionEditRequestReceived",
+		-- 			callback = function()
+		-- 				-- Toggle the terminal off.
+		-- 				local ok, toggleterm = pcall(require, "toggleterm")
+		-- 				if ok then
+		-- 					toggleterm.toggle()
+		-- 				end
+		-- 			end,
+		-- 		})
+		-- 	end,
+		-- },
 	}
 end
 
@@ -741,7 +612,6 @@ end
 
 local plugins = {}
 vim.list_extend(plugins, fuzzy_finders())
-vim.list_extend(plugins, colorschemes())
 vim.list_extend(plugins, syntax())
 vim.list_extend(plugins, lsp())
 vim.list_extend(plugins, debugging())

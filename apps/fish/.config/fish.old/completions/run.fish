@@ -1,0 +1,1 @@
+/var/home/nxtcoder17/workspace/github.com/nxtcoder17/RunFile/cmd/run/completions/run.fish

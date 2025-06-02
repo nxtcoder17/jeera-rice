@@ -48,8 +48,16 @@ local function toggleterm_keymaps()
 		end
 
 		local init_cmd = {
-			["fish"] = string.format([[ fish --init-command "pushd %s; pushd %s" ]], vim.g.project_root_dir, vim.fn.getcwd()),
-			["bash"] = string.format([[ bash --init-file <(pushd %s; pushd %s) ]], vim.g.project_root_dir, vim.fn.getcwd()),
+			["fish"] = string.format(
+				[[ fish --init-command "pushd %s; pushd %s" ]],
+				vim.g.project_root_dir,
+				vim.fn.getcwd()
+			),
+			["bash"] = string.format(
+				[[ bash --init-file <(pushd %s; pushd %s) ]],
+				vim.g.project_root_dir,
+				vim.fn.getcwd()
+			),
 			["zsh"] = string.format([[ zsh -c "pushd %s; pushd %s; zsh -i" ]], vim.g.project_root_dir, vim.fn.getcwd()),
 		}
 		local term = require("toggleterm.terminal").Terminal:new({

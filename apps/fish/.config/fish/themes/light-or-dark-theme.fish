@@ -1,1 +1,0 @@
-/var/home/nxtcoder17/.config/fish/themes/nightfox.fish
