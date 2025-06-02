@@ -1,19 +1,29 @@
 #! /usr/bin/env sh
 
 # xset r rate 140 75
-xset r rate 200 60
+# xset r rate 200 60
+xset r rate 300 50
 
 # xset r rate 200 60
-setxkbmap -option ctrl:nocaps
 
-# left shift as spacmodmap -e 'keycode 50 = space'
-xmodmap -e 'keycode 50 = space'
+with_xcape() {
+  setxkbmap -option ctrl:nocaps
 
-# space key as Left Shift
-xmodmap -e 'keycode 65 = Shift_L'
+  # left shift as spacmodmap -e 'keycode 50 = space'
+  xmodmap -e 'keycode 50 = space'
 
-pkill -9 xcape
+  # space key as Left Shift
+  xmodmap -e 'keycode 65 = Shift_L'
 
-# make space toggle b/w space and Shift_L
-xcape -e 'Shift_L=space'
-xcape -e 'Control_L=Escape'
+  pkill -9 xcape
+
+  # make space toggle b/w space and Shift_L
+  xcape -e 'Shift_L=space'
+  xcape -e 'Control_L=Escape' -t 70
+}
+
+with_kanata() {
+   kanata -c ~/.config/kanata/config.kbd
+}
+
+# with_xcape
