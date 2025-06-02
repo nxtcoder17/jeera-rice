@@ -159,7 +159,7 @@ set -gx NPM_CONFIG_STORE_DIR "$XDG_DATA_HOME/node/bin"
 ## zoxide exclude DIRS
 set -gx _ZO_EXCLUDE_DIRS "$HOME:$HOME/workspace/kloudlite/archived/.*"
 
-set -gx FZF_DEFAULT_COMMAND "rg --files --reverse --hidden --follow --smart-case"
+set -gx FZF_DEFAULT_COMMAND "rg --files --hidden --follow --smart-case"
 set -gx GPG_TTY (tty) # to make GPG work with TTY input box
 
 set -x LANGUAGE "en_US.UTF-8"
