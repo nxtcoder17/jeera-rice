@@ -55,7 +55,7 @@ set -g status-left ' 🌳 '
 
 # set -g status-right "#{prefix_highlight} #[fg=$hl_bg]$icon_hostname_left#[fg=$hl_selected_bg,bg=$hl_bg]   #S (#H) #[fg=$hl_bg,bg=default,nobold,noitalics,nounderscore]$icon_hostname_right#[bg=default] "
 
-set -g status-right "#{prefix_highlight} #[fg=$hl_selected_fg,bg=default]   #S (#H) #[fg=$hl_selected_bg,bg=default,nobold,noitalics,nounderscore]#[bg=default] "
+set -g status-right "#{prefix_highlight} #[fg=$hl_selected_fg,bg=default]   #S #[fg=$hl_selected_bg,bg=default,nobold,noitalics,nounderscore]#[bg=default] "
 
 # plugin: prefix-hightlight
 set -g @prefix_highlight_output_prefix "#[fg=$hl_bg]#[bg=default]#[nobold]#[noitalics]$icon_hostname_left#[fg=$hl_selected_bg]#[bg=$hl_bg]"
