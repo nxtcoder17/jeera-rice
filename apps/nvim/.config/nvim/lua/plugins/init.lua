@@ -485,9 +485,9 @@ end
 local function nxtcoder17_plugins()
 	return {
 		{
-			-- "nxtcoder17/http-cli",
-			dir = "~/workspace/nxtcoder17/http-cli",
-			build = "task build",
+			"nxtcoder17/http-cli",
+			-- dir = "~/workspace/nxtcoder17/http-cli",
+			build = "go build -ldflags='-s -w' -o ./bin/http ./",
 			cmd = {
 				"Gql",
 				"Http",
