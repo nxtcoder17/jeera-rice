@@ -32,7 +32,8 @@ local palette = {
 
 local lib = require("lib_color")
 
-local base16_path = os.getenv("HOME") .. "/.base16/nvim-base16.lua"
+-- local base16_path = os.getenv("HOME") .. "/.base16/nvim-base16.lua"
+local base16_path = os.getenv("HOME") .. "/.base16.d/nvim/base16.lua"
 if vim.uv.fs_stat(base16_path) then
 	palette = dofile(base16_path)
 end
@@ -42,9 +43,11 @@ palette.base_error = "#a3685a"
 
 local theme = lib.Theme(palette):set_hl_groups(function(p)
 	-- local comment_fg = lib.darken(p.base03, 60)
-	local comment_fg = p.base03
+	local comment_fg = p.base02
 	lib.hl("Comment", { fg = comment_fg })
 	-- util.hl("Normal", { bg = string.format("%s%s", p.base00, "00") })
+
+	local nontext_fg = lib.lighten(comment_fg, 40)
 
 	-- neovim native highlight groups
 	lib.hl("Normal", { bg = "None" })
@@ -66,10 +69,10 @@ local theme = lib.Theme(palette):set_hl_groups(function(p)
 	lib.hl("Visual", { bg = p.base00 })
 
 	-- INFO: nontext and whitespace are for listchars highlighting
-	lib.hl("NonText", { fg = lib.darken(comment_fg, 40) })
-	lib.hl("Whitespace", { fg = lib.darken(comment_fg, 40) })
+	lib.hl("NonText", { fg = nontext_fg })
+	lib.hl("Whitespace", { fg = nontext_fg })
 
-	lib.hl("MatchParen", { bg = lib.darken(p.base0A, 80), fg = p.base0A })
+	lib.hl("MatchParen", { bg = lib.lighten(p.base02, 40), fg = p.base02 })
 
 	lib.hl("FloatBorder", { link = "Comment" })
 
@@ -81,7 +84,8 @@ local theme = lib.Theme(palette):set_hl_groups(function(p)
 
 	lib.hl("WinSeparator", { bg = "None" })
 
-	lib.hl("DiagnosticError", { bg = lib.darken(p.base_error, 80), fg = lib.lighten(p.base_error, 30) })
+	-- lib.hl("DiagnosticError", { bg = lib.darken(p.base_error, 80), fg = lib.lighten(p.base_error, 30) })
+	lib.hl("DiagnosticError", { bg = p.base08, fg = lib.lighten(p.base08, 30) })
 	-- lib.hl("DiagnosticSignError", { link = "DiagnosticError" })
 	-- lib.hl("DiagnosticFloatingError", { link = "DiagnosticError" })
 	lib.hl("DiagnosticUnnecessary", { fg = p.base03, style = "undercurl", sp = p.base_error })
@@ -94,15 +98,17 @@ local theme = lib.Theme(palette):set_hl_groups(function(p)
 	lib.hl("DiagnosticUnderlineInfo", { style = "undercurl" })
 	lib.hl("DiagnosticUnderlineOk", { link = "DiagnosticUnderlineInfo" })
 
-	lib.hl("Visual", { bg = lib.darken(p.base0C, 90) })
+	lib.hl("Visual", { bg = lib.darken(p.base00, 30) })
 	lib.hl("SpecialChar", { fg = p.base0E })
 
-	-- lib.hl("StatusLine", { bg = p.base01 })
-	-- lib.hl("StatusLineNC", { bg = p.base08 })
+	lib.hl("StatusLine", { bg = "None", fg = "None" })
+	lib.hl("StatusLineNC", { bg = "None", fg = "None" })
 
-	lib.hl("MiniStatuslineDevinfo", { bg = p.base01 })
+	-- lib.hl("MiniStatuslineDevinfo", { bg = p.base01 })
+	-- lib.hl("MiniStatuslineDevinfo", { bg = p.base01 })
+	lib.hl("MiniStatuslineDevinfo", { bg = nontext_fg, fg = lib.darken(nontext_fg, 80) })
 	-- lib.hl("MiniStatuslineFileinfo", { bg = p.base01 })
-	lib.hl("MiniStatuslineFilename", { bg = p.base01, fg = lib.lighten(p.base01, 17) })
+	lib.hl("MiniStatuslineFilename", { bg = nontext_fg, fg = lib.darken(nontext_fg, 80) })
 	lib.hl("MiniStatuslineModeNormal", { bg = p.base03 })
 end)
 

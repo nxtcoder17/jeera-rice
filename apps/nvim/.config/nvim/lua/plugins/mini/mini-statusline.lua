@@ -13,7 +13,7 @@ local function lsp_progress()
 	return vim.lsp.status()
 end
 
-function active_status_line()
+local function active_status_line()
 	local mode, mode_hl = MiniStatusline.section_mode({ trunc_width = 120 })
 	local git = MiniStatusline.section_git({ trunc_width = 75 })
 	local diagnostics = MiniStatusline.section_diagnostics({ trunc_width = 75 })
