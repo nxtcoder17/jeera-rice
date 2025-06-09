@@ -17,8 +17,8 @@ git checkout -b "$NAME-branch" "$NAME/$BRANCH"
 
 # Move all files into a subdirectory (excluding .git)
 mkdir -p "$NAME"
-shopt -s dotglob            # Include hidden files except .git
-git mv $(ls -A) "$NAME/" -k # Ignore errors if empty
+shopt -s dotglob              # Include hidden files except .git
+git mv "$(ls -A)" "$NAME/" -k # Ignore errors if empty
 
 # Commit the changes
 git commit -am "Merged $NAME into subdirectory $NAME"

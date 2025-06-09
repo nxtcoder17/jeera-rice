@@ -107,7 +107,7 @@
         modules = [
           ./home.nix
           {
-            home.packages = with pkgs; [];
+            home.packages = with pkgs; [ ];
           }
         ];
 

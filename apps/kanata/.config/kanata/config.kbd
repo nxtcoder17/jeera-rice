@@ -1,0 +1,23 @@
+(defcfg process-unmapped-keys yes)
+
+(defsrc 
+  caps
+  spc
+)
+
+(defvar
+  tap-time 200
+  hold-time 200
+)
+
+(defalias
+  escctrl (tap-hold-press $tap-time $hold-time esc lctrl)
+  ctrl_a  (macro lctrl a)
+  ctrl_a_z  (macro lctrl a z)
+  space (tap-hold-press $tap-time $hold-time spc lsft)
+)
+
+(deflayer base
+  @escctrl
+  @space
+)

@@ -1,5 +1,0 @@
--- if vim.opt.background == "light" then
---   return require("plugins.colorschemes.nightfox.dayfox")
--- end
--- -- return require("plugins.colorschemes.nightfox.nightfox")
--- return require("plugins.colorschemes.nightfox.dayfox")

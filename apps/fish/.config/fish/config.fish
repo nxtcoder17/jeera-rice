@@ -32,6 +32,10 @@ alias cat 'bat'
 alias cursor 'cursor --enable-features=UseOzonePlatform,WaylandWindowDecorations,WebRTCPipeWireCapturer --ozone-platform-hint=auto'
 
 function cc --description "copies stdout to system clipboard"
+  if test "$(uname)" = "Darwin"
+    pbcopy
+    return
+  end
   if test "$XDG_BACKEND" = "wayland"
     wl-copy
     return
@@ -40,7 +44,6 @@ function cc --description "copies stdout to system clipboard"
 end
 
 alias rm 'rm -i'
-# alias task 'go-task'
 
 alias hm 'home-manager'
 alias hme 'home-manager edit'
@@ -195,3 +198,8 @@ fish_add_path $HOME/workspace/github.com/kloudlite/internal-tools/bin
 fish_add_path "$XDG_DATA_HOME/node/bin"
 fish_add_path "$XDG_DATA_HOME/bun/bin"
 fish_add_path "$XDG_DATA_HOME/pnpm/bin"
+if test "$(uname)" = "Darwin"
+  fish_add_path "/opt/homebrew/bin"
+end
+
+# direnv hook fish  | source 2>&1 > /dev/null

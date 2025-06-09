@@ -1,7 +1,0 @@
--- vim.g.rnvimr_ranger_cmd = {
--- 	"ranger",
--- 	-- "--selectfile",
--- 	-- vim.fn.expand("%p"),
--- 	"--cmd=set draw_borders both",
--- 	"--cmd=find " .. vim.fn.expand("%:p"),
--- }

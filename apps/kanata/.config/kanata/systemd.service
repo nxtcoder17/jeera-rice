@@ -1,0 +1,14 @@
+[Unit]
+Description=Kanata Daemon
+
+[Service]
+Restart=always
+RestartSec=60
+User=root
+#ExecStart=bash /var/home/nxtcoder17/me/jeera-rice/bin/keyboard-defaults.sh
+ExecStart=bash /home/nxtcoder17/.config/kanata/kanata.sh
+StartLimitInterval=30
+
+[Install]
+WantedBy=default.target
+

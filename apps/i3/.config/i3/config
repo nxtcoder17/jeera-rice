@@ -315,7 +315,8 @@ for_window [class="firefox" title="Firefox — Sharing Indicator"] floating enab
 for_window [class="firefox" title="Pushbullet – Mozilla Firefox"] floating enable
 for_window [class="firefox" title="About Mozilla Firefox"] floating enable
 for_window [title="Picture-in-Picture"] floating enable
-for_window [instance="copyq"] floating enable, resize set 1000 600, border pixel
+# for_window [instance="copyq"] floating enable, resize set 1000 600, border pixel
+for_window [title=".*::floating::"] floating enable
 
 # ScratchPad
 bindsym $mod+$shift+BackSpace move scratchpad

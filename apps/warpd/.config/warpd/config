@@ -3,6 +3,8 @@
 exit: C-e
 hint_activation_key: M-x
 history_activation_key: M-;
+drag: v
+copy_and_exit: y
 
 cursor_color: #27f2db
 cursor_size: 11
@@ -16,12 +18,15 @@ scroll_up: K
 # hint_bgcolor: #8aa7ab
 # hint_fgcolor: #38e8ff
 
-hint_bgcolor: #e6f3f5
-hint_fgcolor: #3f4445
+# hint_bgcolor: #e6f3f5
+# hint_fgcolor: #3f4445
 
 # --fg: ; --bg: #d5f0f0;
-hint_bgcolor: #d5f0f0
-hint_fgcolor: #244242
+# hint_bgcolor: #d5f0f0
+hint_fgcolor: #38e8ff
+hint_bgcolor: #244242
 # hint_font: "Comic Code Ligatures Medium"
-hint_font: "Serious Shanns Bold"
+# hint_font: "Serious Shanns Bold"
+hint_font: "Monaspace Krypton Regular"
 hint_size: 20
+hint_border_radius: 7

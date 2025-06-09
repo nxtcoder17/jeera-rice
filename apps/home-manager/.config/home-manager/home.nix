@@ -108,7 +108,8 @@ let
     networkmanagerapplet
     networkmanager
 
-    keyd
+    # keyd
+    # kanata
   ];
 
   packages.audio_video = with pkgs; [
@@ -122,7 +123,7 @@ let
   packages.kubernetes = with pkgs; [
     kubernetes-helm
     kubectl
-    k9s
+    # k9s
 
     (writeShellScriptBin "k3d" ''
       #! /usr/bin/env bash
@@ -159,34 +160,12 @@ let
     graphviz
 
     clamav
-    (runWithNvidiaGPU ghostty)
+    # (runWithNvidiaGPU ghostty)
 
     transmission_4
     jujutsu
     # ags
-
-    (stdenv.mkDerivation rec {
-      name = "nvim";
-      pname = name;
-      src = fetchurl {
-        url = "https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.tar.gz";
-        sha256 = "sha256-YH1TVW359/4BLW7hE/pE183hG/tZDVF4kbsk91ipnAk=";
-
-        # url = "https://github.com/neovim/neovim/releases/download/v0.10.3/nvim-linux64.tar.gz";
-        # sha256 = "sha256-vhiZFaKg2jYVV24tsGp8cUrvCukmtNphB+WJo8xiPlw=";
-      };
-      # buildInputs = [ bash ];
-      # nativeBuildInputs = [ ];
-      installPhase = ''
-        mkdir -p $out/bin
-        tar xf $src
-        ls -al $src
-
-        cp -R nvim-linux-x86_64 $out/nvim
-        ln -sf $out/nvim/bin/nvim $out/bin/$name
-      '';
-    }
-    )
+    udp2raw
 
     # (writeShellScriptBin "fwatcher" ''
     #   #! /usr/bin/env bash
@@ -294,6 +273,7 @@ let
 
     go_1_22
     gopls
+    golangci-lint
     gnumake
     gcc13
     git-filter-repo
@@ -314,6 +294,7 @@ let
     duf
 
     postgresql
+    nushell
   ];
 
   packages.gui_apps = with pkgs; [
@@ -326,6 +307,7 @@ let
 
     (runWithNvidiaGPU vivaldi)
     (runWithNvidiaGPU windsurf)
+    (runWithNvidiaGPU qutebrowser)
     vivaldi-ffmpeg-codecs
 
     freshfetch
@@ -335,26 +317,32 @@ let
     zathura
 
     copyq
+    postman
+    vscode
 
     gtk-engine-murrine
 
     # (runWithNvidiaGPU code-cursor)
 
-    # zed-editor
-    (writeShellScriptBin "zed" ''
-      #! /usr/bin/env bash
-      if [ ! -x "$HOME/.local/bin/zed" ]; then
-        echo "Downloading zed..."
-        dir="$HOME/.local/tars.uz"
-        echo mkdir -p $dir
-        mkdir -p $dir
-        curl -L0 https://github.com/zed-industries/zed/releases/download/v0.145.1-pre/zed-linux-x86_64.tar.gz > $dir/zed.tar.gz
-        ls -al $dir
-        tar xf $dir/zed.tar.gz -C $dir
-        ln -sf $dir/zed-preview.app/bin/zed $HOME/.local/bin/zed
-      fi
-      $HOME/.local/bin/zed "$@"
-    '')
+    (runWithNvidiaGPU zed-editor)
+    # (runWithNvidiaGPU en-croissant)
+
+    stockfish
+
+    # (writeShellScriptBin "zed" ''
+    #   #! /usr/bin/env bash
+    #   if [ ! -x "$HOME/.local/bin/zed" ]; then
+    #     echo "Downloading zed..."
+    #     dir="$HOME/.local/tars.uz"
+    #     echo mkdir -p $dir
+    #     mkdir -p $dir
+    #     curl -L0 https://github.com/zed-industries/zed/releases/download/v0.145.1-pre/zed-linux-x86_64.tar.gz > $dir/zed.tar.gz
+    #     ls -al $dir
+    #     tar xf $dir/zed.tar.gz -C $dir
+    #     ln -sf $dir/zed-preview.app/bin/zed $HOME/.local/bin/zed
+    #   fi
+    #   $HOME/.local/bin/zed "$@"
+    # '')
 
     (writeShellScriptBin "discord" ''
       #! /usr/bin/env bash
@@ -384,33 +372,32 @@ let
       '';
     })
 
-    (runWithNvidiaGPU (stdenv.mkDerivation rec {
-      name = "zen-browser";
-      pname = name;
-      version = "";
-      src = fetchurl {
-        url = "https://github.com/zen-browser/desktop/releases/latest/download/zen-x86_64.AppImage";
-        sha256 = "sha256-GJuxooMV6h3xoYB9hA9CaF4g7JUIJ2ck5/hiQp89Y5o=";
-
-        # url = "https://github.com/zen-browser/desktop/releases/latest/download/zen-generic.AppImage";
-        # sha256 = "sha256-Dy21dVatjyl9AiDm+SXEnoT+HMHCtTZehXUAyYKiUpU=";
-      };
-      unpackPhase = ":";
-      buildInputs = with pkgs; [ bash unzip ];
-      installPhase = ''
-        mkdir -p $out/appimage $out/bin
-        cp $src $out/appimage/$name
-        chmod +x $out/appimage/$name
-        pushd $out/appimage
-        ./$name --appimage-extract
-        popd
-        ln -sf $out/appimage/squashfs-root/AppRun $out/bin/$name
-      '';
-    }))
+    # (runWithNvidiaGPU (stdenv.mkDerivation rec {
+    #   name = "zen-browser";
+    #   pname = name;
+    #   version = "";
+    #   src = fetchurl {
+    #     url = "https://github.com/zen-browser/desktop/releases/latest/download/zen-x86_64.AppImage";
+    #     sha256 = "sha256-GJuxooMV6h3xoYB9hA9CaF4g7JUIJ2ck5/hiQp89Y5o=";
+    #
+    #     # url = "https://github.com/zen-browser/desktop/releases/latest/download/zen-generic.AppImage";
+    #     # sha256 = "sha256-Dy21dVatjyl9AiDm+SXEnoT+HMHCtTZehXUAyYKiUpU=";
+    #   };
+    #   unpackPhase = ":";
+    #   buildInputs = with pkgs; [ bash unzip ];
+    #   installPhase = ''
+    #     mkdir -p $out/appimage $out/bin
+    #     cp $src $out/appimage/$name
+    #     chmod +x $out/appimage/$name
+    #     pushd $out/appimage
+    #     ./$name --appimage-extract
+    #     popd
+    #     ln -sf $out/appimage/squashfs-root/AppRun $out/bin/$name
+    #   '';
+    # }))
 
     # (runWithNvidiaGPU firefox-devedition)
-    (runWithNvidiaGPU jetbrains.idea-ultimate)
-    kanata
+    # (runWithNvidiaGPU jetbrains.idea-ultimate)
   ];
 
   packages.nxtcoder17 = with pkgs; [

@@ -9,3 +9,4 @@ aliases:
   np: networkpolicies
   apps: crds.kloudlite.io/v1/apps
   lf: crds.kloudlite.io/v1/lifecycles
+  mh: environments.mhack.kloudlite.github.com

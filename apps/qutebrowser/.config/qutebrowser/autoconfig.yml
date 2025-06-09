@@ -5,18 +5,18 @@
 # Instead, create a config.py - see :help for details.
 
 config_version: 2
-settings:
-  colors.webpage.darkmode.algorithm:
-    global: brightness-rgb
-  colors.webpage.darkmode.contrast:
-    global: 1.0
-  colors.webpage.darkmode.enabled:
-    global: false
-  colors.webpage.darkmode.grayscale.all:
-    global: false
-  colors.webpage.darkmode.grayscale.images:
-    global: 0.9
-  colors.webpage.darkmode.policy.images:
-    global: smart
-  colors.webpage.darkmode.policy.page:
-    global: smart
+settings: {}
+  # colors.webpage.darkmode.algorithm:
+  #   global: brightness-rgb
+  # colors.webpage.darkmode.contrast:
+  #   global: 1.0
+  # colors.webpage.darkmode.enabled:
+  #   global: false
+  # colors.webpage.darkmode.grayscale.all:
+  #   global: false
+  # colors.webpage.darkmode.grayscale.images:
+  #   global: 0.9
+  # colors.webpage.darkmode.policy.images:
+  #   global: smart
+  # colors.webpage.darkmode.policy.page:
+  #   global: smart
