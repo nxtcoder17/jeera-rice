@@ -149,8 +149,11 @@ end
 zoxide init fish | source
 
 # base16 manager
-[ -f ~/.base16/fish.fish ] && source ~/.base16/fish.fish
-[ -f ~/.base16/fzf.fish ] && source ~/.base16/fzf.fish
+[ -f ~/.base16.d/fish/base16.fish ] && source ~/.base16.d/fish/base16.fish
+[ -f ~/.base16.d/fzf/base16.fish ] && source ~/.base16.d/fzf/base16.fish
+
+# [ -f ~/.base16/fish.fish ] && source ~/.base16/fish.fish
+# [ -f ~/.base16/fzf.fish ] && source ~/.base16/fzf.fish
 
 set -gx SHELL $(which fish)
 set -gx DOCKER_CONFIG "$XDG_CONFIG_HOME/docker"

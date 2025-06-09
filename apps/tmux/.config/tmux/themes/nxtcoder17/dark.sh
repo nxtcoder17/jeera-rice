@@ -4,7 +4,8 @@
 # hl_selected_bg="#63b8c7"
 # hl_selected_fg="#395257"
 #
-source ~/.base16/tmux-base16.sh
+# source ~/.base16/tmux-base16.sh
+source ~/.base16.d/tmux/base16.sh
 
 # [glymphs](https://www.compart.com/en/unicode/category/So)
 # ░ \u2591 ░ \u2592 ▓ \u2593
