@@ -17,16 +17,16 @@ git checkout -b "$NAME-branch" "$NAME/$BRANCH"
 
 # Move all files into a subdirectory (excluding .git)
 mkdir -p "$NAME"
-shopt -s dotglob              # Include hidden files except .git
-git mv "$(ls -A)" "$NAME/" -k # Ignore errors if empty
+shopt -s dotglob                         # Include hidden files except .git
+ls -A | xargs -I{} git mv {} "$NAME/" -k # Ignore errors if empty
 
 # Commit the changes
 git commit -am "Merged $NAME into subdirectory $NAME"
 
 # Merge into main branch
 git checkout master
-git merge --allow-unrelated-histories --no-ff "$NAME-branch"
+git merge --allow-unrelated-histories --no-edit --no-ff "$NAME-branch"
 
 # Cleanup
-git branch -d "$NAME-branch"
+git branch -D "$NAME-branch"
 git remote remove "$NAME"
