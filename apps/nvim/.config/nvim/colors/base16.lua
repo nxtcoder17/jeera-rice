@@ -45,7 +45,7 @@ local theme = lib.Theme(palette):set_hl_groups(function(p)
 	-- local comment_fg = lib.darken(p.base03, 60)
 	local comment_fg = p.base02
 	lib.hl("Comment", { fg = comment_fg })
-	local nontext_fg = lib.blend(comment_fg, 40)
+	local nontext_fg = lib.blend(comment_fg, 30)
 
 	-- neovim native highlight groups
 	lib.hl("Normal", { bg = p.base00 })
@@ -53,11 +53,11 @@ local theme = lib.Theme(palette):set_hl_groups(function(p)
 	lib.hl("Identifier", { fg = p.base0C })
 	lib.hl("Variable", { fg = p.base05 })
 	lib.hl("@variable", { link = "Variable" })
-	lib.hl("Keyword", { fg = p.base08 })
-	lib.hl("Structure", { fg = lib.blend(p.base09, 20) })
-	lib.hl("String", { fg = lib.blend(p.base0B, 20) })
+	lib.hl("Keyword", { fg = lib.reverse_blend(p.base09, 30) })
+	lib.hl("Structure", { fg = lib.reverse_blend(p.base09, 20) })
+	lib.hl("String", { fg = lib.reverse_blend(p.base0B, 20) })
 
-	lib.hl("Whitespace", { link = "Comment" })
+	lib.hl("Whitespace", { link = "NonText" })
 	lib.hl("Delimiter", { fg = p.base0E })
 
 	lib.hl("LineNr", { link = "Comment" })
