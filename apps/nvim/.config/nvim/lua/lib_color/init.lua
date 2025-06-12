@@ -21,6 +21,7 @@ function M.blend(hex, amount)
 	end
 end
 
+-- reverse_blend does lightning or darkening based on vim.o.background's value
 function M.reverse_blend(hex, amount)
 	if vim.opt.background:get() == "light" then
 		return M.darken(hex, amount)
