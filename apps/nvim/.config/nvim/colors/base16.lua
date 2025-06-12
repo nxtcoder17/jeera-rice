@@ -45,19 +45,17 @@ local theme = lib.Theme(palette):set_hl_groups(function(p)
 	-- local comment_fg = lib.darken(p.base03, 60)
 	local comment_fg = p.base02
 	lib.hl("Comment", { fg = comment_fg })
-	-- util.hl("Normal", { bg = string.format("%s%s", p.base00, "00") })
-
-	local nontext_fg = lib.lighten(comment_fg, 40)
+	local nontext_fg = lib.blend(comment_fg, 40)
 
 	-- neovim native highlight groups
-	lib.hl("Normal", { bg = "None" })
+	lib.hl("Normal", { bg = p.base00 })
 	lib.hl("NormalNC", { bg = "None" })
 	lib.hl("Identifier", { fg = p.base0C })
 	lib.hl("Variable", { fg = p.base05 })
 	lib.hl("@variable", { link = "Variable" })
 	lib.hl("Keyword", { fg = p.base08 })
-	lib.hl("Structure", { fg = lib.darken(p.base09, 20) })
-	lib.hl("String", { fg = lib.darken(p.base0B, 20) })
+	lib.hl("Structure", { fg = lib.blend(p.base09, 20) })
+	lib.hl("String", { fg = lib.blend(p.base0B, 20) })
 
 	lib.hl("Whitespace", { link = "Comment" })
 	lib.hl("Delimiter", { fg = p.base0E })
@@ -72,7 +70,7 @@ local theme = lib.Theme(palette):set_hl_groups(function(p)
 	lib.hl("NonText", { fg = nontext_fg })
 	lib.hl("Whitespace", { fg = nontext_fg })
 
-	lib.hl("MatchParen", { bg = lib.lighten(p.base02, 40), fg = p.base02 })
+	lib.hl("MatchParen", { bg = lib.blend(p.base02, 40), fg = p.base02 })
 
 	lib.hl("FloatBorder", { link = "Comment" })
 
@@ -85,7 +83,7 @@ local theme = lib.Theme(palette):set_hl_groups(function(p)
 	lib.hl("WinSeparator", { bg = "None" })
 
 	-- lib.hl("DiagnosticError", { bg = lib.darken(p.base_error, 80), fg = lib.lighten(p.base_error, 30) })
-	lib.hl("DiagnosticError", { bg = p.base08, fg = lib.lighten(p.base08, 30) })
+	lib.hl("DiagnosticError", { bg = p.base08, fg = lib.blend(p.base08, 30) })
 	-- lib.hl("DiagnosticSignError", { link = "DiagnosticError" })
 	-- lib.hl("DiagnosticFloatingError", { link = "DiagnosticError" })
 	lib.hl("DiagnosticUnnecessary", { fg = p.base03, style = "undercurl", sp = p.base_error })
@@ -98,17 +96,18 @@ local theme = lib.Theme(palette):set_hl_groups(function(p)
 	lib.hl("DiagnosticUnderlineInfo", { style = "undercurl" })
 	lib.hl("DiagnosticUnderlineOk", { link = "DiagnosticUnderlineInfo" })
 
-	lib.hl("Visual", { bg = lib.darken(p.base00, 30) })
+	lib.hl("Visual", { bg = p.base01 })
 	lib.hl("SpecialChar", { fg = p.base0E })
 
-	lib.hl("StatusLine", { bg = "None", fg = "None" })
-	lib.hl("StatusLineNC", { bg = "None", fg = "None" })
+	-- lib.hl("StatusLine", { bg = "None", fg = "None" })
+	lib.hl("StatusLine", { bg = lib.blend(p.base00, 40), fg = "None" })
+	-- lib.hl("StatusLineNC", { bg = "None", fg = "None" })
 
 	-- lib.hl("MiniStatuslineDevinfo", { bg = p.base01 })
 	-- lib.hl("MiniStatuslineDevinfo", { bg = p.base01 })
-	lib.hl("MiniStatuslineDevinfo", { bg = nontext_fg, fg = lib.darken(nontext_fg, 80) })
+	lib.hl("MiniStatuslineDevinfo", { bg = "None", fg = p.base03 })
 	-- lib.hl("MiniStatuslineFileinfo", { bg = p.base01 })
-	lib.hl("MiniStatuslineFilename", { bg = nontext_fg, fg = lib.darken(nontext_fg, 80) })
+	lib.hl("MiniStatuslineFilename", { bg = "None", fg = p.base03 })
 	lib.hl("MiniStatuslineModeNormal", { bg = p.base03 })
 end)
 

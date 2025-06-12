@@ -12,6 +12,15 @@ function M.darken(hex, amount)
 	return c(hex):blend("#000000", amount):to_hex()
 end
 
+-- blend does lightning or darkening based on vim.o.background's value
+function M.blend(hex, amount)
+	if vim.opt.background:get() == "light" then
+		return M.lighten(hex, amount)
+	else
+		return M.darken(hex, amount)
+	end
+end
+
 --- @class HLGroupParams
 --- @field fg string|nil The foreground color of the highlight group. (Optional)
 --- @field bg string|nil The background color of the highlight group. (Optional)
