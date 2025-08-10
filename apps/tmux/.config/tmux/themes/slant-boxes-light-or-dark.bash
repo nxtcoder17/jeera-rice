@@ -1,1 +1,0 @@
-/var/home/nxtcoder17/.config/tmux/themes/slant-boxes-light.bash

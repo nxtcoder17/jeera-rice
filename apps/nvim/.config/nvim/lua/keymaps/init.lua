@@ -9,6 +9,8 @@ local function opt(description)
 	}
 end
 
+vim.g.mapleader = ","
+
 -- allows pasting without yanking deleted text
 keymap({ "x" }, "p", "P")
 

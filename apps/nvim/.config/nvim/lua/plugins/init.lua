@@ -44,6 +44,14 @@ local function syntax()
 		-- 	event = "VeryLazy",
 		-- },
 		{
+			"catppuccin/nvim",
+			name = "catppuccin",
+			priority = 1000,
+			config = function()
+				require("plugins.colorschemes.catppuccin")
+			end,
+		},
+		{
 			"nvim-treesitter/nvim-treesitter",
 			event = "BufReadPost",
 			config = function()

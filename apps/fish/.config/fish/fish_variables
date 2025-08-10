@@ -1,7 +1,7 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
-SETUVAR --export FZF_DEFAULT_OPTS:\x20\x2d\x2dcolor\x3dbg\x3a\x23dfe2e5\x2cfg\x3a\x23595a5b\x2chl\x3a\x23bb9200\x20\x2d\x2dcolor\x3dbg\x2b\x3a\x23dfe2e5\x2cfg\x2b\x3a\x235a7000\x2chl\x2b\x3a\x23c46c18\x20\x2d\x2dcolor\x3dinfo\x3a\x234271ae\x2cborder\x3a\x23888b8d\x2cprompt\x3a\x235a7000\x20\x2d\x2dcolor\x3dpointer\x3a\x234271ae\x2cmarker\x3a\x23c82829\x2cspinner\x3a\x23c82829\x2cheader\x3a\x23c82829
-SETUVAR __fish_initialized:3400
+SETUVAR --export FZF_DEFAULT_OPTS:\x2d\x2dcolor\x3dbg\x2b\x3a\x23303850\x2cbg\x3a\x231A1A24\x2cspinner\x3a\x23F0D0C8\x2chl\x3a\x23D87A8A\x20\x2d\x2dcolor\x3dfg\x3a\x23D8E0F0\x2cheader\x3a\x23D87A8A\x2cinfo\x3a\x23C098E0\x2cpointer\x3a\x23F0D0C8\x20\x2d\x2dcolor\x3dmarker\x3a\x23A8B0E8\x2cfg\x2b\x3a\x23D8E0F0\x2cprompt\x3a\x23C098E0\x2chl\x2b\x3a\x23D87A8A\x20\x2d\x2dcolor\x3dselected\x2dbg\x3a\x23404860\x20\x2d\x2dcolor\x3dborder\x3a\x23303850\x2clabel\x3a\x23D8E0F0
+SETUVAR __fish_initialized:3800
 SETUVAR _async_pid:
 SETUVAR _async_prompt_content:\x5bNo\x20Value\x20YET\x5d
 SETUVAR fish_color_autosuggestion:brblack
@@ -25,7 +25,7 @@ SETUVAR fish_color_search_match:bryellow\x1e\x2d\x2dbackground\x3dbrblack
 SETUVAR fish_color_selection:white\x1e\x2d\x2dbold\x1e\x2d\x2dbackground\x3dbrblack
 SETUVAR fish_color_status:red
 SETUVAR fish_color_user:brgreen
-SETUVAR fish_color_valid_path:\x2d\x2dunderline
+SETUVAR fish_color_valid_path:normal
 SETUVAR fish_greeting:\x1d
 SETUVAR fish_key_bindings:fish_vi_key_bindings
 SETUVAR fish_pager_color_completion:normal
@@ -33,3 +33,4 @@ SETUVAR fish_pager_color_description:yellow\x1e\x2di
 SETUVAR fish_pager_color_prefix:normal\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
 SETUVAR fish_pager_color_selected_background:\x2dr
+SETUVAR fish_user_paths:/var/home/nxtcoder17/\x2elocal/share/node/bin\x1e/var/home/nxtcoder17/workspace/github\x2ecom/kloudlite/internal\x2dtools/bin\x1e/var/home/nxtcoder17/\x2elocal/share/go/bin\x1e/var/home/nxtcoder17/\x2elocal/bin\x1e/var/home/nxtcoder17/me/jeera\x2drice/bin

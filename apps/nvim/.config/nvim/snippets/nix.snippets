@@ -13,6 +13,14 @@ snippet flake.nix
             inherit system; 
             # config.allowUnfree = true;
           };
+
+        	archMap = {
+          	"x86_64" = "amd64";
+          	"aarch64" = "arm64";
+        	};
+
+        	arch = builtins.getAttr (builtins.elemAt (builtins.split "-" system) 0) archMap;
+        	os = builtins.elemAt (builtins.split "-" system) 2;
         in
         {
           devShells.default = pkgs.mkShell {
@@ -23,8 +31,13 @@ snippet flake.nix
                 name = "run";
                 pname = "run";
                 src = fetchurl {
-                	url = "https://github.com/nxtcoder17/Runfile/releases/download/v1.5.2/run-linux-amd64";
-                	sha256 = "sha256-fxYRh2ndLf8zMhNiBo+aPI9UPtqndUkCWKGYqJ2tOpQ=";
+                	url = "https://github.com/nxtcoder17/Runfile/releases/download/v1.5.4/run-${${os}}-${${arch}}";
+                	sha256 = builtins.getAttr "${${os}}/${${arch}}" {
+                		"linux/amd64" = "j/0q+cNdt2ltFIpCgnenvZGX1GEJ5ZKBrRfskalhO5c=";
+                		"linux/arm64" = "BsI1cFNG/wEGa33HZiG+Mt/iSaA8kkPyrQX+lbGrMaM=";
+                		"darwin/amd64" = "VDroUq7dOvHa5rWK9N01Mv6aqUfXcVrk/NRXvGiYzAk=";
+                		"darwin/arm64" = "iltkmz3G2zeSs04La1xB1IcvfzG2g6ssisET5skhs2U=";
+                	};
                 };
                 unpackPhase = ":";
                 installPhase = ''

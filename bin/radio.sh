@@ -83,4 +83,7 @@ trap '( echo "killing ..."; kill $$ ) > /dev/null 2>&1 ' SIGINT SIGTERM EXIT
 
 # mpv --cache=no "$url" | tee "$log_file" | grep -i 'icy-title:' --line-buffered | sed -u -E 's/icy-title://g' | sed -u -E "s/^\s*/$(date -Is)\t$name\t/g" | notify_send | tee -a "$history_file" | tail -f "$log_file"
 
-mpv --cache=no "$url" | tee "$log_file" | grep -i 'icy-title:' --line-buffered | sed -u -E 's/icy-title://g' | sed -u -E "s/^\s*/$(date -Is)\t$name\t/g" | notify_send | tee -a "$history_file" | tail -f "$log_file" | awk '{printf "\r\033[K%s", $0; fflush()}'
+# mpv --cache=no "$url" | tee "$log_file" | grep -i 'icy-title:' --line-buffered | sed -u -E 's/icy-title://g' | sed -u -E "s/^\s*/$(date -Is)\t$name\t/g" | notify_send | tee -a "$history_file" | tail -f "$log_file" | awk '{printf "\r\033[K%s", $0; fflush()}'
+
+MPV_ARGS=(--stream-buffer-size=1MiB --cache=no)
+mpv "${MPV_ARGS[@]}" "$url" | tee "$log_file" | grep -i 'icy-title:' --line-buffered | sed -u -E 's/icy-title://g' | sed -u -E "s/^\s*/$(date -Is)\t$name\t/g" | notify_send | tee -a "$history_file" | tail -f "$log_file" | awk '{printf "\r\033[K%s", $0; fflush()}'

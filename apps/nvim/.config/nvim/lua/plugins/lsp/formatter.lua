@@ -10,6 +10,8 @@ M.setup_mason = function()
 
 		"prettierd",
 		"djlint",
+
+		"alejandra",
 	}
 
 	for _, item in ipairs(requirements) do
@@ -24,10 +26,11 @@ M.setup_formatters = function()
 		formatters_by_ft = {
 			lua = { "stylua" },
 			python = { "black" },
-			javascript = { "prettierd", stop_after_first = true },
+			-- javascript = { "prettierd", stop_after_first = true },
 			-- javascriptreact = { "prettierd", stop_after_first = true },
 			html = { "prettierd" },
 			gohtmltmpl = { "djlint" },
+			nix = { "alejandra" },
 		},
 
 		formatters = {

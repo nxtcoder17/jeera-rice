@@ -6,7 +6,8 @@ if type -q exa
 end
 
 # alias sudo "sudo -E env"
-alias vim 'nvim'
+alias vim 'TERM=xterm-kitty nvim'
+# alias nvim 'TERM=xterm-kitty nvim'
 # function sudo 
 #   command sudo -E=env $argv
 # end
@@ -85,20 +86,24 @@ set -g __color_nix "#2fbaf5"
 set -g __icon_nix " "
 set -g __icon_sep "|"
 
-function fish_prompt --on-var _async_prompt_content
+function fish_prompt
+  [ -f ~/.colorscheme.d/fish/catppuccin.fish ] && source ~/.colorscheme.d/fish/catppuccin.fish
+  [ -f ~/.colorscheme.d/fzf/catppuccin.fish ] && source ~/.colorscheme.d/fzf/catppuccin.fish
+
   # set prompt_char "😎"
   set prompt_char "ϟ" # Greek Small Letter Koppa[1]
   # set prompt_char "𝛌"
   [ ! -z "$fish_private_mode" ] && set prompt_char "🥷"
   [ "$EUID" -eq 0 ] && set prompt_char "√π"
   [ -n "$IN_NIX_SHELL" ] && set prompt_char " " && set prompt_color $__color_nix
+  [ -n "$IN_NIXY_SHELL" ] && set prompt_char "[NIXY]" && set prompt_color $__color_nix
 
   if [ -n "$KUBECONFIG" ]
     printf "%s(󰠳 %s)%s " (set_color $__color_kubeconfig) (basename $KUBECONFIG) (set_color $fish_color_normal)
   end
 
   printf "%s%s" (set_color $fish_color_cwd) (prompt_pwd)
-  printf "%s%s" (set_color $fish_color_git) (fish_git_prompt)
+  printf "%s%s" (set_color $fish_color_command) (fish_git_prompt)
   printf "%s\n" (set_color $fish_color_normal)
 
   printf "$prompt_char "
@@ -151,10 +156,10 @@ end
 
 zoxide init fish | source
 
-# base16 manager
-[ -f ~/.base16.d/fish/base16.fish ] && source ~/.base16.d/fish/base16.fish
-[ -f ~/.base16.d/fzf/base16.fish ] && source ~/.base16.d/fzf/base16.fish
-
+# # base16 manager
+# [ -f ~/.base16.d/fish/base16.fish ] && source ~/.base16.d/fish/base16.fish
+# [ -f ~/.base16.d/fzf/base16.fish ] && source ~/.base16.d/fzf/base16.fish
+#
 # [ -f ~/.base16/fish.fish ] && source ~/.base16/fish.fish
 # [ -f ~/.base16/fzf.fish ] && source ~/.base16/fzf.fish
 

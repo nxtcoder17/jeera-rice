@@ -1,0 +1,9 @@
+[[keymap]]
+key = "CAPSLOCK"
+tap = "ESC"
+hold = "LEFTCTRL"
+
+[[keymap]]
+key = "SPACE"
+tap = "SPACE"
+hold = "LEFTSHIFT"

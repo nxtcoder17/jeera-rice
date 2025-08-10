@@ -36,7 +36,11 @@ Require("nvim-treesitter.configs").setup({
 		enable = true,
 		additional_vim_regex_highlighting = false,
 		disable = function(_, bufnr)
-			return vim.api.nvim_buf_line_count(bufnr) > 1500
+			local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(bufnr))
+			if ok and stats and stats.size > 100 * 1024 then -- > 100KB
+				return true
+			end
+			return false
 		end,
 	},
 

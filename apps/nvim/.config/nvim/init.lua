@@ -7,9 +7,9 @@ Require("keymaps")
 Require("autocmds")
 Require("commands")
 
-vim.api.nvim_create_autocmd("OptionSet", {
-	pattern = "background",
-	callback = function()
-		vim.cmd("colorscheme base16")
-	end,
-})
+-- vim.api.nvim_create_autocmd("OptionSet", {
+-- 	pattern = "background",
+-- 	callback = function()
+-- 		vim.cmd("colorscheme base16")
+-- 	end,
+-- })

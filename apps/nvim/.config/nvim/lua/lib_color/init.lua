@@ -108,4 +108,26 @@ M.Theme = function(palette)
 	})
 end
 
+-- source: https://www.reddit.com/r/GoodNotes/comments/s91wwi/zebra_sarasa_pen_color_hex_codes/
+M.gel_pen_variants = {
+	["black"] = "#252724",
+	["blue-black"] = "#0D314B",
+	["blue"] = "#162F57",
+	["cobalt-blue"] = "#2F5BA2",
+	["pale-blue"] = "#2493C0",
+	["string"] = "#1f719b",
+	["light-blue"] = "#6ACFEB",
+	-- ["Deep Cerulean"] = "#1f617f",
+	["blue-green"] = "#60D3DA",
+	["vividian-green"] = "#047D54",
+	["yellow"] = "#F4BC5B",
+	["orange"] = "#ED7E39",
+	["red-orange"] = "#E96B3B",
+	["red"] = "#F6474E",
+	["purple"] = "#E942CE",
+	["magenta-pink"] = "#E92DA1",
+	["pink"] = "#F15988",
+	["light-pink"] = "#F581C8",
+}
+
 return M

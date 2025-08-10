@@ -92,28 +92,28 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 	end,
 })
 
-vim.api.nvim_create_autocmd({ "InsertEnter" }, {
-	group = global,
-	pattern = "*",
-	callback = function()
-		if vim.fn.exists(":TSBufDisable") > 0 then
-			vim.cmd("TSBufDisable highlight")
-		end
-	end,
-})
-
-vim.api.nvim_create_autocmd({ "InsertLeave" }, {
-	group = global,
-	pattern = "*",
-	callback = function()
-		if vim.b.no_ts_highlight == true then
-			return
-		end
-		if vim.fn.exists(":TSBufEnable") > 0 then
-			vim.cmd("TSBufEnable highlight")
-		end
-	end,
-})
+-- vim.api.nvim_create_autocmd({ "InsertEnter" }, {
+-- 	group = global,
+-- 	pattern = "*",
+-- 	callback = function()
+-- 		if vim.fn.exists(":TSBufDisable") > 0 then
+-- 			vim.cmd("TSBufDisable highlight")
+-- 		end
+-- 	end,
+-- })
+--
+-- vim.api.nvim_create_autocmd({ "InsertLeave" }, {
+-- 	group = global,
+-- 	pattern = "*",
+-- 	callback = function()
+-- 		if vim.b.no_ts_highlight == true then
+-- 			return
+-- 		end
+-- 		if vim.fn.exists(":TSBufEnable") > 0 then
+-- 			vim.cmd("TSBufEnable highlight")
+-- 		end
+-- 	end,
+-- })
 
 vim.api.nvim_create_autocmd("BufReadPost", {
 	group = global,

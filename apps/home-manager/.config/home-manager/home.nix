@@ -1,13 +1,20 @@
 # [Learn NIX](https://nixos.org/manual/nix/stable/language/)
-
-{ config, pkgs, lib, nvidiaVersion, runWithNvidiaGPU, withPostInstallScript, nixGLWrap, ... }:
-
-let
+{
+  config,
+  pkgs,
+  lib,
+  nvidiaVersion,
+  runWithNvidiaGPU,
+  withPostInstallScript,
+  nixGLWrap,
+  ...
+}: let
   packages.xorg = with pkgs; [
     # xorg.xinit
     # xorg.xauth
     xorg.xrandr
     xorg.xset
+    arandr
     xcape
     # xorg.xmodmap
     xorg.setxkbmap
@@ -49,7 +56,7 @@ let
     gtk3
     # tilix
     xdg-desktop-portal-hyprland
-    xdg-desktop-portal-gtk
+    # xdg-desktop-portal-gtk
     swaybg
     waybar
 
@@ -110,6 +117,7 @@ let
 
     # keyd
     # kanata
+    lxappearance
   ];
 
   packages.audio_video = with pkgs; [
@@ -148,16 +156,43 @@ let
     dive
 
     awscli2
+    podman-compose
     # lens
 
-    (google-cloud-sdk.withExtraComponents [ google-cloud-sdk.components.gke-gcloud-auth-plugin ])
+    (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin])
     # azure-cli
+
+    # mkcert
+    # (pkgs.stdenv.mkDerivation {
+    #   pname = "nss_tools";
+    #   version = "custom";
+    #
+    #   # No source, we're just copying from nss_latest
+    #   src = ./.;
+    #
+    #   unpackPhase = ":";
+    #   buildInputs = with pkgs; [nss_latest];
+    #
+    #   installPhase = ''
+    #     ls -al ${pkgs.nss_latest}
+    #     mkdir -p $out/bin
+    #     cp ${pkgs.nss_latest}/tools/certutil $out/bin/
+    #   '';
+    # })
+    nssTools
+    iotop
+  ];
+
+  packages.ai_tools = with pkgs; [
+    gemini-cli
+    claude-code
   ];
 
   packages.cli_workflow = with pkgs; [
-    python312Packages.gtts
+    # python312Packages.gtts
     networkmanager
     graphviz
+    android-tools
 
     clamav
     # (runWithNvidiaGPU ghostty)
@@ -193,7 +228,6 @@ let
       '';
     })
 
-
     (writeShellScriptBin "testing" ''
       #! /usr/bin/env bash
       mkdir -p $out
@@ -209,7 +243,8 @@ let
     fishPlugins.autopair
     # fishPlugins.hydro
 
-    gitstatus
+    # gitstatus
+    bfg-repo-cleaner # helps in removing secrets already commited in git history
     # bash
     glibcLocales
     # bash-completion
@@ -257,7 +292,6 @@ let
     nmap
     socat
 
-
     # mouse control
     warpd
 
@@ -266,15 +300,15 @@ let
     mycli
     redli
 
-    # global programming languages support 
+    # global programming languages support
     nodejs
     nodePackages.npm
     nodePackages.pnpm
 
-    go_1_22
+    go
     gopls
     golangci-lint
-    gnumake
+    # gnumake
     gcc13
     git-filter-repo
     upx
@@ -307,7 +341,7 @@ let
 
     (runWithNvidiaGPU vivaldi)
     (runWithNvidiaGPU windsurf)
-    (runWithNvidiaGPU qutebrowser)
+    # (runWithNvidiaGPU qutebrowser)
     vivaldi-ffmpeg-codecs
 
     freshfetch
@@ -317,7 +351,7 @@ let
     zathura
 
     copyq
-    postman
+    # postman
     vscode
 
     gtk-engine-murrine
@@ -362,7 +396,7 @@ let
         sha256 = "sha256-pl42AR4zWF3vx3wPSZkfIP7Oksune5nsbmciyJUv8D4=";
       };
       # unpackPhase = ":";
-      buildInputs = with pkgs; [ bash ];
+      buildInputs = with pkgs; [bash];
       installPhase = ''
         tar xf $src
         mkdir -p $out/bin $out/share/applications
@@ -408,8 +442,7 @@ let
       # nixGLNvidia-$nvidia_version $@
     '')
   ];
-in
-{
+in {
   # imports = [
   #   # TODO: remove when https://github.com/nix-community/home-manager/pull/5355 gets merged:
   #   (builtins.fetchurl {
@@ -424,7 +457,7 @@ in
   home.homeDirectory = "/home/nxtcoder17";
 
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.allowUnfreePredicate = (_: true);
+  nixpkgs.config.allowUnfreePredicate = _: true;
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -437,28 +470,34 @@ in
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = with pkgs; [
-    cargo
-    glibcLocales
-    # rofi-wayland
-    sassc
-    noto-fonts
-    noto-fonts-color-emoji
-  ]
-  ++ packages.hyprland
-  ++ packages.wayfire
-  ++ packages.xorg
-  ++ packages.i3wm
-  ++ packages.audio_video
-  ++ packages.cli_workflow
-  ++ packages.kubernetes
-  ++ packages.gui_apps
-  ++ packages.hardware_acceleration
-  ++ packages.nxtcoder17
-  ;
+  home.packages = with pkgs;
+    [
+      cargo
+      glibcLocales
+      # rofi-wayland
+      sassc
+      # noto-fonts
+      # noto-fonts-color-emoji
+      # noto-fonts-monochrome-emoji
+      # joypixels
+      twemoji-color-font
+    ]
+    ++ packages.hyprland
+    ++ packages.wayfire
+    ++ packages.xorg
+    ++ packages.i3wm
+    ++ packages.audio_video
+    ++ packages.cli_workflow
+    ++ packages.ai_tools
+    ++ packages.kubernetes
+    ++ packages.gui_apps
+    ++ packages.hardware_acceleration
+    ++ packages.nxtcoder17;
 
   programs.direnv = {
     enable = true;
+    silent = true;
+    enableFishIntegration = true;
     nix-direnv.enable = true;
   };
 
@@ -466,7 +505,6 @@ in
   #   enable = true;
   #   package = (nixGL pkgs.chromium);
   # };
-
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -478,7 +516,6 @@ in
       source = "${pkgs.docker-buildx}/bin/docker-buildx";
     };
   };
-
 
   # xdg.configFile = {
   #     “nvim” = {
