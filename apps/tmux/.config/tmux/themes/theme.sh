@@ -1,0 +1,1 @@
+/var/home/nxtcoder17/.colorscheme.d/tmux/theme.sh

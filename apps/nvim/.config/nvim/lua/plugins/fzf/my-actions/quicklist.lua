@@ -61,6 +61,12 @@ local function quicklist()
 			label = "[base64] decode",
 			action = fn.base64_decode,
 		},
+		{
+			label = "Toggle Inlay Hints",
+			action = function()
+				vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+			end,
+		},
 	}
 
 	local choices_keys = {}
@@ -75,16 +81,14 @@ local function quicklist()
 		actions = {
 			-- Use fzf-lua builtin actions or your own handler
 			["default"] = function(selected, opts)
-				local fn = choices_map[selected[1]]
-				if not fn then
+				local handler = choices_map[selected[1]]
+				if not handler then
 					return
 				end
-				fn()
+				handler()
 			end,
 		},
 	})
 end
-
--- vim.keymap.set({ "n", "v" }, "f;", quicklist, { desc = "Quicklist" })
 
 return quicklist

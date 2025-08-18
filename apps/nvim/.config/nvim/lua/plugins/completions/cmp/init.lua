@@ -58,18 +58,20 @@ cmp.setup({
 	preselect = cmp.PreselectMode.None,
 
 	window = {
-		completion = {
-			winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
-			border = "rounded",
-			col_offset = -3,
-			side_padding = 0,
-		},
-		documentation = {
-			winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
-			border = "rounded",
-			col_offset = -3,
-			side_padding = 0,
-		},
+		completion = cmp.config.window.bordered(),
+		documentation = cmp.config.window.bordered(),
+		-- completion = cmp.config.window.bordered({
+		-- 	-- winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+		-- 	-- border = "rounded",
+		-- 	-- col_offset = -3,
+		-- 	-- side_padding = 0,
+		-- }),
+		-- documentation = cmp.config.window.bordered({
+		-- 	-- winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+		-- 	-- border = "rounded",
+		-- 	-- col_offset = -3,
+		-- 	-- side_padding = 0,
+		-- }),
 	},
 
 	mapping = cmp.mapping.preset.insert({

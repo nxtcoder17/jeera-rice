@@ -1,23 +1,5 @@
 local actions = Require("fzf-lua.actions")
 
-vim.cmd([[
-  " hi! link FzfFg @operator
-  " hi! link FzfFg Identifier
-  " hi! link FzfBg Normal
-  " hi! link FzfHl Normal
-  " hi! link FzfFgPlus @variable
-  " hi! link FzfBgPlus CursorLine
-  " hi! link FzfHlPlus Statement
-  " hi! link FzfInfo PreProc
-  " hi! link FzfPrompt Conditional
-  " hi! link FzfPointer Exception
-  " hi! link FzfMarker Keyword
-  " hi! link FzfLuaHeaderText Keyword
-  " hi! link FzfSpinner Label
-  " hi! link FzfHeader Comment
-  " hi! link FzfGutter Normal
-]])
-
 local fzf = Require("fzf-lua")
 fzf.setup({
 	"telescope",
@@ -45,22 +27,6 @@ fzf.setup({
 			syntax_limit_b = 1024 * 100, -- 100KB
 		},
 	},
-
-	-- fzf_colors = {
-	-- 	["fg"] = { "fg", "FzfFg" },
-	-- 	["bg"] = { "bg", "FzfBg" },
-	-- 	["hl"] = { "fg", "FzfHl" },
-	-- 	["fg+"] = { "fg", "FzfFgPlus" },
-	-- 	["bg+"] = { "bg", "FzfBgPlus" },
-	-- 	["hl+"] = { "fg", "FzfHlPlus" },
-	-- 	["info"] = { "fg", "FzfInfo" },
-	-- 	["prompt"] = { "fg", "FzfPrompt" },
-	-- 	["pointer"] = { "fg", "FzfPointer" },
-	-- 	["marker"] = { "fg", "FzfMarker" },
-	-- 	["spinner"] = { "fg", "FzfSpinner" },
-	-- 	["header"] = { "fg", "FzfHeader" },
-	-- 	["gutter"] = { "bg", "FzfGutter" },
-	-- },
 
 	winopts = {
 		preview = {

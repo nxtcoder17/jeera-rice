@@ -15,7 +15,7 @@ vim.g.mapleader = ","
 keymap({ "x" }, "p", "P")
 
 -- free's up the `s` key
-keymap({ "n", "v" }, "s", "<Nop>", opts)
+keymap({ "n", "v" }, "s", "<nop>", opts)
 
 -- why, cause i keep on typing it for some weird reason
 keymap({ "c" }, "w'", "<Nop>", opts)
@@ -147,8 +147,6 @@ local function faster_tab_switching()
 		end, opt(string.format("binds `Alt/Meta + Shift + %d` to tab %d", key, key)))
 	end
 end
-
-vim.cmd([[ cnoreabbrev cd lua require('plugins.fzf.my-actions.choose-tab-dir')()<CR>]])
 
 faster_tab_switching()
 

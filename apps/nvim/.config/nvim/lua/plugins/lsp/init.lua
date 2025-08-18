@@ -58,9 +58,9 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
 local function on_attach(client, bufnr)
 	local opts = { silent = true, buffer = bufnr, remap = false }
 
-	-- if client.supports_method("textDocument/inlayHint") then
-	--   vim.lsp.inlay_hint.enable(bufnr, true)
-	-- end
+	if client.supports_method("textDocument/inlayHint") then
+		vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+	end
 
 	vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 		border = "rounded",
@@ -93,7 +93,6 @@ local function on_attach(client, bufnr)
 		if ft == "typescript" or ft == "typescript.tsx" or ft == "typescriptreact" then
 			severity.min = vim.diagnostic.severity.HINT
 		end
-		vim.diagnostic.goto_next()
 		vim.diagnostic.goto_next({ severity = severity })
 	end, opts)
 

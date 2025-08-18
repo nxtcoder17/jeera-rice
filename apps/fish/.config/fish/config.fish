@@ -87,8 +87,8 @@ set -g __icon_nix " "
 set -g __icon_sep "|"
 
 function fish_prompt
-  [ -f ~/.colorscheme.d/fish/catppuccin.fish ] && source ~/.colorscheme.d/fish/catppuccin.fish
-  [ -f ~/.colorscheme.d/fzf/catppuccin.fish ] && source ~/.colorscheme.d/fzf/catppuccin.fish
+  [ -f ~/.colorscheme.d/fish/theme.fish ] && source ~/.colorscheme.d/fish/theme.fish
+  [ -f ~/.colorscheme.d/fzf/theme.fish ] && source ~/.colorscheme.d/fzf/theme.fish
 
   # set prompt_char "😎"
   set prompt_char "ϟ" # Greek Small Letter Koppa[1]

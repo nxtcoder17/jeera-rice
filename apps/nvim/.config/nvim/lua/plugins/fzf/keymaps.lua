@@ -1,10 +1,6 @@
 vim.keymap.set("n", "sf", Require("plugins.fzf.my-actions.find-files"))
+vim.cmd([[ cnoreabbrev cd lua require('plugins.fzf.my-actions.choose-tab-dir')()<CR>]])
 
--- vim.cmd(
--- [[ cnoreabbrev cd lua require('fuzzy-actions.choose-tab-dir')()<CR>\|lua vim.api.nvim_feedkeys("x", "n", true)<CR> ]]
--- )
-
--- vim.keymap.set("c", "cd", require("fuzzy-actions.choose-tab-dir"))
 vim.keymap.set("n", "tl", Require("plugins.fzf.my-actions.find-tabs"))
 vim.keymap.set({ "n", "v" }, "ff", Require("plugins.fzf.my-actions.grep"))
 vim.keymap.set({ "n" }, "FF", function()

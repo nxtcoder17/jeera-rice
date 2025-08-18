@@ -19,20 +19,14 @@ local function fuzzy_finders()
 	return {
 		{
 			"ibhagwan/fzf-lua",
-			-- commit = "86b77a661ff38bf08b1ceb5a6c3c257285a42a4d",
 			dependencies = { "nvim-tree/nvim-web-devicons" },
 			lazy = true,
-			-- event = "UIEnter",
-			-- event = "Lazy",
 			config = function()
 				require("plugins.fzf")
 			end,
-			cmd = {
-				"Fzf",
-				"FzfLua",
-			},
-
-			keys = { "sf", "cd", "f;" },
+			init = function()
+				Require("plugins.fzf.keymaps")
+			end,
 		},
 	}
 end
@@ -317,25 +311,32 @@ local function completions()
 			end,
 		},
 
+		-- {
+		-- 	"hrsh7th/nvim-cmp",
+		-- 	event = "InsertEnter",
+		-- 	after = "LuaSnip",
+		-- 	dependencies = {
+		-- 		-- { "L3MON4D3/LuaSnip" },
+		-- 		{ "hrsh7th/cmp-nvim-lsp-signature-help" },
+		-- 		{ "hrsh7th/cmp-nvim-lsp" },
+		-- 		-- { "lukas-reineke/cmp-rg" },
+		-- 		-- { "hrsh7th/cmp-cmdline" },
+		-- 		-- { "andersevenrud/cmp-tmux" },
+		-- 		{ "saadparwaiz1/cmp_luasnip" },
+		-- 		{ "FelipeLema/cmp-async-path" },
+		-- 		{ "quangnguyen30192/cmp-nvim-tags" },
+		-- 	},
+		-- 	config = function()
+		-- 		-- Require("plugins.completions.luasnip")
+		-- 		Require("plugins.completions.cmp")
+		-- 	end,
+		-- },
 		{
-			"hrsh7th/nvim-cmp",
+			"saghen/blink.cmp",
+			build = "nix run .#build-plugin",
 			event = "InsertEnter",
-			after = "LuaSnip",
-			dependencies = {
-				-- { "L3MON4D3/LuaSnip" },
-				{ "hrsh7th/cmp-nvim-lsp-signature-help" },
-				{ "hrsh7th/cmp-nvim-lsp" },
-				-- { "lukas-reineke/cmp-rg" },
-				-- { "hrsh7th/cmp-cmdline" },
-				-- { "andersevenrud/cmp-tmux" },
-				{ "saadparwaiz1/cmp_luasnip" },
-				{ "FelipeLema/cmp-async-path" },
-				{ "quangnguyen30192/cmp-nvim-tags" },
-			},
-			config = function()
-				-- Require("plugins.completions.luasnip")
-				Require("plugins.completions.cmp")
-			end,
+			dependencies = { "L3MON4D3/LuaSnip" },
+			opts = Require("plugins.completions.blink.options"),
 		},
 	}
 end

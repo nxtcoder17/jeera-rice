@@ -19,6 +19,7 @@ M.setup_lsp = function(on_attach, capabilities_wrapper)
 	local lsp_config = Require("lspconfig")
 	lsp_config.clangd.setup(capabilities_wrapper({
 		on_attach = on_attach,
+		filetypes = { "c", "cpp" },
 		cmd = {
 			"clangd",
 			"--background-index",
