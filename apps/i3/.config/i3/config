@@ -16,8 +16,6 @@
 # i3 gaps
 for_window [class="^.*"] border pixel 3
 
-# Smart Borders mean no border if only one window is open
-smart_borders on
 
 # group										 border			 background		text			indicator		childborder
 client.focused						 #6687cc		 #364A82			#c0caf5		#9aa5ce			#6687cc
@@ -29,7 +27,9 @@ gaps inner 4
 gaps outer -5
 
 focus_follows_mouse false
-hide_edge_borders vertical
+
+# Smart Borders mean no border if only one window is open
+hide_edge_borders smart_no_gaps
 
 # Modifier Keys
 set $mod Mod4

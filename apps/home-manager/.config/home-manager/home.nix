@@ -39,6 +39,7 @@
     # xorg.xcbutilrenderutil
     # xorg.xcbutilkeysyms
     # xorg.libxcb
+    # xdg-desktop-portal
   ];
 
   packages.wayfire = with pkgs; [
@@ -55,8 +56,7 @@
     swaynotificationcenter # swaync
     gtk3
     # tilix
-    xdg-desktop-portal-hyprland
-    # xdg-desktop-portal-gtk
+    # xdg-desktop-portal-hyprland
     swaybg
     waybar
 
@@ -118,6 +118,9 @@
     # keyd
     # kanata
     lxappearance
+
+    xdg-desktop-portal
+    xdg-desktop-portal-gtk
   ];
 
   packages.audio_video = with pkgs; [
@@ -250,6 +253,7 @@
     # bash-completion
     readline
     ncdu
+    gum
 
     # navigation
     zoxide
