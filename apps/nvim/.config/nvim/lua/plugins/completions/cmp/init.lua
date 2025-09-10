@@ -12,7 +12,7 @@ vim.api.nvim_create_autocmd({ "TextChangedI", "TextChangedP" }, {
 	callback = function()
 		timer:stop()
 		timer:start(
-			400,
+			200,
 			0,
 			vim.schedule_wrap(function()
 				cmp.complete()

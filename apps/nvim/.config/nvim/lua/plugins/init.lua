@@ -311,32 +311,25 @@ local function completions()
 			end,
 		},
 
-		-- {
-		-- 	"hrsh7th/nvim-cmp",
-		-- 	event = "InsertEnter",
-		-- 	after = "LuaSnip",
-		-- 	dependencies = {
-		-- 		-- { "L3MON4D3/LuaSnip" },
-		-- 		{ "hrsh7th/cmp-nvim-lsp-signature-help" },
-		-- 		{ "hrsh7th/cmp-nvim-lsp" },
-		-- 		-- { "lukas-reineke/cmp-rg" },
-		-- 		-- { "hrsh7th/cmp-cmdline" },
-		-- 		-- { "andersevenrud/cmp-tmux" },
-		-- 		{ "saadparwaiz1/cmp_luasnip" },
-		-- 		{ "FelipeLema/cmp-async-path" },
-		-- 		{ "quangnguyen30192/cmp-nvim-tags" },
-		-- 	},
-		-- 	config = function()
-		-- 		-- Require("plugins.completions.luasnip")
-		-- 		Require("plugins.completions.cmp")
-		-- 	end,
-		-- },
 		{
-			"saghen/blink.cmp",
-			build = "nix run .#build-plugin",
+			"hrsh7th/nvim-cmp",
 			event = "InsertEnter",
-			dependencies = { "L3MON4D3/LuaSnip" },
-			opts = Require("plugins.completions.blink.options"),
+			after = "LuaSnip",
+			dependencies = {
+				-- { "L3MON4D3/LuaSnip" },
+				{ "hrsh7th/cmp-nvim-lsp-signature-help" },
+				{ "hrsh7th/cmp-nvim-lsp" },
+				-- { "lukas-reineke/cmp-rg" },
+				-- { "hrsh7th/cmp-cmdline" },
+				-- { "andersevenrud/cmp-tmux" },
+				{ "saadparwaiz1/cmp_luasnip" },
+				{ "FelipeLema/cmp-async-path" },
+				{ "quangnguyen30192/cmp-nvim-tags" },
+			},
+			config = function()
+				-- Require("plugins.completions.luasnip")
+				Require("plugins.completions.cmp")
+			end,
 		},
 	}
 end

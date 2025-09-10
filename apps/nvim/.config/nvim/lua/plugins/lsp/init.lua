@@ -62,6 +62,8 @@ local function on_attach(client, bufnr)
 		vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 	end
 
+	vim.lsp.semantic_tokens.enable(false)
+
 	vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 		border = "rounded",
 		title = "",

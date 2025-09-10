@@ -1,21 +1,25 @@
-local global = vim.api.nvim_create_augroup("autocmds", { clear = true })
+local autocmds = vim.api.nvim_create_augroup("my.autocmds", { clear = true })
+
+-- local function augroup(name)
+-- 	return vim.api.nvim_create_augroup("my-nvim-" .. name, { clear = true })
+-- end
 
 vim.api.nvim_create_autocmd("TermOpen", {
-	group = global,
+	group = autocmds,
 	callback = function()
 		vim.cmd("set ft=terminal")
 	end,
 })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
-	group = global,
+	group = autocmds,
 	callback = function()
 		vim.hl.on_yank({ higroup = "IncSearch", priority = 250, timeout = 200 })
 	end,
 })
 
 vim.api.nvim_create_autocmd("BufRead", {
-	group = global,
+	group = autocmds,
 	pattern = "*",
 	callback = function()
 		vim.cmd(
@@ -25,7 +29,7 @@ vim.api.nvim_create_autocmd("BufRead", {
 })
 
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-	group = global,
+	group = autocmds,
 	pattern = { os.getenv("HOME") .. "/.Xresources" },
 	callback = function()
 		os.execute(string.format("xrdb -merge %s", os.getenv("HOME") .. "/.Xresources"))
@@ -33,7 +37,7 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 })
 
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-	group = global,
+	group = autocmds,
 	pattern = { "env", ".env" },
 	callback = function()
 		-- vim.diagnostic.disable(vim.fn.expand("<abuf>"))
@@ -42,14 +46,14 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 })
 
 -- vim.api.nvim_create_autocmd({ "BufNewFile" }, {
--- 	group = global,
+-- 	group = autocmds,
 -- 	callback = function()
 -- 		vim.cmd(string.format("-1r %s/skeletons/%s.nix", vim.fn.stdpath("config"), vim.b.filetype))
 -- 	end,
 -- })
 
 vim.api.nvim_create_autocmd({ "LspAttach" }, {
-	group = global,
+	group = autocmds,
 	pattern = "*",
 	callback = function()
 		--INFO: https://github.com/quangnguyen30192/cmp-nvim-tags/blob/main/README.md#troubleshooting
@@ -63,8 +67,8 @@ local function file_exists(name)
 end
 
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-	group = global,
-	pattern = "*",
+	group = autocmds,
+	-- pattern = "*",
 	callback = function()
 		coroutine.wrap(function()
 			local co = coroutine.running()
@@ -93,7 +97,7 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 })
 
 -- vim.api.nvim_create_autocmd({ "InsertEnter" }, {
--- 	group = global,
+-- 	group = autocmds,
 -- 	pattern = "*",
 -- 	callback = function()
 -- 		if vim.fn.exists(":TSBufDisable") > 0 then
@@ -103,7 +107,7 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 -- })
 --
 -- vim.api.nvim_create_autocmd({ "InsertLeave" }, {
--- 	group = global,
+-- 	group = autocmds,
 -- 	pattern = "*",
 -- 	callback = function()
 -- 		if vim.b.no_ts_highlight == true then
@@ -115,14 +119,19 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 -- 	end,
 -- })
 
-vim.api.nvim_create_autocmd("BufReadPost", {
-	group = global,
-	desc = "Go to the last location when opening a buffer",
-	callback = function(args)
-		local mark = vim.api.nvim_buf_get_mark(args.buf, '"')
-		local line_count = vim.api.nvim_buf_line_count(args.buf)
-		if mark[1] > 0 and mark[1] <= line_count then
-			vim.cmd('normal! g`"zz')
+vim.api.nvim_create_autocmd({ "BufReadPost" }, {
+	group = autocmds,
+	pattern = "*",
+	callback = function(event)
+		local exclude = { "gitcommit" }
+		local buf = event.buf
+		if vim.tbl_contains(exclude, vim.bo[buf].filetype) then
+			return
+		end
+		local mark = vim.api.nvim_buf_get_mark(buf, '"')
+		local lcount = vim.api.nvim_buf_line_count(buf)
+		if mark[1] > 0 and mark[1] <= lcount then
+			pcall(vim.api.nvim_win_set_cursor, 0, mark)
 		end
 	end,
 })

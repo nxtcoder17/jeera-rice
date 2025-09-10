@@ -29,7 +29,7 @@ function _G.foldtext()
 	return prefix .. dashes .. suffix .. stripped
 end
 
-local logger = NewLogger("folds")
+-- local logger = NewLogger("folds")
 
 function MyFoldExpr(ln)
 	local indent = vim.fn.indent(ln) / vim.opt.shiftwidth:get()
