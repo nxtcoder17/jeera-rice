@@ -96,7 +96,7 @@ function fish_prompt
   [ ! -z "$fish_private_mode" ] && set prompt_char "🥷"
   [ "$EUID" -eq 0 ] && set prompt_char "√π"
   [ -n "$IN_NIX_SHELL" ] && set prompt_char " " && set prompt_color $__color_nix
-  [ -n "$IN_NIXY_SHELL" ] && set prompt_char "[NIXY]" && set prompt_color $__color_nix
+  [ -n "$NIXY_SHELL" ] && set prompt_char "[NIXY]" && set prompt_color $__color_nix
 
   if [ -n "$KUBECONFIG" ]
     printf "%s(󰠳 %s)%s " (set_color $__color_kubeconfig) (basename $KUBECONFIG) (set_color $fish_color_normal)
