@@ -28,6 +28,16 @@ _G.NewLogger = function(name, level)
 	})
 end
 
+_G.bin_lookup = function(bin)
+	local handle = io.popen("command -v " .. vim.fn.shellescape(bin) .. " 2>/dev/null")
+	if not handle then
+		return false
+	end
+	local result = handle:read("*a")
+	handle:close()
+	return result ~= ""
+end
+
 -- _G.Logger = _G.NewLogger("global-logger")
 
 -- INFO: neovim configuration directory

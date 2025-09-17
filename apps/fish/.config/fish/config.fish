@@ -87,6 +87,11 @@ set -g __icon_nix " "
 set -g __icon_sep "|"
 
 function fish_prompt
+  # if [ -e "$(pwd)/nixy.yml" ]
+  #   eval nixy shell
+  #   return
+  # end
+
   [ -f ~/.colorscheme.d/fish/theme.fish ] && source ~/.colorscheme.d/fish/theme.fish
   [ -f ~/.colorscheme.d/fzf/theme.fish ] && source ~/.colorscheme.d/fzf/theme.fish
 
@@ -208,3 +213,16 @@ if test "$(uname)" = "Darwin"
 end
 
 # direnv hook fish  | source 2>&1 > /dev/null
+
+set -gx NIXY_EXECUTOR "bubblewrap"
+set -gx NIXY_USE_PROFILE "true"
+
+function _auto_nixy_shell --on-variable PWD
+    if test -f nixy.yml
+        if [ -z "$NIXY_SHELL" ]
+          nixy shell
+        end
+    end
+end
+
+_auto_nixy_shell
