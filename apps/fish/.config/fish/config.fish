@@ -87,11 +87,6 @@ set -g __icon_nix " "
 set -g __icon_sep "|"
 
 function fish_prompt
-  # if [ -e "$(pwd)/nixy.yml" ]
-  #   eval nixy shell
-  #   return
-  # end
-
   [ -f ~/.colorscheme.d/fish/theme.fish ] && source ~/.colorscheme.d/fish/theme.fish
   [ -f ~/.colorscheme.d/fzf/theme.fish ] && source ~/.colorscheme.d/fzf/theme.fish
 
@@ -217,12 +212,32 @@ end
 set -gx NIXY_EXECUTOR "bubblewrap"
 set -gx NIXY_USE_PROFILE "true"
 
-function _auto_nixy_shell --on-variable PWD
-    if test -f nixy.yml
-        if [ -z "$NIXY_SHELL" ]
-          nixy shell
-        end
-    end
+function __nixy_shell_activate --on-variable PWD
+  if not status is-interactive
+    return
+  end
+
+  if test -n "$NIXY_SHELL"
+    return
+  end
+
+  if not test -e nixy.yml
+    return
+  end
+
+  set value (fzf --reverse --prompt "Load nixy shell ? " < (printf "YES\nNO" | psub))
+
+  if test -z $value
+    set value "YES"
+  end
+
+  if test "$value" = "NO"
+    return
+  end
+
+  exec nixy shell
 end
 
-_auto_nixy_shell
+if status is-interactive
+  __nixy_shell_activate
+end
