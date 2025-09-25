@@ -1,14 +1,10 @@
-local color_overrides = {}
-
-local overrides_path = os.getenv("HOME") .. "/.colorscheme.d/nvim/theme.lua"
-if vim.uv.fs_stat(overrides_path) then
-	color_overrides = dofile(overrides_path)
-end
+local color_overrides = require("theme")
 
 local lib = require("lib_color")
 
 require("catppuccin").setup({
 	flavour = "auto",
+	float = { solid = true, transparent = false },
 	background = {
 		light = "latte",
 		dark = "mocha",
