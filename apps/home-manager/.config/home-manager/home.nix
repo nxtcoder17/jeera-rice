@@ -192,7 +192,6 @@
   ];
 
   packages.cli_workflow = with pkgs; [
-    # python312Packages.gtts
     networkmanager
     graphviz
     android-tools

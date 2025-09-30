@@ -86,9 +86,13 @@ set -g __color_nix "#2fbaf5"
 set -g __icon_nix " "
 set -g __icon_sep "|"
 
+function  source_if_exists
+  [ -f "$1" ] && source $1
+end
+
 function fish_prompt
-  [ -f ~/.colorscheme.d/fish/theme.fish ] && source ~/.colorscheme.d/fish/theme.fish
-  [ -f ~/.colorscheme.d/fzf/theme.fish ] && source ~/.colorscheme.d/fzf/theme.fish
+  source_if_exists ~/.config/fish/themes/theme.fish
+  source_if_exists ~/.colorscheme.d/fzf/theme.fish
 
   # set prompt_char "😎"
   set prompt_char "ϟ" # Greek Small Letter Koppa[1]
