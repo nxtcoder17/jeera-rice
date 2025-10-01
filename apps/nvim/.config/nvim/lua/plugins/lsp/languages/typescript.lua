@@ -44,7 +44,7 @@ end
 M.setup_lsp = function(on_attach, capabilities_wrapper)
 	local lsp_config = Require("lspconfig")
 	lsp_config.ts_ls.setup(capabilities_wrapper({
-		root_dir = lsp_config.util.root_pattern("package-lock.json", "yarn.lock", "pnpm-lock.yaml"),
+		root_dir = lsp_config.util.root_pattern("package-lock.json", "yarn.lock", "pnpm-lock.yaml", "bun.lock"),
 		single_file_support = false,
 		on_attach = function(client)
 			if client.config.flags then
