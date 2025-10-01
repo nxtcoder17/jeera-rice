@@ -8,4 +8,6 @@ session_name=$(fzf --reverse --prompt="Use Session: " <<<"$(ls .)")
 [ -n "$session_name" ] || exit 0
 popd >/dev/null || exit
 
+kitty @action close_session "kitty"
 kitty @action goto_session "$dir/$session_name"
+kitty @close-tab --match id:"$KITTY_WINDOW_ID"

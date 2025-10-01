@@ -33,4 +33,4 @@ SETUVAR fish_pager_color_description:yellow\x1e\x2di
 SETUVAR fish_pager_color_prefix:normal\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
 SETUVAR fish_pager_color_selected_background:\x2dr
-SETUVAR fish_user_paths:/var/home/nxtcoder17/\x2elocal/share/node/bin\x1e/var/home/nxtcoder17/workspace/github\x2ecom/kloudlite/internal\x2dtools/bin\x1e/var/home/nxtcoder17/\x2elocal/share/go/bin\x1e/var/home/nxtcoder17/\x2elocal/bin\x1e/var/home/nxtcoder17/me/jeera\x2drice/bin
+SETUVAR fish_user_paths:/home/nixy/\x2elocal/share/node/bin\x1e/var/home/nxtcoder17/\x2elocal/share/node/bin\x1e/var/home/nxtcoder17/workspace/github\x2ecom/kloudlite/internal\x2dtools/bin\x1e/var/home/nxtcoder17/\x2elocal/share/go/bin\x1e/var/home/nxtcoder17/\x2elocal/bin\x1e/var/home/nxtcoder17/me/jeera\x2drice/bin

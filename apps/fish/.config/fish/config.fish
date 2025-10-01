@@ -87,12 +87,16 @@ set -g __icon_nix " "
 set -g __icon_sep "|"
 
 function  source_if_exists
-  [ -f "$1" ] && source $1
+  set file $argv[1]
+  [ -e "$file" ] && source $file || echo "failed to source $file"
 end
+
+source_if_exists ~/.config/fish/themes/theme.fish
+source_if_exists ~/.config/fzf/themes/theme.fish
 
 function fish_prompt
   source_if_exists ~/.config/fish/themes/theme.fish
-  source_if_exists ~/.colorscheme.d/fzf/theme.fish
+  source_if_exists ~/.config/fzf/themes/theme.fish
 
   # set prompt_char "😎"
   set prompt_char "ϟ" # Greek Small Letter Koppa[1]
@@ -160,13 +164,6 @@ end
 
 zoxide init fish | source
 
-# # base16 manager
-# [ -f ~/.base16.d/fish/base16.fish ] && source ~/.base16.d/fish/base16.fish
-# [ -f ~/.base16.d/fzf/base16.fish ] && source ~/.base16.d/fzf/base16.fish
-#
-# [ -f ~/.base16/fish.fish ] && source ~/.base16/fish.fish
-# [ -f ~/.base16/fzf.fish ] && source ~/.base16/fzf.fish
-
 set -gx SHELL $(which fish)
 set -gx DOCKER_CONFIG "$XDG_CONFIG_HOME/docker"
 set -gx NPM_CONFIG_STORE_DIR "$XDG_DATA_HOME/node/bin"
@@ -206,7 +203,7 @@ fish_add_path "$GOPATH/bin"
 fish_add_path $HOME/workspace/github.com/kloudlite/internal-tools/bin
 fish_add_path "$XDG_DATA_HOME/node/bin"
 fish_add_path "$XDG_DATA_HOME/bun/bin"
-fish_add_path "$XDG_DATA_HOME/pnpm/bin"
+fish_add_path "$XDG_DATA_HOME/pnpm"
 if test "$(uname)" = "Darwin"
   fish_add_path "/opt/homebrew/bin"
 end
