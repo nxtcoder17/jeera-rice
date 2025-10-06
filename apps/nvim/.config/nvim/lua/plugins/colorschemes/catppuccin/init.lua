@@ -1,4 +1,4 @@
-local color_overrides = require("theme")
+local color_overrides = require(("theme.%s"):format(os.getenv("SYSTEM_THEME")))
 
 local lib = require("lib_color")
 

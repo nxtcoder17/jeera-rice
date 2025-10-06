@@ -5,7 +5,6 @@ M.setup_mason = function()
 
 	local requirements = {
 		"buf",
-		"buf-language-server",
 	}
 
 	for _, item in ipairs(requirements) do

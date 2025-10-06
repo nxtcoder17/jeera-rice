@@ -82,6 +82,8 @@ export GOPATH="$XDG_DATA_HOME/go"
 export NIXY_EXECUTOR="bubblewrap"
 export NIXY_USE_PROFILE="true"
 
+export SYSTEM_THEME=$(cat ~/.system-theme || echo "dark")
+
 function add_to_path() {
   for item in "${@}"; do
     export PATH="$item:$PATH"
@@ -246,7 +248,7 @@ function __bash_prompt() {
 
   [ -n "$IN_NIXY_SHELL" ] && nixy="[  NIXY] "
 
-  source_if_exists ~/.config/fzf/themes/theme.bash
+  source_if_exists "$HOME/.config/fzf/themes/$SYSTEM_THEME.bash"
 
   # PS1="$kubeconfig$pwd ${YELLOW}($(__git_info))${RESET}
   PS1="$kubeconfig$pwd $(__fast_git_info)
@@ -267,7 +269,7 @@ function __nixy_shell() {
   [ "$__last_dir" = "$PWD" ] && return
   [ -n "$IN_NIXY_SHELL" ] && return
   __last_dir="$PWD"
-  [ -e "$PWD/nixy.yml" ] && nixy shell
+  [ -e "$PWD/nixy.yml" ] && nixy shell fish
 }
 
 function __run_on_prompt_render() {

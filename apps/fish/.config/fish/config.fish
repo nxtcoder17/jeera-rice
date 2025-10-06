@@ -91,12 +91,17 @@ function  source_if_exists
   [ -e "$file" ] && source $file || echo "failed to source $file"
 end
 
-source_if_exists ~/.config/fish/themes/theme.fish
-source_if_exists ~/.config/fzf/themes/theme.fish
+[ -e "$SYSTEM_THEME" ] && set SYSTEM_THEME "dark"
+[ -e "$HOME/.system-theme" ] && set SYSTEMT_THEME (cat "$HOME/.system-theme")
+
+source_if_exists ~/.config/fish/themes/$SYSTEM_THEME.fish
+source_if_exists ~/.config/fzf/themes/$SYSTEM_THEME.fish
 
 function fish_prompt
-  source_if_exists ~/.config/fish/themes/theme.fish
-  source_if_exists ~/.config/fzf/themes/theme.fish
+[ -e "$HOME/.system-theme" ] && set SYSTEMT_THEME (cat "$HOME/.system-theme")
+
+  source_if_exists ~/.config/fish/themes/$SYSTEM_THEME.fish
+  source_if_exists ~/.config/fzf/themes/$SYSTEM_THEME.fish
 
   # set prompt_char "😎"
   set prompt_char "ϟ" # Greek Small Letter Koppa[1]
@@ -182,7 +187,6 @@ set -x MANPAGER 'nvim +Man!'
 
 set -gx DIRENV_LOG_FORMAT ""
 set -gx EDITOR nvim
-set -gx PAGER less
 
 # xdg path
 set -gx XDG_CONFIG_HOME "$HOME/.config"

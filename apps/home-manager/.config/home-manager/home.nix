@@ -30,7 +30,7 @@
     xdragon
     sx # a simple alternative to xinit and startx
 
-    # picom-pijulius
+    picom-pijulius
 
     # -- xcb related
     # xorg.xcbutil
@@ -56,7 +56,7 @@
     swaynotificationcenter # swaync
     gtk3
     # tilix
-    # xdg-desktop-portal-hyprland
+    xdg-desktop-portal-hyprland
     swaybg
     waybar
 
@@ -82,6 +82,10 @@
     wf-recorder
 
     dart-sass
+  ];
+
+  packages.niri_wm = with pkgs; [
+    (runWithNvidiaGPU niri)
   ];
 
   packages.linux = with pkgs; [
@@ -192,6 +196,10 @@
   ];
 
   packages.cli_workflow = with pkgs; [
+    bash
+    bash-completion
+
+    tldr
     networkmanager
     graphviz
     android-tools
@@ -495,6 +503,7 @@ in {
     ++ packages.kubernetes
     ++ packages.gui_apps
     ++ packages.hardware_acceleration
+    ++ packages.niri_wm
     ++ packages.nxtcoder17;
 
   programs.direnv = {
@@ -540,14 +549,15 @@ in {
   #  /etc/profiles/per-user/nxtcoder17/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    EDITOR = "nvim";
-    TMUX_SHELL = "${pkgs.fish}";
+    # EDITOR = "nvim";
+    # TMUX_SHELL = "${pkgs.fish}";
     # TMUX_SHELL = "fish";
     # DIRENV_LOG_FORMAT = "\033[2mdirenv: %%s\033[0m"; # source: https://ianthehenry.com/posts/how-to-learn-nix/nix-direnv/
-    DIRENV_LOG_FORMAT = ""; # source: https://ianthehenry.com/posts/how-to-learn-nix/nix-direnv/
+    # DIRENV_LOG_FORMAT = ""; # source: https://ianthehenry.com/posts/how-to-learn-nix/nix-direnv/
     # NIXOS_OZONE_WL = "1";
-    #LOCALES_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
+    LOCALES_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
     # LOCALES_ARCHIVE_GLIBC = "${pkgs.glibcLocales}/lib/locale/locale-archive";
+    BASH_COMPLETION_SOURCE_DIR = "${pkgs.bash-completion}";
   };
 
   # Let Home Manager install and manage itself.
