@@ -15,6 +15,15 @@ vim.keymap.set({ "n" }, "k", "gk", desc("makes k work as expected with wrapped l
 vim.keymap.set("t", "<esc>", "<C-\\><C-N>", desc("escaping in terminal mode"))
 vim.keymap.set({ "n", "x" }, "cc", '"+y', desc("copy to clipboard"))
 
+-- completion
+vim.keymap.set("i", "<C-x><C-]>", function()
+	require("completion").complete_tags()
+end, desc("tag completion from ctags"))
+
+vim.keymap.set("i", "<C-Space>", function()
+	require("completion").complete_tags()
+end, desc("tag completion from ctags"))
+
 -- buffers
 vim.keymap.set({ "n" }, "ss", ":w<CR>", desc("save"))
 vim.keymap.set("c", "wqa", "wa! | qa!", desc("save all and exit"))
@@ -36,6 +45,8 @@ vim.keymap.set({ "n" }, "<C-M-Down>", ":resize +5<CR>", desc("resizes horizontal
 
 -- windows
 vim.keymap.set("n", "sx", ":only<CR>", desc("closes all other splits in current tab"))
+
+-- close all floating windows
 vim.keymap.set("n", "<BS>", function()
 	for _, win in ipairs(vim.api.nvim_list_wins()) do
 		if not vim.api.nvim_win_is_valid(win) then
@@ -53,8 +64,10 @@ vim.keymap.set("n", "<BS>", function()
 	vim.cmd("nohls")
 end, desc("closes all the floating windows"))
 
--- tabs
+-- close all but this tab
 vim.keymap.set("n", "s0", ":tabonly<CR>", desc("closes all other tabs"))
+
+-- new tab
 vim.keymap.set(
 	"n",
 	"tn",
@@ -62,6 +75,7 @@ vim.keymap.set(
 	desc("creates an empty, new tab")
 )
 
+-- current file in new tab
 vim.keymap.set(
 	"n",
 	"te",

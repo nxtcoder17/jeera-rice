@@ -1,5 +1,5 @@
 Require("fzf-lua").setup({
-	-- "telescope",
+	"telescope",
 	fzf_opts = {
 		["--layout"] = "reverse",
 		["--pointer"] = "👉",

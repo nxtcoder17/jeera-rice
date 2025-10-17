@@ -17,13 +17,19 @@ vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
 	{
+		-- general purpose lua development utilities
+		"nvim-lua/plenary.nvim",
+		lazy = true,
+	},
+	{
 		"ibhagwan/fzf-lua",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		-- lazy = true,
 		event = "UIEnter",
 		-- event = "Lazy",
 		config = function()
-			Require("04-plugins.fzf-lua")
+			Require("plugins.fzf-lua")
+			Require("plugins.fzf-lua.keymaps")
 		end,
 		-- cmd = {
 		-- 	"Fzf",
@@ -36,9 +42,6 @@ local plugins = {
 		-- event = "UIEnter",
 		event = "BufReadPre",
 		branch = "stable",
-		init = function()
-			Require("plugins.mini.mini-base16")
-		end,
 		config = function()
 			require("plugins.mini")
 		end,
