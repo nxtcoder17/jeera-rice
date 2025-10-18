@@ -1,14 +1,39 @@
+local border = {
+  "╭",
+  "─",
+  "╮",
+  "│",
+  "╯",
+  "─",
+  "╰",
+  "│",
+}
+
 Require("fzf-lua").setup({
-	"telescope",
-	fzf_opts = {
-		["--layout"] = "reverse",
-		["--pointer"] = "👉",
-		["--tiebreak"] = "index",
-	},
-	hls = {
-		border = "FloatBorder",
-		preview_border = "FloatBorder",
-	},
+  "ivy",
+  fzf_opts = {
+    ["--layout"] = "reverse",
+    ["--pointer"] = "👉",
+    ["--tiebreak"] = "index",
+  },
+  hls = {
+    border = "FloatBorder",
+    preview_border = "FloatBorder",
+  },
+  winopts = {
+    preview = {
+      layout = "horizontal",
+      horizontal = "right:40%",
+      border = border,
+      row = 1, -- window row position (0=top, 1=bottom)
+      col = 0.50, -- window col position (0=left, 1=right)
+    },
+    height = 0.3, -- window height
+    width = 1, -- window width
+    row = 1, -- window row position (0=top, 1=bottom)
+    col = 0.50, -- window col position (0=left, 1=right)
+    border = border,
+  },
 })
 
 -- fzf.setup({
@@ -122,4 +147,4 @@ Require("fzf-lua").setup({
 -- 	},
 -- })
 
--- vim.cmd("FzfLua register_ui_select")
+vim.cmd("FzfLua register_ui_select")

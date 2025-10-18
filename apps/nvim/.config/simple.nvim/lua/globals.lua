@@ -5,6 +5,7 @@ _G.Require = function(module)
 		return mod
 	end
 	print("ERROR while loading module: ", module)
+	return false
 end
 
 --- reload any package
@@ -17,6 +18,17 @@ end
 --- pretty print for lua datastructures
 _G.P = function(...)
 	vim.print(vim.inspect(...))
+end
+
+-- create a new logger
+_G.NewLogger = function(name, level)
+	level = level or "debug"
+	return Require("plenary.log").new({
+		plugin = name,
+		level = level,
+
+		outfile = require("plenary.path"):new(vim.fn.stdpath("cache"), "log", name .. ".log").filename,
+	})
 end
 
 -- INFO: neovim configuration directory

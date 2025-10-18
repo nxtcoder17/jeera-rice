@@ -1,4 +1,4 @@
-package.path = package.path .. ';' .. debug.getinfo(1, "S").source:match("@?(.*/)") .. '?.lua'
+package.path = package.path .. ";" .. debug.getinfo(1, "S").source:match("@?(.*/)") .. "?.lua"
 
 -- file picker
 vim.keymap.set("n", "sf", Require("pickers.find-files"))
@@ -13,7 +13,7 @@ vim.keymap.set("n", "tl", Require("pickers.find-tabs"))
 vim.keymap.set({ "n", "v" }, "ff", Require("pickers.grep"))
 
 vim.keymap.set({ "n" }, "FF", function()
-	Require("pickers.grep")(vim.fn.getcwd(), vim.fn.expand("<cword>"))
+  Require("pickers.grep")(vim.fn.getcwd(), vim.fn.expand("<cword>"))
 end)
 
 -- quicklist picker
@@ -24,4 +24,3 @@ vim.keymap.set("n", "s/", "<cmd>FzfLua grep_curbuf multiprocess=false<CR>")
 
 -- buffer picker
 vim.keymap.set("n", "sb", "<Cmd>FzfLua buffers<CR>")
-

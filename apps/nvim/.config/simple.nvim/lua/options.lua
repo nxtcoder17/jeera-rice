@@ -17,6 +17,9 @@ opt.cmdheight = 0
 opt.splitright = true
 opt.splitbelow = true
 
+-- stabilize.nvim
+opt.splitkeep = "screen"
+
 opt.swapfile = false
 
 -- no awkward shitty horizontal shifting due to Diagnostics, GitSigns, etc.
