@@ -210,6 +210,20 @@ local plugins = {
       require("plugins.colorschemes.catppuccin")
     end,
   },
+  {
+    "sindrets/diffview.nvim",
+    cmd = {
+      "DiffviewFileHistory",
+      "DiffviewOpen",
+      "DiffviewClose",
+      "DiffviewRefresh",
+      "DiffviewToggleFiles",
+      "DiffviewFocusFiles",
+    },
+    config = function()
+      require("plugins.diffview")
+    end,
+  },
 }
 
 -- Make sure to setup `mapleader` and `maplocalleader` before
