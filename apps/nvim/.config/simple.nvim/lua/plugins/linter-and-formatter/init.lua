@@ -54,19 +54,30 @@ function filetypes:mason_packages(ft)
 end
 
 M.linter = function()
-  require("lint").linters_by_ft = {
+  local lint = require("lint")
+  lint.linters_by_ft = {
     lua = filetypes:linters("lua"),
     markdown = filetypes:linters("markdown"),
     go = filetypes:linters("go"),
     python = filetypes:linters("python"),
   }
 
+  -- local golang_ci_lint_parser = lint.linters.golangcilint.parser
+  -- lint.linters.golangcilint.parser = function(output, bufnr)
+  --   local result = golang_ci_lint_parser(output, bufnr)
+  --   vim.print(result)
+  --   -- for _, d in pairs(result) do
+  --   --   d.message = string.format("%s (%s: %s)", d.message, "golangci-lint", d.source)
+  --   -- end
+  --   return result
+  -- end
+
   -- [source](https://github.com/mfussenegger/nvim-lint)
   vim.api.nvim_create_autocmd({ "BufWritePost" }, {
     callback = function()
       -- try_lint without arguments runs the linters defined in `linters_by_ft`
       -- for the current filetype
-      require("lint").try_lint()
+      lint.try_lint()
     end,
   })
 end

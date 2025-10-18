@@ -1,1 +1,1 @@
-snippets/gotmpl.lua
+gotmpl.lua

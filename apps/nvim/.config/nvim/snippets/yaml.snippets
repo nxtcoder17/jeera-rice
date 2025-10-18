@@ -25,6 +25,7 @@ snippet template-k8s-secret
 		namespace: ${2:namespace}
 	stringData: {}
 
+
 snippet template-k8s-pod
 	apiVersion: v1
 	kind: Pod
@@ -50,3 +51,6 @@ snippet template-k8s-pod
     	- name: alpine-root
       	hostPath:
         	path: /
+
+
+snippet golangci.yml
