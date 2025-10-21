@@ -23,4 +23,13 @@ vim.keymap.set({ "n", "v", "x" }, "f;", Require("pickers.quicklist"))
 vim.keymap.set("n", "s/", "<cmd>FzfLua grep_curbuf multiprocess=false<CR>")
 
 -- buffer picker
-vim.keymap.set("n", "sb", "<Cmd>FzfLua buffers<CR>")
+vim.keymap.set("n", "sb", function()
+  Require("fzf-lua").buffers({
+    actions = {
+      ["ctrl-d"] = function(selected, opts)
+        -- [source](https://sourcegraph.com/github.com/ibhagwan/fzf-lua/-/blob/lua/fzf-lua/actions.lua?L464-466)
+        Require("fzf-lua.actions").buf_del(selected, opts)
+      end,
+    },
+  })
+end)

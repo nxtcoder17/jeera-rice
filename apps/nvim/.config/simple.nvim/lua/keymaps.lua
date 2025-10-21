@@ -30,11 +30,25 @@ end, { desc = "tag completion from ctags" })
 
 -- navigation: lookup
 vim.keymap.set("n", "gd", function()
-  require("navigation.lookup").lookup_definition()
+  require("fzf-lua").tags({
+    prompt = "Definition ϟ ",
+    query = vim.fn.expand("<cword>"),
+    fzf_opts = {
+      ["--nth"] = "1",
+      ["--with-nth"] = "1,2,3",
+    },
+  })
 end, desc("go to definition using tags"))
 
 vim.keymap.set("n", "K", function()
-  require("navigation.lookup").lookup_definition()
+  require("fzf-lua").tags({
+    prompt = "Definition ϟ ",
+    query = vim.fn.expand("<cword>"),
+    fzf_opts = {
+      ["--nth"] = "1",
+      ["--with-nth"] = "1,2,3",
+    },
+  })
 end, desc("lookup definition using tags"))
 
 -- navigation: diagnostic lookup
@@ -86,6 +100,22 @@ end, desc("closes all the floating windows"))
 
 -- close all but this tab
 vim.keymap.set("n", "s0", ":tabonly<CR>", desc("closes all other tabs"))
+
+vim.keymap.set("n", "scc", function()
+  local f = vim.fn.expand("%:p")
+  local from_project_root = f:sub(#vim.g.project_root_dir + 2)
+
+  local lineNr = vim.fn.line(".")
+
+  vim.fn.setreg("+", from_project_root .. ":" .. lineNr)
+end, desc("Copy file path, including line number to system clipboard"))
+
+vim.keymap.set("n", "scd", function()
+  local f = vim.fn.expand("%:p")
+  local from_project_root = f:sub(#vim.g.project_root_dir + 2)
+
+  vim.fn.setreg("+", vim.fs.dirname(from_project_root))
+end, desc("Copy directory of current buffer to system clipboard"))
 
 -- new tab
 vim.keymap.set(

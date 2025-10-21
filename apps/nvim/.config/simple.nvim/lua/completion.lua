@@ -95,6 +95,10 @@ function M.complete_tags()
   fzf.tags({
     query = current_word,
     prompt = "Complete❯ ",
+    fzf_opts = {
+      ["--nth"] = "1",
+      ["--with-nth"] = "1,2,3",
+    },
     winopts = {
       height = 0.35, -- ivy mode: small height
       width = 1, -- ivy mode: full width
@@ -111,7 +115,7 @@ function M.complete_tags()
       ["ctrl-t"] = false,
     },
     -- Show preview with file context
-    previewer = "builtin",
+    -- previewer = "builtin",
   })
 end
 
@@ -136,7 +140,7 @@ function M.complete_snippets()
 
   -- Use fzf-lua to search through snippets
   fzf_lua.fzf_exec(entries, {
-    prompt = "Select Snippet> ",
+    prompt = "Snippet ϟ ",
     actions = {
       ["default"] = function(selected)
         if #selected > 0 then

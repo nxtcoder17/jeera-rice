@@ -387,24 +387,24 @@ end
 
 local function editor_ui_enhancements()
 	return {
-		{
-			"luukvbaal/stabilize.nvim",
-			event = "BufReadPost",
-			config = function()
-				require("stabilize").setup()
-			end,
-		},
-		{
-			"stevearc/dressing.nvim",
-			event = "BufReadPost",
-			config = function()
-				require("dressing").setup({
-					-- insert_only = false,
-					-- start_in_insert = false,
-					relative = "editor",
-				})
-			end,
-		},
+		-- {
+		-- 	"luukvbaal/stabilize.nvim",
+		-- 	event = "BufReadPost",
+		-- 	config = function()
+		-- 		require("stabilize").setup()
+		-- 	end,
+		-- },
+		-- {
+		-- 	"stevearc/dressing.nvim",
+		-- 	event = "BufReadPost",
+		-- 	config = function()
+		-- 		require("dressing").setup({
+		-- 			-- insert_only = false,
+		-- 			-- start_in_insert = false,
+		-- 			relative = "editor",
+		-- 		})
+		-- 	end,
+		-- },
 		{
 			"nvchad/nvim-colorizer.lua",
 			ft = { "javascriptreact", "css", "html", "javascript", "typescript", "typescriptreact", "svelte", "vue" },
@@ -612,6 +612,15 @@ local function lua_rocks()
 	}
 end
 
+local function ai()
+	return {
+		"supermaven-inc/supermaven-nvim",
+		config = function()
+			require("supermaven-nvim").setup({})
+		end,
+	}
+end
+
 local plugins = {}
 vim.list_extend(plugins, fuzzy_finders())
 vim.list_extend(plugins, syntax())
@@ -628,6 +637,7 @@ vim.list_extend(plugins, nxtcoder17_plugins())
 vim.list_extend(plugins, file_managers())
 vim.list_extend(plugins, terminals())
 vim.list_extend(plugins, lua_rocks())
+vim.list_extend(plugins, ai())
 
 require("lazy").setup(plugins, {
 	ui = {
