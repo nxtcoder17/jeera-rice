@@ -24,7 +24,20 @@ function has_command() {
 
 function source_if_exists() {
   file=$1
-  [ -e "$file" ] && source "$file" || echo "failed to source $file"
+  if [ -e "$file" ]; then 
+    source "$file"
+  else
+    test "$BASHRC_DEBUG" && echo "[bashrc.DEBUG] failed to source file: $file"
+  fi
+}
+
+function add_to_path_if_exists() {
+  dir=$1
+  if [ -d "$dir" ]; then 
+    add_to_path "$dir"
+  else
+    test "$BASHRC_DEBUG" && echo "[bashrc.DEBUG] skipped adding to path: $dir"
+  fi
 }
 
 export EDITOR='nvim'
@@ -52,12 +65,6 @@ alias k9s='k9s --logoless --headless -c ns'
 
 has_command bat && alias cat='bat'
 
-if has_command home-manager; then
-  alias hm='home-manager'
-  alias hme='home-manager edit'
-  alias hms='home-manager switch'
-fi
-
 alias shell_reload='source ~/.bashrc'
 
 # -------------------
@@ -82,7 +89,8 @@ export GOPATH="$XDG_DATA_HOME/go"
 export NIXY_EXECUTOR="bubblewrap"
 export NIXY_USE_PROFILE="true"
 
-export SYSTEM_THEME=$(cat ~/.system-theme || echo "dark")
+[ -e ~/.system-theme ] && export SYSTEM_THEME=$(cat ~/.system-theme)
+[ -z "$SYSTEM_THEME" ] && export SYSTEM_THEME=dark
 
 function add_to_path() {
   for item in "${@}"; do
@@ -103,13 +111,16 @@ export GPG_TTY=$(tty)
 # set -x LANG "en_US.UTF-8"
 # set -x LC_TYPE "en_US.UTF-8"
 
-add_to_path "$HOME/me/jeera-rice/bin"
-add_to_path "$HOME/.local/bin"
-add_to_path "$GOPATH/bin"
-add_to_path "$HOME/workspace/github.com/kloudlite/internal-tools/bin"
-add_to_path "$XDG_DATA_HOME/node/bin"
-add_to_path "$XDG_DATA_HOME/bun/bin"
-add_to_path "$XDG_DATA_HOME/pnpm"
+add_to_path_if_exists "$HOME/me/jeera-rice/bin"
+add_to_path_if_exists "$HOME/.local/jeera-rice-bin"
+
+add_to_path_if_exists "$HOME/.local/bin"
+add_to_path_if_exists "$GOPATH/bin"
+add_to_path_if_exists "$HOME/workspace/github.com/kloudlite/internal-tools/bin"
+add_to_path_if_exists "$XDG_DATA_HOME/node/bin"
+add_to_path_if_exists "$XDG_DATA_HOME/bun/bin"
+add_to_path_if_exists "$HOME/.cache/.bun/bin"
+add_to_path_if_exists "$XDG_DATA_HOME/pnpm"
 
 [ "$(uname)" = "Darwin" ] && append_to_path "/opt/homebrew/bin"
 
@@ -123,20 +134,17 @@ export NIXY_USE_PROFILE="true"
 # -------------------
 
 function cc() {
-  if [ "$(uname)" = "Darwin" ]; then
+  case "$(uname)" in
+  Darwin)
     pbcopy
     return
-  fi
-
-  if [ "$(uname)" = "Linux" ]; then
-    if [ "$XDG_BACKEND" = "wayland" ]; then
-      wl-copy
-      return
-    else
-      xclip -sel clip
-      return
-    fi
-  fi
+    ;;
+  Linux)
+    [ "$XDG_BACKEND" = "wayland" ] && wl-copy && return
+    xclip -sel clip
+    return
+    ;;
+  esac
 }
 
 # choose kubeconfig
@@ -184,15 +192,16 @@ bind -x '"\C-e": edit_prompt'
 # Section: Integrating with other tools
 # ----------------------------
 
-source <(fzf --bash)
-source <(zoxide init bash)
-
-if has_command nix; then
-  source_if_exists "/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
-fi
+has_command fzf && source <(fzf --bash)
+has_command zoxide && source <(zoxide init bash)
+has_command nix && source_if_exists "/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
 
 if has_command home-manager; then
   source_if_exists "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+
+  alias hm='home-manager'
+  alias hme='home-manager edit'
+  alias hms='home-manager switch'
 fi
 #
 # ----------------------------
@@ -229,30 +238,43 @@ function __fast_git_info() {
     dirty="*"
   fi
 
-  echo "${YELLOW}($branch $dirty)${RESET}"
+  [ -n "$dirty" ] && dirty=" $dirty"
+
+  echo "${YELLOW}($branch$dirty)${RESET}"
 }
 
 function __bash_prompt() {
   # Colors
+  local BLACK RED GREEN YELLOW BLUE MAGENTA CYAN WHITE DIM_CYAN RESET
+
+  BLACK="\[\033[0;30m\]"
   RED="\[\033[0;31m\]"
   GREEN="\[\033[0;32m\]"
   YELLOW="\[\033[0;33m\]"
   BLUE="\[\033[0;34m\]"
+  MAGENTA="\[\033[0;35m\]"
+  CYAN="\[\033[0;36m\]"
+  WHITE="\[\033[0;37m\]"
+
+  DIM_CYAN="\[\033[2;36m\]"
+
   RESET="\[\033[0m\]"
 
   prompt_char="ϟ"
   prompt_char="${GREEN}$prompt_char${RESET}"
 
   pwd="${BLUE}\w${RESET}"
-  [ -n "$KUBECONFIG" ] && kubeconfig="(  $(basename $KUBECONFIG)) "
 
-  [ -n "$IN_NIXY_SHELL" ] && nixy="[  NIXY] "
+  if [ -n "$NIXY_SHELL" ]; then
+    pwd="${BLUE}$(echo $PWD | sed "s|$NIXY_WORKSPACE_DIR|$(basename $NIXY_WORKSPACE_DIR)|")${RESET}"
+  fi
+
+  [ -n "$KUBECONFIG" ] && kubeconfig="(  $(basename $KUBECONFIG)) "
 
   source_if_exists "$HOME/.config/fzf/themes/$SYSTEM_THEME.bash"
 
-  # PS1="$kubeconfig$pwd ${YELLOW}($(__git_info))${RESET}
   PS1="$kubeconfig$pwd $(__fast_git_info)
-$nixy$prompt_char "
+$prompt_char "
 }
 
 function __debug_performance() {
@@ -264,35 +286,37 @@ function __debug_performance() {
   echo "$1 took: $elapsed_ms ms"
 }
 
-__last_dir=""
-function __nixy_shell() {
-  [ "$__last_dir" = "$PWD" ] && return
-  [ -n "$IN_NIXY_SHELL" ] && return
-  __last_dir="$PWD"
-  [ -e "$PWD/nixy.yml" ] && nixy shell fish
-}
-
 function __run_on_prompt_render() {
   # INFO: to debug performance issue of a function prefix it with __debug_performance
   __bash_prompt
-  __nixy_shell
 }
 
-# hook into prompt rendering
-PROMPT_COMMAND="__run_on_prompt_render${PROMPT_COMMAND:+; $PROMPT_COMMAND}"
+# # hook into prompt rendering
+# PROMPT_COMMAND="__run_on_prompt_render${PROMPT_COMMAND:+; $PROMPT_COMMAND}"
 
 bind 'set show-all-if-ambiguous on'
 bind 'TAB:menu-complete'
 bind "set menu-complete-display-prefix on"
 
 # shell completion
+source_if_exists "/usr/share/bash-completion/bash-completion"
+source_if_exists "${BASH_COMPLETION_DIR}/etc/profile.d/bash_completion.sh"
 
-source_if_exists "$BASH_COMPLETION_DIR/etc/profile.d/bash_completion.sh"
+# has_command nixy && [ -z "$NIXY_SHELL" ] && source <(nixy shell:hook bash)
+has_command nixy && source <(nixy shell:hook bash)
+PROMPT_COMMAND="__run_on_prompt_render${PROMPT_COMMAND:+; $PROMPT_COMMAND}"
 
-# Only run fish for interactive sessions
+## Only run fish for interactive sessions
 # case "$-" in
 # *i*)
-#   if has_command fish && [ -e "" ]; then
+#   if [[ -n "$BASH_EXECUTION_STRING" ]]; then
+#     return
+#   fi
+#
+#   # let prompt hook handle this
+#   # [ "$NO_AUTO_EXEC_FISH" = "true" ] && [ -e "$PWD/nixy.yml" ] && unset NO_AUTO_EXEC_FISH && return
+#
+#   if has_command fish; then
 #     exec fish
 #   fi
 #   ;;
