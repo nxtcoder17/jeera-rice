@@ -8,4 +8,4 @@ query=$(fd . | rofi -dmenu -p "Choose Kitty Session")
 [ -n "$query" ] || exit 0
 popd >/dev/null || exit
 
-kitty @action goto_session "$dir/$query"
+kitty --session "$dir/$query"
