@@ -1,0 +1,15 @@
+themes {
+  system-light {
+    bg "#b8bcc2" // Surface2
+    fg "#2f3447" // Text
+    red "#c23848"
+    green "#143b0f"
+    blue "#2f5ca3"
+    yellow "#5b4415"
+    magenta "#b85896" // Pink
+    orange "#b8622d" // Peach
+    cyan "#2973a8" // Sky
+    black "#f2f4f6" // Mantle
+    white "#2f3447" // Text
+  }
+}

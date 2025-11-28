@@ -6,7 +6,7 @@ if type -q exa
 end
 
 # alias sudo "sudo -E env"
-alias vim 'TERM=xterm-kitty nvim'
+# alias vim 'TERM=xterm-kitty nvim'
 # alias nvim 'TERM=xterm-kitty nvim'
 # function sudo 
 #   command sudo -E=env $argv
@@ -42,6 +42,11 @@ function cc --description "copies stdout to system clipboard"
     return
   end
   xclip -sel clip
+end
+
+function mkcd --description  "mkdir and cd to dir"
+  mkdir -p $argv[1]
+  cd $argv[1]
 end
 
 alias rm 'rm -i'
@@ -91,14 +96,14 @@ function  source_if_exists
   [ -e "$file" ] && source $file || echo "failed to source $file"
 end
 
-[ -e "$SYSTEM_THEME" ] && set SYSTEM_THEME "dark"
-[ -e "$HOME/.system-theme" ] && set SYSTEMT_THEME (cat "$HOME/.system-theme")
+[ -e "$SYSTEM_THEME" ] || set -gx SYSTEM_THEME "dark"
+[ -e "$HOME/.system-theme" ] && set -gx SYSTEM_THEME (cat "$HOME/.system-theme")
 
 source_if_exists ~/.config/fish/themes/$SYSTEM_THEME.fish
 source_if_exists ~/.config/fzf/themes/$SYSTEM_THEME.fish
 
 function fish_prompt
-[ -e "$HOME/.system-theme" ] && set SYSTEMT_THEME (cat "$HOME/.system-theme")
+[ -e "$HOME/.system-theme" ] && set -gx SYSTEMT_THEME (cat "$HOME/.system-theme")
 
   source_if_exists ~/.config/fish/themes/$SYSTEM_THEME.fish
   source_if_exists ~/.config/fzf/themes/$SYSTEM_THEME.fish
@@ -217,32 +222,11 @@ end
 set -gx NIXY_EXECUTOR "bubblewrap"
 set -gx NIXY_USE_PROFILE "true"
 
-function __nixy_shell_activate --on-variable PWD
-  if not status is-interactive
-    return
-  end
-
-  if test -n "$NIXY_SHELL"
-    return
-  end
-
-  if not test -e nixy.yml
-    return
-  end
-
-  set value (fzf --reverse --prompt "Load nixy shell ? " < (printf "YES\nNO" | psub))
-
-  if test -z $value
-    set value "YES"
-  end
-
-  if test "$value" = "NO"
-    return
-  end
-
-  exec nixy shell
+# pnpm
+set -gx PNPM_HOME "/var/home/nxtcoder17/.local/share/pnpm"
+if not string match -q -- $PNPM_HOME $PATH
+  set -gx PATH "$PNPM_HOME" $PATH
 end
+# pnpm end
 
-if status is-interactive
-  __nixy_shell_activate
-end
+nixy shell:hook fish | source
