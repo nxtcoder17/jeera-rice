@@ -224,6 +224,15 @@ local plugins = {
       require("plugins.diffview")
     end,
   },
+  {
+    "ms-jpq/coq_nvim",
+    init = function()
+      vim.g.coq_settings = {
+        auto_start = true, -- if you want to start COQ at startup
+        -- Your COQ settings here
+      }
+    end,
+  },
 }
 
 -- Make sure to setup `mapleader` and `maplocalleader` before

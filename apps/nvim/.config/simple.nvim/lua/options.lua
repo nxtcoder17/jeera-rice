@@ -49,16 +49,16 @@ opt.undofile = true
 -- }
 
 opt.listchars = {
-	["eol"] = "↲",
-	-- ["tab"] = "»·",
-	["tab"] = "·",
-	["space"] = "␣",
-	["trail"] = "-",
-	["extends"] = "☛",
-	-- ["precedes"] = "☚",
+  ["eol"] = "↲",
+  -- ["tab"] = "»·",
+  ["tab"] = "·",
+  ["space"] = "␣",
+  ["trail"] = "-",
+  ["extends"] = "☛",
+  -- ["precedes"] = "☚",
 
-	["conceal"] = "┊",
-	["nbsp"] = "☠",
+  ["conceal"] = "┊",
+  ["nbsp"] = "☠",
 }
 
 -- Tab, Spaces and Indentations
@@ -75,29 +75,29 @@ opt.copyindent = true
 opt.autoindent = true
 
 function _G.indent_with_spaces()
-	-- Tab, Spaces and Indentations
-	opt.tabstop = 2
-	opt.softtabstop = 2
-	opt.shiftwidth = 2 -- spaces per tab when using >> or <<
-	opt.expandtab = true -- expand tabs into spaces
-	opt.autoindent = true
-	opt.smarttab = true
-	opt.shiftround = true
-	-- Copy Previous Indentation
-	opt.smartindent = true
-	opt.copyindent = true
-	opt.autoindent = true
+  -- Tab, Spaces and Indentations
+  opt.tabstop = 2
+  opt.softtabstop = 2
+  opt.shiftwidth = 2 -- spaces per tab when using >> or <<
+  opt.expandtab = true -- expand tabs into spaces
+  opt.autoindent = true
+  opt.smarttab = true
+  opt.shiftround = true
+  -- Copy Previous Indentation
+  opt.smartindent = true
+  opt.copyindent = true
+  opt.autoindent = true
 end
 
 function _G.indent_with_tabs()
-	-- using tabs for indentation, and spaces for everything else
-	-- reference: https://vim.fandom.com/wiki/Indent_with_tabs,_align_with_spaces
-	opt.expandtab = false
-	opt.copyindent = true
-	opt.preserveindent = true
-	opt.softtabstop = 0
-	opt.shiftwidth = 2
-	opt.tabstop = 2
+  -- using tabs for indentation, and spaces for everything else
+  -- reference: https://vim.fandom.com/wiki/Indent_with_tabs,_align_with_spaces
+  opt.expandtab = false
+  opt.copyindent = true
+  opt.preserveindent = true
+  opt.softtabstop = 0
+  opt.shiftwidth = 2
+  opt.tabstop = 2
 end
 
 indent_with_tabs()
@@ -110,11 +110,11 @@ opt.pumblend = 1
 opt.pumheight = 20
 --
 vim.list_extend(opt.wildignore, {
-	"node_modules",
-	".git",
-	".next",
-	-- "build",
-	"dist",
+  "node_modules",
+  ".git",
+  ".next",
+  -- "build",
+  "dist",
 })
 
 -- completion
@@ -161,4 +161,3 @@ vim.opt.formatoptions = vim.opt.formatoptions + "j" -- remove comment leader whe
 vim.opt.formatoptions = vim.opt.formatoptions + "n" -- smart auto-indenting inside numbered lists
 
 vim.o.diffopt = "internal,filler,closeoff,indent-heuristic,linematch:60,algorithm:histogram"
-

@@ -1,0 +1,6 @@
+# [source](https://sourcegraph.com/github.com/folke/noice.nvim/-/blob/stylua.yml)
+indent_type = "Spaces"
+indent_width = 2
+column_width = 120
+[sort_requires]
+enabled = true

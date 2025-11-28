@@ -32,7 +32,7 @@ end, { desc = "tag completion from ctags" })
 vim.keymap.set("n", "gd", function()
   require("fzf-lua").tags({
     prompt = "Definition ϟ ",
-    query = vim.fn.expand("<cword>"),
+    query = "'" .. vim.fn.expand("<cword>"),
     fzf_opts = {
       ["--nth"] = "1",
       ["--with-nth"] = "1,2,3",
@@ -43,7 +43,7 @@ end, desc("go to definition using tags"))
 vim.keymap.set("n", "K", function()
   require("fzf-lua").tags({
     prompt = "Definition ϟ ",
-    query = vim.fn.expand("<cword>"),
+    query = "'" .. vim.fn.expand("<cword>"),
     fzf_opts = {
       ["--nth"] = "1",
       ["--with-nth"] = "1,2,3",

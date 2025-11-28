@@ -13,7 +13,7 @@ vim.keymap.set("n", "tl", Require("pickers.find-tabs"))
 vim.keymap.set({ "n", "v" }, "ff", Require("pickers.grep"))
 
 vim.keymap.set({ "n" }, "FF", function()
-  Require("pickers.grep")(vim.fn.getcwd(), vim.fn.expand("<cword>"))
+  Require("pickers.grep")(vim.fn.getcwd(), "'" .. vim.fn.expand("<cword>"))
 end)
 
 -- quicklist picker

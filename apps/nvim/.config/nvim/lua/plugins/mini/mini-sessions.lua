@@ -1,1 +1,0 @@
-Require("mini.sessions").setup()
