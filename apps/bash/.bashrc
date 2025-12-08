@@ -111,7 +111,7 @@ export GPG_TTY=$(tty)
 # set -x LANG "en_US.UTF-8"
 # set -x LC_TYPE "en_US.UTF-8"
 
-add_to_path_if_exists "$HOME/me/jeera-rice/bin"
+add_to_path_if_exists "$HOME/workspace/nxtcoder17/jeera-rice/bin"
 add_to_path_if_exists "$HOME/.local/jeera-rice-bin"
 
 add_to_path_if_exists "$HOME/.local/bin"
@@ -243,7 +243,7 @@ function __fast_git_info() {
   echo "${YELLOW}($branch$dirty)${RESET}"
 }
 
-function __bash_prompt() {
+function __prompt() {
   # Colors
   local BLACK RED GREEN YELLOW BLUE MAGENTA CYAN WHITE DIM_CYAN RESET
 
@@ -263,17 +263,19 @@ function __bash_prompt() {
   prompt_char="ϟ"
   prompt_char="${GREEN}$prompt_char${RESET}"
 
-  pwd="${BLUE}\w${RESET}"
-
   if [ -n "$NIXY_SHELL" ]; then
-    pwd="${BLUE}$(echo $PWD | sed "s|$NIXY_WORKSPACE_DIR|$(basename $NIXY_WORKSPACE_DIR)|")${RESET}"
+    PS1="$NIXY_PROMPT_PREFIX"
+    PS1+=" ${BLUE}$(echo $PWD | sed "s|$NIXY_WORKSPACE_DIR|$(basename $NIXY_WORKSPACE_DIR)|")${RESET}"
+  else
+    PS1="${BLUE}\w${RESET}"
   fi
 
-  [ -n "$KUBECONFIG" ] && kubeconfig="(  $(basename $KUBECONFIG)) "
+
+  [ -n "$KUBECONFIG" ] && PS1+=" (  $(basename $KUBECONFIG))"
 
   source_if_exists "$HOME/.config/fzf/themes/$SYSTEM_THEME.bash"
 
-  PS1="$kubeconfig$pwd $(__fast_git_info)
+  PS1="$PS1 $(__fast_git_info)
 $prompt_char "
 }
 
@@ -288,11 +290,8 @@ function __debug_performance() {
 
 function __run_on_prompt_render() {
   # INFO: to debug performance issue of a function prefix it with __debug_performance
-  __bash_prompt
+  __prompt
 }
-
-# # hook into prompt rendering
-# PROMPT_COMMAND="__run_on_prompt_render${PROMPT_COMMAND:+; $PROMPT_COMMAND}"
 
 bind 'set show-all-if-ambiguous on'
 bind 'TAB:menu-complete'
@@ -302,9 +301,10 @@ bind "set menu-complete-display-prefix on"
 source_if_exists "/usr/share/bash-completion/bash-completion"
 source_if_exists "${BASH_COMPLETION_DIR}/etc/profile.d/bash_completion.sh"
 
-# has_command nixy && [ -z "$NIXY_SHELL" ] && source <(nixy shell:hook bash)
-has_command nixy && source <(nixy shell:hook bash)
 PROMPT_COMMAND="__run_on_prompt_render${PROMPT_COMMAND:+; $PROMPT_COMMAND}"
+if has_command nixy; then
+  source <(nixy shell:hook bash)
+fi
 
 ## Only run fish for interactive sessions
 # case "$-" in

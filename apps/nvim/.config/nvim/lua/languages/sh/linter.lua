@@ -1,4 +1,6 @@
-notify_if_not_installed({ "shellcheck" })
+if not notify_if_not_installed({ "shellcheck" }) then
+  return
+end
 
 local ok, lint = pcall(require, "lint")
 if not ok then

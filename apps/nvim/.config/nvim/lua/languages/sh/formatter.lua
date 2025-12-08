@@ -1,5 +1,4 @@
 if not notify_if_not_installed({ "shfmt" }) then
-  vim.notify_error("[lua] failed to configure and start formatter")
   return
 end
 

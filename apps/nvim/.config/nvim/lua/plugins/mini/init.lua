@@ -21,6 +21,7 @@ local notify = Require("mini.notify")
 notify.setup()
 
 vim.notify = notify.make_notify({
+  DEBUG = { duration = 1 },
   ERROR = { duration = 2000 },
   WARN = { duration = 2000 },
   INFO = { duration = 2000 },

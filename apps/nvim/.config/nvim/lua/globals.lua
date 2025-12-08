@@ -42,7 +42,7 @@ _G.notify_if_not_installed = function(binaries)
   local has_error = false
   for _, item in ipairs(binaries) do
     if not bin_lookup(item) then
-      vim.notify_debug(item .. " is not installed")
+      vim.notify_debug(string.format("[filetype: %s] binary '%s' is not installed", vim.bo.filetype, item))
       has_error = true
     end
   end
