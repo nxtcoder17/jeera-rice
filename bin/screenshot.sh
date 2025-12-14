@@ -1,12 +1,13 @@
 #! /usr/bin/env bash
 
 if [[ "$XDG_BACKEND" = "wayland" ]]; then
-  hyprshot -m region --clipboard-only
-  return
+  t=$(mktemp)
+  hyprshot -m region -o /tmp --filename $(basename $t)
+  echo "$t" | wl-copy
+  exit 0
 fi
 
-# for xorg
-
+# for X11
 name="/tmp/screenshot-$RANDOM".png
 
 # name=""
