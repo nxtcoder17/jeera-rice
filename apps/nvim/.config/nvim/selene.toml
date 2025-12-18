@@ -28,4 +28,5 @@ P = "read"
 NewLogger = "read"
 bin_lookup = "read"
 notify_if_not_installed = "read"
-
+set_linter = "read"
+set_formatter = "read"

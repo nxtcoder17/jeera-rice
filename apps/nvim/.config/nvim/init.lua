@@ -1,6 +1,5 @@
 require("globals")
 require("disable-builtin-plugins")
-require("languages.auto-loader")
 require("options")
 Require("plugins")
 require("folds")

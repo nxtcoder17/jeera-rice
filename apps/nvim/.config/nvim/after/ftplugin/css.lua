@@ -1,3 +1,4 @@
+-- LSP
 if not notify_if_not_installed({
   "css-lsp",
   "tailwindcss-language-server",

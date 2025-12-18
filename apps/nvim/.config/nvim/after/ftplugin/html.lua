@@ -1,13 +1,10 @@
-if not notify_if_not_installed({
+notify_if_not_installed({
   "html-lsp",
   "emmet-language-server",
-}) then
-  vim.notify_error("[HTML] failed to start LSP server")
-  return
-end
+})
 
 vim.lsp.config("html", {
-  filetypes = { "gohtmltmpl", "html", "htmljinja", "svelte", "vue" },
+  filetypes = { "gohtmltmpl", "html", "htmljinja" },
 })
 
 vim.lsp.config("emmet_language_server", {
@@ -35,4 +32,5 @@ vim.lsp.config("emmet_language_server", {
 })
 
 vim.lsp.enable({ "html", "emmet_language_server" })
-require("languages.css.lsp")
+
+vim.cmd("runtime! ftplugin/css.lua")

@@ -11,12 +11,6 @@ vim.lsp.config("lua_ls", {
       runtime = {
         version = "LuaJIT",
       },
-      -- runtime = {
-      --   path = runtime_path,
-      -- },
-      -- completion = {
-      --   callSnippet = "Replace",
-      -- },
       workspace = {
         -- library = vim.api.nvim_get_runtime_file("", true),
         library = {
@@ -36,3 +30,9 @@ vim.lsp.config("lua_ls", {
 })
 
 vim.lsp.enable("lua_ls")
+
+-- LINTER
+set_linter("lua", { "selene" })
+
+-- FORMATTER
+set_formatter("lua", { "stylua" })

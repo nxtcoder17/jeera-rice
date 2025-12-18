@@ -1,19 +1,7 @@
-local binaries = {
+notify_if_not_installed({
   "clangd",
   "clangd-format",
-}
-
-local has_error = false
-for _, item in ipairs(binaries) do
-  if not bin_lookup(item) then
-    vim.notify_warn(item .. " is not installed")
-    has_error = true
-  end
-end
-
-if has_error then
-  return
-end
+})
 
 vim.lsp.config("clangd", {
   filetypes = { "c", "cpp" },
@@ -36,3 +24,9 @@ vim.lsp.config("clangd", {
 })
 
 vim.lsp.enable("clangd")
+
+-- LINTER
+set_linter(vim.bo.filetype, { "clangtidy" })
+
+-- FORMATTER
+set_formatter(vim.bo.filetype, { "clang-format" })
