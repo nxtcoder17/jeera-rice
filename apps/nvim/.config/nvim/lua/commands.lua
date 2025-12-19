@@ -34,3 +34,6 @@ end, { nargs = 1 })
 vim.api.nvim_create_user_command("Scratch", function()
 	vim.cmd("vne | setlocal buftype=nofile | setlocal bufhidden=hide | setlocal noswapfile")
 end, {})
+
+-- Custom tabbar setup
+require("plugins.ui.tabbar").setup()

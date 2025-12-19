@@ -364,7 +364,7 @@ end
 local function mini_nvim()
   return {
     {
-      "echasnovski/mini.nvim",
+      "nvim-mini/mini.nvim",
       -- event = "UIEnter",
       event = "BufReadPre",
       branch = "stable",
@@ -438,15 +438,6 @@ local function editor_ui_enhancements()
     },
 
     { "ellisonleao/glow.nvim", ft = "markdown", config = true, cmd = "Glow" },
-
-    {
-      "nanozuki/tabby.nvim",
-      -- event = "UIEnter",
-      event = "BufReadPre",
-      config = function()
-        require("plugins.ui.tabby")
-      end,
-    },
   }
 end
 

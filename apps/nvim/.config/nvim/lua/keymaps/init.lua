@@ -163,8 +163,18 @@ vim.keymap.set({ "n" }, "st", function()
   local init_cmd = {
     ["fish"] = { "fish", "--init-command", string.format("pushd %s; pushd %s", vim.g.project_root_dir, dir) },
     ["bash"] = { "bash" },
-    -- ["bash"] = { "bash", "--rcfile", string.format("<(pushd %s; pushd %s; source $HOME/.bashrc)", vim.g.project_root_dir, dir) },
-    -- ["bash"] = { "bash", "-i", "-c", string.format("pushd %s >/dev/null; pushd %s >/dev/null; exec bash", vim.g.project_root_dir, dir) },
+    -- ["bash"] = {
+    --   "bash",
+    --   "--rcfile",
+    --   string.format("<(pushd %s; pushd %s; source $HOME/.bashrc)", vim.g.project_root_dir, dir),
+    -- },
+    -- ["bash"] = {
+    --   "bash",
+    --   "-i",
+    --   "-c",
+    --   -- string.format("pushd %s >/dev/null; pushd %s >/dev/null; exec bash", vim.g.project_root_dir, dir),
+    --   string.format("pushd %s; pushd %s; exec bash", vim.g.project_root_dir, dir),
+    -- },
     -- ["bash"] = { "bash", "--init-file", string.format([[
     --   if [ -f ~/.bashrc ]; then
     --     echo "SOURCING ~/.bashrc" >> /tmp/term.log
