@@ -1,4 +1,4 @@
-Require("nvim-treesitter.configs").setup({
+Require("nvim-treesitter").setup({
   -- ensure_installed = "all",
   -- ignore_install = { "javascript", "typescript", "bash", "go", "lua", "yaml", "json" },
   ensure_installed = {
@@ -126,8 +126,7 @@ Require("nvim-treesitter.configs").setup({
   },
 })
 
-local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-parser_config.gotmpl = {
+require("nvim-treesitter.parsers").gotmpl = {
   install_info = {
     url = "https://github.com/qvalentin/tree-sitter-go-template",
     branch = "helm-ls",

@@ -77,4 +77,3 @@ MiniStatusline.setup({
 		active = active_status_line,
 	},
 })
-

@@ -1,0 +1,126 @@
+local ls = require("luasnip")
+-- some shorthands...
+local s = ls.snippet
+local sn = ls.snippet_node
+local t = ls.text_node
+local i = ls.insert_node
+local f = ls.function_node
+local c = ls.choice_node
+local d = ls.dynamic_node
+local r = ls.restore_node
+local rep = require("luasnip.extras").rep
+local fmt = require("luasnip.extras.fmt").fmt
+local fmta = require("luasnip.extras.fmt").fmta
+local postfix = require("luasnip.extras.postfix").postfix
+
+-- local stringsFn = require("functions.strings")
+
+local snippets, autosnippets = {}, {}
+
+local function new_snippet(item)
+	return table.insert(snippets, item)
+end
+
+new_snippet(s(
+	"var",
+	c(1, {
+		fmta([[{{- <p1> := <p2> }}]], {
+			p1 = f(function(...)
+				local args = ...
+				return "$" .. require("functions.strings").camel_case(args[1][1])
+			end, 1),
+			p2 = i(1, "var"),
+		}),
+		fmta(
+			[[{{- <p1> := get . "<p2>" <p0>}}
+    ]],
+			{
+				p1 = f(function(...)
+					local args = ...
+					return "$" .. require("functions.strings").camel_case(args[1][1])
+				end, 1),
+				p2 = i(1, "var"),
+				p0 = i(0),
+			}
+		),
+	})
+))
+
+-- local var_stmt = s(
+--   "var",
+--   c(1, {
+--     fmta([[{{- <p1> := <p2> }}]], {
+--       p1 = f(function(...)
+--         local args = ...
+--         return "$" .. require("functions.strings").camel_case(args[1][1])
+--       end, 1),
+--       p2 = i(1, "var"),
+--     }),
+--     fmta(
+--       [[{{- <p1> := get . "<p2>" <p0>}}
+--     ]],
+--       {
+--         p1 = f(function(...)
+--           local args = ...
+--           return "$" .. require("functions.strings").camel_case(args[1][1])
+--         end, 1),
+--         p2 = i(1, "var"),
+--         p0 = i(0),
+--       }
+--     ),
+--   })
+-- )
+-- table.insert(snippets, var_stmt)
+
+new_snippet(s(
+	"define",
+	fmta(
+		[[
+{{- define "<p1>" }}
+<p0>
+{{- end }}
+]],
+		{
+			p1 = i(1, "name"),
+			p0 = i(0),
+		}
+	)
+))
+
+new_snippet(s(
+	"if",
+	c(1, {
+		fmta(
+			[[
+{{- if <p1> }}
+<p2>
+{{- end }}
+<p0>
+]],
+			{
+				p1 = i(1, "condition"),
+				p2 = i(2, "{{- /* if */}}"),
+				p0 = i(0),
+			}
+		),
+
+		fmta(
+			[[
+{{- if <p1> }}
+<p2>
+{{- else }}
+<p3>
+{{- end }}
+<p0>
+]],
+			{
+				p1 = i(1, "condition"),
+				p2 = i(0, "{{- /* if */}}"),
+				p3 = i(2, "{{- /* else */}}"),
+				p0 = i(0),
+			}
+		),
+	})
+))
+
+return snippets, autosnippets

@@ -2,6 +2,7 @@ local opt = vim.opt
 
 -- to disable filetype based indentation, uncomment the following line
 -- vim.cmd("filetype indent off")
+
 opt.startofline = true
 
 opt.number = true
@@ -16,9 +17,6 @@ opt.cmdheight = 0
 
 opt.splitright = true
 opt.splitbelow = true
-
--- stabilize.nvim
-opt.splitkeep = "screen"
 
 opt.swapfile = false
 

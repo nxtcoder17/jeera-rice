@@ -1,0 +1,12 @@
+vim.keymap.set("n", "sf", Require("plugins.fzf.my-actions.find-files"))
+vim.cmd([[ cnoreabbrev cd lua require('plugins.fzf.my-actions.choose-tab-dir')()<CR>]])
+
+vim.keymap.set("n", "tl", Require("plugins.fzf.my-actions.find-tabs"))
+vim.keymap.set({ "n", "v" }, "ff", Require("plugins.fzf.my-actions.grep"))
+vim.keymap.set({ "n" }, "FF", function()
+	Require("plugins.fzf.my-actions.grep")(vim.fn.getcwd(), vim.fn.expand("<cword>"))
+end)
+vim.keymap.set({ "n", "v", "x" }, "f;", Require("plugins.fzf.my-actions.quicklist"))
+vim.keymap.set("n", "s/", "<cmd>FzfLua grep_curbuf multiprocess=false<CR>")
+vim.keymap.set("n", "sb", "<Cmd>FzfLua buffers<CR>")
+vim.keymap.set("n", "K", function() Require("plugins.fzf.my-actions.doc-search")() end)

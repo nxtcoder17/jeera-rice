@@ -1,4 +1,32 @@
-std="vim"
+# Disable comment line-length limit
+[formatting]
+line_endings = "Unix"
 
-[lints]
-mixed_table="allow"
+[configuration]
+# Selene does not enforce comment line length, so no need for explicit disable.
+# Enable all diagnostics (similar to luacheck `codes = true`)
+# (Selene shows rule codes by default.)
+
+# Ignore equivalent diagnostics
+# NOTE: Selene has different rule names/numbers; see mappings below.
+skip_diagnostics = [
+  "unused_arg",       # luacheck 212: unused argument
+  "too_long_line",    # luacheck 631: line is too long
+  "write_globals",    # luacheck 122: setting readonly global
+  "empty_if",         # luacheck 542: empty if
+]
+
+# Register globals (Selene treats undeclared globals as errors unless allowed)
+[globals]
+vim = "read"
+a = "read"
+assert = "read"
+
+Require = "read"
+R = "read"
+P = "read"
+NewLogger = "read"
+bin_lookup = "read"
+notify_if_not_installed = "read"
+set_linter = "read"
+set_formatter = "read"
