@@ -45,22 +45,6 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   end,
 })
 
--- vim.api.nvim_create_autocmd({ "BufNewFile" }, {
--- 	group = autocmds,
--- 	callback = function()
--- 		vim.cmd(string.format("-1r %s/skeletons/%s.nix", vim.fn.stdpath("config"), vim.b.filetype))
--- 	end,
--- })
-
--- vim.api.nvim_create_autocmd({ "LspAttach" }, {
---   group = autocmds,
---   pattern = "*",
---   callback = function()
---     --INFO: https://github.com/quangnguyen30192/cmp-nvim-tags/blob/main/README.md#troubleshooting
---     vim.bo.tagfunc = nil
---   end,
--- })
-
 local function file_exists(name)
   local f = io.open(name, "r")
   return f ~= nil and io.close(f)
@@ -110,13 +94,5 @@ vim.api.nvim_create_autocmd({ "BufReadPost" }, {
     if mark[1] > 0 and mark[1] <= lcount then
       pcall(vim.api.nvim_win_set_cursor, 0, mark)
     end
-  end,
-})
-
-vim.api.nvim_create_autocmd("LspAttach", {
-  group = autocmds,
-  callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    print("LSP attached:", client.name)
   end,
 })

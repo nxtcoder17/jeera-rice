@@ -1,4 +1,4 @@
-Require("nvim-treesitter").setup({
+Require("nvim-treesitter.configs").setup({
   -- ensure_installed = "all",
   -- ignore_install = { "javascript", "typescript", "bash", "go", "lua", "yaml", "json" },
   ensure_installed = {
