@@ -1,6 +1,6 @@
 local M = {}
 
-local c = Require("plugins.colorschemes.lib.color")
+local c = relative_require("color")
 
 function M.lighten(hex, amount)
 	amount = amount > 1 and amount / 100

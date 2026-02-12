@@ -1,6 +1,6 @@
 -- DO NOT EDIT: copied from https://github.com/rebelot/kanagawa.nvim/blob/master/lua/kanagawa/lib/color.lua
 
-local hsluv = Require("plugins.colorschemes.lib.hsluv")
+local hsluv = relative_require("hsluv")
 
 ---@class HSLuvColor
 local Color = {}

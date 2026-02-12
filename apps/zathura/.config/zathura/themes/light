@@ -1,0 +1,36 @@
+# Zathura Light Theme
+
+set default-bg "#f5f3ee"
+set default-fg "#2a2a37"
+
+set statusbar-bg "#e9e6df"
+set statusbar-fg "#2a2a37"
+
+set inputbar-bg "#e9e6df"
+set inputbar-fg "#2a2a37"
+
+set notification-bg "#e9e6df"
+set notification-fg "#2a2a37"
+set notification-error-bg "#c84053"
+set notification-error-fg "#f5f3ee"
+set notification-warning-bg "#b38a3c"
+set notification-warning-fg "#f5f3ee"
+
+set highlight-color "#b38a3c"
+set highlight-active-color "#4c6fae"
+
+set completion-bg "#e9e6df"
+set completion-fg "#2a2a37"
+set completion-highlight-bg "#ddd9d0"
+set completion-highlight-fg "#2a2a37"
+set completion-group-bg "#e9e6df"
+set completion-group-fg "#4c6fae"
+
+set render-loading-bg "#f5f3ee"
+set render-loading-fg "#8a887f"
+
+# Recolor document to match theme
+set recolor true
+set recolor-lightcolor "#f5f3ee"
+set recolor-darkcolor "#2a2a37"
+set recolor-keephue true

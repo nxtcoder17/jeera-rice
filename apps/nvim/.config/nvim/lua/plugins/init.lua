@@ -38,14 +38,14 @@ local function syntax()
     -- 	"sheerun/vim-polyglot",
     -- 	event = "VeryLazy",
     -- },
-    {
-      "catppuccin/nvim",
-      name = "catppuccin",
-      priority = 1000,
-      config = function()
-        require("plugins.colorschemes.catppuccin")
-      end,
-    },
+    -- {
+    --   "catppuccin/nvim",
+    --   name = "catppuccin",
+    --   priority = 1000,
+    --   config = function()
+    --     require("plugins.colorschemes.catppuccin")
+    --   end,
+    -- },
     {
       "nvim-treesitter/nvim-treesitter",
       event = "BufReadPost",
@@ -366,13 +366,14 @@ local function mini_nvim()
     {
       "nvim-mini/mini.nvim",
       -- event = "UIEnter",
-      event = "BufReadPre",
+      -- event = "BufReadPre",
       branch = "stable",
       -- init = function()
-      -- 	Require("plugins.mini.mini-base16")
+      --   Require("plugins.mini.mini-base16")
       -- end,
       config = function()
         require("plugins.mini")
+        vim.cmd(string.format("colorscheme %s", vim.o.background))
       end,
     },
   }

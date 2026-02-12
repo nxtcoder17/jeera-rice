@@ -1,5 +1,15 @@
 # If not running interactively, don't do anything
-[ -z "$PS1" ] && return
+if [ -z "$PS1" ]; then
+  # NOTE: this is required so that if i run fzf from app like
+  # kitty -e "cat <something> |fzf", the colors match the theme
+
+  export SYSTEM_THEME=$(cat ~/.system-theme)
+  file="$HOME/.config/fzf/themes/$SYSTEM_THEME.bash"
+  if [ -e "$file" ]; then
+    source $file
+  fi
+  return
+fi
 
 # bash shell history
 HISTSIZE=100000
@@ -24,19 +34,10 @@ function has_command() {
 
 function source_if_exists() {
   file=$1
-  if [ -e "$file" ]; then 
+  if [ -e "$file" ]; then
     source "$file"
   else
     test "$BASHRC_DEBUG" && echo "[bashrc.DEBUG] failed to source file: $file"
-  fi
-}
-
-function add_to_path_if_exists() {
-  dir=$1
-  if [ -d "$dir" ]; then 
-    add_to_path "$dir"
-  else
-    test "$BASHRC_DEBUG" && echo "[bashrc.DEBUG] skipped adding to path: $dir"
   fi
 }
 
@@ -55,6 +56,10 @@ else
   alias ll='ls -al'
 fi
 
+if has_command claude; then
+  alias code-agent="claude --dangerously-skip-permissions"
+fi
+
 alias gs='git status'
 alias gss='git status -s'
 
@@ -71,56 +76,60 @@ alias shell_reload='source ~/.bashrc'
 # Section: Env Vars
 # -------------------
 
-export EDITOR=nvim
+# export EDITOR=nvim
 # export PAGER="nvim -R"
 export MANPAGER='nvim +Man!'
 
 # XDG Dirs
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_CACHE_HOME="$HOME/.cache"
-export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_STATE_HOME="$HOME/.local/state"
+# export XDG_CONFIG_HOME="$HOME/.config"
+# export XDG_CACHE_HOME="$HOME/.cache"
+# export XDG_DATA_HOME="$HOME/.local/share"
+# export XDG_STATE_HOME="$HOME/.local/state"
+#
+# export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
+# export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
+# export NPM_CONFIG_STORE_DIR="$XDG_DATA_HOME/node/bin"
+# export GOPATH="$XDG_DATA_HOME/go"
 
-export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
-export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
-export NPM_CONFIG_STORE_DIR="$XDG_DATA_HOME/node/bin"
-export GOPATH="$XDG_DATA_HOME/go"
-
-export NIXY_EXECUTOR="bubblewrap"
-export NIXY_USE_PROFILE="true"
+# export NIX_CONFIG="experimental-features = nix-command flakes"
+#
+# export NIXY_EXECUTOR="bubblewrap"
+# export NIXY_USE_PROFILE="true"
 
 [ -e ~/.system-theme ] && export SYSTEM_THEME=$(cat ~/.system-theme)
 [ -z "$SYSTEM_THEME" ] && export SYSTEM_THEME=dark
 
 function add_to_path() {
-  for item in "${@}"; do
-    export PATH="$item:$PATH"
+  for item in "$@"; do
+    [ -d "$item" ] || continue
+
+    case ":$PATH:" in
+    *":$item:"*) ;; # already in PATH, do nothing
+    *) PATH="$item:$PATH" ;;
+    esac
   done
+  export PATH
 }
 
-## zoxide exclude DIRS
-export _ZO_EXCLUDE_DIRS=".secrets:archived:.dump:old"
+#
+# ## zoxide exclude DIRS
+# export _ZO_EXCLUDE_DIRS=".secrets:archived:.dump:old"
+#
+# export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --smart-case"
+#
+# # to make GPG work with TTY input box
+# export GPG_TTY=$(tty)
 
-export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --smart-case"
-
-# to make GPG work with TTY input box
-export GPG_TTY=$(tty)
-
-# set -x LANGUAGE "en_US.UTF-8"
-# set -x LC_ALL "en_US.UTF-8"
-# set -x LANG "en_US.UTF-8"
-# set -x LC_TYPE "en_US.UTF-8"
-
-add_to_path_if_exists "$HOME/workspace/nxtcoder17/jeera-rice/bin"
-add_to_path_if_exists "$HOME/.local/jeera-rice-bin"
-
-add_to_path_if_exists "$HOME/.local/bin"
-add_to_path_if_exists "$GOPATH/bin"
-add_to_path_if_exists "$HOME/workspace/github.com/kloudlite/internal-tools/bin"
-add_to_path_if_exists "$XDG_DATA_HOME/node/bin"
-add_to_path_if_exists "$XDG_DATA_HOME/bun/bin"
-add_to_path_if_exists "$HOME/.cache/.bun/bin"
-add_to_path_if_exists "$XDG_DATA_HOME/pnpm"
+# add_to_path_if_exists "$HOME/workspace/nxtcoder17/jeera-rice/bin"
+# add_to_path_if_exists "$HOME/.local/jeera-rice-bin"
+#
+# add_to_path_if_exists "$HOME/.local/bin"
+# add_to_path_if_exists "$GOPATH/bin"
+# add_to_path_if_exists "$HOME/workspace/github.com/kloudlite/internal-tools/bin"
+# add_to_path_if_exists "$XDG_DATA_HOME/node/bin"
+# add_to_path_if_exists "$XDG_DATA_HOME/bun/bin"
+# add_to_path_if_exists "$HOME/.cache/.bun/bin"
+# add_to_path_if_exists "$XDG_DATA_HOME/pnpm"
 
 [ "$(uname)" = "Darwin" ] && append_to_path "/opt/homebrew/bin"
 
@@ -270,10 +279,10 @@ function __prompt() {
     PS1="${BLUE}\w${RESET}"
   fi
 
-
   [ -n "$KUBECONFIG" ] && PS1+=" (  $(basename $KUBECONFIG))"
 
   source_if_exists "$HOME/.config/fzf/themes/$SYSTEM_THEME.bash"
+  source_if_exists "$HOME/.config/ls/themes/$SYSTEM_THEME.bash"
 
   PS1="$PS1 $(__fast_git_info)
 $prompt_char "
@@ -305,6 +314,11 @@ PROMPT_COMMAND="__run_on_prompt_render${PROMPT_COMMAND:+; $PROMPT_COMMAND}"
 if has_command nixy; then
   source <(nixy shell:hook bash)
 fi
+
+export _JAVA_OPTIONS="-Dawt.toolkit.name=WLToolkit -Dsun.java2d.uiScale.enabled=true"
+
+export ANDROID_HOME="$HOME/Android"
+add_to_path "$HOME/SDKs/flutter/bin"
 
 ## Only run fish for interactive sessions
 # case "$-" in

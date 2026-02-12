@@ -1,4 +1,7 @@
 local fzf = require("fzf-lua")
+local go_syscalls = require("plugins.fzf.my-actions.doc-search.go.syscalls")
+local go_awk = require("plugins.fzf.my-actions.doc-search.go.awk")
+
 
 local M = {}
 
@@ -12,45 +15,8 @@ local patterns = {
   constants = "^(const |var )",
 }
 
--- =============================================================================
--- Get module name from go.mod
--- =============================================================================
-local function get_module_name()
-  local mod = vim.fn.systemlist("go list -m 2>/dev/null")[1]
-  return mod or "go.mod"
-end
-
--- =============================================================================
--- Get GOROOT path
--- =============================================================================
-local function get_goroot()
-  local goroot = vim.fn.systemlist("go env GOROOT 2>/dev/null")[1]
-  return goroot or ""
-end
-
--- =============================================================================
--- Get stdlib packages
--- =============================================================================
-local function get_stdlib_packages()
-  local goroot = get_goroot()
-  if goroot == "" then return {} end
-
-  local src_dir = goroot .. "/src"
-  if vim.fn.isdirectory(src_dir) ~= 1 then return {} end
-
-  -- Get all stdlib packages using go list
-  local pkgs = vim.fn.systemlist("go list std 2>/dev/null")
-  local result = {}
-  for _, pkg in ipairs(pkgs) do
-    if pkg ~= "" and not pkg:match("^vendor/") and not pkg:match("^internal/") and not pkg:match("/internal/") and not pkg:match("/internal$") then
-      local pkg_dir = src_dir .. "/" .. pkg
-      if vim.fn.isdirectory(pkg_dir) == 1 then
-        table.insert(result, { path = pkg, dir = pkg_dir })
-      end
-    end
-  end
-  return result
-end
+local GO_MOD = go_syscalls.get_gomod()
+local GO_ROOT = go_syscalls.get_goroot()
 
 -- =============================================================================
 -- Build rg command with custom formatting: import-path.Symbol<TAB>file:line
@@ -58,52 +24,13 @@ end
 -- =============================================================================
 local function build_cmd(base_dir, pattern, include_stdlib)
   pattern = pattern or patterns.all
-  -- Get module name for import path calculation
-  local mod_name = vim.fn.systemlist("cd '" .. base_dir .. "' && go list -m 2>/dev/null")[1] or ""
-  if mod_name == "" or mod_name:match("^command%-line%-arguments") then
-    mod_name = vim.fn.fnamemodify(base_dir, ":t") -- fallback to directory name
-  end
 
-  local goroot = get_goroot()
-  local stdlib_src = goroot ~= "" and (goroot .. "/src") or ""
+  local stdlib_src = GO_ROOT ~= "" and (GO_ROOT .. "/src") or ""
 
   -- Build workspace command
   local ws_cmd = string.format(
-    [[cd '%s' && rg -n --no-heading '%s' --glob '*.go' --glob '!*_test.go' . 2>/dev/null | sed 's|^\./||' | awk -F: -v modname='%s' -v basedir='%s' '
-    {
-      file = $1
-      linenum = $2
-      content = $0
-      sub(/^[^:]+:[^:]+:/, "", content)
-      gsub(/ *\{.*$/, "", content)
-
-      symbol = content
-      gsub(/^(func|type|const|var) +/, "", symbol)
-
-      if (match(symbol, /^\([^)]+\) +/)) {
-        receiver_part = substr(symbol, RSTART, RLENGTH)
-        method_part = substr(symbol, RSTART + RLENGTH)
-        receiver_type = receiver_part
-        gsub(/^\(/, "", receiver_type)
-        gsub(/\) *$/, "", receiver_type)
-        gsub(/^[^ ]+ +/, "", receiver_type)
-        symbol = receiver_type "{}." method_part
-      }
-      gsub(/\t/, "", symbol)
-
-      dir = file
-      gsub(/\/[^\/]+$/, "", dir)
-      if (dir == file) dir = "."
-
-      if (dir == ".") {
-        importpath = modname
-      } else {
-        importpath = modname "/" dir
-      }
-
-      printf "%%s.%%s\t%%s/%%s:%%s\n", importpath, symbol, basedir, file, linenum
-    }']],
-    base_dir, pattern, mod_name, base_dir
+    "cd '%s' && rg -n --no-heading '%s' --glob '*.go' --glob '!*_test.go' . 2>/dev/null | sed 's|^\\./||' | awk -F: -v modname='%s' -v basedir='%s' '%s'",
+    base_dir, pattern, GO_MOD, base_dir, go_awk.workspace_symbols()
   )
 
   -- If not including stdlib or stdlib not found, just return workspace command
@@ -113,40 +40,8 @@ local function build_cmd(base_dir, pattern, include_stdlib)
 
   -- Build stdlib command
   local stdlib_cmd = string.format(
-    [[cd '%s' && rg -n --no-heading '%s' --glob '*.go' --glob '!*_test.go' --glob '!vendor/**' --glob '!internal/**' --glob '!**/internal/**' . 2>/dev/null | sed 's|^\./||' | awk -F: -v srcdir='%s' '
-    {
-      file = $1
-      linenum = $2
-      content = $0
-      sub(/^[^:]+:[^:]+:/, "", content)
-      gsub(/ *\{.*$/, "", content)
-
-      symbol = content
-      gsub(/^(func|type|const|var) +/, "", symbol)
-
-      if (match(symbol, /^\([^)]+\) +/)) {
-        receiver_part = substr(symbol, RSTART, RLENGTH)
-        method_part = substr(symbol, RSTART + RLENGTH)
-        receiver_type = receiver_part
-        gsub(/^\(/, "", receiver_type)
-        gsub(/\) *$/, "", receiver_type)
-        gsub(/^[^ ]+ +/, "", receiver_type)
-        symbol = receiver_type "{}." method_part
-      }
-      gsub(/\t/, "", symbol)
-
-      dir = file
-      gsub(/\/[^\/]+$/, "", dir)
-      if (dir == file) dir = ""
-      importpath = dir
-
-      if (importpath == "") {
-        printf "%%s\t%%s/%%s:%%s\n", symbol, srcdir, file, linenum
-      } else {
-        printf "%%s.%%s\t%%s/%%s:%%s\n", importpath, symbol, srcdir, file, linenum
-      }
-    }']],
-    stdlib_src, pattern, stdlib_src
+    "cd '%s' && rg -n --no-heading '%s' --glob '*.go' --glob '!*_test.go' --glob '!vendor/**' --glob '!internal/**' --glob '!**/internal/**' . 2>/dev/null | sed 's|^\\./||' | awk -F: -v srcdir='%s' '%s'",
+    stdlib_src, pattern, stdlib_src, go_awk.stdlib_symbols()
   )
 
   -- Combine both commands
@@ -154,14 +49,37 @@ local function build_cmd(base_dir, pattern, include_stdlib)
 end
 
 -- =============================================================================
--- Build fzf options with preview (handles absolute paths)
+-- Preview command builder
 -- =============================================================================
-local function build_fzf_opts(header, query)
+local function preview_cmd(prefix)
+  if prefix then
+    return string.format(
+      "f=$(echo {2} | cut -d: -f1); l=$(echo {2} | cut -d: -f2); bat --style=header,numbers --color=always --highlight-line $l --line-range $l: '%s/'$f 2>/dev/null || { echo '── %s/'$f; cat -n '%s/'$f | tail -n +$l | head -30; }",
+      prefix, prefix, prefix
+    )
+  end
+  return "f=$(echo {2} | cut -d: -f1); l=$(echo {2} | cut -d: -f2); bat --style=header,numbers --color=always --highlight-line $l --line-range $l: $f 2>/dev/null || { echo \"── $f\"; cat -n $f | tail -n +$l | head -30; }"
+end
+
+-- Stdlib preview (shows relative path in header)
+local function preview_cmd_stdlib(prefix)
+  return string.format(
+    "f=$(echo {2} | cut -d: -f1); l=$(echo {2} | cut -d: -f2); echo '── '$f':'; bat --style=numbers --color=always --highlight-line $l --line-range $l: '%s/'$f 2>/dev/null || cat -n '%s/'$f | tail -n +$l | head -30",
+    prefix, prefix
+  )
+end
+
+-- =============================================================================
+-- Build fzf options with preview
+-- prefix: optional path prefix for preview (e.g., dep_dir)
+-- stdlib: if true, use stdlib preview style (relative path header)
+-- =============================================================================
+local function build_fzf_opts(header, query, prefix, stdlib)
   local opts = {
     ["--delimiter"] = "\t",
     ["--with-nth"] = "1",
     ["--nth"] = "1",
-    ["--preview"] = "f=$(echo {2} | cut -d: -f1); l=$(echo {2} | cut -d: -f2); bat --style=header,numbers --color=always --highlight-line $l --line-range $l: $f 2>/dev/null || { echo \"── $f\"; cat -n $f | tail -n +$l | head -30; }",
+    ["--preview"] = stdlib and preview_cmd_stdlib(prefix) or preview_cmd(prefix),
     ["--preview-window"] = "right:40%",
     ["--header"] = header,
   }
@@ -183,34 +101,9 @@ end
 -- Returns selector expression if on call_expression, otherwise falls back to <cword>
 -- =============================================================================
 local function get_query_at_cursor()
-  local ok, ts_utils = pcall(require, "nvim-treesitter.ts_utils")
-  if ok then
-    local node = ts_utils.get_node_at_cursor()
-    if node then
-      -- Walk up the tree to find a call_expression
-      local current = node
-      while current do
-        if current:type() == "call_expression" then
-          -- Found a call_expression, get the function field
-          local func_node = current:field("function")[1]
-          if func_node then
-            if func_node:type() == "selector_expression" then
-              return "'" .. vim.treesitter.get_node_text(func_node, 0)
-            elseif func_node:type() == "identifier" then
-              -- Simple function call like myFunc()
-              return "'" .. vim.treesitter.get_node_text(func_node, 0)
-            end
-          end
-          break
-        end
-        current = current:parent()
-      end
-    end
-  end
-
-  -- Fallback to word under cursor
-  local cword = vim.fn.expand("<cword>")
-  return cword ~= "" and "'" .. cword or nil
+  local fns = require("functions.encoding")
+  local query = vim.api.nvim_get_mode()["mode"] == 'v' and fns.get_selection() or vim.fn.expand("<cword>")
+  return query ~= "" and "'" .. query or nil
 end
 
 -- =============================================================================
@@ -227,35 +120,46 @@ local function parse_selection(selected)
 end
 
 -- =============================================================================
+-- Common action builders
+-- =============================================================================
+local function make_open_action(prefix)
+  return function(selected)
+    local parsed = parse_selection(selected)
+    if parsed then
+      local file = prefix and (prefix .. "/" .. parsed.file) or parsed.file
+      vim.cmd("edit " .. file)
+      vim.cmd(":" .. parsed.line)
+      vim.cmd("normal! zz")
+    end
+  end
+end
+
+local function make_yank_action()
+  return function(selected)
+    local parsed = parse_selection(selected)
+    if parsed then
+      vim.fn.setreg("+", parsed.symbol)
+      vim.notify("Copied: " .. parsed.symbol)
+    end
+  end
+end
+
+-- =============================================================================
 -- All symbols view (includes stdlib when searching from workspace root)
 -- =============================================================================
 function M.symbols(dir, query)
   local cwd = dir or vim.fn.getcwd()
-  local include_stdlib = not dir -- include stdlib only when searching from workspace root
-  -- Use selector at cursor as default query if none provided
+  local include_stdlib = not dir
   local effective_query = query or get_query_at_cursor()
   local shortcuts = dir and "ctrl-f: funcs | ctrl-t: types | ctrl-c: consts" or "ctrl-f: funcs | ctrl-t: types | ctrl-c: consts | ctrl-p: packages | ctrl-d: deps"
-  local header = shortcuts
+
   fzf.fzf_exec(build_cmd(cwd, patterns.all, include_stdlib), {
     prompt = "Symbols ❯ ",
     previewer = false,
-    fzf_opts = build_fzf_opts(header, effective_query),
+    fzf_opts = build_fzf_opts(shortcuts, effective_query),
     actions = {
-      ["default"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.cmd("edit " .. parsed.file)
-          vim.cmd(":" .. parsed.line)
-          vim.cmd("normal! zz")
-        end
-      end,
-      ["ctrl-y"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.fn.setreg("+", parsed.symbol)
-          vim.notify("Copied: " .. parsed.symbol)
-        end
-      end,
+      ["default"] = make_open_action(),
+      ["ctrl-y"] = make_yank_action(),
       ["ctrl-f"] = function(_, opts) M.functions(dir, get_query(opts)) end,
       ["ctrl-t"] = function(_, opts) M.types(dir, get_query(opts)) end,
       ["ctrl-c"] = function(_, opts) M.constants(dir, get_query(opts)) end,
@@ -263,30 +167,6 @@ function M.symbols(dir, query)
       ["ctrl-d"] = not dir and function(_, opts) M.dep_packages(get_query(opts)) end or nil,
     },
   })
-end
-
--- =============================================================================
--- Get direct dependencies from go.mod
--- =============================================================================
-local function get_go_mod_deps()
-  local deps = {}
-  local cache = vim.fn.systemlist("go env GOMODCACHE")[1] or ""
-  if cache == "" then return deps end
-
-  -- Get direct dependencies from go.mod using go list
-  local mod_deps = vim.fn.systemlist("go list -m -f '{{.Path}}@{{.Version}}' all 2>/dev/null")
-  for _, dep in ipairs(mod_deps) do
-    if dep ~= "" and not dep:match("^command%-line%-arguments") then
-      local path, version = dep:match("^(.+)@(.+)$")
-      if path and version then
-        local dep_dir = cache .. "/" .. path .. "@" .. version
-        if vim.fn.isdirectory(dep_dir) == 1 then
-          table.insert(deps, { path = path, version = version, dir = dep_dir })
-        end
-      end
-    end
-  end
-  return deps
 end
 
 -- =============================================================================
@@ -302,44 +182,8 @@ local function build_deps_cmd(deps, pattern, gomodcache)
   if #dirs == 0 then return "echo ''" end
 
   return string.format(
-    [[rg -n --no-heading '%s' --glob '*.go' --glob '!*_test.go' %s 2>/dev/null | awk -F: '
-    {
-      file = $1
-      linenum = $2
-      content = $0
-      sub(/^[^:]+:[^:]+:/, "", content)
-      gsub(/ *\{.*$/, "", content)
-
-      # Extract symbol from declaration
-      symbol = content
-      gsub(/^(func|type|const|var) +/, "", symbol)
-
-      # Handle method receivers: (r *Receiver) MethodName(...) -> *Receiver{}.MethodName(...)
-      if (match(symbol, /^\([^)]+\) +/)) {
-        receiver_part = substr(symbol, RSTART, RLENGTH)
-        method_part = substr(symbol, RSTART + RLENGTH)
-
-        # Extract type from receiver: "(s *UDPServer) " -> "*UDPServer"
-        receiver_type = receiver_part
-        gsub(/^\(/, "", receiver_type)
-        gsub(/\) *$/, "", receiver_type)
-        gsub(/^[^ ]+ +/, "", receiver_type)
-
-        symbol = receiver_type "{}." method_part
-      }
-      gsub(/\t/, "", symbol)
-
-      # Extract import path from GOMODCACHE path
-      # e.g., /home/user/go/pkg/mod/github.com/pkg/errors@v0.9.1/errors.go
-      #    -> github.com/pkg/errors
-      importpath = file
-      sub(/^.*\/pkg\/mod\//, "", importpath)  # remove gomodcache prefix
-      sub(/@[^\/]+/, "", importpath)          # remove @version
-      sub(/\/[^\/]+$/, "", importpath)        # remove filename
-
-      printf "%%s.%%s\t%%s:%%s\n", importpath, symbol, file, linenum
-    }']],
-    pattern, table.concat(dirs, " ")
+    "rg -n --no-heading '%s' --glob '*.go' --glob '!*_test.go' %s 2>/dev/null | awk -F: '%s'",
+    pattern, table.concat(dirs, " "), go_awk.deps_symbols()
   )
 end
 
@@ -349,46 +193,8 @@ end
 local function build_single_dep_cmd(dep_dir, dep_path, pattern)
   pattern = pattern or patterns.all
   return string.format(
-    [[cd '%s' && rg -n --no-heading '%s' --glob '*.go' --glob '!*_test.go' . 2>/dev/null | sed 's|^\./||' | awk -F: -v deppath='%s' '
-    {
-      file = $1
-      linenum = $2
-      content = $0
-      sub(/^[^:]+:[^:]+:/, "", content)
-      gsub(/ *\{.*$/, "", content)
-
-      # Extract symbol from declaration
-      symbol = content
-      gsub(/^(func|type|const|var) +/, "", symbol)
-
-      # Handle method receivers: (r *Receiver) MethodName(...) -> *Receiver{}.MethodName(...)
-      if (match(symbol, /^\([^)]+\) +/)) {
-        receiver_part = substr(symbol, RSTART, RLENGTH)
-        method_part = substr(symbol, RSTART + RLENGTH)
-
-        receiver_type = receiver_part
-        gsub(/^\(/, "", receiver_type)
-        gsub(/\) *$/, "", receiver_type)
-        gsub(/^[^ ]+ +/, "", receiver_type)
-
-        symbol = receiver_type "{}." method_part
-      }
-      gsub(/\t/, "", symbol)
-
-      # Calculate import path from file directory within dep
-      dir = file
-      gsub(/\/[^\/]+$/, "", dir)
-      if (dir == file) dir = ""
-
-      if (dir == "") {
-        importpath = deppath
-      } else {
-        importpath = deppath "/" dir
-      }
-
-      printf "%%s.%%s\t%%s:%%s\n", importpath, symbol, file, linenum
-    }']],
-    dep_dir, pattern, dep_path
+    "cd '%s' && rg -n --no-heading '%s' --glob '*.go' --glob '!*_test.go' . 2>/dev/null | sed 's|^\\./||' | awk -F: -v deppath='%s' '%s'",
+    dep_dir, pattern, dep_path, go_awk.single_dep_symbols()
   )
 end
 
@@ -396,7 +202,7 @@ end
 -- List dependency packages
 -- =============================================================================
 function M.dep_packages(query)
-  local deps = get_go_mod_deps()
+  local deps = go_syscalls.get_go_mod_deps()
   if #deps == 0 then
     vim.notify("No dependencies found in go.mod", vim.log.levels.WARN)
     return
@@ -408,7 +214,7 @@ function M.dep_packages(query)
   end
 
   local shortcuts = "ctrl-a: all symbols | ctrl-f: all funcs | ctrl-t: all types | ctrl-w: workspace"
-  local header = shortcuts .. "\n" .. get_module_name() .. " (" .. #deps .. " deps)"
+  local header = shortcuts .. "\n" .. GO_MOD .. " (" .. #deps .. " deps)"
 
   local fzf_opts = {
     ["--delimiter"] = "\t",
@@ -452,39 +258,15 @@ end
 -- Show symbols from a specific dependency package
 -- =============================================================================
 function M.dep_package_symbols(dep_path, dep_dir)
-  local shortcuts = "ctrl-f: funcs | ctrl-t: types | ctrl-c: consts | ctrl-p: packages"
-  local header = shortcuts .. "\n" .. dep_path
+  local header = "ctrl-f: funcs | ctrl-t: types | ctrl-c: consts | ctrl-p: packages\n" .. dep_path
 
   fzf.fzf_exec(build_single_dep_cmd(dep_dir, dep_path, patterns.all), {
     prompt = "Symbols ❯ ",
     previewer = false,
-    fzf_opts = {
-      ["--delimiter"] = "\t",
-      ["--with-nth"] = "1",
-      ["--nth"] = "1",
-      ["--preview"] = string.format(
-        "f=$(echo {2} | cut -d: -f1); l=$(echo {2} | cut -d: -f2); bat --style=header,numbers --color=always --highlight-line $l --line-range $l: '%s/'$f 2>/dev/null || { echo '── %s/'$f; cat -n '%s/'$f | tail -n +$l | head -30; }",
-        dep_dir, dep_dir, dep_dir
-      ),
-      ["--preview-window"] = "right:40%",
-      ["--header"] = header,
-    },
+    fzf_opts = build_fzf_opts(header, nil, dep_dir),
     actions = {
-      ["default"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.cmd("edit " .. dep_dir .. "/" .. parsed.file)
-          vim.cmd(":" .. parsed.line)
-          vim.cmd("normal! zz")
-        end
-      end,
-      ["ctrl-y"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.fn.setreg("+", parsed.symbol)
-          vim.notify("Copied: " .. parsed.symbol)
-        end
-      end,
+      ["default"] = make_open_action(dep_dir),
+      ["ctrl-y"] = make_yank_action(),
       ["ctrl-f"] = function() M.dep_package_functions(dep_path, dep_dir) end,
       ["ctrl-t"] = function() M.dep_package_types(dep_path, dep_dir) end,
       ["ctrl-c"] = function() M.dep_package_constants(dep_path, dep_dir) end,
@@ -497,39 +279,15 @@ end
 -- Show functions from a specific dependency package
 -- =============================================================================
 function M.dep_package_functions(dep_path, dep_dir)
-  local shortcuts = "ctrl-a: all | ctrl-t: types | ctrl-c: consts | ctrl-p: packages"
-  local header = shortcuts .. "\n" .. dep_path
+  local header = "ctrl-a: all | ctrl-t: types | ctrl-c: consts | ctrl-p: packages\n" .. dep_path
 
   fzf.fzf_exec(build_single_dep_cmd(dep_dir, dep_path, patterns.functions), {
     prompt = "Functions ❯ ",
     previewer = false,
-    fzf_opts = {
-      ["--delimiter"] = "\t",
-      ["--with-nth"] = "1",
-      ["--nth"] = "1",
-      ["--preview"] = string.format(
-        "f=$(echo {2} | cut -d: -f1); l=$(echo {2} | cut -d: -f2); bat --style=header,numbers --color=always --highlight-line $l --line-range $l: '%s/'$f 2>/dev/null || { echo '── %s/'$f; cat -n '%s/'$f | tail -n +$l | head -30; }",
-        dep_dir, dep_dir, dep_dir
-      ),
-      ["--preview-window"] = "right:40%",
-      ["--header"] = header,
-    },
+    fzf_opts = build_fzf_opts(header, nil, dep_dir),
     actions = {
-      ["default"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.cmd("edit " .. dep_dir .. "/" .. parsed.file)
-          vim.cmd(":" .. parsed.line)
-          vim.cmd("normal! zz")
-        end
-      end,
-      ["ctrl-y"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.fn.setreg("+", parsed.symbol)
-          vim.notify("Copied: " .. parsed.symbol)
-        end
-      end,
+      ["default"] = make_open_action(dep_dir),
+      ["ctrl-y"] = make_yank_action(),
       ["ctrl-a"] = function() M.dep_package_symbols(dep_path, dep_dir) end,
       ["ctrl-t"] = function() M.dep_package_types(dep_path, dep_dir) end,
       ["ctrl-c"] = function() M.dep_package_constants(dep_path, dep_dir) end,
@@ -542,39 +300,15 @@ end
 -- Show types from a specific dependency package
 -- =============================================================================
 function M.dep_package_types(dep_path, dep_dir)
-  local shortcuts = "ctrl-a: all | ctrl-f: funcs | ctrl-c: consts | ctrl-p: packages"
-  local header = shortcuts .. "\n" .. dep_path
+  local header = "ctrl-a: all | ctrl-f: funcs | ctrl-c: consts | ctrl-p: packages\n" .. dep_path
 
   fzf.fzf_exec(build_single_dep_cmd(dep_dir, dep_path, patterns.types), {
     prompt = "Types ❯ ",
     previewer = false,
-    fzf_opts = {
-      ["--delimiter"] = "\t",
-      ["--with-nth"] = "1",
-      ["--nth"] = "1",
-      ["--preview"] = string.format(
-        "f=$(echo {2} | cut -d: -f1); l=$(echo {2} | cut -d: -f2); bat --style=header,numbers --color=always --highlight-line $l --line-range $l: '%s/'$f 2>/dev/null || { echo '── %s/'$f; cat -n '%s/'$f | tail -n +$l | head -30; }",
-        dep_dir, dep_dir, dep_dir
-      ),
-      ["--preview-window"] = "right:40%",
-      ["--header"] = header,
-    },
+    fzf_opts = build_fzf_opts(header, nil, dep_dir),
     actions = {
-      ["default"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.cmd("edit " .. dep_dir .. "/" .. parsed.file)
-          vim.cmd(":" .. parsed.line)
-          vim.cmd("normal! zz")
-        end
-      end,
-      ["ctrl-y"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.fn.setreg("+", parsed.symbol)
-          vim.notify("Copied: " .. parsed.symbol)
-        end
-      end,
+      ["default"] = make_open_action(dep_dir),
+      ["ctrl-y"] = make_yank_action(),
       ["ctrl-a"] = function() M.dep_package_symbols(dep_path, dep_dir) end,
       ["ctrl-f"] = function() M.dep_package_functions(dep_path, dep_dir) end,
       ["ctrl-c"] = function() M.dep_package_constants(dep_path, dep_dir) end,
@@ -587,39 +321,15 @@ end
 -- Show constants from a specific dependency package
 -- =============================================================================
 function M.dep_package_constants(dep_path, dep_dir)
-  local shortcuts = "ctrl-a: all | ctrl-f: funcs | ctrl-t: types | ctrl-p: packages"
-  local header = shortcuts .. "\n" .. dep_path
+  local header = "ctrl-a: all | ctrl-f: funcs | ctrl-t: types | ctrl-p: packages\n" .. dep_path
 
   fzf.fzf_exec(build_single_dep_cmd(dep_dir, dep_path, patterns.constants), {
     prompt = "Constants ❯ ",
     previewer = false,
-    fzf_opts = {
-      ["--delimiter"] = "\t",
-      ["--with-nth"] = "1",
-      ["--nth"] = "1",
-      ["--preview"] = string.format(
-        "f=$(echo {2} | cut -d: -f1); l=$(echo {2} | cut -d: -f2); bat --style=header,numbers --color=always --highlight-line $l --line-range $l: '%s/'$f 2>/dev/null || { echo '── %s/'$f; cat -n '%s/'$f | tail -n +$l | head -30; }",
-        dep_dir, dep_dir, dep_dir
-      ),
-      ["--preview-window"] = "right:40%",
-      ["--header"] = header,
-    },
+    fzf_opts = build_fzf_opts(header, nil, dep_dir),
     actions = {
-      ["default"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.cmd("edit " .. dep_dir .. "/" .. parsed.file)
-          vim.cmd(":" .. parsed.line)
-          vim.cmd("normal! zz")
-        end
-      end,
-      ["ctrl-y"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.fn.setreg("+", parsed.symbol)
-          vim.notify("Copied: " .. parsed.symbol)
-        end
-      end,
+      ["default"] = make_open_action(dep_dir),
+      ["ctrl-y"] = make_yank_action(),
       ["ctrl-a"] = function() M.dep_package_symbols(dep_path, dep_dir) end,
       ["ctrl-f"] = function() M.dep_package_functions(dep_path, dep_dir) end,
       ["ctrl-t"] = function() M.dep_package_types(dep_path, dep_dir) end,
@@ -646,7 +356,7 @@ function M.packages(query)
   end
 
   -- Stdlib packages
-  local stdlib = get_stdlib_packages()
+  local stdlib = go_syscalls.get_stdlib_packages(GO_ROOT)
   for _, pkg in ipairs(stdlib) do
     table.insert(items, "[std] " .. pkg.path .. "\t" .. pkg.dir .. "\t" .. pkg.path)
   end
@@ -667,7 +377,7 @@ function M.packages(query)
   end
 
   local shortcuts = "ctrl-a: all | ctrl-f: funcs | ctrl-t: types | ctrl-s: stdlib"
-  local header = shortcuts .. "\n" .. get_module_name()
+  local header = shortcuts .. "\n" .. GO_MOD
 
   local fzf_opts = {
     ["--delimiter"] = "\t",
@@ -711,39 +421,15 @@ end
 -- Show all symbols within a package (works for workspace, stdlib, and deps)
 -- =============================================================================
 function M.package_symbols(pkg_path, pkg_dir)
-  local shortcuts = "ctrl-f: funcs | ctrl-t: types | ctrl-c: consts | ctrl-p: packages"
-  local header = shortcuts .. "\n" .. pkg_path
+  local header = "ctrl-f: funcs | ctrl-t: types | ctrl-c: consts | ctrl-p: packages\n" .. pkg_path
 
   fzf.fzf_exec(build_single_dep_cmd(pkg_dir, pkg_path, patterns.all), {
     prompt = "Symbols ❯ ",
     previewer = false,
-    fzf_opts = {
-      ["--delimiter"] = "\t",
-      ["--with-nth"] = "1",
-      ["--nth"] = "1",
-      ["--preview"] = string.format(
-        "f=$(echo {2} | cut -d: -f1); l=$(echo {2} | cut -d: -f2); bat --style=header,numbers --color=always --highlight-line $l --line-range $l: '%s/'$f 2>/dev/null || { echo '── %s/'$f; cat -n '%s/'$f | tail -n +$l | head -30; }",
-        pkg_dir, pkg_dir, pkg_dir
-      ),
-      ["--preview-window"] = "right:40%",
-      ["--header"] = header,
-    },
+    fzf_opts = build_fzf_opts(header, nil, pkg_dir),
     actions = {
-      ["default"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.cmd("edit " .. pkg_dir .. "/" .. parsed.file)
-          vim.cmd(":" .. parsed.line)
-          vim.cmd("normal! zz")
-        end
-      end,
-      ["ctrl-y"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.fn.setreg("+", parsed.symbol)
-          vim.notify("Copied: " .. parsed.symbol)
-        end
-      end,
+      ["default"] = make_open_action(pkg_dir),
+      ["ctrl-y"] = make_yank_action(),
       ["ctrl-f"] = function() M.package_functions(pkg_path, pkg_dir) end,
       ["ctrl-t"] = function() M.package_types(pkg_path, pkg_dir) end,
       ["ctrl-c"] = function() M.package_constants(pkg_path, pkg_dir) end,
@@ -756,39 +442,15 @@ end
 -- Show functions within a package
 -- =============================================================================
 function M.package_functions(pkg_path, pkg_dir)
-  local shortcuts = "ctrl-a: all | ctrl-t: types | ctrl-c: consts | ctrl-p: packages"
-  local header = shortcuts .. "\n" .. pkg_path
+  local header = "ctrl-a: all | ctrl-t: types | ctrl-c: consts | ctrl-p: packages\n" .. pkg_path
 
   fzf.fzf_exec(build_single_dep_cmd(pkg_dir, pkg_path, patterns.functions), {
     prompt = "Functions ❯ ",
     previewer = false,
-    fzf_opts = {
-      ["--delimiter"] = "\t",
-      ["--with-nth"] = "1",
-      ["--nth"] = "1",
-      ["--preview"] = string.format(
-        "f=$(echo {2} | cut -d: -f1); l=$(echo {2} | cut -d: -f2); bat --style=header,numbers --color=always --highlight-line $l --line-range $l: '%s/'$f 2>/dev/null || { echo '── %s/'$f; cat -n '%s/'$f | tail -n +$l | head -30; }",
-        pkg_dir, pkg_dir, pkg_dir
-      ),
-      ["--preview-window"] = "right:40%",
-      ["--header"] = header,
-    },
+    fzf_opts = build_fzf_opts(header, nil, pkg_dir),
     actions = {
-      ["default"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.cmd("edit " .. pkg_dir .. "/" .. parsed.file)
-          vim.cmd(":" .. parsed.line)
-          vim.cmd("normal! zz")
-        end
-      end,
-      ["ctrl-y"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.fn.setreg("+", parsed.symbol)
-          vim.notify("Copied: " .. parsed.symbol)
-        end
-      end,
+      ["default"] = make_open_action(pkg_dir),
+      ["ctrl-y"] = make_yank_action(),
       ["ctrl-a"] = function() M.package_symbols(pkg_path, pkg_dir) end,
       ["ctrl-t"] = function() M.package_types(pkg_path, pkg_dir) end,
       ["ctrl-c"] = function() M.package_constants(pkg_path, pkg_dir) end,
@@ -801,39 +463,15 @@ end
 -- Show types within a package
 -- =============================================================================
 function M.package_types(pkg_path, pkg_dir)
-  local shortcuts = "ctrl-a: all | ctrl-f: funcs | ctrl-c: consts | ctrl-p: packages"
-  local header = shortcuts .. "\n" .. pkg_path
+  local header = "ctrl-a: all | ctrl-f: funcs | ctrl-c: consts | ctrl-p: packages\n" .. pkg_path
 
   fzf.fzf_exec(build_single_dep_cmd(pkg_dir, pkg_path, patterns.types), {
     prompt = "Types ❯ ",
     previewer = false,
-    fzf_opts = {
-      ["--delimiter"] = "\t",
-      ["--with-nth"] = "1",
-      ["--nth"] = "1",
-      ["--preview"] = string.format(
-        "f=$(echo {2} | cut -d: -f1); l=$(echo {2} | cut -d: -f2); bat --style=header,numbers --color=always --highlight-line $l --line-range $l: '%s/'$f 2>/dev/null || { echo '── %s/'$f; cat -n '%s/'$f | tail -n +$l | head -30; }",
-        pkg_dir, pkg_dir, pkg_dir
-      ),
-      ["--preview-window"] = "right:40%",
-      ["--header"] = header,
-    },
+    fzf_opts = build_fzf_opts(header, nil, pkg_dir),
     actions = {
-      ["default"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.cmd("edit " .. pkg_dir .. "/" .. parsed.file)
-          vim.cmd(":" .. parsed.line)
-          vim.cmd("normal! zz")
-        end
-      end,
-      ["ctrl-y"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.fn.setreg("+", parsed.symbol)
-          vim.notify("Copied: " .. parsed.symbol)
-        end
-      end,
+      ["default"] = make_open_action(pkg_dir),
+      ["ctrl-y"] = make_yank_action(),
       ["ctrl-a"] = function() M.package_symbols(pkg_path, pkg_dir) end,
       ["ctrl-f"] = function() M.package_functions(pkg_path, pkg_dir) end,
       ["ctrl-c"] = function() M.package_constants(pkg_path, pkg_dir) end,
@@ -846,39 +484,15 @@ end
 -- Show constants within a package
 -- =============================================================================
 function M.package_constants(pkg_path, pkg_dir)
-  local shortcuts = "ctrl-a: all | ctrl-f: funcs | ctrl-t: types | ctrl-p: packages"
-  local header = shortcuts .. "\n" .. pkg_path
+  local header = "ctrl-a: all | ctrl-f: funcs | ctrl-t: types | ctrl-p: packages\n" .. pkg_path
 
   fzf.fzf_exec(build_single_dep_cmd(pkg_dir, pkg_path, patterns.constants), {
     prompt = "Constants ❯ ",
     previewer = false,
-    fzf_opts = {
-      ["--delimiter"] = "\t",
-      ["--with-nth"] = "1",
-      ["--nth"] = "1",
-      ["--preview"] = string.format(
-        "f=$(echo {2} | cut -d: -f1); l=$(echo {2} | cut -d: -f2); bat --style=header,numbers --color=always --highlight-line $l --line-range $l: '%s/'$f 2>/dev/null || { echo '── %s/'$f; cat -n '%s/'$f | tail -n +$l | head -30; }",
-        pkg_dir, pkg_dir, pkg_dir
-      ),
-      ["--preview-window"] = "right:40%",
-      ["--header"] = header,
-    },
+    fzf_opts = build_fzf_opts(header, nil, pkg_dir),
     actions = {
-      ["default"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.cmd("edit " .. pkg_dir .. "/" .. parsed.file)
-          vim.cmd(":" .. parsed.line)
-          vim.cmd("normal! zz")
-        end
-      end,
-      ["ctrl-y"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.fn.setreg("+", parsed.symbol)
-          vim.notify("Copied: " .. parsed.symbol)
-        end
-      end,
+      ["default"] = make_open_action(pkg_dir),
+      ["ctrl-y"] = make_yank_action(),
       ["ctrl-a"] = function() M.package_symbols(pkg_path, pkg_dir) end,
       ["ctrl-f"] = function() M.package_functions(pkg_path, pkg_dir) end,
       ["ctrl-t"] = function() M.package_types(pkg_path, pkg_dir) end,
@@ -891,7 +505,7 @@ end
 -- List stdlib packages only
 -- =============================================================================
 function M.stdlib_packages(query)
-  local stdlib = get_stdlib_packages()
+  local stdlib = go_syscalls.get_stdlib_packages(GO_ROOT)
   if #stdlib == 0 then
     vim.notify("Could not find Go stdlib", vim.log.levels.WARN)
     return
@@ -946,52 +560,14 @@ end
 -- Build rg command for stdlib (all packages)
 -- =============================================================================
 local function build_stdlib_cmd(pattern)
-  local goroot = get_goroot()
-  if goroot == "" then return "echo ''" end
+  if GO_ROOT == "" then return "echo ''" end
 
-  local src_dir = goroot .. "/src"
+  local src_dir = GO_ROOT .. "/src"
   pattern = pattern or patterns.all
 
   return string.format(
-    [[cd '%s' && rg -n --no-heading '%s' --glob '*.go' --glob '!*_test.go' --glob '!vendor/**' --glob '!internal/**' . 2>/dev/null | sed 's|^\./||' | awk -F: '
-    {
-      file = $1
-      linenum = $2
-      content = $0
-      sub(/^[^:]+:[^:]+:/, "", content)
-      gsub(/ *\{.*$/, "", content)
-
-      # Extract symbol from declaration
-      symbol = content
-      gsub(/^(func|type|const|var) +/, "", symbol)
-
-      # Handle method receivers
-      if (match(symbol, /^\([^)]+\) +/)) {
-        receiver_part = substr(symbol, RSTART, RLENGTH)
-        method_part = substr(symbol, RSTART + RLENGTH)
-
-        receiver_type = receiver_part
-        gsub(/^\(/, "", receiver_type)
-        gsub(/\) *$/, "", receiver_type)
-        gsub(/^[^ ]+ +/, "", receiver_type)
-
-        symbol = receiver_type "{}." method_part
-      }
-      gsub(/\t/, "", symbol)
-
-      # Get import path from file directory
-      dir = file
-      gsub(/\/[^\/]+$/, "", dir)
-      if (dir == file) dir = ""
-      importpath = dir
-
-      if (importpath == "") {
-        printf "%%s\t%%s:%%s\n", symbol, file, linenum
-      } else {
-        printf "%%s.%%s\t%%s:%%s\n", importpath, symbol, file, linenum
-      }
-    }']],
-    src_dir, pattern
+    "cd '%s' && rg -n --no-heading '%s' --glob '*.go' --glob '!*_test.go' --glob '!vendor/**' --glob '!internal/**' . 2>/dev/null | sed 's|^\\./||' | awk -F: -v srcdir='%s' '%s'",
+    src_dir, pattern, src_dir, go_awk.stdlib_symbols()
   )
 end
 
@@ -999,46 +575,16 @@ end
 -- Search all stdlib symbols
 -- =============================================================================
 function M.stdlib_symbols(query)
-  local shortcuts = "ctrl-f: funcs | ctrl-t: types | ctrl-c: consts | ctrl-p: packages"
-  local header = shortcuts .. "\nGo stdlib"
-  local goroot = get_goroot()
-  local src_dir = goroot .. "/src"
-
-  local fzf_opts = {
-    ["--delimiter"] = "\t",
-    ["--with-nth"] = "1",
-    ["--nth"] = "1",
-    ["--preview"] = string.format(
-      "f=$(echo {2} | cut -d: -f1); l=$(echo {2} | cut -d: -f2); echo '── '$f':'; bat --style=numbers --color=always --highlight-line $l --line-range $l: '%s/'$f 2>/dev/null || cat -n '%s/'$f | tail -n +$l | head -30",
-      src_dir, src_dir
-    ),
-    ["--preview-window"] = "right:40%",
-    ["--header"] = header,
-  }
-  if query and query ~= "" then
-    fzf_opts["--query"] = query
-  end
+  local header = "ctrl-f: funcs | ctrl-t: types | ctrl-c: consts | ctrl-p: packages\nGo stdlib"
+  local src_dir = GO_ROOT .. "/src"
 
   fzf.fzf_exec(build_stdlib_cmd(patterns.all), {
     prompt = "Stdlib Symbols ❯ ",
     previewer = false,
-    fzf_opts = fzf_opts,
+    fzf_opts = build_fzf_opts(header, query, src_dir, true),
     actions = {
-      ["default"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.cmd("edit " .. src_dir .. "/" .. parsed.file)
-          vim.cmd(":" .. parsed.line)
-          vim.cmd("normal! zz")
-        end
-      end,
-      ["ctrl-y"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.fn.setreg("+", parsed.symbol)
-          vim.notify("Copied: " .. parsed.symbol)
-        end
-      end,
+      ["default"] = make_open_action(src_dir),
+      ["ctrl-y"] = make_yank_action(),
       ["ctrl-f"] = function(_, opts) M.stdlib_functions(get_query(opts)) end,
       ["ctrl-t"] = function(_, opts) M.stdlib_types(get_query(opts)) end,
       ["ctrl-c"] = function(_, opts) M.stdlib_constants(get_query(opts)) end,
@@ -1051,46 +597,16 @@ end
 -- Search all stdlib functions
 -- =============================================================================
 function M.stdlib_functions(query)
-  local shortcuts = "ctrl-a: all | ctrl-t: types | ctrl-c: consts | ctrl-p: packages"
-  local header = shortcuts .. "\nGo stdlib"
-  local goroot = get_goroot()
-  local src_dir = goroot .. "/src"
-
-  local fzf_opts = {
-    ["--delimiter"] = "\t",
-    ["--with-nth"] = "1",
-    ["--nth"] = "1",
-    ["--preview"] = string.format(
-      "f=$(echo {2} | cut -d: -f1); l=$(echo {2} | cut -d: -f2); echo '── '$f':'; bat --style=numbers --color=always --highlight-line $l --line-range $l: '%s/'$f 2>/dev/null || cat -n '%s/'$f | tail -n +$l | head -30",
-      src_dir, src_dir
-    ),
-    ["--preview-window"] = "right:40%",
-    ["--header"] = header,
-  }
-  if query and query ~= "" then
-    fzf_opts["--query"] = query
-  end
+  local header = "ctrl-a: all | ctrl-t: types | ctrl-c: consts | ctrl-p: packages\nGo stdlib"
+  local src_dir = GO_ROOT .. "/src"
 
   fzf.fzf_exec(build_stdlib_cmd(patterns.functions), {
     prompt = "Stdlib Functions ❯ ",
     previewer = false,
-    fzf_opts = fzf_opts,
+    fzf_opts = build_fzf_opts(header, query, src_dir, true),
     actions = {
-      ["default"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.cmd("edit " .. src_dir .. "/" .. parsed.file)
-          vim.cmd(":" .. parsed.line)
-          vim.cmd("normal! zz")
-        end
-      end,
-      ["ctrl-y"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.fn.setreg("+", parsed.symbol)
-          vim.notify("Copied: " .. parsed.symbol)
-        end
-      end,
+      ["default"] = make_open_action(src_dir),
+      ["ctrl-y"] = make_yank_action(),
       ["ctrl-a"] = function(_, opts) M.stdlib_symbols(get_query(opts)) end,
       ["ctrl-t"] = function(_, opts) M.stdlib_types(get_query(opts)) end,
       ["ctrl-c"] = function(_, opts) M.stdlib_constants(get_query(opts)) end,
@@ -1103,46 +619,16 @@ end
 -- Search all stdlib types
 -- =============================================================================
 function M.stdlib_types(query)
-  local shortcuts = "ctrl-a: all | ctrl-f: funcs | ctrl-c: consts | ctrl-p: packages"
-  local header = shortcuts .. "\nGo stdlib"
-  local goroot = get_goroot()
-  local src_dir = goroot .. "/src"
-
-  local fzf_opts = {
-    ["--delimiter"] = "\t",
-    ["--with-nth"] = "1",
-    ["--nth"] = "1",
-    ["--preview"] = string.format(
-      "f=$(echo {2} | cut -d: -f1); l=$(echo {2} | cut -d: -f2); echo '── '$f':'; bat --style=numbers --color=always --highlight-line $l --line-range $l: '%s/'$f 2>/dev/null || cat -n '%s/'$f | tail -n +$l | head -30",
-      src_dir, src_dir
-    ),
-    ["--preview-window"] = "right:40%",
-    ["--header"] = header,
-  }
-  if query and query ~= "" then
-    fzf_opts["--query"] = query
-  end
+  local header = "ctrl-a: all | ctrl-f: funcs | ctrl-c: consts | ctrl-p: packages\nGo stdlib"
+  local src_dir = GO_ROOT .. "/src"
 
   fzf.fzf_exec(build_stdlib_cmd(patterns.types), {
     prompt = "Stdlib Types ❯ ",
     previewer = false,
-    fzf_opts = fzf_opts,
+    fzf_opts = build_fzf_opts(header, query, src_dir, true),
     actions = {
-      ["default"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.cmd("edit " .. src_dir .. "/" .. parsed.file)
-          vim.cmd(":" .. parsed.line)
-          vim.cmd("normal! zz")
-        end
-      end,
-      ["ctrl-y"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.fn.setreg("+", parsed.symbol)
-          vim.notify("Copied: " .. parsed.symbol)
-        end
-      end,
+      ["default"] = make_open_action(src_dir),
+      ["ctrl-y"] = make_yank_action(),
       ["ctrl-a"] = function(_, opts) M.stdlib_symbols(get_query(opts)) end,
       ["ctrl-f"] = function(_, opts) M.stdlib_functions(get_query(opts)) end,
       ["ctrl-c"] = function(_, opts) M.stdlib_constants(get_query(opts)) end,
@@ -1155,46 +641,16 @@ end
 -- Search all stdlib constants
 -- =============================================================================
 function M.stdlib_constants(query)
-  local shortcuts = "ctrl-a: all | ctrl-f: funcs | ctrl-t: types | ctrl-p: packages"
-  local header = shortcuts .. "\nGo stdlib"
-  local goroot = get_goroot()
-  local src_dir = goroot .. "/src"
-
-  local fzf_opts = {
-    ["--delimiter"] = "\t",
-    ["--with-nth"] = "1",
-    ["--nth"] = "1",
-    ["--preview"] = string.format(
-      "f=$(echo {2} | cut -d: -f1); l=$(echo {2} | cut -d: -f2); echo '── '$f':'; bat --style=numbers --color=always --highlight-line $l --line-range $l: '%s/'$f 2>/dev/null || cat -n '%s/'$f | tail -n +$l | head -30",
-      src_dir, src_dir
-    ),
-    ["--preview-window"] = "right:40%",
-    ["--header"] = header,
-  }
-  if query and query ~= "" then
-    fzf_opts["--query"] = query
-  end
+  local header = "ctrl-a: all | ctrl-f: funcs | ctrl-t: types | ctrl-p: packages\nGo stdlib"
+  local src_dir = GO_ROOT .. "/src"
 
   fzf.fzf_exec(build_stdlib_cmd(patterns.constants), {
     prompt = "Stdlib Constants ❯ ",
     previewer = false,
-    fzf_opts = fzf_opts,
+    fzf_opts = build_fzf_opts(header, query, src_dir, true),
     actions = {
-      ["default"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.cmd("edit " .. src_dir .. "/" .. parsed.file)
-          vim.cmd(":" .. parsed.line)
-          vim.cmd("normal! zz")
-        end
-      end,
-      ["ctrl-y"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.fn.setreg("+", parsed.symbol)
-          vim.notify("Copied: " .. parsed.symbol)
-        end
-      end,
+      ["default"] = make_open_action(src_dir),
+      ["ctrl-y"] = make_yank_action(),
       ["ctrl-a"] = function(_, opts) M.stdlib_symbols(get_query(opts)) end,
       ["ctrl-f"] = function(_, opts) M.stdlib_functions(get_query(opts)) end,
       ["ctrl-t"] = function(_, opts) M.stdlib_types(get_query(opts)) end,
@@ -1209,30 +665,16 @@ end
 function M.functions(dir, query)
   local cwd = dir or vim.fn.getcwd()
   local include_stdlib = not dir
-  -- Use selector at cursor as default query if none provided
   local effective_query = query or get_query_at_cursor()
   local shortcuts = dir and "ctrl-a: all | ctrl-t: types | ctrl-c: consts" or "ctrl-a: all | ctrl-t: types | ctrl-c: consts | ctrl-p: packages | ctrl-d: deps"
-  local header = shortcuts
+
   fzf.fzf_exec(build_cmd(cwd, patterns.functions, include_stdlib), {
     prompt = "Functions ❯ ",
     previewer = false,
-    fzf_opts = build_fzf_opts(header, effective_query),
+    fzf_opts = build_fzf_opts(shortcuts, effective_query),
     actions = {
-      ["default"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.cmd("edit " .. parsed.file)
-          vim.cmd(":" .. parsed.line)
-          vim.cmd("normal! zz")
-        end
-      end,
-      ["ctrl-y"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.fn.setreg("+", parsed.symbol)
-          vim.notify("Copied: " .. parsed.symbol)
-        end
-      end,
+      ["default"] = make_open_action(),
+      ["ctrl-y"] = make_yank_action(),
       ["ctrl-a"] = function(_, opts) M.symbols(dir, get_query(opts)) end,
       ["ctrl-t"] = function(_, opts) M.types(dir, get_query(opts)) end,
       ["ctrl-c"] = function(_, opts) M.constants(dir, get_query(opts)) end,
@@ -1246,46 +688,20 @@ end
 -- Search functions in dependencies
 -- =============================================================================
 function M.dep_functions(query)
-  local deps = get_go_mod_deps()
+  local deps = go_syscalls.get_go_mod_deps()
   if #deps == 0 then
     vim.notify("No dependencies found in go.mod", vim.log.levels.WARN)
     return
   end
-  local shortcuts = "ctrl-a: all | ctrl-t: types | ctrl-c: consts | ctrl-p: packages | ctrl-w: workspace"
-  local header = shortcuts .. "\n" .. get_module_name() .. " deps (" .. #deps .. ")"
-
-  local fzf_opts = {
-    ["--delimiter"] = "\t",
-    ["--with-nth"] = "1",
-    ["--nth"] = "1",
-    ["--preview"] = "f=$(echo {2} | cut -d: -f1); l=$(echo {2} | cut -d: -f2); bat --style=header,numbers --color=always --highlight-line $l --line-range $l: $f 2>/dev/null || { echo \"── $f\"; cat -n $f | tail -n +$l | head -30; }",
-    ["--preview-window"] = "right:40%",
-    ["--header"] = header,
-  }
-  if query and query ~= "" then
-    fzf_opts["--query"] = query
-  end
+  local header = "ctrl-a: all | ctrl-t: types | ctrl-c: consts | ctrl-p: packages | ctrl-w: workspace\n" .. GO_MOD .. " deps (" .. #deps .. ")"
 
   fzf.fzf_exec(build_deps_cmd(deps, patterns.functions), {
     prompt = "Dep Functions ❯ ",
     previewer = false,
-    fzf_opts = fzf_opts,
+    fzf_opts = build_fzf_opts(header, query),
     actions = {
-      ["default"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.cmd("edit " .. parsed.file)
-          vim.cmd(":" .. parsed.line)
-          vim.cmd("normal! zz")
-        end
-      end,
-      ["ctrl-y"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.fn.setreg("+", parsed.symbol)
-          vim.notify("Copied: " .. parsed.symbol)
-        end
-      end,
+      ["default"] = make_open_action(),
+      ["ctrl-y"] = make_yank_action(),
       ["ctrl-a"] = function(_, opts) M.dep_symbols(get_query(opts)) end,
       ["ctrl-t"] = function(_, opts) M.dep_types(get_query(opts)) end,
       ["ctrl-c"] = function(_, opts) M.dep_constants(get_query(opts)) end,
@@ -1301,30 +717,16 @@ end
 function M.types(dir, query)
   local cwd = dir or vim.fn.getcwd()
   local include_stdlib = not dir
-  -- Use selector at cursor as default query if none provided
   local effective_query = query or get_query_at_cursor()
   local shortcuts = dir and "ctrl-a: all | ctrl-f: funcs | ctrl-c: consts" or "ctrl-a: all | ctrl-f: funcs | ctrl-c: consts | ctrl-p: packages | ctrl-d: deps"
-  local header = shortcuts
+
   fzf.fzf_exec(build_cmd(cwd, patterns.types, include_stdlib), {
     prompt = "Types ❯ ",
     previewer = false,
-    fzf_opts = build_fzf_opts(header, effective_query),
+    fzf_opts = build_fzf_opts(shortcuts, effective_query),
     actions = {
-      ["default"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.cmd("edit " .. parsed.file)
-          vim.cmd(":" .. parsed.line)
-          vim.cmd("normal! zz")
-        end
-      end,
-      ["ctrl-y"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.fn.setreg("+", parsed.symbol)
-          vim.notify("Copied: " .. parsed.symbol)
-        end
-      end,
+      ["default"] = make_open_action(),
+      ["ctrl-y"] = make_yank_action(),
       ["ctrl-a"] = function(_, opts) M.symbols(dir, get_query(opts)) end,
       ["ctrl-f"] = function(_, opts) M.functions(dir, get_query(opts)) end,
       ["ctrl-c"] = function(_, opts) M.constants(dir, get_query(opts)) end,
@@ -1338,46 +740,20 @@ end
 -- Search types in dependencies
 -- =============================================================================
 function M.dep_types(query)
-  local deps = get_go_mod_deps()
+  local deps = go_syscalls.get_go_mod_deps()
   if #deps == 0 then
     vim.notify("No dependencies found in go.mod", vim.log.levels.WARN)
     return
   end
-  local shortcuts = "ctrl-a: all | ctrl-f: funcs | ctrl-c: consts | ctrl-p: packages | ctrl-w: workspace"
-  local header = shortcuts .. "\n" .. get_module_name() .. " deps (" .. #deps .. ")"
-
-  local fzf_opts = {
-    ["--delimiter"] = "\t",
-    ["--with-nth"] = "1",
-    ["--nth"] = "1",
-    ["--preview"] = "f=$(echo {2} | cut -d: -f1); l=$(echo {2} | cut -d: -f2); bat --style=header,numbers --color=always --highlight-line $l --line-range $l: $f 2>/dev/null || { echo \"── $f\"; cat -n $f | tail -n +$l | head -30; }",
-    ["--preview-window"] = "right:40%",
-    ["--header"] = header,
-  }
-  if query and query ~= "" then
-    fzf_opts["--query"] = query
-  end
+  local header = "ctrl-a: all | ctrl-f: funcs | ctrl-c: consts | ctrl-p: packages | ctrl-w: workspace\n" .. GO_MOD .. " deps (" .. #deps .. ")"
 
   fzf.fzf_exec(build_deps_cmd(deps, patterns.types), {
     prompt = "Dep Types ❯ ",
     previewer = false,
-    fzf_opts = fzf_opts,
+    fzf_opts = build_fzf_opts(header, query),
     actions = {
-      ["default"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.cmd("edit " .. parsed.file)
-          vim.cmd(":" .. parsed.line)
-          vim.cmd("normal! zz")
-        end
-      end,
-      ["ctrl-y"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.fn.setreg("+", parsed.symbol)
-          vim.notify("Copied: " .. parsed.symbol)
-        end
-      end,
+      ["default"] = make_open_action(),
+      ["ctrl-y"] = make_yank_action(),
       ["ctrl-a"] = function(_, opts) M.dep_symbols(get_query(opts)) end,
       ["ctrl-f"] = function(_, opts) M.dep_functions(get_query(opts)) end,
       ["ctrl-c"] = function(_, opts) M.dep_constants(get_query(opts)) end,
@@ -1393,30 +769,16 @@ end
 function M.constants(dir, query)
   local cwd = dir or vim.fn.getcwd()
   local include_stdlib = not dir
-  -- Use selector at cursor as default query if none provided
   local effective_query = query or get_query_at_cursor()
   local shortcuts = dir and "ctrl-a: all | ctrl-f: funcs | ctrl-t: types" or "ctrl-a: all | ctrl-f: funcs | ctrl-t: types | ctrl-p: packages | ctrl-d: deps"
-  local header = shortcuts
+
   fzf.fzf_exec(build_cmd(cwd, patterns.constants, include_stdlib), {
     prompt = "Constants ❯ ",
     previewer = false,
-    fzf_opts = build_fzf_opts(header, effective_query),
+    fzf_opts = build_fzf_opts(shortcuts, effective_query),
     actions = {
-      ["default"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.cmd("edit " .. parsed.file)
-          vim.cmd(":" .. parsed.line)
-          vim.cmd("normal! zz")
-        end
-      end,
-      ["ctrl-y"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.fn.setreg("+", parsed.symbol)
-          vim.notify("Copied: " .. parsed.symbol)
-        end
-      end,
+      ["default"] = make_open_action(),
+      ["ctrl-y"] = make_yank_action(),
       ["ctrl-a"] = function(_, opts) M.symbols(dir, get_query(opts)) end,
       ["ctrl-f"] = function(_, opts) M.functions(dir, get_query(opts)) end,
       ["ctrl-t"] = function(_, opts) M.types(dir, get_query(opts)) end,
@@ -1430,46 +792,20 @@ end
 -- Search constants in dependencies
 -- =============================================================================
 function M.dep_constants(query)
-  local deps = get_go_mod_deps()
+  local deps = go_syscalls.get_go_mod_deps()
   if #deps == 0 then
     vim.notify("No dependencies found in go.mod", vim.log.levels.WARN)
     return
   end
-  local shortcuts = "ctrl-a: all | ctrl-f: funcs | ctrl-t: types | ctrl-p: packages | ctrl-w: workspace"
-  local header = shortcuts .. "\n" .. get_module_name() .. " deps (" .. #deps .. ")"
-
-  local fzf_opts = {
-    ["--delimiter"] = "\t",
-    ["--with-nth"] = "1",
-    ["--nth"] = "1",
-    ["--preview"] = "f=$(echo {2} | cut -d: -f1); l=$(echo {2} | cut -d: -f2); bat --style=header,numbers --color=always --highlight-line $l --line-range $l: $f 2>/dev/null || { echo \"── $f\"; cat -n $f | tail -n +$l | head -30; }",
-    ["--preview-window"] = "right:40%",
-    ["--header"] = header,
-  }
-  if query and query ~= "" then
-    fzf_opts["--query"] = query
-  end
+  local header = "ctrl-a: all | ctrl-f: funcs | ctrl-t: types | ctrl-p: packages | ctrl-w: workspace\n" .. GO_MOD .. " deps (" .. #deps .. ")"
 
   fzf.fzf_exec(build_deps_cmd(deps, patterns.constants), {
     prompt = "Dep Constants ❯ ",
     previewer = false,
-    fzf_opts = fzf_opts,
+    fzf_opts = build_fzf_opts(header, query),
     actions = {
-      ["default"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.cmd("edit " .. parsed.file)
-          vim.cmd(":" .. parsed.line)
-          vim.cmd("normal! zz")
-        end
-      end,
-      ["ctrl-y"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.fn.setreg("+", parsed.symbol)
-          vim.notify("Copied: " .. parsed.symbol)
-        end
-      end,
+      ["default"] = make_open_action(),
+      ["ctrl-y"] = make_yank_action(),
       ["ctrl-a"] = function(_, opts) M.dep_symbols(get_query(opts)) end,
       ["ctrl-f"] = function(_, opts) M.dep_functions(get_query(opts)) end,
       ["ctrl-t"] = function(_, opts) M.dep_types(get_query(opts)) end,
@@ -1483,46 +819,20 @@ end
 -- Search all symbols in dependencies
 -- =============================================================================
 function M.dep_symbols(query)
-  local deps = get_go_mod_deps()
+  local deps = go_syscalls.get_go_mod_deps()
   if #deps == 0 then
     vim.notify("No dependencies found in go.mod", vim.log.levels.WARN)
     return
   end
-  local shortcuts = "ctrl-f: funcs | ctrl-t: types | ctrl-c: consts | ctrl-p: packages | ctrl-w: workspace"
-  local header = shortcuts .. "\n" .. get_module_name() .. " deps (" .. #deps .. ")"
-
-  local fzf_opts = {
-    ["--delimiter"] = "\t",
-    ["--with-nth"] = "1",
-    ["--nth"] = "1",
-    ["--preview"] = "f=$(echo {2} | cut -d: -f1); l=$(echo {2} | cut -d: -f2); bat --style=header,numbers --color=always --highlight-line $l --line-range $l: $f 2>/dev/null || { echo \"── $f\"; cat -n $f | tail -n +$l | head -30; }",
-    ["--preview-window"] = "right:40%",
-    ["--header"] = header,
-  }
-  if query and query ~= "" then
-    fzf_opts["--query"] = query
-  end
+  local header = "ctrl-f: funcs | ctrl-t: types | ctrl-c: consts | ctrl-p: packages | ctrl-w: workspace\n" .. GO_MOD .. " deps (" .. #deps .. ")"
 
   fzf.fzf_exec(build_deps_cmd(deps, patterns.all), {
     prompt = "Dep Symbols ❯ ",
     previewer = false,
-    fzf_opts = fzf_opts,
+    fzf_opts = build_fzf_opts(header, query),
     actions = {
-      ["default"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.cmd("edit " .. parsed.file)
-          vim.cmd(":" .. parsed.line)
-          vim.cmd("normal! zz")
-        end
-      end,
-      ["ctrl-y"] = function(selected)
-        local parsed = parse_selection(selected)
-        if parsed then
-          vim.fn.setreg("+", parsed.symbol)
-          vim.notify("Copied: " .. parsed.symbol)
-        end
-      end,
+      ["default"] = make_open_action(),
+      ["ctrl-y"] = make_yank_action(),
       ["ctrl-f"] = function(_, opts) M.dep_functions(get_query(opts)) end,
       ["ctrl-t"] = function(_, opts) M.dep_types(get_query(opts)) end,
       ["ctrl-c"] = function(_, opts) M.dep_constants(get_query(opts)) end,

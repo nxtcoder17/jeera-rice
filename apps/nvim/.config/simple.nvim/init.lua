@@ -1,5 +1,3 @@
-vim.cmd("colorscheme simple")
-
 require("globals")
 require("disable-builtin-plugins")
 require("options")
@@ -8,3 +6,5 @@ require("folds")
 Require("keymaps")
 Require("autocmds")
 Require("commands")
+
+vim.cmd("colorscheme nxtcoder17")

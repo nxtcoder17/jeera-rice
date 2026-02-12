@@ -1,9 +1,13 @@
 #! /usr/bin/env bash
 
+dir="$HOME/Pictures/screenshots"
+mkdir -p $dir
+
 if [[ "$XDG_BACKEND" = "wayland" ]]; then
-  t=$(mktemp)
-  hyprshot -m region -o /tmp --filename $(basename $t)
-  echo "$t" | wl-copy
+  REGION=$(slurp) || exit
+  picture_path="$dir/Screenshot-$(date +%F_%T).png"
+  grim -g "$REGION" - | wl-copy && wl-paste >$picture_path && notify-send -a "Screenshot" -i "$picture_path" "Screenshot Taken"
+  echo -n "$picture_path" | wl-copy
   exit 0
 fi
 

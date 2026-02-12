@@ -13,6 +13,15 @@ _G.R = function(pkg)
   return Require(pkg)
 end
 
+-- @param rel string
+_G.relative_require = function(rel)
+  local src = debug.getinfo(2, "S").source:sub(2)
+  local dir = src:match("(.*/)")
+  local mod = (dir .. rel):gsub(".lua$", "")
+  mod = mod:gsub("^.*/lua/", ""):gsub("/", ".")
+  return require(mod)
+end
+
 ---pretty print for lua datastructures
 _G.P = function(...)
   vim.print(vim.inspect(...))

@@ -1,3 +1,4 @@
+-- add CWD as a Lua module root
 -- Simple: Ultra-minimal colorscheme
 -- Only 4 syntax colors: keywords, strings, functions, everything else
 
@@ -71,8 +72,37 @@ local gruvmute = {
   warning = "#d8a657", -- golden ochre
 }
 
-local p = gruvmute
+-- color palette: https://loading.io/color/feature/GreatWaveoffKanagawa-%E7%A5%9E%E5%A5%88%E5%B7%9D%E6%B2%96%E6%B5%AA%E8%A3%8F/
+local kanagawa = {
+  background = "#1f1f28", -- sumi ink night
+  surface    = "#2a2a37", -- layered ink wash
+  text       = "#dcd7ba", -- rice paper
+  comment    = "#727169", -- stone gray
+  -- keyword    = "#957fb8", -- muted violet
+  -- keyword = "#b39df3"     -- Ink-plum
+  keyword = "#a89ecb",     --Moon-violet softer, calmer
+  string     = "#98bb6c", -- moss green
+  fn         = "#7e9cd8", -- faded indigo
+  error      = "#e46876", -- dusty crimson
+  warning    = "#e6c384", -- aged gold
+}
 
+local kanagawa_light = {
+  background = "#f5f3ee", -- rice paper daylight
+  surface    = "#e9e6df", -- layered parchment
+  text       = "#2a2a37", -- sumi ink
+  comment    = "#8a887f", -- weathered stone
+  keyword    = "#6f5fa6", -- moon-violet ink
+  string     = "#5f7f3a", -- dried moss
+  fn         = "#4c6fae", -- washed indigo
+  error      = "#c84053", -- muted crimson
+  warning    = "#b38a3c", -- antique gold
+}
+
+
+-- local p = gruvmute
+local p = kanagawa
+--
 local function hi(group, opts)
   vim.api.nvim_set_hl(0, group, opts)
 end
@@ -88,6 +118,7 @@ hi("String", { fg = p.string })
 hi("Function", { fg = p.fn })
 hi("Keyword", { fg = p.keyword })
 hi("Statement", { link = "Keyword" })
+hi("Type", { link = "Keyword" })
 
 -- UI essentials
 hi("Visual", { bg = p.surface })
@@ -113,3 +144,6 @@ hi("FzfLuaFzfMatch", { fg = p.warning, bold = true })
 hi("FzfLuaFzfPointer", { fg = p.warning })
 hi("FzfLuaFzfMarker", { fg = p.warning })
 hi("IncSearch", { fg = p.background, bg = p.warning })
+
+-- typescript
+hi("@type.builtin.typescript", { link = "Type" })
