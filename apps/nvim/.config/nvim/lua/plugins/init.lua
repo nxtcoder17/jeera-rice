@@ -373,7 +373,6 @@ local function mini_nvim()
       -- end,
       config = function()
         require("plugins.mini")
-        vim.cmd(string.format("colorscheme %s", vim.o.background))
       end,
     },
   }

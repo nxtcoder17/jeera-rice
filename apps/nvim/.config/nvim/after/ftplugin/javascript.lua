@@ -56,9 +56,52 @@ vim.lsp.enable({
   "denols",
 })
 
+require("lint").linters.biome_lint = {
+  cmd = "sh",
+  stdin = false,
+  args = {
+    "-c",
+    "bunx biome lint --reporter=rdjson || exit 0",
+  },
+  stream = "stdout",
+
+  parser = function(output, bufnr)
+    local diagnostics = {}
+
+    local ok, decoded = pcall(vim.json.decode, output)
+    if not ok or not decoded then
+      return diagnostics
+    end
+
+    for _, item in ipairs(decoded.diagnostics or {}) do
+      local start = item.location.range.start
+      local finish = item.location.range["end"]
+
+      table.insert(diagnostics, {
+        lnum = start.line - 1,
+        col = start.column - 1,
+        end_lnum = finish.line - 1,
+        end_col = finish.column - 1,
+        message = item.message,
+        code = item.code and item.code.value or nil,
+        source = decoded.source and decoded.source.name or "biome",
+        severity = vim.diagnostic.severity.WARN,
+      })
+    end
+
+    return diagnostics
+  end,
+}
+
+require("lint").linters_by_ft = {
+  javascript = { "biome_lint" },
+  typescript = { "biome_lint" },
+}
+
 -- LINTER
 for _, ft in ipairs(filetypes) do
-  set_linter(ft, { "eslint_d" })
+  -- set_linter(ft, { "eslint_d" })
+  set_linter(ft, { "biome_lint" })
 end
 
 -- FORMATTER

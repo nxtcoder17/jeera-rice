@@ -4,6 +4,14 @@ local autocmds = vim.api.nvim_create_augroup("my.autocmds", { clear = true })
 -- 	return vim.api.nvim_create_augroup("my-nvim-" .. name, { clear = true })
 -- end
 
+vim.api.nvim_create_autocmd("OptionSet", {
+  group = autocmds,
+  pattern = "background",
+  callback = function(args)
+    vim.cmd("colorscheme " .. vim.o.background)
+  end,
+})
+
 vim.api.nvim_create_autocmd("TermOpen", {
   group = autocmds,
   callback = function()

@@ -1,35 +1,35 @@
 local palette = {
-	bg_edge2 = '#c6c3bd',
-	bg_edge = '#e9e6df',
-	bg = '#f5f3ee',
-	bg_mid = '#ddd9d0',
-	bg_mid2 = '#e2ded7',
+	bg_edge2 = '#23232e',
+	bg_edge = '#2a2a37',
+	bg = '#1f1f28',
+	bg_mid = '#363646',
+	bg_mid2 = '#545461',
 
-	fg_edge2 = '#3f3f4b',
-	fg_edge = '#2a2a37',
-	fg = '#2a2a37',
-	fg_mid = '#a19f98',
-	fg_mid2 = '#c2c0bb',
+	fg_edge2 = '#dfdbc0',
+	fg_edge = '#dcd7ba',
+	fg = '#dcd7ba',
+	fg_mid = '#8e8d87',
+	fg_mid2 = '#878798',
 
-	accent = '#4a8a7a',
-	accent_bg = '#1d3730',
+	accent = '#7aa89f',
+	accent_bg = '#30433f',
 
-	red = '#c84053',
-	red_bg = '#501921',
-	orange = '#b35c00',
-	orange_bg = '#472400',
-	yellow = '#b38a3c',
-	yellow_bg = '#473718',
-	green = '#5f7f3a',
-	green_bg = '#263217',
-	cyan = '#4a8a7a',
-	cyan_bg = '#1d3730',
-	azure = '#4583a2',
-	azure_bg = '#1b3440',
-	blue = '#4c6fae',
-	blue_bg = '#1e2c45',
-	purple = '#846aa5',
-	purple_bg = '#2c203c',
+	red = '#e46876',
+	red_bg = '#5b292f',
+	orange = '#ffa066',
+	orange_bg = '#664028',
+	yellow = '#e6c384',
+	yellow_bg = '#5c4e34',
+	green = '#98bb6c',
+	green_bg = '#3c4a2b',
+	cyan = '#7aa89f',
+	cyan_bg = '#30433f',
+	azure = '#7fb4ca',
+	azure_bg = '#324850',
+	blue = '#7e9cd8',
+	blue_bg = '#323e56',
+	purple = '#a492c2',
+	purple_bg = '#3b3249',
 }
 
 require("mini.hues").apply_palette(palette, {
@@ -43,7 +43,10 @@ require("mini.hues").apply_palette(palette, {
 	["williamboman/mason.nvim"] = true,
 })
 
-vim.g.colors_name = 'dark'
+vim.g.colors_name = "dark"
+
+-- Resets
+vim.api.nvim_set_hl(0, "FloatBorder", { bg = vim.NONE })
 
 -- Overrides using our palette colors
 vim.api.nvim_set_hl(0, "Delimiter", { fg = palette.azure })
@@ -54,14 +57,14 @@ vim.api.nvim_set_hl(0, "@number", { fg = palette.purple })
 vim.api.nvim_set_hl(0, "@boolean", { fg = palette.purple })
 
 -- Keywords: make them stand out (desaturated orange)
-local keyword_color = '#8f6e30'
+local keyword_color = '#b89c69'
 vim.api.nvim_set_hl(0, "Keyword", { fg = keyword_color, bold = true })
 vim.api.nvim_set_hl(0, "@keyword", { fg = keyword_color, bold = true })
 vim.api.nvim_set_hl(0, "Statement", { fg = keyword_color, bold = true })
 vim.api.nvim_set_hl(0, "@keyword.function", { fg = keyword_color, bold = true })
 vim.api.nvim_set_hl(0, "@keyword.return", { fg = keyword_color })
 
-local text_color = '#2a2a37'
+local text_color = '#dcd7ba'
 vim.api.nvim_set_hl(0, "Type", { fg = type_color, bold = true })
 vim.api.nvim_set_hl(0, "@type.go", { link = "Type" })
 

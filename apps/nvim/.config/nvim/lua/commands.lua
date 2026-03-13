@@ -35,5 +35,8 @@ vim.api.nvim_create_user_command("Scratch", function()
 	vim.cmd("vne | setlocal buftype=nofile | setlocal bufhidden=hide | setlocal noswapfile")
 end, {})
 
+-- Doc Search
+Require("plugins.doc-search-v2")
+
 -- Custom tabbar setup
 require("plugins.ui.tabbar").setup()
