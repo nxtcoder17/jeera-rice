@@ -59,7 +59,8 @@ function M.go_symbol_parser()
     gsub(/^[^ ]+ +/, "", receiver_type)
     symbol = receiver_type "{}." method_part
   }
-  gsub(/\t/, "", symbol)
+  # Strip params, return types, type keywords — keep just the identifier
+  gsub(/[ \t([].*$/, "", symbol)
 ]]
 end
 

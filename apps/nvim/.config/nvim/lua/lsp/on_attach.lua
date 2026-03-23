@@ -13,8 +13,7 @@ local function on_attach(client, bufnr)
   })
 
   if client ~= nil and client.server_capabilities ~= nil then
-    -- client.server_capabilities.semanticTokensProvider = nil
-    client.server_capabilities.semanticTokensProvider = {}
+    client.server_capabilities.semanticTokensProvider = nil
   end
 
   -- vim.api.nvim_create_autocmd("CursorHold", {

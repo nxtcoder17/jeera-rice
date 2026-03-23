@@ -1,3 +1,5 @@
+
+
 local palette = {
 	bg_edge2 = '#23232e',
 	bg_edge = '#2a2a37',
@@ -55,6 +57,14 @@ vim.api.nvim_set_hl(0, "@punctuation.delimiter", { fg = palette.azure })
 vim.api.nvim_set_hl(0, "Constant", { fg = palette.purple })
 vim.api.nvim_set_hl(0, "@number", { fg = palette.purple })
 vim.api.nvim_set_hl(0, "@boolean", { fg = palette.purple })
+
+-- Diagnostic Errors
+vim.api.nvim_set_hl(0, "DiagnosticError", { bg = palette.red_bg, fg = palette.red })
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { gui = undercurl })
+vim.api.nvim_set_hl(0, "DiagnosticWarn", { bg = palette.yellow_bg, fg = palette.yellow })
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", { gui = undercurl })
+vim.api.nvim_set_hl(0, "DiagnosticUnnecessary", { gui = undercurl })
+vim.api.nvim_set_hl(0, "DiagnosticInfo", { gui = undercurl })
 
 -- Keywords: make them stand out (desaturated orange)
 local keyword_color = '#b89c69'

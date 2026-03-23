@@ -100,7 +100,9 @@ local function syntax()
       event = "BufReadPost",
       dependencies = { "nvim-treesitter" },
       config = function()
-        require("treesitter-context").setup()
+        require("treesitter-context").setup({
+          max_lines = 1500, -- disable on large files to prevent scroll jank
+        })
       end,
     },
     {

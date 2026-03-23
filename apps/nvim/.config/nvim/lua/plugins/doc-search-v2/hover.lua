@@ -107,6 +107,71 @@ end
 
 
 
+-- Extract qualified symbol from cursor context (e.g., "time.Now" from `time.Now()`)
+-- Returns { qualifier = "time", symbol = "Now" } or { symbol = "Now" } for bare symbols
+local function get_qualified_symbol()
+  local cword = vim.fn.expand("<cword>")
+  if cword == "" then return nil end
+
+  local line = vim.fn.getline(".")
+  local col = vim.fn.col(".")
+
+  -- Find where <cword> starts on the line
+  local word_start = col
+  while word_start > 1 and line:sub(word_start - 1, word_start - 1):match("[%w_]") do
+    word_start = word_start - 1
+  end
+
+  -- Check if preceded by a dot
+  if word_start > 1 and line:sub(word_start - 1, word_start - 1) == "." then
+    -- Grab the word before the dot
+    local dot_pos = word_start - 1
+    local qual_end = dot_pos - 1
+    local qual_start = qual_end
+    while qual_start > 1 and line:sub(qual_start - 1, qual_start - 1):match("[%w_]") do
+      qual_start = qual_start - 1
+    end
+    local qualifier = line:sub(qual_start, qual_end)
+    if qualifier ~= "" then
+      return { qualifier = qualifier, symbol = cword }
+    end
+  end
+
+  return { symbol = cword }
+end
+
+-- Build search command across all scopes for a given language
+-- Note: workspace scope already includes stdlib (for Go), so we skip standalone stdlib here
+local function build_find_cmd(lang, symbol_info)
+  local pattern = lang.patterns.all
+  local cmds = {}
+
+  -- Workspace (includes stdlib for Go)
+  local ws_cmd = lang.build_cmd("workspace", pattern, {})
+  if ws_cmd and ws_cmd ~= "echo ''" then
+    table.insert(cmds, ws_cmd)
+  end
+
+  -- Dependencies
+  local dep_cmd = lang.build_cmd("dep", pattern, {})
+  if dep_cmd and dep_cmd ~= "echo ''" then
+    table.insert(cmds, dep_cmd)
+  end
+
+  if #cmds == 0 then return nil end
+
+  -- If we have a qualifier (e.g., time.Now), filter for "time.Now\t" (precise)
+  -- Otherwise, filter for ".Symbol\t" (broad fallback)
+  local rg_pattern
+  if symbol_info.qualifier then
+    rg_pattern = symbol_info.qualifier .. "." .. symbol_info.symbol .. '\t'
+  else
+    rg_pattern = "." .. symbol_info.symbol .. '\t'
+  end
+
+  return "{ " .. table.concat(cmds, "; ") .. '; } | rg -F "' .. rg_pattern .. '"'
+end
+
 -- Main hover function: find definition and show in float
 function M.show(lang)
   if not lang then
@@ -114,38 +179,16 @@ function M.show(lang)
     return
   end
 
-  -- Get word under cursor
-  local query = vim.fn.expand("<cword>")
-  if query == "" then return end
+  local symbol_info = get_qualified_symbol()
+  if not symbol_info then return end
 
-  -- Build a targeted search command — exact function/type name match
-  -- We search all scopes: workspace first, then stdlib/deps
-  local pattern = lang.patterns.all
-  local cmds = {}
-
-  -- Workspace search
-  local ws_cmd = lang.build_cmd("workspace", pattern, {})
-  if ws_cmd and ws_cmd ~= "echo ''" then
-    table.insert(cmds, ws_cmd)
-  end
-
-  -- Stdlib search (Go only)
-  if lang.build_cmd("stdlib", pattern, {}) then
-    local stdlib_cmd = lang.build_cmd("stdlib", pattern, {})
-    if stdlib_cmd and stdlib_cmd ~= "echo ''" then
-      table.insert(cmds, stdlib_cmd)
-    end
-  end
-
-  if #cmds == 0 then
+  local combined = build_find_cmd(lang, symbol_info)
+  if not combined then
     vim.notify("No search commands available", vim.log.levels.WARN)
     return
   end
+  local query = symbol_info.symbol
 
-  -- Combine and grep for exact symbol match
-  local combined = "{ " .. table.concat(cmds, "; ") .. '; } | grep -F ".' .. query .. '\t"'
-
-  -- Run async
   vim.system({ "sh", "-c", combined }, { text = true }, vim.schedule_wrap(function(result)
     if not result or result.code ~= 0 or not result.stdout or result.stdout == "" then
       vim.notify("No definition found for: " .. query, vim.log.levels.INFO)
@@ -194,27 +237,12 @@ function M.goto_definition(lang)
     return
   end
 
-  local query = vim.fn.expand("<cword>")
-  if query == "" then return end
+  local symbol_info = get_qualified_symbol()
+  if not symbol_info then return end
 
-  local pattern = lang.patterns.all
-  local cmds = {}
-
-  local ws_cmd = lang.build_cmd("workspace", pattern, {})
-  if ws_cmd and ws_cmd ~= "echo ''" then
-    table.insert(cmds, ws_cmd)
-  end
-
-  if lang.build_cmd("stdlib", pattern, {}) then
-    local stdlib_cmd = lang.build_cmd("stdlib", pattern, {})
-    if stdlib_cmd and stdlib_cmd ~= "echo ''" then
-      table.insert(cmds, stdlib_cmd)
-    end
-  end
-
-  if #cmds == 0 then return end
-
-  local combined = "{ " .. table.concat(cmds, "; ") .. '; } | grep -F ".' .. query .. '\t"'
+  local combined = build_find_cmd(lang, symbol_info)
+  if not combined then return end
+  local query = symbol_info.symbol
 
   vim.system({ "sh", "-c", combined }, { text = true }, vim.schedule_wrap(function(result)
     if not result or result.code ~= 0 or not result.stdout or result.stdout == "" then

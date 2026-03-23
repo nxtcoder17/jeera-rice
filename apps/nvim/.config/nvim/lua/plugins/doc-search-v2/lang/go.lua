@@ -19,18 +19,32 @@ M.patterns = {
 
 -- Symbol types with fzf shortcut keys
 M.symbol_types = {
-  { name = "all",       label = "all",    key = "ctrl-a", prompt = "Symbols" },
-  { name = "functions", label = "funcs",  key = "ctrl-f", prompt = "Functions" },
-  { name = "types",     label = "types",  key = "ctrl-t", prompt = "Types" },
+  { name = "all", label = "all", key = "ctrl-a", prompt = "Symbols" },
+  { name = "functions", label = "funcs", key = "ctrl-f", prompt = "Functions" },
+  { name = "types", label = "types", key = "ctrl-t", prompt = "Types" },
   { name = "constants", label = "consts", key = "ctrl-c", prompt = "Constants" },
 }
 
 -- Available scopes with shortcut keys
 M.scopes = {
   { name = "workspace", label = "workspace", key = "ctrl-w" },
-  { name = "packages",  label = "packages",  key = "ctrl-p", handler = function(lang, query) lang.show_packages(query) end },
-  { name = "dep",       label = "deps",      key = "ctrl-d", handler = function(lang, query) lang.show_dep_packages(query) end },
-  { name = "stdlib",    label = "stdlib",     key = "ctrl-s" },
+  {
+    name = "packages",
+    label = "packages",
+    key = "ctrl-p",
+    handler = function(lang, query)
+      lang.show_packages(query)
+    end,
+  },
+  {
+    name = "dep",
+    label = "deps",
+    key = "ctrl-d",
+    handler = function(lang, query)
+      lang.show_dep_packages(query)
+    end,
+  },
+  { name = "stdlib", label = "stdlib", key = "ctrl-s" },
 }
 
 -- Lazy cached syscalls
@@ -78,9 +92,13 @@ end
 local function get_stdlib_packages()
   local goroot = get_goroot()
   return cache.get("go:stdlib_packages", function()
-    if goroot == "" then return {} end
+    if goroot == "" then
+      return {}
+    end
     local src_dir = goroot .. "/src"
-    if vim.fn.isdirectory(src_dir) ~= 1 then return {} end
+    if vim.fn.isdirectory(src_dir) ~= 1 then
+      return {}
+    end
 
     local result = {}
     local pkgs = vim.fn.systemlist("go list std 2>/dev/null | grep -vE 'vendor|internal'")
@@ -101,7 +119,9 @@ local function get_deps()
   return cache.get("go:deps", function()
     local deps = {}
     local modcache = get_gomodcache()
-    if modcache == "" then return deps end
+    if modcache == "" then
+      return deps
+    end
 
     local mod_deps = vim.fn.systemlist("go list -m -f '{{.Path}}@{{.Version}}' all 2>/dev/null")
     for _, dep in ipairs(mod_deps) do
@@ -132,32 +152,44 @@ function M.build_cmd(scope, pattern, opts)
     -- Workspace command
     local ws_cmd = string.format(
       "cd '%s' && rg -n --no-heading '%s' --glob '*.go' --glob '!*_test.go' . 2>/dev/null | sed 's|^\\./||' | awk -F: -v modname='%s' -v basedir='%s' '%s'",
-      cwd, pattern, modname, cwd, awk.go_workspace()
+      cwd,
+      pattern,
+      modname,
+      cwd,
+      awk.go_workspace()
     )
 
     -- Include stdlib in workspace searches
     if stdlib_src ~= "" and not opts.dir then
       local stdlib_cmd = string.format(
         "cd '%s' && rg -n --no-heading '%s' --glob '*.go' --glob '!*_test.go' --glob '!vendor/**' --glob '!internal/**' --glob '!**/internal/**' . 2>/dev/null | sed 's|^\\./||' | awk -F: -v srcdir='%s' '%s'",
-        stdlib_src, pattern, stdlib_src, awk.go_stdlib()
+        stdlib_src,
+        pattern,
+        stdlib_src,
+        awk.go_stdlib()
       )
       return "{ " .. ws_cmd .. "; " .. stdlib_cmd .. "; }"
     end
 
     return ws_cmd
-
   elseif scope == "stdlib" then
     local stdlib_src = M.stdlib_src()
-    if stdlib_src == "" then return "echo ''" end
+    if stdlib_src == "" then
+      return "echo ''"
+    end
 
     return string.format(
       "cd '%s' && rg -n --no-heading '%s' --glob '*.go' --glob '!*_test.go' --glob '!vendor/**' --glob '!internal/**' . 2>/dev/null | sed 's|^\\./||' | awk -F: -v srcdir='%s' '%s'",
-      stdlib_src, pattern, stdlib_src, awk.go_stdlib()
+      stdlib_src,
+      pattern,
+      stdlib_src,
+      awk.go_stdlib()
     )
-
   elseif scope == "dep" then
     local deps = get_deps()
-    if #deps == 0 then return "echo ''" end
+    if #deps == 0 then
+      return "echo ''"
+    end
 
     local dirs = {}
     for _, dep in ipairs(deps) do
@@ -166,16 +198,22 @@ function M.build_cmd(scope, pattern, opts)
 
     return string.format(
       "rg -n --no-heading '%s' --glob '*.go' --glob '!*_test.go' %s 2>/dev/null | awk -F: '%s'",
-      pattern, table.concat(dirs, " "), awk.go_deps()
+      pattern,
+      table.concat(dirs, " "),
+      awk.go_deps()
     )
-
   elseif scope == "dep_package" then
     local dep_info = opts.dep_info
-    if not dep_info then return "echo ''" end
+    if not dep_info then
+      return "echo ''"
+    end
 
     return string.format(
       "cd '%s' && rg -n --no-heading '%s' --glob '*.go' --glob '!*_test.go' . 2>/dev/null | sed 's|^\\./||' | awk -F: -v deppath='%s' '%s'",
-      dep_info.dir, pattern, dep_info.path, awk.go_single_dep()
+      dep_info.dir,
+      pattern,
+      dep_info.path,
+      awk.go_single_dep()
     )
   end
 
@@ -189,7 +227,9 @@ function M.get_query_at_cursor()
     local mode = vim.api.nvim_get_mode()["mode"]
     if mode == "v" then
       local sel = fns.get_selection()
-      if sel and sel ~= "" then return "'" .. sel end
+      if sel and sel ~= "" then
+        return "'" .. sel
+      end
     end
   end
   local cword = vim.fn.expand("<cword>")

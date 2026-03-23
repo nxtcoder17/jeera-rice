@@ -10,7 +10,7 @@ local filetypes = {
 -- LSP
 notify_if_not_installed({
   "typescript-language-server",
-  "biome",
+  -- "biome",
   "deno",
 })
 
@@ -30,7 +30,7 @@ vim.lsp.config("ts_ls", {
   end,
 })
 
-vim.lsp.config("biome", {})
+-- vim.lsp.config("biome", {})
 
 vim.lsp.config("denols", {
   root_markers = { "deno.lock", "deno.json" },
@@ -52,7 +52,7 @@ vim.lsp.config("denols", {
 
 vim.lsp.enable({
   "ts_ls",
-  "biome", -- linter and formatter
+  -- "biome", -- linter and formatter
   "denols",
 })
 
@@ -61,7 +61,7 @@ require("lint").linters.biome_lint = {
   stdin = false,
   args = {
     "-c",
-    "bunx biome lint --reporter=rdjson || exit 0",
+    string.format("bunx @biomejs/biome lint --reporter=rdjson '%s' || exit 0", vim.fn.expand("%")),
   },
   stream = "stdout",
 
@@ -106,7 +106,8 @@ end
 
 -- FORMATTER
 for _, ft in ipairs(filetypes) do
-  set_formatter(ft, { "eslint_d" })
+  -- set_formatter(ft, { "eslint_d" })
+  set_formatter(ft, { "biome" })
 end
 
 vim.cmd("runtime! ftplugin/css.lua")

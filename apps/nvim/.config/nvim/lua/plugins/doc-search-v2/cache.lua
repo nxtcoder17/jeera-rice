@@ -14,7 +14,9 @@ local TTL_SECONDS = 30
 
 -- Get file mtime (returns 0 if file doesn't exist)
 local function get_mtime(filepath)
-  if not filepath then return 0 end
+  if not filepath then
+    return 0
+  end
   local stat = vim.uv.fs_stat(filepath)
   return stat and stat.mtime.sec or 0
 end

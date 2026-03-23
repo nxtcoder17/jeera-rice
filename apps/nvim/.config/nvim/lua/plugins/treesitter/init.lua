@@ -1,3 +1,19 @@
+-- Nuke all treesitter features on large buffers via autocmd
+-- More reliable than per-module `disable` callbacks which some modules ignore
+vim.api.nvim_create_autocmd("BufReadPost", {
+  callback = function(args)
+    local bufnr = args.buf
+    local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(bufnr))
+    if not ok or not stats or stats.size <= 50 * 1024 then return end
+
+    -- Kill the treesitter parser entirely — no module can use it
+    vim.treesitter.stop(bufnr)
+
+    -- Fall back to vim regex syntax so the file isn't plain text
+    vim.bo[bufnr].syntax = vim.bo[bufnr].filetype
+  end,
+})
+
 Require("nvim-treesitter.configs").setup({
   -- ensure_installed = "all",
   -- ignore_install = { "javascript", "typescript", "bash", "go", "lua", "yaml", "json" },
@@ -35,13 +51,6 @@ Require("nvim-treesitter.configs").setup({
   highlight = {
     enable = true,
     additional_vim_regex_highlighting = false,
-    disable = function(_, bufnr)
-      local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(bufnr))
-      if ok and stats and stats.size > 100 * 1024 then -- > 100KB
-        return true
-      end
-      return false
-    end,
   },
 
   incremental_selection = {
