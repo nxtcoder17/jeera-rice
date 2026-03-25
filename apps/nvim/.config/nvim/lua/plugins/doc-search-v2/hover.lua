@@ -1,18 +1,14 @@
--- hover.lua — Show ~30 lines from symbol definition in a floating window
---
--- Fast alternative to LSP hover: runs a targeted rg search for the symbol
--- under cursor, then displays the definition context in a float.
+-- hover.lua — Simplified hover and goto definition
 
 local import = require("plugins.doc-search-v2.pkg")
 local preview = import("util.preview")
+local awk_util = import("util.awk")
 
 local M = {}
-
 
 local hover_win = nil
 local hover_buf = nil
 
--- Close any existing hover float
 local function close_hover()
   if hover_win and vim.api.nvim_win_is_valid(hover_win) then
     vim.api.nvim_win_close(hover_win, true)
@@ -24,16 +20,11 @@ local function close_hover()
   hover_buf = nil
 end
 
--- Open a float with the given lines, with syntax highlighting
--- opts = { filepath, filetype, title, target_line }
 local function open_float(opts)
   close_hover()
-
-  -- Read entire file
   local lines = {}
   local f = io.open(opts.filepath, "r")
   if not f then
-    vim.notify("Cannot read: " .. opts.filepath, vim.log.levels.WARN)
     return
   end
   for line in f:lines() do
@@ -43,31 +34,24 @@ local function open_float(opts)
 
   hover_buf = vim.api.nvim_create_buf(false, true)
   vim.api.nvim_buf_set_lines(hover_buf, 0, -1, false, lines)
-
-  if opts.filetype then
-    vim.bo[hover_buf].filetype = opts.filetype
-  end
+  vim.bo[hover_buf].filetype = opts.filetype or "text"
   vim.bo[hover_buf].modifiable = false
   vim.bo[hover_buf].bufhidden = "wipe"
 
   local width = math.floor(vim.o.columns * 0.8)
   local height = math.floor(vim.o.lines * 0.7)
-  local row = math.floor((vim.o.lines - height) / 2)
-  local col = math.floor((vim.o.columns - width) / 2)
-
   hover_win = vim.api.nvim_open_win(hover_buf, true, {
     relative = "editor",
-    row = row,
-    col = col,
+    row = math.floor((vim.o.lines - height) / 2),
+    col = math.floor((vim.o.columns - width) / 2),
     width = width,
     height = height,
     style = "minimal",
     border = "rounded",
     title = opts.title and (" " .. opts.title .. " ") or nil,
-    title_pos = opts.title and "center" or nil,
+    title_pos = "center",
   })
 
-  -- Jump to target line at top of window
   if opts.target_line then
     vim.api.nvim_win_set_cursor(hover_win, { opts.target_line, 0 })
     vim.cmd("normal! zt")
@@ -75,56 +59,29 @@ local function open_float(opts)
 
   local buf = hover_buf
   local filepath = opts.filepath
-  vim.keymap.set("n", "q", close_hover, { buffer = buf, nowait = true })
-  vim.keymap.set("n", "<Esc>", close_hover, { buffer = buf, nowait = true })
+  vim.keymap.set("n", "q", close_hover, { buffer = buf })
+  vim.keymap.set("n", "<Esc>", close_hover, { buffer = buf })
   vim.keymap.set("n", "<CR>", function()
     local cursor_line = vim.api.nvim_win_get_cursor(hover_win)[1]
     close_hover()
     vim.cmd("edit " .. vim.fn.fnameescape(filepath))
     vim.cmd(":" .. cursor_line)
     vim.cmd("normal! zz")
-  end, { buffer = buf, nowait = true })
-
-  vim.api.nvim_create_autocmd("BufLeave", {
-    buffer = buf,
-    once = true,
-    callback = close_hover,
-  })
+  end, { buffer = buf })
 end
 
--- Detect filetype from file extension
-local function ft_from_ext(filepath)
-  local ext = filepath:match("%.([^%.]+)$")
-  local map = {
-    go = "go",
-    js = "javascript", jsx = "javascriptreact",
-    ts = "typescript", tsx = "typescriptreact",
-    mjs = "javascript", cjs = "javascript",
-    lua = "lua",
-  }
-  return map[ext] or ext
-end
-
-
-
--- Extract qualified symbol from cursor context (e.g., "time.Now" from `time.Now()`)
--- Returns { qualifier = "time", symbol = "Now" } or { symbol = "Now" } for bare symbols
 local function get_qualified_symbol()
   local cword = vim.fn.expand("<cword>")
-  if cword == "" then return nil end
-
+  if cword == "" then
+    return nil
+  end
   local line = vim.fn.getline(".")
   local col = vim.fn.col(".")
-
-  -- Find where <cword> starts on the line
   local word_start = col
   while word_start > 1 and line:sub(word_start - 1, word_start - 1):match("[%w_]") do
     word_start = word_start - 1
   end
-
-  -- Check if preceded by a dot
   if word_start > 1 and line:sub(word_start - 1, word_start - 1) == "." then
-    -- Grab the word before the dot
     local dot_pos = word_start - 1
     local qual_end = dot_pos - 1
     local qual_start = qual_end
@@ -136,176 +93,260 @@ local function get_qualified_symbol()
       return { qualifier = qualifier, symbol = cword }
     end
   end
-
   return { symbol = cword }
 end
 
--- Build search command across all scopes for a given language
--- Note: workspace scope already includes stdlib (for Go), so we skip standalone stdlib here
 local function build_find_cmd(lang, symbol_info)
+  local dirs = lang.get_search_dirs()
   local pattern = lang.patterns.all
-  local cmds = {}
-
-  -- Workspace (includes stdlib for Go)
-  local ws_cmd = lang.build_cmd("workspace", pattern, {})
-  if ws_cmd and ws_cmd ~= "echo ''" then
-    table.insert(cmds, ws_cmd)
+  local dir_paths = {}
+  for _, d in ipairs(dirs) do
+    table.insert(dir_paths, vim.fn.shellescape(d.path))
   end
+  -- local awk_content = lang.get_awk_script(dirs)
+  -- local awk_path = awk_util.to_file("hover_search", awk_content)
 
-  -- Dependencies
-  local dep_cmd = lang.build_cmd("dep", pattern, {})
-  if dep_cmd and dep_cmd ~= "echo ''" then
-    table.insert(cmds, dep_cmd)
-  end
-
-  if #cmds == 0 then return nil end
-
-  -- If we have a qualifier (e.g., time.Now), filter for "time.Now\t" (precise)
-  -- Otherwise, filter for ".Symbol\t" (broad fallback)
-  local rg_pattern
+  local rg_filter
   if symbol_info.qualifier then
-    rg_pattern = symbol_info.qualifier .. "." .. symbol_info.symbol .. '\t'
+    rg_filter = symbol_info.qualifier .. "." .. symbol_info.symbol .. "\t"
   else
-    rg_pattern = "." .. symbol_info.symbol .. '\t'
+    rg_filter = "." .. symbol_info.symbol .. "\t"
   end
 
-  return "{ " .. table.concat(cmds, "; ") .. '; } | rg -F "' .. rg_pattern .. '"'
+  return string.format(
+    -- "rg -n --no-heading -e %s %s 2>/dev/null | awk -F: -f %s | rg -F %s",
+    "rg -n --no-heading -e %s %s 2>/dev/null | rg -F %s",
+    vim.fn.shellescape(pattern),
+    table.concat(dir_paths, " "),
+    -- vim.fn.shellescape(awk_path),
+    vim.fn.shellescape(rg_filter)
+  )
 end
 
--- Main hover function: find definition and show in float
-function M.show(lang)
-  if not lang then
-    vim.notify("doc-search hover: no language adapter for this filetype", vim.log.levels.WARN)
-    return
-  end
+-- function M.show(lang)
+--   local symbol_info = get_qualified_symbol()
+--   if not symbol_info then
+--     return
+--   end
+--   local cmd = build_find_cmd(lang, symbol_info)
+--
+--   vim.system(
+--     { "sh", "-c", cmd },
+--     { text = true },
+--     vim.schedule_wrap(function(result)
+--       if not result or result.stdout == "" then
+--         return
+--       end
+--       local lines = vim.split(result.stdout, "\n")
+--       local parts = vim.split(lines[1], "\t")
+--       if #parts < 2 then
+--         return
+--       end
+--       local file, lnum = parts[2]:match("^([^:]+):(%d+)")
+--       if not (file and lnum) then
+--         return
+--       end
+--       open_float({
+--         filepath = file,
+--         filetype = file:match("%.([^%.]+)$"),
+--         title = parts[1],
+--         target_line = tonumber(lnum),
+--       })
+--     end)
+--   )
+-- end
 
-  local symbol_info = get_qualified_symbol()
-  if not symbol_info then return end
-
-  local combined = build_find_cmd(lang, symbol_info)
-  if not combined then
-    vim.notify("No search commands available", vim.log.levels.WARN)
-    return
-  end
-  local query = symbol_info.symbol
-
-  vim.system({ "sh", "-c", combined }, { text = true }, vim.schedule_wrap(function(result)
-    if not result or result.code ~= 0 or not result.stdout or result.stdout == "" then
-      vim.notify("No definition found for: " .. query, vim.log.levels.INFO)
-      return
-    end
-
-    -- Parse results
-    local matches = {}
-    for line in result.stdout:gmatch("[^\n]+") do
-      local parts = vim.split(line, "\t")
-      if #parts >= 2 then
-        local file, lnum = parts[2]:match("^([^:]+):(%d+)")
-        if file and lnum then
-          table.insert(matches, {
-            symbol = parts[1],
-            file = file,
-            line = tonumber(lnum),
-          })
-        end
-      end
-    end
-
-    if #matches == 0 then
-      vim.notify("No definition found for: " .. query, vim.log.levels.INFO)
-      return
-    end
-
-    local match = matches[1]
-    local filepath = match.file
-    local ft = ft_from_ext(filepath)
-    local title = match.symbol .. "  " .. filepath .. ":" .. match.line
-
-    open_float({
-      filepath = filepath,
-      filetype = ft,
-      title = title,
-      target_line = match.line,
-    })
-  end))
-end
-
--- Jump to definition: like hover but navigates to the file
 function M.goto_definition(lang)
-  if not lang then
-    vim.notify("doc-search goto: no language adapter for this filetype", vim.log.levels.WARN)
+  local symbol_info = get_qualified_symbol()
+  if not symbol_info then
     return
   end
-
-  local symbol_info = get_qualified_symbol()
-  if not symbol_info then return end
-
-  local combined = build_find_cmd(lang, symbol_info)
-  if not combined then return end
-  local query = symbol_info.symbol
-
-  vim.system({ "sh", "-c", combined }, { text = true }, vim.schedule_wrap(function(result)
-    if not result or result.code ~= 0 or not result.stdout or result.stdout == "" then
-      vim.notify("No definition found for: " .. query, vim.log.levels.INFO)
-      return
-    end
-
-    local matches = {}
-    for line in result.stdout:gmatch("[^\n]+") do
-      local parts = vim.split(line, "\t")
-      if #parts >= 2 then
-        local file, lnum = parts[2]:match("^([^:]+):(%d+)")
-        if file and lnum then
-          table.insert(matches, { file = file, line = tonumber(lnum), symbol = parts[1] })
+  local cmd = build_find_cmd(lang, symbol_info)
+  vim.system(
+    { "sh", "-c", cmd },
+    { text = true },
+    vim.schedule_wrap(function(result)
+      if not result or result.stdout == "" then
+        return
+      end
+      local matches = {}
+      for line in result.stdout:gmatch("[^\n]+") do
+        local parts = vim.split(line, "\t")
+        if #parts >= 2 then
+          local file, lnum = parts[2]:match("^([^:]+):(%d+)")
+          if file and lnum then
+            table.insert(matches, { file = file, line = tonumber(lnum), symbol = parts[1] })
+          end
         end
       end
-    end
-
-    if #matches == 0 then
-      vim.notify("No definition found for: " .. query, vim.log.levels.INFO)
-      return
-    end
-
-    if #matches == 1 then
-      -- Single match: jump directly
-      local m = matches[1]
-      vim.cmd("edit " .. vim.fn.fnameescape(m.file))
-      vim.cmd(":" .. m.line)
-      vim.cmd("normal! zz")
-    else
-      -- Multiple matches: use fzf to pick
-      local fzf = require("fzf-lua")
-      local items = {}
-      for _, m in ipairs(matches) do
-        table.insert(items, m.symbol .. "\t" .. m.file .. ":" .. m.line)
+      if #matches == 0 then
+        return
       end
-
-      fzf.fzf_exec(items, {
-        prompt = "Definitions > ",
-        previewer = false,
-        fzf_opts = {
-          ["--delimiter"] = "\t",
-          ["--with-nth"] = "1",
-          ["--preview"] = preview.build(),
-          ["--preview-window"] = "right:50%",
-        },
-        actions = {
-          ["default"] = function(selected)
-            if not selected or #selected == 0 then return end
-            local sel_parts = vim.split(selected[1], "\t")
-            if #sel_parts >= 2 then
-              local file, lnum = sel_parts[2]:match("^([^:]+):(%d+)")
-              if file and lnum then
-                vim.cmd("edit " .. vim.fn.fnameescape(file))
-                vim.cmd(":" .. lnum)
+      if #matches == 1 then
+        vim.cmd("edit " .. vim.fn.fnameescape(matches[1].file))
+        vim.cmd(":" .. matches[1].line)
+        vim.cmd("normal! zz")
+      else
+        local fzf = require("fzf-lua")
+        local items = {}
+        for _, m in ipairs(matches) do
+          table.insert(items, m.symbol .. "\t" .. m.file .. ":" .. m.line)
+        end
+        fzf.fzf_exec(items, {
+          prompt = "Definitions > ",
+          previewer = false,
+          fzf_opts = {
+            ["--delimiter"] = "\t",
+            ["--with-nth"] = "1",
+            ["--preview"] = preview.build(),
+            ["--preview-window"] = "right:50%",
+          },
+          actions = {
+            ["default"] = function(selected)
+              local p = import("engine").parse_selection(selected)
+              if p then
+                vim.cmd("edit " .. vim.fn.fnameescape(p.file))
+                vim.cmd(":" .. p.line)
                 vim.cmd("normal! zz")
               end
-            end
-          end,
-        },
-      })
-    end
-  end))
+            end,
+          },
+        })
+      end
+    end)
+  )
 end
+
+function M.show(lang, search_query)
+  search_query = search_query or vim.fn.expand("<cword>")
+
+  local fzf = require("fzf-lua")
+
+  fzf.fzf_exec(lang.get_search_command(search_query), {
+    prompt = "Search > ",
+    query = search_query,
+    formatter = false,
+    multiprocess = false,
+    no_esc = true,
+    regex = true,
+    rg_glob = true,
+    fzf_opts = {
+      ["--delimiter"] = " ≈",
+      ["--with-nth"] = "2..",
+    },
+    previewer = "builtin",
+    actions = {
+      ["default"] = function(selected)
+        vim.print(vim.inspect(selected))
+        vim.print(selected[1])
+        local delimiter_pos = string.find(selected[1], " ≈", 1, true)
+        if delimiter_pos then
+          local path = string.sub(selected[1], 1, delimiter_pos - 1)
+          vim.cmd("edit " .. path)
+          vim.cmd("normal! zz")
+        end
+      end,
+      ["ctrl-f"] = function(selected)
+        vim.print(vim.inspect(selected))
+        M.show(lang, lang.build_query("function", fzf.get_last_query()))
+      end,
+      ["ctrl-r"] = function(selected)
+        M.show(lang, lang.build_query("function_call", fzf.get_last_query()))
+      end
+    },
+  })
+
+  -- fzf.live_grep({
+  --   prompt = "Search > ",
+  --   -- search = search_query,
+  --   cmd = lang.get_search_command(search_query),
+  --   -- debug = true,
+  --   actions = {
+  --     ["default"] = function(selected)
+  --       local true_path = fzf.path.entry_to_file(selected[1])
+  --       local p = import("engine").parse_selection(true_path)
+  --       if p then
+  --         vim.cmd("edit " .. vim.fn.fnameescape(p.file))
+  --         vim.cmd(":" .. p.line)
+  --         vim.cmd("normal! zz")
+  --       end
+  --     end,
+  --     ["ctrl-f"] = function(selected)
+  --       vim.print(vim.inspect(selected))
+  --       M.show(lang, lang.build_query("function", fzf.get_last_query()))
+  --     end,
+  --     ["ctrl-r"] = function(selected)
+  --       M.show(lang, lang.build_query("function_call", fzf.get_last_query()))
+  --     end
+  --   },
+  -- })
+end
+
+-- function M.show(lang, search_query)
+--   local search_result = lang.get_search_dirs()
+--   local dirs, pretty_path = search_result[1], search_result[2]
+--   search_query = search_query or vim.fn.expand("<cword>")
+--
+--   local fzf = require("fzf-lua")
+--
+--   fzf.live_grep({
+--     prompt = "Search > ",
+--     cmd = lang.get_search_command(),
+--   })
+--
+--
+--   fzf.live_grep({
+--     prompt = "Search > ",
+--     -- search = search_query,
+--     -- search_paths = dirs,
+--     cmd = string.format([[
+--       rg --column --line-number --no-heading --color=always --smart-case -t go -e '%s' %s | sed 's/'
+--     ]], search_query, dirs),
+--     -- rg_glob = true,
+--     -- rg_opts = "--column --line-number --no-heading --color=always --smart-case -e",
+--     formatter = false, -- REQUIRED to stop internal formatting
+--     -- multiline = true,
+--     -- formatter = {"path.filename_first", 2},
+--     -- multiprocess = false,
+--     -- fn_transform = function(entry)
+--     --   local file, line_num, col, rest = entry:match("^([^:]+):(%d+):(%d+):%s*(.*)$")
+--     --   if file then
+--     --     local display = string.format(
+--     --       "%s:%s:%s: %s",
+--     --       pretty_path(file),
+--     --       line_num,
+--     --       col,
+--     --       rest
+--     --     )
+--     --     -- Embed original as field 1, display as field 2
+--     --     return entry .. "≈" ..  display
+--     --     -- return FzfLua.make_entry.file(entry, { file_icons = true, color_icons = true }) .. "\0" .. display
+--     --   end
+--     --   return entry
+--     -- end,
+--     -- fzf_opts = {
+--     --   ["--delimiter"] = "≈",
+--     --   ["--with-nth"] = "2..",
+--     -- },
+--     actions = {
+--       ["default"] = function(selected)
+--         local true_path = fzf.path.entry_to_file(selected[1])
+--         local p = import("engine").parse_selection(true_path)
+--         if p then
+--           vim.cmd("edit " .. vim.fn.fnameescape(p.file))
+--           vim.cmd(":" .. p.line)
+--           vim.cmd("normal! zz")
+--         end
+--       end,
+--       ["ctrl-f"] = function(selected)
+--         vim.print(vim.inspect(selected))
+--         M.show(lang, lang.build_query("function", fzf.get_last_query()))
+--       end,
+--       ["ctrl-r"] = function(selected)
+--         M.show(lang, lang.build_query("function_call", fzf.get_last_query()))
+--       end
+--     },
+--   })
+-- end
 
 return M
