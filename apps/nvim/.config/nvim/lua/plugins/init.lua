@@ -585,15 +585,15 @@ end
 
 local function ai()
   return {
-    {
-      "supermaven-inc/supermaven-nvim",
-      event = "BufReadPost",
-      config = function()
-        require("supermaven-nvim").setup({
-          disable_inline_completion = true, -- disables inline completion for use with cmp
-        })
-      end,
-    },
+    -- {
+    --   "supermaven-inc/supermaven-nvim",
+    --   event = "BufReadPost",
+    --   config = function()
+    --     require("supermaven-nvim").setup({
+    --       disable_inline_completion = true, -- disables inline completion for use with cmp
+    --     })
+    --   end,
+    -- },
   }
 end
 

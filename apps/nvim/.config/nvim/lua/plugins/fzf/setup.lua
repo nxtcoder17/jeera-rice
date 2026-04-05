@@ -68,6 +68,9 @@ fzf.setup({
         vertical = "right:20%",
       },
     },
+    -- fzf = {
+    --   ["ctrl-g"] = "select-all+accept",
+    -- },
   },
 
   lsp_definitions = {
@@ -82,11 +85,13 @@ fzf.setup({
   },
 
   grep = {
+    no_esc = true,
     formatter = "path.filename_first",
   },
 
   live_grep = {
-    multiprocess = false,
+    multiline = true
+    -- multiprocess = false,
   },
 
   actions = {
@@ -99,6 +104,9 @@ fzf.setup({
       ["ctrl-t"] = actions.buf_tabedit,
       ["ctrl-d"] = { actions.buf_del, actions.resume },
     },
+    ["alt-f"] =  function(selected)
+      vim.print(vim.inspect(selected))
+    end,
   },
 })
 

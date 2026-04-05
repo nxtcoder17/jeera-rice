@@ -75,10 +75,10 @@ vim.notify_info = function(...)
 end
 
 _G.set_linter = function(lang, linters)
-  if not notify_if_not_installed(linters) then
-    vim.notify_debug(string.format("[%s] LINTER setup aborted", lang))
-    return
-  end
+  -- if not notify_if_not_installed(linters) then
+  --   vim.notify_debug(string.format("[%s] LINTER setup aborted", lang))
+  --   return
+  -- end
 
   local ok, lint = pcall(require, "lint")
   if not ok then
@@ -90,10 +90,10 @@ _G.set_linter = function(lang, linters)
 end
 
 _G.set_formatter = function(lang, formatters)
-  if not notify_if_not_installed(formatters) then
-    vim.notify_debug(string.format("[%s] FORMATTER setup aborted", lang))
-    return
-  end
+  -- if not notify_if_not_installed(formatters) then
+  --   vim.notify_debug(string.format("[%s] FORMATTER setup aborted", lang))
+  --   return
+  -- end
 
   local ok, conform = pcall(require, "conform")
   if not ok then

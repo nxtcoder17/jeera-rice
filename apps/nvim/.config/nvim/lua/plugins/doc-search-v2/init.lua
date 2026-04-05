@@ -50,4 +50,6 @@ vim.api.nvim_create_user_command("DSHover", M.hover, { desc = "Doc Hover" })
 vim.api.nvim_create_user_command("DSGoto", M.goto_definition, { desc = "Doc Search Goto Definition" })
 vim.api.nvim_create_user_command("DSClear", M.clear_cache, { desc = "Doc Search Clear Cache" })
 
+vim.keymap.set("n", "gd", M.hover, { desc = "Doc Search" })
+
 return M

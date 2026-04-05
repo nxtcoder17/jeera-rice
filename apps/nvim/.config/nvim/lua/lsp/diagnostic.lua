@@ -47,10 +47,14 @@ vim.diagnostic.config({
   },
 })
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-  -- delay update diagnostics
+vim.diagnostic.config({
   update_in_insert = false,
 })
+
+-- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+--   -- delay update diagnostics
+--   update_in_insert = false,
+-- })
 
 vim.keymap.set("n", "sn", function()
   local severity = { min = vim.diagnostic.severity.WARN, max = vim.diagnostic.severity.ERROR }

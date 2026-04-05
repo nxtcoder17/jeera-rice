@@ -6,13 +6,12 @@ local awk = import("util.awk")
 
 local M = {}
 
-M.patterns = {
-  all = "^(func |type |const |var )"
-}
-
 function M.build_query(type, search)
   if type == "function" then
-    return "^func.*" .. search
+    if search:match("^%^func ") then
+      return search:gsub("^%^func ", "", 1)
+    end
+    return "^func " .. search
   end
 
   if type == "function_call" then
@@ -20,6 +19,9 @@ function M.build_query(type, search)
   end
 
   if type == "type" then
+    if search:match("type ") then
+      return search:gsub("type ", "", 1)
+    end
     return "type " .. search
   end
 
@@ -34,6 +36,18 @@ local function find_gomod_file()
     path = vim.fn.fnamemodify(path, ":h")
   end
   return nil
+end
+
+function M.rg_options()
+  return {
+    "--column",
+    "--line-number",
+    "--no-heading",
+    "--color=always",
+    "--smart-case",
+    "-t go",
+    "-e",
+  }
 end
 
 function M.get_search_command(search)
@@ -74,8 +88,21 @@ function M.get_search_command(search)
     table.insert(dirs, d)
   end
 
+  local rg_args = {
+    "--column",
+    "--line-number",
+    "--no-heading",
+    "--color=always",
+    "--smart-case",
+    "-t go",
+    "--glob '!**/testdata/**'",
+    "--glob '!**/test/**'",
+    "--glob '!*_test.go'",
+    "-e",
+  }
+
   return string.format([[
-    rg --column --line-number --no-heading --color=always --smart-case -t go -e %s %s | awk -F':' '{
+    rg %s '%s' %s | awk -F':' '{
       file = $1;
       line = $2;
       col  = $3;
@@ -83,13 +110,14 @@ function M.get_search_command(search)
       entry = $0;
 
       # Replace the string in the "rest" part
+      gsub("%s", "", entry)
       gsub("%s", "[std]", entry)
       gsub("%s", "[mod]", entry)
 
       # Rebuild clean format
       print file ":" line ":" col " ≈" entry
     }'
-  ]], search, table.concat(dirs, " "), goroot, gomodcache)
+  ]], table.concat(rg_args, " "), search, table.concat(dirs, " "), vim.fn.getcwd() .. "/", goroot, gomodcache)
 
 end
 

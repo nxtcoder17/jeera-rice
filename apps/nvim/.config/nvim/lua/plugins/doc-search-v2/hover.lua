@@ -1,5 +1,7 @@
 -- hover.lua — Simplified hover and goto definition
 
+-- [FZF-lua advanced docs](https://github.com/ibhagwan/fzf-lua/wiki/Advanced#fn_transform_cmd)
+
 local import = require("plugins.doc-search-v2.pkg")
 local preview = import("util.preview")
 local awk_util = import("util.awk")
@@ -123,39 +125,6 @@ local function build_find_cmd(lang, symbol_info)
   )
 end
 
--- function M.show(lang)
---   local symbol_info = get_qualified_symbol()
---   if not symbol_info then
---     return
---   end
---   local cmd = build_find_cmd(lang, symbol_info)
---
---   vim.system(
---     { "sh", "-c", cmd },
---     { text = true },
---     vim.schedule_wrap(function(result)
---       if not result or result.stdout == "" then
---         return
---       end
---       local lines = vim.split(result.stdout, "\n")
---       local parts = vim.split(lines[1], "\t")
---       if #parts < 2 then
---         return
---       end
---       local file, lnum = parts[2]:match("^([^:]+):(%d+)")
---       if not (file and lnum) then
---         return
---       end
---       open_float({
---         filepath = file,
---         filetype = file:match("%.([^%.]+)$"),
---         title = parts[1],
---         target_line = tonumber(lnum),
---       })
---     end)
---   )
--- end
-
 function M.goto_definition(lang)
   local symbol_info = get_qualified_symbol()
   if not symbol_info then
@@ -220,133 +189,118 @@ end
 function M.show(lang, search_query)
   search_query = search_query or vim.fn.expand("<cword>")
 
+  local open_file = function(selected, mode)
+    mode = mode or "vsplit"
+    local file, line, col = string.match(selected[1], "^(.-):(%d+):(%d+)%s*≈")
+    if file then
+      if mode == "vsplit" then
+        vim.cmd(":vsplit")
+      elseif mode == "split" then
+        vim.cmd(":split")
+      elseif mode == "tab" then
+        vim.cmd(":tabnew")
+      end
+      vim.cmd("edit " .. file)
+      if line then 
+        vim.cmd(":" .. line) 
+      end
+      vim.cmd("normal! zz")
+    end
+  end
+
   local fzf = require("fzf-lua")
 
-  fzf.fzf_exec(lang.get_search_command(search_query), {
-    prompt = "Search > ",
-    query = search_query,
-    formatter = false,
-    multiprocess = false,
+  local opts =  {
+    prompt = "Search> ",
+    command_fn = function(args)
+      return lang.get_search_command(table.concat(args, ""))
+    end,
+
+    search = search_query,
+    -- query = search_query,
     no_esc = true,
-    regex = true,
+    -- regex = true,
     rg_glob = true,
+    formatter = false,
+    file_icons = false,
+    color_icons = false,
+
+    -- fzf = {
+    --   ["ctrl-g"] = "select-all+accept",
+    -- },
+
+    multiprocess = false,
     fzf_opts = {
       ["--delimiter"] = " ≈",
       ["--with-nth"] = "2..",
     },
-    previewer = "builtin",
+
     actions = {
       ["default"] = function(selected)
-        vim.print(vim.inspect(selected))
-        vim.print(selected[1])
-        local delimiter_pos = string.find(selected[1], " ≈", 1, true)
-        if delimiter_pos then
-          local path = string.sub(selected[1], 1, delimiter_pos - 1)
-          vim.cmd("edit " .. path)
-          vim.cmd("normal! zz")
+        open_file(selected)
+      end,
+      ["ctrl-g"] = function(selected)
+        local q = fzf.get_last_query()
+        local cmd_string = lang.get_search_command(q)
+
+        local entries = {}
+
+        local results = vim.system({ "sh", "-c", cmd_string }):wait()
+        if results.code == 0 then
+          entries = vim.split(results.stdout, "\n")
         end
+
+        return fzf.fzf_exec(entries, {
+          previewer = "builtin",
+          fzf_opts = {
+            ["--delimiter"] = " ≈",
+            ["--with-nth"] = "2..",
+          },
+          actions = {
+            ["default"] = function(selected)
+              open_file(selected)
+            end,
+            ["ctrl-t"] = function(selected)
+              open_file(selected, "tab")
+            end,
+            ["ctrl-v"] = function(selected)
+              open_file(selected, "vsplit")
+            end,
+          },
+        })
+      end,
+      ["ctrl-v"] = function(selected)
+        open_file(selected, "vsplit")
       end,
       ["ctrl-f"] = function(selected)
-        vim.print(vim.inspect(selected))
         M.show(lang, lang.build_query("function", fzf.get_last_query()))
+      end,
+      ["ctrl-t"] = function(selected)
+        M.show(lang, lang.build_query("type", fzf.get_last_query()))
       end,
       ["ctrl-r"] = function(selected)
         M.show(lang, lang.build_query("function_call", fzf.get_last_query()))
       end
     },
-  })
+  }
 
-  -- fzf.live_grep({
-  --   prompt = "Search > ",
-  --   -- search = search_query,
-  --   cmd = lang.get_search_command(search_query),
-  --   -- debug = true,
-  --   actions = {
-  --     ["default"] = function(selected)
-  --       local true_path = fzf.path.entry_to_file(selected[1])
-  --       local p = import("engine").parse_selection(true_path)
-  --       if p then
-  --         vim.cmd("edit " .. vim.fn.fnameescape(p.file))
-  --         vim.cmd(":" .. p.line)
-  --         vim.cmd("normal! zz")
-  --       end
-  --     end,
-  --     ["ctrl-f"] = function(selected)
-  --       vim.print(vim.inspect(selected))
-  --       M.show(lang, lang.build_query("function", fzf.get_last_query()))
-  --     end,
-  --     ["ctrl-r"] = function(selected)
-  --       M.show(lang, lang.build_query("function_call", fzf.get_last_query()))
-  --     end
-  --   },
-  -- })
+  -- return fzf.fzf_live(function(args)
+  --   return lang.get_search_command(table.concat(args, "") or search_query)
+  -- end, opts)
+
+  local fzf_internals = require("plugins.fzf.fzf-internals")
+  return fzf_internals.live_grep_dynamic(opts)
+  -- fzf_fn()
 end
 
--- function M.show(lang, search_query)
---   local search_result = lang.get_search_dirs()
---   local dirs, pretty_path = search_result[1], search_result[2]
---   search_query = search_query or vim.fn.expand("<cword>")
---
---   local fzf = require("fzf-lua")
---
---   fzf.live_grep({
---     prompt = "Search > ",
---     cmd = lang.get_search_command(),
---   })
---
---
---   fzf.live_grep({
---     prompt = "Search > ",
---     -- search = search_query,
---     -- search_paths = dirs,
---     cmd = string.format([[
---       rg --column --line-number --no-heading --color=always --smart-case -t go -e '%s' %s | sed 's/'
---     ]], search_query, dirs),
---     -- rg_glob = true,
---     -- rg_opts = "--column --line-number --no-heading --color=always --smart-case -e",
---     formatter = false, -- REQUIRED to stop internal formatting
---     -- multiline = true,
---     -- formatter = {"path.filename_first", 2},
---     -- multiprocess = false,
---     -- fn_transform = function(entry)
---     --   local file, line_num, col, rest = entry:match("^([^:]+):(%d+):(%d+):%s*(.*)$")
---     --   if file then
---     --     local display = string.format(
---     --       "%s:%s:%s: %s",
---     --       pretty_path(file),
---     --       line_num,
---     --       col,
---     --       rest
---     --     )
---     --     -- Embed original as field 1, display as field 2
---     --     return entry .. "≈" ..  display
---     --     -- return FzfLua.make_entry.file(entry, { file_icons = true, color_icons = true }) .. "\0" .. display
---     --   end
---     --   return entry
---     -- end,
---     -- fzf_opts = {
---     --   ["--delimiter"] = "≈",
---     --   ["--with-nth"] = "2..",
---     -- },
---     actions = {
---       ["default"] = function(selected)
---         local true_path = fzf.path.entry_to_file(selected[1])
---         local p = import("engine").parse_selection(true_path)
---         if p then
---           vim.cmd("edit " .. vim.fn.fnameescape(p.file))
---           vim.cmd(":" .. p.line)
---           vim.cmd("normal! zz")
---         end
---       end,
---       ["ctrl-f"] = function(selected)
---         vim.print(vim.inspect(selected))
---         M.show(lang, lang.build_query("function", fzf.get_last_query()))
---       end,
---       ["ctrl-r"] = function(selected)
---         M.show(lang, lang.build_query("function_call", fzf.get_last_query()))
---       end
---     },
---   })
--- end
+-- vim.keymap.set("n", "xx", function() M.show(import("lang.go"), "Getwd") end, { noremap = true, silent = true })
 
+-- vim.keymap.set("n", "xy", function()
+--   require("fzf-lua").live_grep({
+--     actions = {
+--       ["default"] = require("fzf-lua").actions.grep_lgrep,
+--     },
+--   }) 
+-- end, { noremap = true, silent = true })
+--
 return M
