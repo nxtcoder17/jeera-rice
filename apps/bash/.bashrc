@@ -5,8 +5,10 @@ if [ -z "$PS1" ]; then
 
   export SYSTEM_THEME=$(cat ~/.system-theme)
   file="$HOME/.config/fzf/themes/$SYSTEM_THEME.bash"
+  echo "sourcing file: $file"
   if [ -e "$file" ]; then
     source $file
+    echo "sourced file: $file"
   fi
   return
 fi
@@ -67,6 +69,8 @@ alias vi='nvim'
 alias vim='nvim'
 alias k='kubectl'
 alias k9s='k9s --logoless --headless -c ns'
+
+alias gc='git clone'
 
 has_command bat && alias cat='bat'
 
@@ -134,7 +138,7 @@ function add_to_path() {
 [ "$(uname)" = "Darwin" ] && append_to_path "/opt/homebrew/bin"
 
 export NIXY_EXECUTOR="bubblewrap"
-export NIXY_USE_PROFILE="true"
+# export NIXY_USE_PROFILE="true"
 
 # direnv hook fish  | source 2>&1 > /dev/null
 
@@ -203,6 +207,11 @@ bind -x '"\C-e": edit_prompt'
 
 has_command fzf && source <(fzf --bash)
 has_command zoxide && source <(zoxide init bash)
+
+# function z() {
+#   __zoxide_z
+# }
+
 has_command nix && source_if_exists "/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
 
 if has_command home-manager; then
@@ -274,7 +283,7 @@ function __prompt() {
 
   if [ -n "$NIXY_SHELL" ]; then
     PS1="$NIXY_PROMPT_PREFIX"
-    PS1+=" ${BLUE}$(echo $PWD | sed "s|$NIXY_WORKSPACE_DIR|$(basename $NIXY_WORKSPACE_DIR)|")${RESET}"
+    PS1+=" ${BLUE}$(echo $PWD | sed "s|$NIXY_GIT_ROOT|$(basename $NIXY_GIT_ROOT)|")${RESET}"
   else
     PS1="${BLUE}\w${RESET}"
   fi
@@ -319,6 +328,8 @@ export _JAVA_OPTIONS="-Dawt.toolkit.name=WLToolkit -Dsun.java2d.uiScale.enabled=
 
 export ANDROID_HOME="$HOME/Android"
 add_to_path "$HOME/SDKs/flutter/bin"
+add_to_path "$HOME/.local/bin"
+export PATH=/home/nixy/.opencode/bin:$PATH
 
 ## Only run fish for interactive sessions
 # case "$-" in

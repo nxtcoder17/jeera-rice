@@ -49,6 +49,7 @@ local function syntax()
     {
       "nvim-treesitter/nvim-treesitter",
       event = "BufReadPost",
+      branch = "master",
       config = function()
         require("plugins.treesitter")
       end,
@@ -265,15 +266,6 @@ local function navigation()
           mode = "n",
           desc = "Go up",
         },
-      },
-    },
-
-    {
-      "chaoren/vim-wordmotion",
-      event = "BufReadPost",
-      keys = {
-        { "cw", "ce", mode = "n" },
-        { "cW", "cE", mode = "n" },
       },
     },
 

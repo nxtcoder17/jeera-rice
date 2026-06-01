@@ -25,6 +25,7 @@ keymap({ "n" }, ";", ":", opt("in normal mode, ; acts like a :"))
 
 vim.keymap.set("n", "j", "gj", opts)
 vim.keymap.set("n", "k", "gk", opts)
+Require("keymaps.wordmotion").setup()
 
 vim.keymap.set("t", "<esc>", "<C-\\><C-N>", opts)
 vim.keymap.set({ "n", "x" }, "cc", '"+y', opts)

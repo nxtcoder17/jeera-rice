@@ -165,4 +165,6 @@ nnoremap sdb :action ToggleLineBreakpoint<CR>
 nnoremap sds :action Resume<CR>
 nnoremap s, :action StepOver<CR>
 
+nnoremap scc :action CopyPathWithLineNumber<CR>
+
 set ideastrictmode

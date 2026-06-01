@@ -1,1 +1,1 @@
-/home/nxtcoder17/.config/fzf/themes/light.bash
+/home/nxtcoder17/.config/fzf/themes/dark.bash

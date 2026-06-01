@@ -1,1 +1,1 @@
-/home/nxtcoder17/.config/fzf/themes/light.fish
+/home/nxtcoder17/.config/fzf/themes/dark.fish
