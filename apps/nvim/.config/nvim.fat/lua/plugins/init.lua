@@ -561,20 +561,6 @@ local function terminals()
   }
 end
 
-local function lua_rocks()
-  return {
-    {
-      "vhyrro/luarocks.nvim",
-      priority = 1000, -- Very high priority is required, luarocks.nvim should run as the first plugin in your config.
-      opts = {
-        rocks = {
-          "lpeg",
-        },
-      },
-    },
-  }
-end
-
 local function ai()
   return {
     -- {
@@ -605,7 +591,6 @@ vim.list_extend(plugins, mini_nvim())
 vim.list_extend(plugins, nxtcoder17_plugins())
 vim.list_extend(plugins, file_managers())
 vim.list_extend(plugins, terminals())
-vim.list_extend(plugins, lua_rocks())
 vim.list_extend(plugins, ai())
 
 require("lazy").setup(plugins, {

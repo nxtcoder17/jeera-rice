@@ -116,7 +116,7 @@ vim.api.nvim_create_user_command("Doc", M.doc_command, {
   end,
 })
 
--- vim.keymap.set("n", "gd", M.goto_definition, { desc = "[DocSearch] Goto Definition" }) 
--- vim.keymap.set("n", "gf", M.search_module, { desc = "[DocSearch] Search Module" }) 
+-- vim.keymap.set("n", "gd", M.goto_definition, { desc = "[DocSearch] Goto Definition" })
+-- vim.keymap.set("n", "gf", M.search_module, { desc = "[DocSearch] Search Module" })
 
 return M

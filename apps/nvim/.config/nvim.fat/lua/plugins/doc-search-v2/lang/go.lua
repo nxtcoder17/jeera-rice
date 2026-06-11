@@ -62,7 +62,7 @@ function M.build_query(type, search)
     end
     return [[^func\s+(?:\([^()]*\)\s*)?[A-Z]\w*]] .. search
   end
-  
+
   -- if type == "exported_function" then
   --   if search:match("^%^func% %[A-Z%]%+") then
   --     return search:gsub("^%^func% %[A-Z%]%+", "", 1)
