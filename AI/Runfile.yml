@@ -1,0 +1,5 @@
+tasks:
+  antigravity:
+    cmd:
+      - ln -sf $PWD/PROMPT.md $HOME/.gemini/GEMINI.md
+      - ln -sf $PWD/skills $HOME/.gemini/antigravity-cli/skills
