@@ -1,5 +1,3 @@
-
-
 local palette = {
 	bg_edge2 = '#494955',
 	bg_edge = '#2a2a37',
@@ -57,6 +55,7 @@ vim.api.nvim_set_hl(0, "@punctuation.delimiter", { fg = palette.azure })
 vim.api.nvim_set_hl(0, "Constant", { fg = palette.purple })
 vim.api.nvim_set_hl(0, "@number", { fg = palette.purple })
 vim.api.nvim_set_hl(0, "@boolean", { fg = palette.purple })
+vim.api.nvim_set_hl(0, "MatchParen", { fg = palette.purple, bold = true, bg = palette.purple_bg })
 
 -- Diagnostic Errors
 vim.api.nvim_set_hl(0, "DiagnosticError", { bg = palette.red_bg, fg = palette.red })

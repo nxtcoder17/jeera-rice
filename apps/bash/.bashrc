@@ -346,3 +346,61 @@ export PATH=/home/nixy/.opencode/bin:$PATH
 #   fi
 #   ;;
 # esac
+
+encrypt-file() {
+  local file=$1
+  [ -e "$file" ] || {
+    echo "$file does not exist" >&2
+    return 1
+  }
+  if [ -n "$ENC_PASS" ]; then
+    openssl enc -aes-256-cbc -a -salt -pbkdf2 -iter 100000 -pass env:ENC_PASS -in "$file"
+  else
+    openssl enc -aes-256-cbc -a -salt -pbkdf2 -iter 100000 -in "$file"
+  fi
+}
+
+decrypt-file() {
+  if [ -n "$ENC_PASS" ]; then
+    openssl enc -d -aes-256-cbc -a -salt -pbkdf2 -iter 100000 -pass env:ENC_PASS -in "$1"
+  else
+    openssl enc -d -aes-256-cbc -a -salt -pbkdf2 -iter 100000 -in "$1"
+  fi
+}
+
+edit-encrypted-file() {
+  local file=$1 tmp enc_tmp
+  tmp=$(mktemp -t enc_plain) || return 1
+  enc_tmp=$(mktemp -t enc_cipher) || {
+    rm -f "$tmp"
+    return 1
+  }
+  trap 'rm -f "$tmp" "$enc_tmp"; unset ENC_PASS' RETURN
+
+  read -rsp "Password: " ENC_PASS
+  echo
+  export ENC_PASS
+
+  decrypt-file "$file" >"$tmp" || {
+    echo "decrypt failed" >&2
+    return 1
+  }
+  "${EDITOR:-vi}" "$tmp"
+  encrypt-file "$tmp" >"$enc_tmp" || {
+    echo "encrypt failed" >&2
+    return 1
+  }
+
+  mv "$enc_tmp" "$file"
+}
+
+# wt — switch between git worktrees with fzf
+# Usage:
+#   wt           pick a worktree interactively
+alias wt='git-worktree.sh'
+
+wts() {
+  dir=$(git-worktree.sh switch-worktree)
+  [ -z "$dir" ] && exit 0
+  cd "$dir"
+}

@@ -1,31 +1,19 @@
 local M = {}
 
-local function is_upper(char)
-  return char:match("%u") ~= nil
-end
-
-local function is_lower(char)
-  return char:match("%l") ~= nil
-end
-
-local function is_digit(char)
-  return char:match("%d") ~= nil
-end
-
-local function is_alnum(char)
-  return char:match("%w") ~= nil
-end
-
-local function is_space(char)
-  return char:match("%s") ~= nil
-end
+local is_upper = Require("functions.strings").is_upper
+local is_lower = Require("functions.strings").is_lower
+local is_digit = Require("functions.strings").is_digit
+local is_alnum = Require("functions.strings").is_alnum
+local is_space = Require("functions.strings").is_space
 
 local function is_separator(char)
   return char == "_" or char == "-"
 end
 
 local function is_boundary(prev, char, next)
-  if is_digit(prev) ~= is_digit(char) then
+  local prevIsDigit = is_digit(prev)
+
+  if prevIsDigit ~= is_digit(char) then
     return true
   end
 
@@ -153,7 +141,10 @@ local function text_object(inner)
   if not inner then
     local line = get_line(lnum)
 
-    while end_col < #line and (is_space(line:sub(end_col + 1, end_col + 1)) or is_separator(line:sub(end_col + 1, end_col + 1))) do
+    while
+      end_col < #line
+      and (is_space(line:sub(end_col + 1, end_col + 1)) or is_separator(line:sub(end_col + 1, end_col + 1)))
+    do
       end_col = end_col + 1
     end
 

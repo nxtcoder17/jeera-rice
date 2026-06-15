@@ -1,3 +1,125 @@
 nixpkgs:
   default: 050e09e091117c3d7328c7b2b7b577492c43c134
-packages: []
+packages:
+  - nixpkgs/default#coreutils-full
+  - nixpkgs/default#unixtools.whereis
+  - nixpkgs/default#bc
+  - nixpkgs/default#which
+  - nixpkgs/default#bat
+  - nixpkgs/default#less
+  - nixpkgs/default#ncurses
+  - nixpkgs/default#ripgrep
+  - nixpkgs/default#curl
+  - nixpkgs/default#go
+  - nixpkgs/default#nodejs
+  - nixpkgs/default#bun
+  - nixpkgs/default#git
+  - nixpkgs/default#git-filter-repo
+  - nixpkgs/default#jq
+  - nixpkgs/default#yq
+  - nixpkgs/default#gh
+  - nixpkgs/default#fd
+  - nixpkgs/default#eza
+  - nixpkgs/default#dust
+  - nixpkgs/default#fzf
+  - nixpkgs/default#podman
+  - nixpkgs/default#nerdctl
+  - nixpkgs/default#unzip
+  - name: nvim
+    sources:
+      linux/amd64:
+        url: https://github.com/neovim/neovim/releases/download/v0.12.2/nvim-linux-x86_64.tar.gz
+        sha256: sha256-Mc+FlFy2ANls32n4i8aL7IFKy/9QhjxVRq3vOhvO8mA=
+    binPaths:
+      - nvim-linux-x86_64/bin
+  - name: treesitter-cli
+    sources:
+      linux/amd64:
+        url: https://github.com/tree-sitter/tree-sitter/releases/download/v0.26.8/tree-sitter-cli-linux-x86.zip
+        sha256: sha256-JQllY+jgEgbmoDbHW4lFkievcBvrPMzDcCo/94UEAHs=
+    binPaths:
+      - .
+  - nixpkgs/default#google-chrome
+  - nixpkgs/default#xdg-utils
+  - nixpkgs/default#wl-clipboard
+  - nixpkgs/default#zed-editor
+env:
+  BROWSER: google-chrome-stable
+  CONTAINER_HOST: unix:///run/user/1000/podman/podman.sock
+  DISPLAY: :0
+  DOCKER_HOST: /run/user/1000/podman/podman.sock
+  IS_DEMO: "1"
+  SSH_AUTH_SOCK: /home/nxtcoder17/.ssh/agent.sock
+  WAYLAND_DISPLAY: wayland-1
+  XDG_BACKEND: wayland
+  XDG_RUNTIME_DIR: /run/user/1000
+mounts:
+  - source: $HOME/.bashrc
+    dest: $HOME/.bashrc
+    readonly: true
+  - source: $HOME/.bash_profile
+    dest: $HOME/.bash_profile
+    readonly: true
+  - source: $HOME/.config/ls
+    dest: $HOME/.config/ls
+    readonly: true
+  - source: $HOME/.config/fzf
+    dest: $HOME/.config/fzf
+    readonly: true
+  - source: $HOME/.profile
+    dest: $HOME/.profile
+    readonly: true
+  - source: $HOME/.gitconfig
+    dest: $HOME/.gitconfig
+    readonly: true
+  - source: $SSH_AUTH_SOCK
+    dest: $SSH_AUTH_SOCK
+    readonly: true
+  - source: $HOME/.bashrc
+    dest: $HOME/.bashrc
+    readonly: true
+  - source: $HOME/Pictures
+    dest: /home/nxtcoder17/Pictures
+    readonly: true
+  - source: $HOME/.system-theme
+    dest: $HOME/.system-theme
+    readonly: true
+  - source: $HOME/Android
+    dest: $HOME/Android
+    readonly: true
+  - source: $HOME/workspace/nxtcoder17/jeera-rice/apps/nvim/.config/nvim
+    dest: $HOME/.config/nvim
+  - source: $HOME/workspace/nxtcoder17/jeera-rice/apps/nvim/.config/simple.nvim
+    dest: $HOME/.config/simple.nvim
+    readonly: true
+  - source: $HOME/workspace/nxtcoder17/jeera-rice/bin
+    dest: $HOME/.local/jeera-rice-bin
+    readonly: true
+  - source: $HOME/.kube/configs
+    dest: $HOME/.kube/configs
+    readonly: true
+  - source: $HOME/.claude
+    dest: $HOME/.claude
+  - source: $HOME/.claude.json
+    dest: $HOME/.claude.json
+  - source: $XDG_DATA_HOME/fonts
+    dest: $XDG_DATA_HOME/fonts
+    readonly: true
+  - source: $XDG_CACHE_HOME/fontconfig
+    dest: $XDG_CACHE_HOME/fontconfig
+    readonly: true
+  - source: /run
+    dest: /run
+  - source: /dev/dri
+    dest: /dev/dri
+    readonly: true
+  - source: /dev/shm
+    dest: /dev/shm
+  - source: /usr/share/zoneinfo
+    dest: /usr/share/zoneinfo
+    readonly: true
+  - source: $HOME/.config/docker/config.json
+    dest: $HOME/.config/docker/config.json
+    readonly: true
+  - source: $HOME/.config/nxtcode
+    dest: $HOME/.config/nxtcode
