@@ -1,8 +1,8 @@
 set -U fish_greeting
 
-if type -q exa
-  alias ls 'exa --icons'
-  alias ll 'exa -la --icons'
+if type -q eza
+  alias ls 'eza --icons'
+  alias ll 'eza -la --icons'
 end
 
 # alias sudo "sudo -E env"
@@ -30,7 +30,7 @@ alias vim 'nvim'
 alias k 'kubectl'
 alias k9s 'k9s --logoless --headless -c ns'
 alias cat 'bat'
-alias cursor 'cursor --enable-features=UseOzonePlatform,WaylandWindowDecorations,WebRTCPipeWireCapturer --ozone-platform-hint=auto'
+alias wt 'git-worktree.sh'
 
 function cc --description "copies stdout to system clipboard"
   if test "$(uname)" = "Darwin"
@@ -139,11 +139,25 @@ function edit_cmd --description 'Input command in external editor'
   end
 end
 
+function _fzf_history
+  set selected (
+      builtin history |
+      fzf --no-sort --layout=reverse --prompt="history> "
+  )
+  if test -n "$selected"
+      commandline -- "$selected"
+  end
+  commandline -f repaint
+end
+
 function fish_user_key_bindings
   bind \ce 'edit_cmd'
   bind -M insert \ce 'edit_cmd'
 
   bind -M insert \cf forward-char
+
+  bind \cr '_fzf_history'
+  bind -M insert \cr _fzf_history  # <-- this is what's missing
 end
 
 if status is-interactive
@@ -206,7 +220,7 @@ set -gx NPM_CONFIG_CACHE "$XDG_CACHE_HOME/npm"
 set -gx NPM_CONFIG_TMP "$XDG_RUNTIME_DIR/npm"
 set -gx NPM_CONFIG_STORE_DIR "$XDG_DATA_HOME/node/bin"
 
-fish_add_path "$HOME/me/jeera-rice/bin"
+fish_add_path "$HOME/nxtcoder17/jeera-rice/bin"
 fish_add_path "$HOME/.local/bin"
 fish_add_path "$GOPATH/bin"
 fish_add_path $HOME/workspace/github.com/kloudlite/internal-tools/bin
@@ -219,7 +233,7 @@ end
 
 # direnv hook fish  | source 2>&1 > /dev/null
 
-set -gx NIXY_EXECUTOR "bubblewrap"
+set -gx NIXY_EXECUTOR "local"
 set -gx NIXY_USE_PROFILE "true"
 
 # pnpm
@@ -229,4 +243,6 @@ if not string match -q -- $PNPM_HOME $PATH
 end
 # pnpm end
 
-nixy shell:hook fish | source
+# nixy shell:hook fish | source
+
+set -gx fish_function_path $__fish_config_dir/functions/*/ $fish_function_path

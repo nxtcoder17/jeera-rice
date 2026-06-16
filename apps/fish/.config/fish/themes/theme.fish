@@ -1,1 +1,1 @@
-light.fish
+/Users/anshuman/.config/fish/themes/dark.fish

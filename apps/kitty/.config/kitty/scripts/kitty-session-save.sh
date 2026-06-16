@@ -4,6 +4,10 @@
 # map ctrl+shift+s launch --type=overlay --allow-remote-control <path-to-this-script>
 ###
 
+if [ "$(uname)" = "Darwin" ]; then
+  PATH="/opt/homebrew/bin:$PATH"
+fi
+
 dir="${XDG_DATA_HOME:-$HOME/.local/share}/kitty/sessions"
 mkdir -p "$dir"
 

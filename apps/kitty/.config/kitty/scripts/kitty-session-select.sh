@@ -1,5 +1,9 @@
 #! /usr/bin/env bash
 
+if [ "$(uname)" = "Darwin" ]; then
+  PATH="/opt/homebrew/bin:$PATH"
+fi
+
 dir="${XDG_DATA_HOME:-$HOME/.local/share}/kitty/sessions"
 mkdir -p "$dir"
 

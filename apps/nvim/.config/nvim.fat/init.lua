@@ -11,3 +11,5 @@ require("folds")
 Require("keymaps")
 Require("autocmds")
 Require("commands")
+
+vim.cmd.colorscheme(vim.o.background)
