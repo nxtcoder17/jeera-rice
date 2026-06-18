@@ -9,13 +9,15 @@ local filetypes = {
 
 -- LSP
 notify_if_not_installed({
-  "typescript-language-server",
+  -- "typescript-language-server",
+  "tsgo",
   -- "biome",
   "deno",
 })
 
-vim.lsp.config("ts_ls", {
-  root_markers = { "package-lock.json", "yarn.lock", "pnpm-lock.yaml", "bun.lock" },
+
+vim.lsp.config("tsgo", {
+  root_markers = { "zpackage-lock.json", "yarn.lock", "pnpm-lock.yaml", "bun.lock" },
   filetypes = filetypes,
   single_file_support = true,
   on_attach = function(client, bufnr)
