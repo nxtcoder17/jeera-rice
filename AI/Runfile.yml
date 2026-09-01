@@ -1,5 +1,9 @@
 tasks:
-  antigravity:
+  install:
     cmd:
-      - ln -sf $PWD/PROMPT.md $HOME/.gemini/GEMINI.md
-      - ln -sf $PWD/skills $HOME/.gemini/antigravity-cli/skills
+      # - ln -sf $PWD/PROMPT.md $HOME/.gemini/GEMINI.md
+      - mkdir -p $HOME/.agents
+      - ln -sf $PWD/skills $HOME/.agents/
+      # - ln -sf $PWD/skills $HOME/.gemini/antigravity-cli/skills
+      # - ln -sf $PWD/skills $HOME/.cursor/skills
+      # - ln -sf $PWD/skills $HOME/.commandcode/skills

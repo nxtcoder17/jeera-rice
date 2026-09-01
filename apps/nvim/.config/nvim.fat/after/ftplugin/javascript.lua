@@ -17,7 +17,7 @@ notify_if_not_installed({
 
 
 vim.lsp.config("tsgo", {
-  root_markers = { "zpackage-lock.json", "yarn.lock", "pnpm-lock.yaml", "bun.lock" },
+  root_markers = { "package-lock.json", "yarn.lock", "pnpm-lock.yaml", "bun.lock" },
   filetypes = filetypes,
   single_file_support = true,
   on_attach = function(client, bufnr)
@@ -31,6 +31,8 @@ vim.lsp.config("tsgo", {
     Require("lsp.on_attach")(client, bufnr)
   end,
 })
+
+vim.lsp.inlay_hint.enable(false)
 
 -- vim.lsp.config("biome", {})
 
@@ -53,7 +55,8 @@ vim.lsp.config("denols", {
 })
 
 vim.lsp.enable({
-  "ts_ls",
+  -- "ts_ls",
+  "tsgo",
   -- "biome", -- linter and formatter
   "denols",
 })

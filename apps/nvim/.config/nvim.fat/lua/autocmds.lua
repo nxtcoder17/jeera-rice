@@ -60,15 +60,6 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 -- 	end,
 -- })
 
--- vim.api.nvim_create_autocmd({ "LspAttach" }, {
---   group = autocmds,
---   pattern = "*",
---   callback = function()
---     --INFO: https://github.com/quangnguyen30192/cmp-nvim-tags/blob/main/README.md#troubleshooting
---     vim.bo.tagfunc = nil
---   end,
--- })
-
 local function file_exists(name)
   local f = io.open(name, "r")
   return f ~= nil and io.close(f)
@@ -144,10 +135,18 @@ vim.api.nvim_create_autocmd({ "BufReadPost" }, {
   end,
 })
 
-vim.api.nvim_create_autocmd("LspAttach", {
+vim.api.nvim_create_autocmd({ "FileType" }, {
   group = autocmds,
-  callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    print("LSP attached:", client.name)
+  pattern = {"go", "lua", "yaml"},
+  callback = function(event)
+    vim.treesitter.start(event.buf)
   end,
 })
+
+-- vim.api.nvim_create_autocmd("LspAttach", {
+--   group = autocmds,
+--   callback = function(args)
+--     local client = vim.lsp.get_client_by_id(args.data.client_id)
+--     print("LSP attached:", client.name)
+--   end,
+-- })

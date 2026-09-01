@@ -3,6 +3,8 @@ local lang_comments = {
   gowork = "// %s",
   terraform = "# %s",
   proto = "// %s",
+  go = "// %s",
+  scheme = "; %s",
   kdl = "// %s",
   gotexttmpl = "{{- /* %s */}}",
   gohtmltmpl = "{{- /* %s */}}",
@@ -18,7 +20,13 @@ Require("mini.comment").setup({
       if v ~= nil then
         return v
       end
-      return require("ts_context_commentstring").calculate_commentstring() or vim.bo.commentstring
+
+      local ok, ts_ctx_comment = pcall(require, "ts_context_commentstring")
+      if ok then
+        return ts_ctx_comment.calculate_commentstring()
+      end
+
+      return vim.bo.commentstring
     end,
   },
   mappings = {

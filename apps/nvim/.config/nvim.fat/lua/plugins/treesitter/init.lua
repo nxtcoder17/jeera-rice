@@ -4,7 +4,9 @@ vim.api.nvim_create_autocmd("BufReadPost", {
   callback = function(args)
     local bufnr = args.buf
     local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(bufnr))
-    if not ok or not stats or stats.size <= 50 * 1024 then return end
+    if not ok or not stats or stats.size <= 50 * 1024 then
+      return
+    end
 
     -- Kill the treesitter parser entirely — no module can use it
     vim.treesitter.stop(bufnr)
@@ -14,7 +16,8 @@ vim.api.nvim_create_autocmd("BufReadPost", {
   end,
 })
 
-Require("nvim-treesitter.configs").setup({
+Require("nvim-treesitter").setup({
+  install_dir = vim.fn.stdpath("data") .. "/site",
   -- ensure_installed = "all",
   -- ignore_install = { "javascript", "typescript", "bash", "go", "lua", "yaml", "json" },
   ensure_installed = {
@@ -35,13 +38,16 @@ Require("nvim-treesitter.configs").setup({
     "html",
     "javascript",
     "typescript",
+    "typescriptreact",
     "tsx",
     "graphql",
     "bash",
     "terraform",
     "proto",
+
     "markdown",
     "markdown_inline",
+    "latex",
   },
   query_linter = {
     enable = true,
@@ -135,13 +141,24 @@ Require("nvim-treesitter.configs").setup({
   },
 })
 
-local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-parser_config.gotmpl = {
-  install_info = {
-    url = "https://github.com/qvalentin/tree-sitter-go-template",
-    branch = "helm-ls",
-    files = { "src/parser.c" },
-  },
-  filetype = { "gotmpl", "gotexttmpl", "gohtmltmpl" },
-  used_by = { "gohtmltmpl", "gotexttmpl", "gotmpl", "yaml" },
-}
+local augroup = vim.api.nvim_create_augroup("ts-autocmds", { clear = true })
+
+-- vim.api.nvim_create_autocmd('FileType', {
+--   group = augroup,
+--   pattern = "*",
+--   callback = function()
+--     vim.print("HERE, it is getting invoked")
+--     vim.treesitter.start()
+--   end,
+-- })
+
+-- local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+-- parser_config.gotmpl = {
+--   install_info = {
+--     url = "https://github.com/qvalentin/tree-sitter-go-template",
+--     branch = "helm-ls",
+--     files = { "src/parser.c" },
+--   },
+--   filetype = { "gotmpl", "gotexttmpl", "gohtmltmpl" },
+--   used_by = { "gohtmltmpl", "gotexttmpl", "gotmpl", "yaml" },
+-- }

@@ -1,0 +1,55 @@
+nixpkgs:
+  default: a50de1b7d8a586adc18d2395c19de7d6058e6030
+
+packages:
+  # shell setup
+  - coreutils-full
+  - unixtools.whereis
+  - which
+  - bat
+  - less
+  - ncurses
+  - jq
+  - yq
+  - curl
+  - dust
+  - zoxide
+  - eza
+  - bun
+
+  # build tools
+  - nodejs
+  - go
+
+  # editor setu
+  - neovim
+  - ripgrep
+  - fd
+  - fzf
+  - fish
+
+mounts:
+  - source: "$HOME/.config/nvim"
+    dest: "/tmp/nvim"
+    readonly: true
+
+  - source: "$HOME/.config/fish"
+    dest: "/tmp/fish"
+    readonly: true
+
+  - source: "$HOME/.config/fzf"
+    dest: "/tmp/fzf"
+    readonly: true
+
+on-shell-enter: |+
+  mkdir -p $HOME/.config
+
+  # echo "nixy-mode  = $NIXY_MODE"
+  if [ "$NIXY_MODE" = "colima" ]; then
+    ln -sf /tmp/nvim $HOME/.config/
+    ln -sf /tmp/fzf $HOME/.config/
+
+    mkdir -p $HOME/.config/fish
+    cp -r -s /tmp/fish/* $HOME/.config/fish/
+    rm -f $HOME/.config/fish/fish_variables
+  fi

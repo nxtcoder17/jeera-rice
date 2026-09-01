@@ -4,10 +4,11 @@ function to-git-root
     set dir .
   end
 
-  if [ -d "$dir/.git" ]
-    pushd $dir
-    return
+  set -l root (git -C "$dir" rev-parse --show-toplevel 2>/dev/null)
+  if test $status -eq 0
+    pushd "$root"
   else
-    to-git-root $dir/..
+    echo "Not inside a Git repository." >&2
+    return 1
   end
 end

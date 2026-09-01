@@ -1,8 +1,8 @@
 set -U fish_greeting
 
 if type -q eza
-  alias ls 'eza --icons'
-  alias ll 'eza -la --icons'
+  alias ls 'eza --icons auto --ignore-glob="worktrees|commondir|gitdir|objects|refs|hooks|info|logs|branches|packed-refs|HEAD|FETCH_HEAD|ORIG_HEAD|index|config|description"'
+  alias ll 'eza -la --icons auto'
 end
 
 # alias sudo "sudo -E env"
@@ -30,7 +30,25 @@ alias vim 'nvim'
 alias k 'kubectl'
 alias k9s 'k9s --logoless --headless -c ns'
 alias cat 'bat'
-alias wt 'git-worktree.sh'
+# alias wt 'git-worktree.sh'
+
+function wt
+  if ! count $argv > /dev/null
+    set -l dir $(git-worktree.sh switch-worktree)
+    if test -n "$dir"
+      cd $dir
+    end
+    return
+  end
+
+  git-worktree.sh $argv
+end
+
+# xdg path
+set -gx XDG_CONFIG_HOME "$HOME/.config"
+set -gx XDG_CACHE_HOME "$HOME/.cache"
+set -gx XDG_DATA_HOME "$HOME/.local/share"
+set -gx XDG_STATE_HOME "$HOME/.local/state"
 
 function cc --description "copies stdout to system clipboard"
   if test "$(uname)" = "Darwin"
@@ -87,6 +105,7 @@ set -g __color_dir "#2fbaf5"
 set -g __color_git "#58bf9c"
 set -g __color_kubeconfig "#2fbaf5"
 set -g __color_nix "#2fbaf5"
+set -g __color_prompt "#2fbaf5"
 
 set -g __icon_nix " "
 set -g __icon_sep "|"
@@ -102,29 +121,37 @@ end
 source_if_exists ~/.config/fish/themes/$SYSTEM_THEME.fish
 source_if_exists ~/.config/fzf/themes/$SYSTEM_THEME.fish
 
+set -e __fish_git_prompt_show_informative_status
+set -e __fish_git_prompt_showdirtystate
+set -e __fish_git_prompt_showuntrackedfiles
+set -e __fish_git_prompt_showupstream
+
 function fish_prompt
-[ -e "$HOME/.system-theme" ] && set -gx SYSTEMT_THEME (cat "$HOME/.system-theme")
+  [ -e "$HOME/.system-theme" ] && set -gx SYSTEMT_THEME (cat "$HOME/.system-theme")
 
   source_if_exists ~/.config/fish/themes/$SYSTEM_THEME.fish
   source_if_exists ~/.config/fzf/themes/$SYSTEM_THEME.fish
 
-  # set prompt_char "😎"
+  # # set prompt_char "😎"
   set prompt_char "ϟ" # Greek Small Letter Koppa[1]
-  # set prompt_char "𝛌"
+  # # set prompt_char "𝛌"
   [ ! -z "$fish_private_mode" ] && set prompt_char "🥷"
   [ "$EUID" -eq 0 ] && set prompt_char "√π"
-  [ -n "$IN_NIX_SHELL" ] && set prompt_char " " && set prompt_color $__color_nix
-  [ -n "$NIXY_SHELL" ] && set prompt_char "[NIXY]" && set prompt_color $__color_nix
+  [ -n "$NIXY_SHELL" ] && set prompt_char " 𝓎"
+  # [ -n "$NIXY_SHELL" ] && set prompt_char "[nix𝓎]" && set prompt_color $__color_nix
 
   if [ -n "$KUBECONFIG" ]
     printf "%s(󰠳 %s)%s " (set_color $__color_kubeconfig) (basename $KUBECONFIG) (set_color $fish_color_normal)
   end
-
+  #
   printf "%s%s" (set_color $fish_color_cwd) (prompt_pwd)
-  printf "%s%s" (set_color $fish_color_command) (fish_git_prompt)
-  printf "%s\n" (set_color $fish_color_normal)
+  set -l git_branch (git branch --show-current 2>/dev/null)
 
-  printf "$prompt_char "
+  if [ ! -z "$git_branch" ]
+    printf " (%s%s)" (set_color $fish_color_command) $git_branch
+  end
+
+  printf "\n%s$prompt_char%s " (set_color $color_prompt) (set_color $fish_color_normal)
 end
 
 function edit_cmd --description 'Input command in external editor'
@@ -207,12 +234,6 @@ set -x MANPAGER 'nvim +Man!'
 set -gx DIRENV_LOG_FORMAT ""
 set -gx EDITOR nvim
 
-# xdg path
-set -gx XDG_CONFIG_HOME "$HOME/.config"
-set -gx XDG_CACHE_HOME "$HOME/.cache"
-set -gx XDG_DATA_HOME "$HOME/.local/share"
-set -gx XDG_STATE_HOME "$HOME/.local/state"
-
 set -gx GOPATH "$XDG_DATA_HOME/go"
 
 set -gx NPM_CONFIG_USERCONFIG "$XDG_CONFIG_HOME/npm/npmrc"
@@ -233,16 +254,26 @@ end
 
 # direnv hook fish  | source 2>&1 > /dev/null
 
-set -gx NIXY_EXECUTOR "local"
-set -gx NIXY_USE_PROFILE "true"
+# set -gx NIXY_MODE "colima"
+set -gx NIXY_MODE "local"
+set -gx NIXY_PRELOAD "$HOME/.config/nixy/nixy.devtools.yml"
 
 # pnpm
-set -gx PNPM_HOME "/var/home/nxtcoder17/.local/share/pnpm"
+set -gx PNPM_HOME "$HOME/.local/share/pnpm"
 if not string match -q -- $PNPM_HOME $PATH
   set -gx PATH "$PNPM_HOME" $PATH
 end
 # pnpm end
 
-# nixy shell:hook fish | source
-
 set -gx fish_function_path $__fish_config_dir/functions/*/ $fish_function_path
+
+set -gx TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE "/var/run/docker.sock"
+
+if test -z "$DOCKER_HOST"
+  set -gx DOCKER_HOST "unix://$HOME/.colima/default/docker.sock"
+end
+
+nixy shell:hook fish | source
+
+# Added by codebase-memory-mcp install
+fish_add_path /Users/anshuman/.local/bin

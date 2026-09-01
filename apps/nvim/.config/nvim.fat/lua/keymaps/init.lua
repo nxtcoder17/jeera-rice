@@ -50,10 +50,32 @@ keymap({ "n" }, "<C-M-Down>", "<Cmd>resize +5<CR>", opt("resizes horizontally by
 keymap("n", "s]", "<cmd>cnext<CR>", opt("quickfix list, jump to next item"))
 keymap("n", "s[", "<cmd>cprev<CR>", opt("quickfix list, jump to previous item"))
 
+local function relative_path(base, target)
+  local base_parts = vim.split(vim.fs.normalize(base), "/")
+  local target_parts = vim.split(vim.fs.normalize(target), "/")
+
+  local common = 0
+  for i = 1, math.min(#base_parts, #target_parts) do
+    if base_parts[i] ~= target_parts[i] then
+      break
+    end
+    common = i
+  end
+
+  local tail = table.concat(vim.list_slice(target_parts, common + 1, #target_parts), "/")
+  local head = string.rep("../", #base_parts - common)
+  return head .. tail
+end
+
 keymap("n", "scc", function()
   local f = vim.fn.expand("%:p")
-  local from_project_root = f:sub(#vim.g.project_root_dir + 2)
+  local root = vim.fn.resolve(vim.g.project_root_dir)
 
+  if not f or not root then
+    return
+  end
+
+  local from_project_root = relative_path(root, f)
   local lineNr = vim.fn.line(".")
 
   vim.fn.setreg("+", from_project_root .. ":" .. lineNr)

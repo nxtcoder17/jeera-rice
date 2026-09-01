@@ -34,10 +34,10 @@ end
 
 local function syntax()
   return {
-    -- {
-    -- 	"sheerun/vim-polyglot",
-    -- 	event = "VeryLazy",
-    -- },
+    {
+      "sheerun/vim-polyglot",
+      event = "VeryLazy",
+    },
     -- {
     --   "catppuccin/nvim",
     --   name = "catppuccin",
@@ -48,11 +48,13 @@ local function syntax()
     -- },
     {
       "nvim-treesitter/nvim-treesitter",
-      event = "BufReadPost",
-      branch = "master",
+      branch = "main",
       config = function()
         require("plugins.treesitter")
       end,
+      -- init = function()
+      --   vim.treesitter.start(bufnr)
+      -- end,
       dependencies = {
         { "nvim-treesitter/nvim-treesitter-textobjects" },
         -- {
@@ -96,26 +98,26 @@ local function syntax()
         -- },
       },
     },
-    {
-      "nvim-treesitter/nvim-treesitter-context",
-      event = "BufReadPost",
-      dependencies = { "nvim-treesitter" },
-      config = function()
-        require("treesitter-context").setup({
-          max_lines = 1500, -- disable on large files to prevent scroll jank
-        })
-      end,
-    },
-    {
-      "ziontee113/syntax-tree-surfer",
-      dependencies = {
-        "nvim-treesitter",
-      },
-      event = "BufReadPost",
-      config = function()
-        require("plugins.treesitter.syntax-tree-surfer")
-      end,
-    },
+    -- {
+    --   "nvim-treesitter/nvim-treesitter-context",
+    --   event = "BufReadPost",
+    --   dependencies = { "nvim-treesitter" },
+    --   config = function()
+    --     require("treesitter-context").setup({
+    --       max_lines = 1500, -- disable on large files to prevent scroll jank
+    --     })
+    --   end,
+    -- },
+    -- {
+    --   "ziontee113/syntax-tree-surfer",
+    --   dependencies = {
+    --     "nvim-treesitter",
+    --   },
+    --   event = "BufReadPost",
+    --   config = function()
+    --     require("plugins.treesitter.syntax-tree-surfer")
+    --   end,
+    -- },
     {
       -- enhanced highlighting for semantic match pairs
       "utilyre/sentiment.nvim",
@@ -194,16 +196,20 @@ local function lsp()
       end,
     },
 
+    -- {
+    --   "olexsmir/gopher.nvim",
+    --   ft = "go",
+    --   dependencies = {
+    --     "nvim-lua/plenary.nvim",
+    --     "nvim-treesitter/nvim-treesitter",
+    --   },
+    --   config = function()
+    --     Require("gopher").setup()
+    --   end,
+    -- },
     {
-      "olexsmir/gopher.nvim",
-      ft = "go",
-      dependencies = {
-        "nvim-lua/plenary.nvim",
-        "nvim-treesitter/nvim-treesitter",
-      },
-      config = function()
-        Require("gopher").setup()
-      end,
+      "nvim-lua/plenary.nvim",
+      lazy = true,
     },
     {
       "folke/trouble.nvim",
@@ -432,6 +438,7 @@ local function editor_ui_enhancements()
     },
 
     { "ellisonleao/glow.nvim", ft = "markdown", config = true, cmd = "Glow" },
+    { "MeanderingProgrammer/render-markdown.nvim", ft = "markdown", config = true },
   }
 end
 

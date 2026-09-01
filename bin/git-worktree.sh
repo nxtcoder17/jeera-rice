@@ -1,42 +1,4 @@
 #! /usr/bin/env bash
-#
-# git-worktree.sh — seamless git worktree management
-#
-# All paths are explicit; this script makes no assumption about where your
-# worktrees live. All commands work from anywhere inside the main repo or
-# any of its worktrees.
-#
-# Usage:
-#   git-worktree.sh add <branch> <path> [base-ref]
-#       Create a worktree at <path> for <branch>. If <branch> exists locally
-#       it is checked out; else if origin/<branch> exists it is tracked;
-#       else a new branch is created from [base-ref] (or origin/HEAD).
-#
-#   git-worktree.sh rm <path>
-#       Remove the worktree at <path>. Also deletes the branch if merged.
-#
-#   git-worktree.sh ls
-#       List worktrees.
-#
-#   git-worktree.sh refresh <branch> <path> [--merge <other>]
-#       Wipe any existing worktree at <path> (and any worktree currently
-#       holding <branch>), force-reset local <branch> to origin/<branch>,
-#       and create a fresh worktree at <path>. With --merge, merge <other>
-#       into the freshly-reset branch. Use this for weekly-reset upstreams
-#       (e.g. channel/beta) to avoid rebase/conflict churn.
-#
-#   git-worktree.sh clean
-#       Prune stale worktree entries.
-#
-#   git-worktree.sh doctor
-#       Diagnose common worktree/fetch issues that cause "cannot lock ref"
-#       or "is not a branch" failures. Reports findings and the exact fix
-#       commands — does not modify anything on its own. Checks:
-#         - stale .lock files under refs/
-#         - case-collision branches (macOS case-insensitive FS)
-#         - empty remote.origin.fetch refspec
-#         - orphaned worktree entries
-
 set -euo pipefail
 
 ### ANSI colors
@@ -163,10 +125,44 @@ default_branch() {
 }
 
 cmd_add() {
-  [ $# -ge 2 ] || die "usage: add <branch> <path> [base-ref]"
-  local branch="$1"
-  local path="$2"
-  local base="${3:-}"
+  local branch="" path="" base=""
+
+  branch="${1:-}"
+  shift 2>/dev/null || true
+  [ -n "$branch" ] || die "usage: add <branch> [--path <path>] [--base <ref>]"
+
+  while [ $# -gt 0 ]; do
+    case "$1" in
+    --path)
+      path="${2:-}"
+      [ -n "$path" ] || die "--path needs a value"
+      shift 2
+      ;;
+    --base)
+      base="${2:-}"
+      [ -n "$base" ] || die "--base needs a value"
+      shift 2
+      ;;
+    *) die "unknown option: $1" ;;
+    esac
+  done
+
+  # Default path to the branch name when --path is omitted
+  [ -n "$path" ] || path="$branch"
+
+  # If --base wasn't provided, let the user pick one via FZF
+  if [ -z "$base" ]; then
+    command -v fzf >/dev/null 2>&1 || die "a base branch is required. use --base <ref> or install fzf for interactive selection"
+    local branches
+    branches="$(
+      {
+        git for-each-ref --format='%(refname:short)' refs/heads/ 2>/dev/null
+        git for-each-ref --format='%(refname:short)' refs/remotes/origin/ 2>/dev/null | sed 's@^origin/@@'
+      } | sort -u | grep -v '^HEAD$'
+    )"
+    base="$(printf '%s\n' "$branches" | fzf --prompt='base> ' --height=40% --reverse --header='Pick a base branch to fork from')"
+    [ -n "$base" ] || die "no base branch selected"
+  fi
 
   [ -e "$path" ] && die "path already exists: $path"
 
@@ -199,7 +195,13 @@ cmd_add() {
   if branch_exists "$branch"; then
     git worktree add "$path" "$branch" >&2
   elif remote_branch_exists "$branch"; then
-    git worktree add --track -b "$branch" "$path" "origin/$branch" >&2
+    # --track requires Git to recognize the start point as a configured
+    # remote-tracking branch. Some clones retain refs/remotes/origin/* but
+    # have no remote.origin.fetch refspec, so create the branch first and set
+    # its upstream explicitly.
+    git worktree add -b "$branch" "$path" "origin/$branch" >&2
+    git -C "$path" config "branch.$branch.remote" origin
+    git -C "$path" config "branch.$branch.merge" "refs/heads/$branch"
   else
     local from="${base:-origin/$(default_branch)}"
     info "creating new branch '$branch' from '$from'"
@@ -253,7 +255,7 @@ cmd_switch() {
     /^branch /{ b=$2; sub("refs/heads/","",b); print p "\t" b }
     /^detached/{ print p "\t(detached)" }
   ')"
-  [ -n "$list" ] || die "no worktrees found"
+  [ -n "$list" ] || warn "no worktrees found"
 
   local target
   if [ $# -gt 0 ]; then
@@ -394,6 +396,11 @@ cmd_clean() {
   git worktree list
 }
 
+cmd_pull() {
+  current_branch=$(git worktree list -v | grep -i $PWD | awk '{print $3}' | sed 's/\[//g' | sed 's/\]//g')
+  git pull origin $current_branch;
+}
+
 cmd_doctor() {
   local common_dir
   common_dir="$(cd "$(git rev-parse --git-common-dir)" && pwd)"
@@ -491,6 +498,20 @@ cmd_doctor() {
   warn "found $issues issue(s); re-run doctor after applying fixes"
 }
 
+cmd_clone() {
+  repo_url="$1"
+
+  if [ -z "$repo_url" ]; then
+    die "repo URL is not provided"
+  fi
+
+  dir_name="${2:-}"
+  [ -z "$dir_name" ] && dir_name="$(basename $repo_url | sed 's/.git//')"
+
+
+  git clone --bare "$repo_url" "$dir_name"
+}
+
 usage() {
   cat <<'EOF'
 git-worktree.sh — seamless git worktree management
@@ -500,10 +521,12 @@ worktrees live. All commands work from anywhere inside the main repo or
 any of its worktrees.
 
 Usage:
-  git-worktree.sh add <branch> <path> [base-ref]
-      Create a worktree at <path> for <branch>. If <branch> exists locally
-      it is checked out; else if origin/<branch> exists it is tracked;
-      else a new branch is created from [base-ref] (or origin/HEAD).
+  git-worktree.sh add <branch> [--path <path>] [--base <ref>]
+      Create a worktree for <branch>. <path> defaults to the branch name
+      when omitted. <base> determines where to fork from — required; if
+      omitted you are prompted to pick one interactively via fzf.
+      If <branch> exists locally it is checked out; else if origin/<branch>
+      exists it is tracked; else a new branch is created from <base>.
 
   git-worktree.sh rm <path>
       Remove the worktree at <path>. Also deletes the branch if merged.
@@ -547,8 +570,8 @@ EOF
 
 main() {
   [ $# -ge 1 ] || {
-    usage >&2
-    exit 1
+    cmd_switch "$@"
+    exit 0
   }
 
   local sub="$1"
@@ -558,10 +581,12 @@ main() {
   add) cmd_add "$@" ;;
   rm | remove) cmd_rm "$@" ;;
   ls | list) cmd_ls "$@" ;;
+  pull) cmd_pull "$@" ;;
   switch-worktree | switch | sw) cmd_switch "$@" ;;
   refresh) cmd_refresh "$@" ;;
   clean | prune) cmd_clean "$@" ;;
   doctor) cmd_doctor "$@" ;;
+  clone) cmd_clone "$@" ;;
   -h | --help | help) usage ;;
   *) die "unknown subcommand: $sub" ;;
   esac

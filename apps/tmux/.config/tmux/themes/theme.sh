@@ -1,1 +1,1 @@
-/home/nxtcoder17/.config/tmux/themes/dark.sh
+/Users/anshuman/.config/tmux/themes/dark.sh

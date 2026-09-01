@@ -1,15 +1,15 @@
 themes {
   system-light {
-    bg "#b8bcc2" // Surface2
-    fg "#2f3447" // Text
-    red "#c23848"
-    green "#143b0f"
-    blue "#2f5ca3"
-    yellow "#5b4415"
-    magenta "#b85896" // Pink
-    orange "#b8622d" // Peach
-    cyan "#2973a8" // Sky
-    black "#f2f4f6" // Mantle
-    white "#2f3447" // Text
+    bg "#2a2a37"
+    fg "#dcd7ba"
+    red "#e46876"
+    green "#98bb6c"
+    blue "#7e9cd8"
+    yellow "#e6c384"
+    magenta "#a89ecb"
+    orange "#e6c384"
+    cyan "#7aa89f"
+    black "#1f1f28"
+    white "#dcd7ba"
   }
 }

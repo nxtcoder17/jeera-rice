@@ -1,16 +1,19 @@
 local function on_attach(client, bufnr)
   local opts = { silent = true, buffer = bufnr, remap = false }
 
-  if client.supports_method("textDocument/inlayHint") then
-    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-  end
+  vim.lsp.inlay_hint.enable(false, { bufnr = bufnr })
+
+  -- INFO: uncomment below to enable inlay-hint
+  -- if client.supports_method("textDocument/inlayHint") then
+  --   vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+  -- end
 
   -- vim.lsp.semantic_tokens.enable(false)
 
-  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-    border = "rounded",
-    title = "",
-  })
+  -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+  --   border = "rounded",
+  --   title = "",
+  -- })
 
   if client ~= nil and client.server_capabilities ~= nil then
     client.server_capabilities.semanticTokensProvider = nil
