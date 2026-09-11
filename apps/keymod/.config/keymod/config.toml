@@ -7,3 +7,17 @@ hold = "LEFTCTRL"
 key = "SPACE"
 tap = "SPACE"
 hold = "LEFTSHIFT"
+
+#### MacOS like keymappings for easier keyboard management
+
+# Swap Left Alt to act as Command (LEFTMETA)
+[[keymap]]
+key = "LEFTMETA"
+tap = "LEFTCTRL"
+hold = "LEFTCTRL"
+
+# Swap Left Windows to act as Option (LEFTALT)
+[[keymap]]
+key = "LEFTCTRL"
+tap = "LEFTMETA"
+hold = "LEFTMETA"
