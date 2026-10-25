@@ -56,7 +56,7 @@ local function syntax()
       --   vim.treesitter.start(bufnr)
       -- end,
       dependencies = {
-        { "nvim-treesitter/nvim-treesitter-textobjects" },
+        -- { "nvim-treesitter/nvim-treesitter-textobjects" },
         -- {
         --   "yorickpeterse/nvim-tree-pairs",
         --   config = function()
@@ -438,7 +438,6 @@ local function editor_ui_enhancements()
     },
 
     { "ellisonleao/glow.nvim", ft = "markdown", config = true, cmd = "Glow" },
-    { "MeanderingProgrammer/render-markdown.nvim", ft = "markdown", config = true },
   }
 end
 

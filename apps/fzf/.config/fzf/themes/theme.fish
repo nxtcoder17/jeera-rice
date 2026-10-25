@@ -1,1 +1,1 @@
-/Users/anshuman/.config/fzf/themes/dark.fish
+/home/nxtcoder17/.config/fzf/themes/dark.fish

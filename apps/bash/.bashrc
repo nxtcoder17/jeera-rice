@@ -52,14 +52,10 @@ export EDITOR='nvim'
 alias rm='rm -i'
 
 if has_command exa; then
-  alias ls='exa --icons'
+  alias ls='exa --icons auto --ignore-glob="worktrees|commondir|gitdir|objects|refs|hooks|info|logs|branches|packed-refs|HEAD|FETCH_HEAD|ORIG_HEAD|index|config|description"'
   alias ll='exa --al --icons'
 else
   alias ll='ls -al'
-fi
-
-if has_command claude; then
-  alias code-agent="claude --dangerously-skip-permissions"
 fi
 
 alias gs='git status'
@@ -99,14 +95,13 @@ export MANPAGER='nvim +Man!'
 #
 # export NIXY_EXECUTOR="bubblewrap"
 # export NIXY_USE_PROFILE="true"
+export NIXY_PRELOAD="$HOME/.config/nixy/devtools.yml"
 
 [ -e ~/.system-theme ] && export SYSTEM_THEME=$(cat ~/.system-theme)
 [ -z "$SYSTEM_THEME" ] && export SYSTEM_THEME=dark
 
 function add_to_path() {
   for item in "$@"; do
-    [ -d "$item" ] || continue
-
     case ":$PATH:" in
     *":$item:"*) ;; # already in PATH, do nothing
     *) PATH="$item:$PATH" ;;
@@ -329,7 +324,8 @@ export _JAVA_OPTIONS="-Dawt.toolkit.name=WLToolkit -Dsun.java2d.uiScale.enabled=
 export ANDROID_HOME="$HOME/Android"
 add_to_path "$HOME/SDKs/flutter/bin"
 add_to_path "$HOME/.local/bin"
-export PATH=/home/nixy/.opencode/bin:$PATH
+add_to_path "$HOME/.cache/.bun/bin"
+add_to_path "$HOME/.opencode/bin"
 
 ## Only run fish for interactive sessions
 # case "$-" in
@@ -397,10 +393,16 @@ edit-encrypted-file() {
 # wt — switch between git worktrees with fzf
 # Usage:
 #   wt           pick a worktree interactively
-alias wt='git-worktree.sh'
+# alias wt='git-worktree.sh'
 
-wts() {
-  dir=$(git-worktree.sh switch-worktree)
-  [ -z "$dir" ] && exit 0
-  cd "$dir"
+wt() {
+  if [ "$#" -eq 0 ]; then
+    dir=$(git-worktree.sh switch-worktree)
+    echo "$dir"
+    [ -z "$dir" ] && return 0
+    cd "$dir" || return 1
+    return
+  fi
+
+  git-worktree.sh "$@"
 }

@@ -96,6 +96,3 @@ vim.api.nvim_set_hl(0, "MiniStatuslineDevinfo", { fg = palette.fg, bg = palette.
 vim.api.nvim_set_hl(0, "MiniStatuslineFilename", { fg = palette.fg, bg = palette.bg_edge })
 vim.api.nvim_set_hl(0, "MiniStatuslineFileinfo", { fg = palette.fg_mid, bg = palette.bg_mid })
 vim.api.nvim_set_hl(0, "MiniStatuslineInactive", { fg = palette.fg_mid2, bg = palette.bg_edge })
-
--- Diffview
-vim.api.nvim_set_hl(0, "DiffviewFilePanelFileName", { fg = palette.fg })

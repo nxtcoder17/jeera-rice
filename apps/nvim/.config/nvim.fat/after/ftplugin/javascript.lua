@@ -10,13 +10,12 @@ local filetypes = {
 -- LSP
 notify_if_not_installed({
   -- "typescript-language-server",
-  "tsgo",
+  "tsc",
   -- "biome",
   "deno",
 })
 
-
-vim.lsp.config("tsgo", {
+vim.lsp.config("tsc", {
   root_markers = { "package-lock.json", "yarn.lock", "pnpm-lock.yaml", "bun.lock" },
   filetypes = filetypes,
   single_file_support = true,
@@ -55,64 +54,69 @@ vim.lsp.config("denols", {
 })
 
 vim.lsp.enable({
+  "tsc",
   -- "ts_ls",
-  "tsgo",
+  -- "oxlint",
   -- "biome", -- linter and formatter
-  "denols",
+  -- "denols",
 })
 
-require("lint").linters.biome_lint = {
-  cmd = "sh",
-  stdin = false,
-  args = {
-    "-c",
-    string.format("bunx @biomejs/biome lint --reporter=rdjson '%s' || exit 0", vim.fn.expand("%")),
-  },
-  stream = "stdout",
+-- require("lint").linters.biome_lint = {
+--   cmd = "sh",
+--   stdin = false,
+--   args = {
+--     "-c",
+--     string.format("bunx @biomejs/biome lint --reporter=rdjson '%s' || exit 0", vim.fn.expand("%")),
+--   },
+--   stream = "stdout",
+--
+--   parser = function(output, bufnr)
+--     local diagnostics = {}
+--
+--     local ok, decoded = pcall(vim.json.decode, output)
+--     if not ok or not decoded then
+--       return diagnostics
+--     end
+--
+--     for _, item in ipairs(decoded.diagnostics or {}) do
+--       local start = item.location.range.start
+--       local finish = item.location.range["end"]
+--
+--       table.insert(diagnostics, {
+--         lnum = start.line - 1,
+--         col = start.column - 1,
+--         end_lnum = finish.line - 1,
+--         end_col = finish.column - 1,
+--         message = item.message,
+--         code = item.code and item.code.value or nil,
+--         source = decoded.source and decoded.source.name or "biome",
+--         severity = vim.diagnostic.severity.WARN,
+--       })
+--     end
+--
+--     return diagnostics
+--   end,
+-- }
 
-  parser = function(output, bufnr)
-    local diagnostics = {}
-
-    local ok, decoded = pcall(vim.json.decode, output)
-    if not ok or not decoded then
-      return diagnostics
-    end
-
-    for _, item in ipairs(decoded.diagnostics or {}) do
-      local start = item.location.range.start
-      local finish = item.location.range["end"]
-
-      table.insert(diagnostics, {
-        lnum = start.line - 1,
-        col = start.column - 1,
-        end_lnum = finish.line - 1,
-        end_col = finish.column - 1,
-        message = item.message,
-        code = item.code and item.code.value or nil,
-        source = decoded.source and decoded.source.name or "biome",
-        severity = vim.diagnostic.severity.WARN,
-      })
-    end
-
-    return diagnostics
-  end,
-}
-
-require("lint").linters_by_ft = {
-  javascript = { "biome_lint" },
-  typescript = { "biome_lint" },
-}
+-- require("lint").linters_by_ft = {
+--   javascript = { "oxlint" },
+--   javascriptreact = { "oxlint" },
+--   typescript = { "oxlint" },
+--   typescriptreact = { "oxlint" },
+-- }
 
 -- LINTER
 for _, ft in ipairs(filetypes) do
   -- set_linter(ft, { "eslint_d" })
-  set_linter(ft, { "biome_lint" })
+  -- set_linter(ft, { "biome_lint" })
+  set_linter(ft, { "oxlint" })
 end
 
 -- FORMATTER
 for _, ft in ipairs(filetypes) do
   -- set_formatter(ft, { "eslint_d" })
-  set_formatter(ft, { "biome" })
+  -- set_formatter(ft, { "biome" })
+  set_formatter(ft, { "oxfmt" })
 end
 
 vim.cmd("runtime! ftplugin/css.lua")

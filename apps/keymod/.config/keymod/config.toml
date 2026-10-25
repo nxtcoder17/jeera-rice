@@ -2,19 +2,26 @@
 key = "CAPSLOCK"
 tap = "ESC"
 hold = "LEFTCTRL"
+tap-timeout = 100
 
 [[keymap]]
 key = "SPACE"
 tap = "SPACE"
 hold = "LEFTSHIFT"
+tap-timeout = 120
 
 #### MacOS like keymappings for easier keyboard management
 
 # Swap Left Alt to act as Command (LEFTMETA)
 [[keymap]]
-key = "LEFTMETA"
+key = "LEFTALT"
 tap = "LEFTCTRL"
 hold = "LEFTCTRL"
+
+[[keymap]]
+key = "LEFTMETA"
+tap = "LEFTALT"
+hold = "LEFTALT"
 
 # Swap Left Windows to act as Option (LEFTALT)
 [[keymap]]

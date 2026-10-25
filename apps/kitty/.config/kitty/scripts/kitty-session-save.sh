@@ -1,22 +1,13 @@
-#! /usr/bin/env bash
-
-### use this script in kitty like this
-# map ctrl+shift+s launch --type=overlay --allow-remote-control <path-to-this-script>
-###
-
-if [ "$(uname)" = "Darwin" ]; then
-  PATH="/opt/homebrew/bin:$PATH"
-fi
+#!/usr/bin/env bash
+set -euo pipefail
 
 dir="${XDG_DATA_HOME:-$HOME/.local/share}/kitty/sessions"
 mkdir -p "$dir"
 
 [ -e "$HOME/.config/fzf/themes/theme.bash" ] && source "$HOME/.config/fzf/themes/theme.bash"
 
-pushd "$dir" >/dev/null || exit
-session_name=$(fzf --reverse --prompt="Create/Save Session: " --print-query <<<"$(ls .)" | tail -1)
-
+session_name=$(fzf --reverse --prompt="Create/Save Session: " --print-query <<<"$(ls $dir)" | tail -1 || exit 0)
 [ -z "$session_name" ] && exit 0
-popd >/dev/null || exit
-
-kitty @action save_as_session --match "session:." --use-foreground-process=yes --base-dir "$dir" "$session_name"
+# kitty @ action save_as_session --save-only --use-foreground-process --match=session:. "$target"
+kitty @action save_as_session --save-only --match=session:. --use-foreground-process=yes --base-dir "$dir" "$session_name"
+notify-send "saved kitty session: $session_name"

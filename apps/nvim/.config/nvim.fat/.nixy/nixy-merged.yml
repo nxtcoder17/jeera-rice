@@ -28,8 +28,8 @@ packages:
   - name: nvim
     sources:
       linux/amd64:
-        url: https://github.com/neovim/neovim/releases/download/v0.12.2/nvim-linux-x86_64.tar.gz
-        sha256: sha256-Mc+FlFy2ANls32n4i8aL7IFKy/9QhjxVRq3vOhvO8mA=
+        url: https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.tar.gz
+        sha256: sha256-gtF2whURb5bXPH/7t4jLrJV0UHsRkagfBytyFaKHbvI=
     binPaths:
       - nvim-linux-x86_64/bin
   - name: treesitter-cli
@@ -37,6 +37,13 @@ packages:
       linux/amd64:
         url: https://github.com/tree-sitter/tree-sitter/releases/download/v0.26.8/tree-sitter-cli-linux-x86.zip
         sha256: sha256-JQllY+jgEgbmoDbHW4lFkievcBvrPMzDcCo/94UEAHs=
+    binPaths:
+      - .
+  - name: codebase-memory-mcp
+    sources:
+      linux/amd64:
+        url: https://github.com/DeusData/codebase-memory-mcp/releases/download/v0.11.0/codebase-memory-mcp-linux-amd64.tar.gz
+        sha256: sha256-AyszwYM5GaLR3mf/Y2f6bqRq7oaJyG7yI8iPrjtuRTY=
     binPaths:
       - .
   - nixpkgs/default#google-chrome
@@ -59,6 +66,12 @@ mounts:
     readonly: true
   - source: $HOME/.bash_profile
     dest: $HOME/.bash_profile
+    readonly: true
+  - source: $HOME/.agents/skills
+    dest: $HOME/.agents/skills
+    readonly: true
+  - source: $HOME/.config/opencode/opencode.jsonc
+    dest: $HOME/.config/opencode/opencode.jsonc
     readonly: true
   - source: $HOME/.config/ls
     dest: $HOME/.config/ls
@@ -87,11 +100,8 @@ mounts:
   - source: $HOME/Android
     dest: $HOME/Android
     readonly: true
-  - source: $HOME/workspace/nxtcoder17/jeera-rice/apps/nvim/.config/nvim
+  - source: $HOME/workspace/nxtcoder17/jeera-rice/apps/nvim/.config/nvim.fat
     dest: $HOME/.config/nvim
-  - source: $HOME/workspace/nxtcoder17/jeera-rice/apps/nvim/.config/simple.nvim
-    dest: $HOME/.config/simple.nvim
-    readonly: true
   - source: $HOME/workspace/nxtcoder17/jeera-rice/bin
     dest: $HOME/.local/jeera-rice-bin
     readonly: true

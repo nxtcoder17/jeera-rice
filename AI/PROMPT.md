@@ -16,7 +16,7 @@ On New Session start
   [Brief description]
 
   **Blockers**
-  <[What's blocking, if any]>
+  What's blocking, if any
 
   Next Steps, when current is done
   1. [First action/task]
