@@ -16,6 +16,7 @@ packages:
   - zoxide
   - eza
   - bun
+  - github-cli
 
   # build tools
   - nodejs
